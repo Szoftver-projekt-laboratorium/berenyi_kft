@@ -72,12 +72,14 @@ public class Game {
 		return this.asteroids;
 	}
 	
+	
 	//???----------------------------------------------
 	/**
 	 * Visszaadja a teleportkapu-pár felépítéséhez szükséges 
 	 * receptet tároló Recipe objektumot.
 	 * @return
 	 */
+	/* -----------------------------------------------
 	public Recipe getGatePairRecipe() {
 		
 	}
@@ -87,6 +89,7 @@ public class Game {
 	 * receptet tároló Recipe objektumot
 	 * @return
 	 */
+	/* --------------------------------------------------
 	public Recipe getAIRobotRecipe() {
 		
 	}
@@ -96,8 +99,10 @@ public class Game {
 	 * receptet tároló Recipe objektumot.
 	 * @return
 	 */
+	/*
 	public Recipe getSpaceBaseRecipe() {
 		
 	}
+	*/
 	
 }
