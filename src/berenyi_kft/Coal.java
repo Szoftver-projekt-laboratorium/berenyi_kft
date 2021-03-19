@@ -7,12 +7,7 @@ package berenyi_kft;
  */
 public class Coal extends Resource {
 
-	@Override
-	public void drilledOut() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	/**
 	 * /**
 	 * Összehasonlítja magát a paraméterként kapott nyersanyaggal 
@@ -21,7 +16,9 @@ public class Coal extends Resource {
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
-		// TODO Auto-generated method stub
+		System.out.println("Coal's isCompatibleWith(r: Resource) has been called");
+		if(this.getClass().equals(r.getClass()))
+			return true;
 		return false;
 	}
 

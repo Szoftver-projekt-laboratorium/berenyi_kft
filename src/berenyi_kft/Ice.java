@@ -13,9 +13,9 @@ public class Ice extends Resource{
 	 * metódust a saját aszteroidáján.
 	 */
 	@Override
-	public void drilledOut() {
-		// TODO Auto-generated method stub
-		
+	public void drilledOut(Asteroid a) {
+		a.removeResource();
+		System.out.println("Ice's drilledOut(a: Asteroid) has been called");
 	}
 
 	/**
@@ -25,7 +25,9 @@ public class Ice extends Resource{
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
-		// TODO Auto-generated method stub
+		System.out.println("Ice's isCompatibleWith(r: Resource) has been called");
+		if(this.getClass().equals(r.getClass()))
+			return true;
 		return false;
 	}
 

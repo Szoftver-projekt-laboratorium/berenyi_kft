@@ -12,9 +12,9 @@ public abstract class RadioactiveResource extends Resource {
 	 * explodedBy(RadioactiveResource rr) metódusát (robban).
 	 */
 	@Override
-	public void drilledOut() {
-		// TODO Auto-generated method stub
-		
+	public void drilledOut(Asteroid a) {
+		a.explodedBy(this);
+		 System.out.println("RadioactiveResource's drilledOut(a: Asteroid) has been called");
 	}
 
 	

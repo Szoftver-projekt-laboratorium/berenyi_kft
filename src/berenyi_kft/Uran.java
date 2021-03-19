@@ -14,7 +14,9 @@ public class Uran extends RadioactiveResource {
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
-		// TODO Auto-generated method stub
+		System.out.println("Uran's isCompatibleWith(r: Resource) has been called");
+		if(this.getClass().equals(r.getClass()))
+			return true;
 		return false;
 	}
 
