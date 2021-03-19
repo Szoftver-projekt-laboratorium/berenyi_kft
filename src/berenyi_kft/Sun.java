@@ -56,6 +56,10 @@ public class Sun implements ISteppable {
 		return false;
 	}
 	
+	public void settimeToSunStorm(long time){
+		timeToSunStorm=time;
+	}
+	
 	
 
 	
