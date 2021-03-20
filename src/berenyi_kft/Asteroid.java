@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * 
  * @author berenyi_kft
- * Aszteroidï¿½kat reprezentï¿½lï¿½ osztï¿½ly
+ * Aszteroidákat reprezentáló osztály
  */
 public class Asteroid {
 	 
 	 /**
-	  * az aszteroida kï¿½penyvastagsï¿½ga, vagyis a magot borï¿½tï¿½ sziklarï¿½tegek szï¿½ma
+	  * az aszteroida köpenyvastagsága, vagyis a magot borító sziklarétegek száma
 	  */
 	 int rockLayerThickness;
 	 
@@ -54,8 +54,8 @@ public class Asteroid {
 	 public Asteroid(){}
 	 
 	 public void addNeighbor(Asteroid a) {
-		 neighbors.add(a);
 		 System.out.println("Asteroid's addNeighbor(a: Asteroid) has been called");
+		 neighbors.add(a);
 	 }
 	 
 	 /**
@@ -63,8 +63,8 @@ public class Asteroid {
 	  * @param a
 	  */
 	 public void accept(Asteroid a) {
-		 neighbors.add(a);
 		 System.out.println("Asteroid's accept(a: Asteroid) has been called");
+		 neighbors.add(a);
 	 }
 	 
 	 /**
@@ -72,10 +72,10 @@ public class Asteroid {
 	  * @param a
 	  */
 	 public void remove(Asteroid a) {
+		 System.out.println("Asteroid's remove(a: Asteroid) has been called");
 		 if(neighbors.contains(a)) {
 			 neighbors.remove(a);
 		 }
-		 System.out.println("Asteroid's remove(a: Asteroid) has been called");
 	 }
 	 
 	 /**
@@ -117,8 +117,8 @@ public class Asteroid {
 	  * @param c
 	  */
 	 public void accept(Character c) {
-		 characters.add(c);
 		 System.out.println("Asteroid's accept(c: Character) has been called");
+		 characters.add(c);
 	 }
 	 
 	 /**
@@ -127,8 +127,8 @@ public class Asteroid {
 	  * @param c
 	  */
 	 public void remove(Character c) {
-		 characters.remove(c);
 		 System.out.println("Asteroid's remove(c: Character) has been called");
+		 characters.remove(c);
 	 }
 	 
 	 /**
@@ -180,6 +180,7 @@ public class Asteroid {
 	 //Ezt a fï¿½ggvï¿½nyt a Settlernek a restore(r) metï¿½dusa hï¿½vja meg, azt vï¿½ltoztattuk rajta, hogy nem csak a Resource
 	 //a paramï¿½ter, hanem a Settler is. Settler restore-ban 2 paramï¿½terrel hï¿½vjï¿½tok meg.
 	 public void accept(Settler s, Resource r) {
+		 System.out.println("Asteroid's accept(s: Settler, r: Resource) has been called");
 		 if(this.isMined()) {
 			 resource=r;
 			 resource.setAsteroid(this);
@@ -188,7 +189,6 @@ public class Asteroid {
 				 resource.drilledOut(this);  //Donï¿½t tanï¿½csait megfogadva ha napkï¿½zelben restore-olunk, akkor hï¿½vï¿½dik meg.
 			 }
 		 }
-		 System.out.println("Asteroid's accept(s: Settler, r: Resource) has been called");
 	 }
 	 
 	 /**
@@ -198,8 +198,8 @@ public class Asteroid {
 	  * @return
 	  */
 	 public void removeResource() {
-		 resource=null;
 		 System.out.println("Asteroid's removeResource() has been called");
+		 resource=null;
 	 }
 	 
 	 /**
@@ -220,8 +220,11 @@ public class Asteroid {
 	  * hogy napkï¿½zeli aszteroidï¿½n felszï¿½nre kerï¿½lt.
 	  */
 	 public void drilled() {
-		 if(rockLayerThickness>=1)
-			 this.setRockLayerThickness(this.rockLayerThickness--);
+		 System.out.println("Asteroid's drilled() has been called");
+		 if(rockLayerThickness>=1) {
+			 int value=rockLayerThickness-1;
+			 this.setRockLayerThickness(value);
+		 }
 		 if(rockLayerThickness==0) {
 			 if(resource!=null) {
 				 if(sun.isCloseToSun(this)) {
@@ -229,7 +232,6 @@ public class Asteroid {
 				 }
 			 }
 		 }
-		 System.out.println("Asteroid's drilled() has been called");
 	 }
 	 
 	 /**
@@ -242,13 +244,13 @@ public class Asteroid {
 	  * @param s
 	  */
 	 public void minedBy(Settler s) {
+		 System.out.println("Asteroid's minedBy() has been called");
 		 if(rockLayerThickness == 0 && resource != null) {
 			 s.accept(resource);
 			 resource.setAsteroid(null);
 			 this.removeResource();
 			 this.checkSpaceBase();
 		 }
-		 System.out.println("Asteroid's minedBy() has been called");
 	 }
 	 
 	 /**
@@ -272,20 +274,20 @@ public class Asteroid {
 	  * @param rr
 	  */
 	 public void explodedBy(RadioactiveResource rr) {
-		 for(Character c : characters){
-			 c.reactToExplosion();
+		 System.out.println("Asteroid's explodedBy(rr: RadioactiveResource) has been called");
+		 for(int i = characters.size()-1; i >= 0; i--) {
+			 characters.get(i).reactToExplosion();
 		 }
 		 
-		 for(TeleportingGate tg : gates) {
-			 tg.die();
+		 for(int i=gates.size()-1;i>=0;i--) {
+			 gates.get(i).die();
 		 }
 		 
-		 for(Asteroid a : neighbors) {
-			 a.remove(this);
+		 for(int i=neighbors.size()-1;i>=0;i--) {
+			 neighbors.get(i).remove(this);
 		 }
 		 
 		 game.removeAsteroid(this);
-		 System.out.println("Asteroid's explodedBy(rr: RadioactiveResource) has been called");
 	 }
 	 
 	 /**
@@ -295,12 +297,12 @@ public class Asteroid {
 	  * meghï¿½vja az aszteroidï¿½n tartï¿½zkodï¿½ karakterek die() fï¿½ggvï¿½nyï¿½t.
 	  */
 	 public void destroySurface() {
+		 System.out.println("Asteroid's destroySurface() has been called");
 		 if(!this.isMined()) {
 			 for(Character c: characters) {
 				 c.die();
 			 }
 		 }
-		 System.out.println("Asteroid's destroySurface() has been called");
 	 }
 	 
 	 /**
@@ -309,6 +311,7 @@ public class Asteroid {
 	  * Ha igen, akkor meghï¿½vja a Game endGame() metï¿½dusï¿½t.
 	  */
 	 public void checkSpaceBase() {
+		 System.out.println("Asteroid's checkSpaceBase() has been called");
 		 ArrayList<Resource> temp=new ArrayList<Resource>();
 		 for(Character c: characters) {
 			 temp.addAll(c.getCollectedResources());
@@ -323,12 +326,32 @@ public class Asteroid {
 		 
 		 if(recipe.isEmpty())
 			 game.endGame();
-		 System.out.println("Asteroid's checkSpaceBase() has been called");
 		 recipe.reset();
 	 }
 	 
-	 public void setGame(Game g) {
-		 this.game = g;
+	 public void addResource(Resource r) {
+		 System.out.println("Asteroid's addResource(r: Resource) has been called");
+		 resource=r;
+		 r.setAsteroid(this);
 	 }
 	 
+	 public int getSizeOfNeighbors() {
+		 System.out.println("Asteroid's getSizeOfNeighbors() has been called");
+		 return neighbors.size();
+	 }
+	 
+	 public void setSun(Sun s) {
+		 System.out.println("Asteroid's setSun(s: Sun) has been called");
+		 sun=s;
+	 }
+	 
+	 public void setGame(Game g) {
+		 System.out.println("Asteroid's setGame(g: Game) has been called");
+		 game=g;
+	 }
+	 
+	 public int getSizeOfCharacters() {
+		 System.out.println("Asteroid's getSizeOfCharacters() has been called");
+		 return characters.size();
+	 }
 }

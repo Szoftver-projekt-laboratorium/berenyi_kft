@@ -28,6 +28,7 @@ public class TeleportingGate {
 	 * Visszaadja a teleportkapu pair p�rj�t.
 	 */
 	public TeleportingGate getPair() {
+		System.out.println("TeleportingGate's getPair() has been called");
 		return this.pair;
 	}
 	
@@ -36,6 +37,7 @@ public class TeleportingGate {
 	 * @param tg
 	 */
 	public void setPair(TeleportingGate tg) {
+		System.out.println("TeleportingGate's setPair(tg: TeleportingGate) has been called");
 		this.pair = tg;
 	}
 	
@@ -45,6 +47,7 @@ public class TeleportingGate {
 	 * @return
 	 */
 	public Asteroid getAsteroid() {
+		System.out.println("TeleportingGate's getAsteroid() has been called");
 		return this.asteroid;
 	}
 	
@@ -53,6 +56,7 @@ public class TeleportingGate {
 	 * @param a
 	 */
 	public void setAsteroid(Asteroid a) {
+		System.out.println("TeleportingGate's setAsteroid(a: Asteroid) has been called");
 		this.asteroid = a;
 	}
 	
@@ -69,6 +73,7 @@ public class TeleportingGate {
 	 */
 	// TODO: Gondoljuk át, hátha így implementálva egyszerűbb.
 	public void die() {
+		System.out.println("TeleportingGate's die() has been called");
 		if (pair != null) {
 			pair.setPair(null);
 			pair.die();

@@ -48,6 +48,7 @@ public class Timer extends java.util.Timer{
 	 * @param s
 	 */
 	public void addSteppable(ISteppable s) {
+		System.out.println("Timer's addSteppable(s: ISteppable) has been called");
 		this.steppables.add(s);
 	}
 	
@@ -55,6 +56,7 @@ public class Timer extends java.util.Timer{
 	 * Elt�vol�tja s-t a steppables list�b�l.
 	 */
 	public void removeSteppable(ISteppable s) {
+		System.out.println("Timer's removeSteppable(s: ISteppable has been called)");
 		if(this.steppables.contains(s)) {
 			this.steppables.remove(s);
 		}
@@ -65,6 +67,7 @@ public class Timer extends java.util.Timer{
 	 * hogy megh�vja a step() f�ggv�ny�t.
 	 */
 	public void tick() {
+		System.out.println("Timer's tick() has been called");
 		this.steppables.forEach((si) -> {si.step();});
 	}
 	

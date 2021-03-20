@@ -8,20 +8,20 @@ package berenyi_kft;
 public class Ice extends Resource{
 
 	/**
-	 * Hatására a vízjég elszublimál: 
-	 * meghívja az asteroid.removeResource()
-	 * metódust a saját aszteroidáján.
+	 * Hatï¿½sï¿½ra a vï¿½zjï¿½g elszublimï¿½l: 
+	 * meghï¿½vja az asteroid.removeResource()
+	 * metï¿½dust a sajï¿½t aszteroidï¿½jï¿½n.
 	 */
 	@Override
 	public void drilledOut(Asteroid a) {
-		a.removeResource();
 		System.out.println("Ice's drilledOut(a: Asteroid) has been called");
+		a.removeResource();
 	}
 
 	/**
-	 * Összehasonlítja magát a paraméterként kapott nyersanyaggal 
-	 * és egyezés esetén igaz értékkel tér vissza, 
-	 * ellenkezõ esetben hamissal.
+	 * ï¿½sszehasonlï¿½tja magï¿½t a paramï¿½terkï¿½nt kapott nyersanyaggal 
+	 * ï¿½s egyezï¿½s esetï¿½n igaz ï¿½rtï¿½kkel tï¿½r vissza, 
+	 * ellenkezï¿½ esetben hamissal.
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
