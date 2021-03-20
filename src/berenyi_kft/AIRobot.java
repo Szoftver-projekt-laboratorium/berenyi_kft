@@ -1,53 +1,51 @@
 package berenyi_kft;
 
-import java.util.ArrayList;
+import java.util.Random;
 
 /**
- * A karakterek egyik fajtája a robot, 
- * amely minden idõegységben fúrni vagy szomszédos aszteroidára mozogni tud.
+ * A karakterek egyik fajtï¿½ja a robot, 
+ * amely minden idï¿½egysï¿½gben fï¿½rni vagy szomszï¿½dos aszteroidï¿½ra mozogni tud.
  * @author berenyi_kft
  *
  */
-public class AIRobot extends Character implements ISteppable{
-
+public class AIRobot extends Character implements ISteppable {
+	// A jÃ¡tÃ©k idÅ‘zÃ­tÅ‘je, amely a robotot is lÃ©pteti.
+	// TODO: konstruktorban Ã¡t kell vennie, hogy a halÃ¡lakor meghÃ­vhassa?
+	// private Timer timer;
+	
 	/**
-	 * A robot megkérdezi az aszteroidától, amelyen áll, 
-	 * hogy mekkora a köpenyvastagsága. 
-	 * Ha az aszteroida nincs teljesen átfúrva, 
-	 * akkor a robot drill() mûveletet végez,
-	 * különben valamelyik szomszédos aszteroidára lép (move(int d)).
+	 * A robot megkï¿½rdezi az aszteroidï¿½tï¿½l, amelyen ï¿½ll, 
+	 * hogy mekkora a kï¿½penyvastagsï¿½ga. 
+	 * Ha az aszteroida nincs teljesen ï¿½tfï¿½rva, 
+	 * akkor a robot drill() mï¿½veletet vï¿½gez,
+	 * kï¿½lï¿½nben valamelyik szomszï¿½dos aszteroidï¿½ra lï¿½p (move(int d)).
 	 */
-	@Override
 	public void step() {
-		// TODO Auto-generated method stub
-		
+		if (place.getRockLayerThickness() >= 1) {
+			drill();
+		} else {
+			Random random = new Random();
+			move(random.nextInt());
+		}
 	}
 	
 	/**
-	 * auto implementation
-	 */
-	@Override
-	public ArrayList<Resource> getCollectedResources() {
-		return null;
-	}
-	
-	/**
-	 * A robot megsemmisül: 
-	 * meghívja a Timer removeSteppable(Steppable s) metódusát.
+	 * A robot megsemmisï¿½l: 
+	 * meghï¿½vja a Timer removeSteppable(ISteppable s) metï¿½dusï¿½t.
 	 */
 	public void die() {
-		
+		// A timerre lesz referenciÃ¡ja a robotoknak?
+		// timer.removeSteppable(this);
 	}
 	
 	/**
-	 * A robot egy véletlenszerû szomszédos aszteroidán landol: 
-	 * sorsol egy d számot, 
-	 * majd meghívja a move (int d) metódust.
+	 * A robot egy vï¿½letlenszerï¿½ szomszï¿½dos aszteroidï¿½n landol: 
+	 * sorsol egy d szï¿½mot, 
+	 * majd meghï¿½vja a move (int d) metï¿½dust.
 	 */
 	public void reactToExplosion() {
-		
+		Random random = new Random();
+		move(random.nextInt());
 	}
-
-	
 
 }
