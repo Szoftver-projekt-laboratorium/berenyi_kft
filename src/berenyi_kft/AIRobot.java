@@ -33,7 +33,7 @@ public class AIRobot extends Character implements ISteppable {
 			drill();
 		} else {
 			Random random = new Random();
-			move(random.nextInt());
+			move(random.nextInt()%place.getNeighbors().size());
 		}
 	}
 	
