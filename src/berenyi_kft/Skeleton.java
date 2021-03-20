@@ -3,7 +3,8 @@ package berenyi_kft;
 import java.util.Scanner;
 
 public class Skeleton {
-
+	
+	
 	 public static void main(String args[])
 	  {
 	   	System.out.println("Welcome in berenyi_kft's Skeleton tester!\n ");
@@ -44,6 +45,7 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tMove to asteroid selected:\n");
+		   			   	    	
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tMove through TeleportingGate selected:\n");
@@ -61,8 +63,8 @@ public class Skeleton {
 		   	    	System.out.println("Testing Drill Asteroid...\n Please choose a test-case:\n");
 		   	    	
 		   	    	System.out.println("\ta: Drill one layer\n");
-		   	    	System.out.println("\tb: Drill radioactive asteroid’s last layer\n");
-		   	    	System.out.println("\tc: Drill icy asteroid’s last layer\n");
+		   	    	System.out.println("\tb: Drill radioactive asteroidï¿½s last layer\n");
+		   	    	System.out.println("\tc: Drill icy asteroidï¿½s last layer\n");
 		   	    	System.out.println("\td: Fail to drill\n");
 		   	    	System.out.println("\te: Back to the main menu\n");
 		   	    	
@@ -74,10 +76,10 @@ public class Skeleton {
 		   			   	    	System.out.println("\t\tDrill one layer selected:\n");
 		   			   	    	break;
 		   			   	    case "b":
-		   			   	    	System.out.println("\t\tDrill radioactive asteroid’s last layer selected:\n");
+		   			   	    	System.out.println("\t\tDrill radioactive asteroidï¿½s last layer selected:\n");
 		   			   	    	break;
 		   			   	    case "c":
-		   			   	    	System.out.println("\t\tDrill icy asteroid’s last layer selected:\n");
+		   			   	    	System.out.println("\t\tDrill icy asteroidï¿½s last layer selected:\n");
 		   			   	    	break;
 		   			   	    case "d":
 		   			   	    	System.out.println("\t\tFail to drill selected:\n");

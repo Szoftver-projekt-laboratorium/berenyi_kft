@@ -127,4 +127,20 @@ public class Game {
 		return recipes.get(3);
 	}
 	*/
+	
+	//--------------------------------------------------------
+	/**
+	 * ideiglenes setterek a controller osztalyhoz
+	 */
+	public void addSettler(Settler e) {
+		this.settlersAlive.add(e);
+	}
+	
+	public void addAsteroid(Asteroid a) {
+		this.asteroids.add(a);
+	}
+	
+	public void addReceipt(Recipe r) {
+		this.recipes.add(r);
+	}
 }
