@@ -3,34 +3,34 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 /**
- * A karakterek egyik fajtája a telepes
+ * A karakterek egyik fajtï¿½ja a telepes
  * @author berenyi_kft
  *
  */
 public class Settler extends Character{
 
 	/**
-	 * A telepes által tárolt nyersanyagok listája
+	 * A telepes ï¿½ltal tï¿½rolt nyersanyagok listï¿½ja
 	 * [0...10]
 	 */
 	ArrayList<Resource> collectedResources = new ArrayList<Resource>();
 	
 	/**
-	 * a telepes által tárolt teleportkapuk kollekciója
+	 * a telepes ï¿½ltal tï¿½rolt teleportkapuk kollekciï¿½ja
 	 * [0...2]
 	 */
 	ArrayList<TeleportingGate> gatesCreated = new ArrayList<TeleportingGate>();
 	
 	/**
-	 * a játékot reprezentáló osztály
+	 * a jï¿½tï¿½kot reprezentï¿½lï¿½ osztï¿½ly
 	 */
 	Game game;
 	
 	//---------------------------------
 	
 	/**
-	 * Visszatér a karakter által tárolt nyersanyagok 
-	 * listájával, alapértelmezetten egy üres listával
+	 * Visszatï¿½r a karakter ï¿½ltal tï¿½rolt nyersanyagok 
+	 * listï¿½jï¿½val, alapï¿½rtelmezetten egy ï¿½res listï¿½val
 	 * @return
 	 */
 	@Override
@@ -39,95 +39,132 @@ public class Settler extends Character{
 	}
 	
 	/**
-	 * A telepes eltárolja a kibányászott r nyersanyagot a resources kollekciójában.
+	 * A telepes eltï¿½rolja a kibï¿½nyï¿½szott r nyersanyagot a resources kollekciï¿½jï¿½ban.
 	 * @param r
 	 */
 	public void accept(Resource r) {
-		
+		collectedResources.add(r);
 	}
 	
 	/**
-	 * A telepes eltávolítja az r nyersanyagot a resources kollekciójából.
+	 * A telepes eltï¿½volï¿½tja az r nyersanyagot a resources kollekciï¿½jï¿½bï¿½l.
 	 * @param r
 	 */
 	public void remove(Resource r) {
-		
+		collectedResources.remove(r);
 	}
 	
 	/**
-	 * A telepes kibányássza az adott megfúrt aszteroida magjában található 
-	 * nyersanyagot. Ehhez meghívja az aszteroida minedBy() metódusát. 
-	 * Ha a bányászat kezdetén az ûrhajóban már nincs hely újabb nyersanyagnak, 
-	 * akkor a telepes nem tud bányászni, a függvénynek nincs hatása.
+	 * A telepes kibï¿½nyï¿½ssza az adott megfï¿½rt aszteroida magjï¿½ban talï¿½lhatï¿½ 
+	 * nyersanyagot. Ehhez meghï¿½vja az aszteroida minedBySettler(s: Settler) metï¿½dusï¿½t. 
+	 * Ha a bï¿½nyï¿½szat kezdetï¿½n az ï¿½rhajï¿½ban mï¿½r nincs hely ï¿½jabb nyersanyagnak, 
+	 * akkor a telepes nem tud bï¿½nyï¿½szni, a fï¿½ggvï¿½nynek nincs hatï¿½sa.
 	 */
 	public void mine() {
-		
+		if (collectedResources.size() < 10) {
+			place.minedBySettler(this);
+		}
 	}
 	
 	/**
-	 * Meghívja a place aszteroida Accept(Resource r) metódusát. 
-	 * Ha az aszteroida üres, akkor az aszteroida eltárolja az r nyersanyagot,
-	 * és eltávolítja azt a Settler nyersanyagai közül. 
-	 * Ha az aszteroida magjában már volt nyersanyag, akkor nem történik semmi.
+	 * Meghï¿½vja a place aszteroida accept(Resource r) metï¿½dusï¿½t. 
+	 * Ha az aszteroida ï¿½res, akkor az aszteroida eltï¿½rolja az r nyersanyagot,
+	 * ï¿½s eltï¿½volï¿½tja azt a Settler nyersanyagai kï¿½zï¿½l. 
+	 * Ha az aszteroida magjï¿½ban mï¿½r volt nyersanyag, akkor nem tï¿½rtï¿½nik semmi.
 	 * @param r
 	 */
 	public void restore(Resource r) {
-		
+		place.accept(r);
 	}
 	
 	/**
-	 * A telepes lekérdezi a Game-tõl az AI robot megépítéséhez szükséges 
-	 * receptet a Recipe getAIRobotRecipe() metódusának meghívásával, 
-	 * majd pedig összehasonlítja a saját nyersanyagait a receptben lévõkkel. 
-	 * Amennyiben rendelkezik a szükséges nyersanyagokkal, létrehoz egy AIRobot példányt, 
-	 * ezután pedig hozzáadja az aktuális aszteroidához az accept(c: Character)
-	 *  metódus meghívásával. Végül meghívja a Recipe reset() függvényét, 
-	 * amelyben ezáltal visszaállítja a recept listájának a tartalmát.
+	 * A telepes lekï¿½rdezi a Game-tï¿½l az AI robot megï¿½pï¿½tï¿½sï¿½hez szï¿½ksï¿½ges 
+	 * receptet a Recipe getAIRobotRecipe() metï¿½dusï¿½nak meghï¿½vï¿½sï¿½val, 
+	 * majd pedig ï¿½sszehasonlï¿½tja a sajï¿½t nyersanyagait a receptben lï¿½vï¿½kkel. 
+	 * Amennyiben rendelkezik a szï¿½ksï¿½ges nyersanyagokkal, lï¿½trehoz egy AIRobot pï¿½ldï¿½nyt, 
+	 * ezutï¿½n pedig hozzï¿½adja az aktuï¿½lis aszteroidï¿½hoz az accept(c: Character)
+	 * metï¿½dus meghï¿½vï¿½sï¿½val. Vï¿½gï¿½l meghï¿½vja a Recipe reset() fï¿½ggvï¿½nyï¿½t, 
+	 * amelyben ezï¿½ltal visszaï¿½llï¿½tja a recept listï¿½jï¿½nak a tartalmï¿½t.
 	 */
 	public void createAIRobot() {
-		
+		Recipe aiRobotRecipe = game.getAIRobotRecipe();
+		for (Resource r : collectedResources) {
+			if (aiRobotRecipe.isEmpty()) {
+				break;
+			}
+			aiRobotRecipe.isNeeded(r);
+		}
+		if (aiRobotRecipe.isEmpty()) {
+			AIRobot air = new AIRobot();
+			place.accept(air);
+		}
+		aiRobotRecipe.reset();
 	}
 	
 	/**
-	 * A telepes lekérdezi a Game-tõl a teleportkapu-pár megépítéséhez 
-	 * szükséges receptet a Recipe getGatePairRecipe() metódusának meghívásával, 
-	 * majd pedig összehasonlítja a saját nyersanyagait a receptben lévõkkel. 
-	 * Amennyiben rendelkezik a szükséges nyersanyagokkal és nincs nála elkészített 
-	 * teleportkapu, akkor létrehozza a TeleportingGate két példányát és párba állítja
-	 *  õket a setPair(tg: TeleportingGate) függvények meghívásával, 
-	 *  majd az ûrhajóján a gatesCreated kollekcióban eltárolja õket. 
-	 *  Végül meghívja a Recipe reset() függvényét, 
-	 * amelyben ezáltal visszaállítja a recept listájának a tartalmát.
+	 * A telepes lekï¿½rdezi a Game-tï¿½l a teleportkapu-pï¿½r megï¿½pï¿½tï¿½sï¿½hez 
+	 * szï¿½ksï¿½ges receptet a Recipe getGatePairRecipe() metï¿½dusï¿½nak meghï¿½vï¿½sï¿½val, 
+	 * majd pedig ï¿½sszehasonlï¿½tja a sajï¿½t nyersanyagait a receptben lï¿½vï¿½kkel. 
+	 * Amennyiben rendelkezik a szï¿½ksï¿½ges nyersanyagokkal ï¿½s nincs nï¿½la elkï¿½szï¿½tett 
+	 * teleportkapu, akkor lï¿½trehozza a TeleportingGate kï¿½t pï¿½ldï¿½nyï¿½t ï¿½s pï¿½rba ï¿½llï¿½tja
+	 * *ï¿½ket a setPair(tg: TeleportingGate) fï¿½ggvï¿½nyek meghï¿½vï¿½sï¿½val, 
+	 * majd az ï¿½rhajï¿½jï¿½n a gatesCreated kollekciï¿½ban eltï¿½rolja ï¿½ket. 
+	 *  Vï¿½gï¿½l meghï¿½vja a Recipe reset() fï¿½ggvï¿½nyï¿½t, 
+	 * amelyben ezï¿½ltal visszaï¿½llï¿½tja a recept listï¿½jï¿½nak a tartalmï¿½t.
 	 */
 	public void createGatePair() {
+		if (!gatesCreated.isEmpty()) {
+			return;
+		}
 		
+		Recipe gatePairRecipe = game.getGatePairRecipe();
+		for (Resource r : collectedResources) {
+			if (gatePairRecipe.isEmpty()) {
+				break;
+			}
+			gatePairRecipe.isNeeded(r);
+		}
+		if (gatePairRecipe.isEmpty()) {
+			TeleportingGate tg1 = new TeleportingGate();
+			TeleportingGate tg2 = new TeleportingGate();
+			tg1.setPair(tg2);
+			tg2.setPair(tg1);
+			gatesCreated.add(tg1);
+			gatesCreated.add(tg2);
+		}
+		gatePairRecipe.reset();
 	}
 	
 	/**
-	 * A telepes a gatesCreated kollekcióból kiválaszt egy teleportkaput, 
-	 * majd az aktuális aszteroidája körüli pályára állítja az
-	 *  Asteroid accept(TeleportingGate tg) függvényével. 
-	 *  Ha a telepesnél nincs elkészült teleportkapu 
-	 * (gatesCreated üres), akkor nem történik semmi.
+	 * A telepes a gatesCreated kollekciï¿½bï¿½l kivï¿½laszt egy teleportkaput, 
+	 * majd az aktuï¿½lis aszteroidï¿½ja kï¿½rï¿½li pï¿½lyï¿½ra ï¿½llï¿½tja az
+	 * Asteroid accept(TeleportingGate tg) fï¿½ggvï¿½nyï¿½vel. 
+	 * Ha a telepesnï¿½l nincs elkï¿½szï¿½lt teleportkapu 
+	 * (gatesCreated ï¿½res), akkor nem tï¿½rtï¿½nik semmi.
 	 */
 	public void releaseGate() {
-		
+		if (gatesCreated.size() >= 1) {
+			TeleportingGate tg = gatesCreated.remove(0);
+			place.accept(tg);
+		}
 	}
 	
 	/**
-	 * A telepes eltávolítja a tg teleportkaput a gatesCreated kollekciójából.
+	 * A telepes eltï¿½volï¿½tja a tg teleportkaput a gatesCreated kollekciï¿½jï¿½bï¿½l.
 	 * @param tg
 	 */
 	public void remove(TeleportingGate tg) {
-		
+		gatesCreated.remove(tg);
 	}
 	
 	/**
-	 * A telepes meghal: megsemmisíti a nála levõ teleportkapukat 
-	 * azok die() függvényeivel, eltávolítja magát az aszteroidájáról, 
-	 * végül meghívja a game removeSettler(Settler s) metódusát.
+	 * A telepes meghal: megsemmisï¿½ti a nï¿½la levï¿½ teleportkapukat 
+	 * azok die() fï¿½ggvï¿½nyeivel, eltï¿½volï¿½tja magï¿½t az aszteroidï¿½jï¿½rï¿½l, 
+	 * vï¿½gï¿½l meghï¿½vja a game removeSettler(Settler s) metï¿½dusï¿½t.
 	 */
 	public void die() {
-		
+		gatesCreated.forEach((tg) -> {tg.die();});
+		place.remove(this);
+		game.removeSettler(this);
 	}
 }

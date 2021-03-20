@@ -1,15 +1,15 @@
 package berenyi_kft;
 
 /**
- * Olyan objektumot jelöl, amely a játékban külsõ irányítás 
- * (játékos aktor beavatkozása) nélkül léptethetõ
+ * Olyan objektumot jelï¿½l, amely a jï¿½tï¿½kban kï¿½lsï¿½ irï¿½nyï¿½tï¿½s 
+ * (jï¿½tï¿½kos aktor beavatkozï¿½sa) nï¿½lkï¿½l lï¿½ptethetï¿½
  * @author berenyi_kft
  *
  */
 public interface ISteppable {
 	
 	/**
-	 * A mûvelet, amelyet az objektum az adott lépésben végez.
+	 * A mï¿½velet, amelyet az objektum az adott lï¿½pï¿½sben vï¿½gez.
 	 */
 	public void step();
 

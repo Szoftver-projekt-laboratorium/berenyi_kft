@@ -18,7 +18,7 @@ public class Asteroid {
 	  * a játékot reprezentáló osztály
 	  */
 	 Game game;
-	 
+	
 	 /**
 	  * az aszteroida magjában található egységnyi nyersanyag, 
 	  * ha a mag üreges, akkor értéke null
@@ -39,7 +39,7 @@ public class Asteroid {
 	 /**
 	  * az aszteroidán tartózkodó karakterek (telepesek, robotok, stb.) kollekciója
 	  */
-	 ArrayList<Character> character = new ArrayList<Character>();
+	 ArrayList<Character> characters = new ArrayList<Character>();
 	 
 	 /**
 	  * a közvetlenül az aszteroida körül keringõ teleportkapuk halmaza
@@ -51,17 +51,20 @@ public class Asteroid {
 	 /**
 	  * ctor
 	  */
-	 Asteroid(){
-		 
+	 public Asteroid(){}
+	 
+	 public void addNeighbor(Asteroid a) {
+		 neighbors.add(a);
+		 System.out.println("Asteroid's addNeighbor(a: Asteroid) has been called");
 	 }
 	 
-	 //class diagramon addneighbor szerepel
 	 /**
 	  * Hozzáadja a neighbor aszteroidát az aszteroida neighbors kollekciójához.
 	  * @param a
 	  */
 	 public void accept(Asteroid a) {
-		 this.neighbors.add(a);
+		 neighbors.add(a);
+		 System.out.println("Asteroid's accept(a: Asteroid) has been called");
 	 }
 	 
 	 /**
@@ -69,9 +72,10 @@ public class Asteroid {
 	  * @param a
 	  */
 	 public void remove(Asteroid a) {
-		 if(this.neighbors.contains(a)) {
-			 this.neighbors.remove(a);
+		 if(neighbors.contains(a)) {
+			 neighbors.remove(a);
 		 }
+		 System.out.println("Asteroid's remove(a: Asteroid) has been called");
 	 }
 	 
 	 /**
@@ -81,7 +85,18 @@ public class Asteroid {
 	  * @return
 	  */
 	 public Asteroid getNeighbor(int d) {
-		 return this.neighbors.get(d);
+		 System.out.println("Asteroid's getNeighbor(d: int) has been called");
+		 return neighbors.get(d);
+	 }
+	 
+	 public int getRockLayerThickness() {
+		 System.out.println("Asteroid's getRockLayerThickness() has been called");
+		 return rockLayerThickness;
+	 }
+	 
+	 public void setRockLayerThickness(int value) {
+		 System.out.println("Asteroid's setRockLayerThickness(value: int) has been called");
+		 rockLayerThickness=value;
 	 }
 	 
 	 /**
@@ -90,8 +105,9 @@ public class Asteroid {
 	  * és a teleportkapuk (gates) általi szomszédokat is.
 	  * @return
 	  */
-	 public ArrayList<Asteroid> getNeighbor(){
-		 return this.neighbors;
+	 public ArrayList<Asteroid> getNeighbors(){
+		 System.out.println("Asteroid's getNeighbors() has been called");
+		 return neighbors;
 	 }
 	 
 	 
@@ -101,7 +117,8 @@ public class Asteroid {
 	  * @param c
 	  */
 	 public void accept(Character c) {
-		 
+		 characters.add(c);
+		 System.out.println("Asteroid's accept(c: Character) has been called");
 	 }
 	 
 	 /**
@@ -110,7 +127,8 @@ public class Asteroid {
 	  * @param c
 	  */
 	 public void remove(Character c) {
-		 
+		 characters.remove(c);
+		 System.out.println("Asteroid's remove(c: Character) has been called");
 	 }
 	 
 	 /**
@@ -118,7 +136,8 @@ public class Asteroid {
 	  * @return
 	  */
 	 public ArrayList<Character> getCharacters(){
-		 return this.character;
+		 System.out.println("Asteroid's getCharacters() has been called");
+		 return characters;
 	 }
 	 
 	 /**
@@ -127,7 +146,8 @@ public class Asteroid {
 	  * @param tg
 	  */
 	 public void accept(TeleportingGate tg) {
-		 
+		 System.out.println("Asteroid's accept(tg: TeleportingGate) has been called");
+		 gates.add(tg);
 	 }
 	 
 	 /**
@@ -136,15 +156,17 @@ public class Asteroid {
 	  * @param tg
 	  */
 	 public void remove(TeleportingGate tg) {
-		 
+		 System.out.println("Asteroid's remove(tg: TeleportingGate) has been called");
+		 gates.remove(tg);
 	 }
 	 
 	 /**
 	  * Visszaadja az adott aszteroidához tartozó teleportkapukat.
 	  * @return
 	  */
-	 public ArrayList<TeleportingGate> getGate(){
-		 return this.gates;
+	 public ArrayList<TeleportingGate> getGates(){
+		 System.out.println("Asteroid's getGates() has been called");
+		 return gates;
 	 }
 	 
 	 /**
@@ -155,20 +177,29 @@ public class Asteroid {
 	  * a resource attribútumot nem írja felül.
 	  * @param r
 	  */
-	 public void accept(Resource r) {
-		 
+	 //Ezt a függvényt a Settlernek a restore(r) metódusa hívja meg, azt változtattuk rajta, hogy nem csak a Resource
+	 //a paraméter, hanem a Settler is. Settler restore-ban 2 paraméterrel hívjátok meg.
+	 public void accept(Settler s, Resource r) {
+		 if(this.isMined()) {
+			 resource=r;
+			 resource.setAsteroid(this);
+			 s.remove(r);
+			 if(sun.isCloseToSun(this)) {
+				 resource.drilledOut(this);  //Donát tanácsait megfogadva ha napközelben restore-olunk, akkor hívódik meg.
+			 }
+		 }
+		 System.out.println("Asteroid's accept(s: Settler, r: Resource) has been called");
 	 }
 	 
 	 /**
 	  * Egy az aszteroidán tartózkodó telepes eltávolítja a magban található nyersanyagot. 
-	  * Az aszteroida a resource attribútumát null-ra állítja, visszatérési értékül
-	  * a nyersanyagot adja. Ha kezdetben resource=null volt,
-	  * a függvénynek nincs mellékhatása, és null-lal tér vissza
+	  * Az aszteroida a resource attribútumát null-ra állítja. Ha kezdetben resource=null volt,
+	  * a függvénynek nincs mellékhatása.
 	  * @return
 	  */
-	 public Resource removeResource() {
-		 //todo
-		 return this.resource; //temp; 
+	 public void removeResource() {
+		 resource=null;
+		 System.out.println("Asteroid's removeResource() has been called");
 	 }
 	 
 	 /**
@@ -176,7 +207,8 @@ public class Asteroid {
 	  * @return
 	  */
 	 public Resource getResource() {
-		 return this.resource;
+		 System.out.println("Asteroid's getResource() has been called");
+		 return resource;
 	 }
 	 
 	 /**
@@ -188,7 +220,16 @@ public class Asteroid {
 	  * hogy napközeli aszteroidán felszínre került.
 	  */
 	 public void drilled() {
-		 
+		 if(rockLayerThickness>=1)
+			 this.setRockLayerThickness(this.rockLayerThickness--);
+		 if(rockLayerThickness==0) {
+			 if(resource!=null) {
+				 if(sun.isCloseToSun(this)) {
+					 resource.drilledOut(this);
+				 }
+			 }
+		 }
+		 System.out.println("Asteroid's drilled() has been called");
 	 }
 	 
 	 /**
@@ -196,11 +237,18 @@ public class Asteroid {
 	  *  akkor a függvénynek nincs hatása. Ha a köpenyvastagság 0, 
 	  *  és az aszteroida resource attribútuma nem null,
 	  *   akkor eltávolítja azt a magjából (removeResource()),
-	  *  és eltároltatja azt az s telepessel (s.accept(resource)).
+	  *  és eltároltatja azt az s telepessel (s.accept(resource)), ezenkívül
+	  *  meghívja a checkSpaceBase() metódust.
 	  * @param s
 	  */
-	 public void minedBySettler(Settler s) {
-		 
+	 public void minedBy(Settler s) {
+		 if(rockLayerThickness == 0 && resource != null) {
+			 s.accept(resource);
+			 resource.setAsteroid(null);
+			 this.removeResource();
+			 this.checkSpaceBase();
+		 }
+		 System.out.println("Asteroid's minedBy() has been called");
 	 }
 	 
 	 /**
@@ -209,6 +257,7 @@ public class Asteroid {
 	  * @return
 	  */
 	 public boolean isMined() {
+		 System.out.println("Asteroid's isMined() has been called");
 		 return (this.rockLayerThickness==0 && this.resource==null) ? true : false;
 	 }
 	 
@@ -223,7 +272,20 @@ public class Asteroid {
 	  * @param rr
 	  */
 	 public void explodedBy(RadioactiveResource rr) {
+		 for(Character c : characters){
+			 c.reactToExplosion();
+		 }
 		 
+		 for(TeleportingGate tg : gates) {
+			 tg.die();
+		 }
+		 
+		 for(Asteroid a : neighbors) {
+			 a.remove(this);
+		 }
+		 
+		 game.removeAsteroid(this);
+		 System.out.println("Asteroid's explodedBy(rr: RadioactiveResource) has been called");
 	 }
 	 
 	 /**
@@ -233,7 +295,12 @@ public class Asteroid {
 	  * meghívja az aszteroidán tartózkodó karakterek die() függvényét.
 	  */
 	 public void destroySurface() {
-		 
+		 if(!this.isMined()) {
+			 for(Character c: characters) {
+				 c.die();
+			 }
+		 }
+		 System.out.println("Asteroid's destroySurface() has been called");
 	 }
 	 
 	 /**
@@ -242,10 +309,22 @@ public class Asteroid {
 	  * Ha igen, akkor meghívja a Game endGame() metódusát.
 	  */
 	 public void checkSpaceBase() {
+		 ArrayList<Resource> temp=new ArrayList<Resource>();
+		 for(Character c: characters) {
+			 temp.addAll(c.getCollectedResources());
+		 }
 		 
+		 Recipe recipe=game.getSpaceBaseRecipe();
+		 for(Resource r : temp) {
+			 if(recipe.isEmpty()) //Az aszteroida resource-át is ellenõrizni kell a checkspacebase-ben?
+				 break;
+			 recipe.isNeeded(r);
+		 }
+		 
+		 if(recipe.isEmpty())
+			 game.endGame();
+		 System.out.println("Asteroid's checkSpaceBase() has been called");
+		 recipe.reset();
 	 }
 	 
-	 
-	 
-	
 }
