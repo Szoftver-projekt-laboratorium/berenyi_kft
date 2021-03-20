@@ -1,24 +1,50 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 /**
- * Egy órajel jellegû idõzítõt reprezentál, 
- * amely periodikusan léptet minden léptethetõ objektumot a játékban.
+ * Egy ï¿½rajel jellegï¿½ idï¿½zï¿½tï¿½t reprezentï¿½l, 
+ * amely periodikusan lï¿½ptet minden lï¿½ptethetï¿½ objektumot a jï¿½tï¿½kban.
  * @author berenyi_kft
  *
  */
-public class Timer {
-
+public class Timer extends java.util.Timer{
 	/**
-	 * a játék léptethetõ objektumainak listája
+	 * 
+	 */
+	int tick = 0;
+	
+	/**
+	 * 
+	 */
+	long delay, period;
+	
+	/**
+	 * a jï¿½tï¿½k lï¿½ptethetï¿½ objektumainak listï¿½ja
 	 */
 	ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
 	
+	/**
+	 * 
+	 */
+	TimerTask timertask = new TimerTask() {
+		@Override
+		public void run() {
+			tick++;
+			tick();
+		}
+	};
+	
 	//----------------------------------------------
 	
+	public Timer(long delay, long period) {
+		this.delay = delay;
+		this.period = period;
+	}
+	
 	/**
-	 * Hozzáadja s-t a steppables listához
+	 * Hozzï¿½adja s-t a steppables listï¿½hoz
 	 * @param s
 	 */
 	public void addSteppable(ISteppable s) {
@@ -26,7 +52,7 @@ public class Timer {
 	}
 	
 	/**
-	 * Eltávolítja s-t a steppables listából.
+	 * Eltï¿½volï¿½tja s-t a steppables listï¿½bï¿½l.
 	 */
 	public void removeSteppable(ISteppable s) {
 		if(this.steppables.contains(s)) {
@@ -35,12 +61,14 @@ public class Timer {
 	}
 	
 	/**
-	 * : Minden steppable listabeli objektumot léptet úgy, 
-	 * hogy meghívja a step() függvényét.
+	 * : Minden steppable listabeli objektumot lï¿½ptet ï¿½gy, 
+	 * hogy meghï¿½vja a step() fï¿½ggvï¿½nyï¿½t.
 	 */
 	public void tick() {
 		this.steppables.forEach((si) -> {si.step();});
 	}
+	
+	
 	
 	
 }
