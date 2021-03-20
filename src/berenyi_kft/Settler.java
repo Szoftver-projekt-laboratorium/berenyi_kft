@@ -62,7 +62,7 @@ public class Settler extends Character{
 	 */
 	public void mine() {
 		if (collectedResources.size() < 10) {
-			place.minedBySettler(this);
+			place.minedBy(this);
 		}
 	}
 	
@@ -74,7 +74,7 @@ public class Settler extends Character{
 	 * @param r
 	 */
 	public void restore(Resource r) {
-		place.accept(r);
+		place.accept(this,r);
 	}
 	
 	/**
@@ -167,4 +167,13 @@ public class Settler extends Character{
 		place.remove(this);
 		game.removeSettler(this);
 	}
+	
+	public Asteroid getPlace() {
+			return place;
+	}
+	
+	public void setPlace(Asteroid a) {
+		place=a;
+	}
+
 }
