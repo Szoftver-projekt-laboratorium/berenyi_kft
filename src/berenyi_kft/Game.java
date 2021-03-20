@@ -48,6 +48,7 @@ public class Game {
 	 * esetben a telepesek veres�g�r�l sz�l� �zenetet jelen�t meg.
 	 */
 	public void endGame() {
+		System.out.println("Game's endGame() has been called");
 		if (settlersAlive.size() > 0) {
 			System.out.println("A telepesek nyertek, fel?ep?lt az ?rbazis.");
 		} else {
@@ -62,6 +63,7 @@ public class Game {
 	 * @param s
 	 */
 	public void removeSettler(Settler s) {
+		System.out.println("Game's removeSettler(s: Settler) has been called");
 		settlersAlive.remove(s);
 		if (settlersAlive.isEmpty()) {
 			endGame();
@@ -73,6 +75,7 @@ public class Game {
 	 * @param a
 	 */
 	public void removeAsteroid(Asteroid a) {
+		System.out.println("Game's removeAsteroid(a: Asteroid) has been called");
 		asteroids.remove(a);
 	}
 	
@@ -81,6 +84,7 @@ public class Game {
 	 * @return
 	 */
 	public ArrayList<Asteroid> getAsteroids(){
+		System.out.println("Game's getAsteroids() has been called");
 		return this.asteroids;
 	}
 	
@@ -91,6 +95,7 @@ public class Game {
 	 */
 	// --------------------------------------------------
 	public Recipe getAIRobotRecipe() {
+		System.out.println("Game's getAIRobotRecipe() has been called");
 		return recipes.get(0);
 	}
 	
@@ -102,6 +107,7 @@ public class Game {
 	 */
 	// -----------------------------------------------
 	public Recipe getGatePairRecipe() {
+		System.out.println("Game's getGatePairRecipe() has been called");
 		return recipes.get(1);
 	}
 	
@@ -112,6 +118,7 @@ public class Game {
 	 * @return
 	 */
 	public Recipe getSpaceBaseRecipe() {
+		System.out.println("Game's getSpaceBaseRecipe() has been called");
 		return recipes.get(2);
 	}
 	
@@ -128,19 +135,28 @@ public class Game {
 	}
 	*/
 	
-	//--------------------------------------------------------
-	/**
-	 * ideiglenes setterek a controller osztalyhoz
-	 */
-	public void addSettler(Settler e) {
-		this.settlersAlive.add(e);
+	public void addSettler(Settler s) {
+		System.out.println("Game's addSettler(s: Settler) has been called");
+		settlersAlive.add(s);
 	}
 	
 	public void addAsteroid(Asteroid a) {
-		this.asteroids.add(a);
+		System.out.println("Game's addAsteroid(a: Asteroid) has been called");
+		asteroids.add(a);
 	}
 	
-	public void addReceipt(Recipe r) {
-		this.recipes.add(r);
+	public void setSun(Sun s) {
+		System.out.println("Game's setSun(s: Sun) has been called");
+		sun=s;
+	}
+	
+	public int getSizeOfSettlersAlive() {
+		System.out.println("Game's getSizeOfSettlersAlive() has been called");
+		return this.settlersAlive.size();
+	}
+	
+	public int getSizeOfAsteroids() {
+		System.out.println("Game's getSizeOfAsteroids() has been called");
+		return this.asteroids.size();
 	}
 }

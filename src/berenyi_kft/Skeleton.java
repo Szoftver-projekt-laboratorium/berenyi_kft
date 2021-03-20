@@ -135,36 +135,112 @@ public class Skeleton {
 		   			   	    	 * expected layersize = 4
 		   			   	    	 * print layersize
 		   			   	    	 */
+		   			   	    	
+		   			   	    	Asteroid a1=new Asteroid();
+		   			   	    	a1.setRockLayerThickness(2);
+		   			   	    	Settler s1=new Settler();
+		   			   	    	s1.setPlace(a1);
+		   			   	    	s1.drill();
+		   			   	    	System.out.println(a1.getRockLayerThickness());
+		   			   	    	if(a1.getRockLayerThickness()==1) {
+		   			   	    		System.out.println("Successful drilling");
+		   			   	    	}
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tDrill radioactive asteroid's last layer selected:\n");
-		   			   	    	/*
-		   			   	    	 * 2 Asteroid
-		   			   	    	 * settler
-		   			   	    	 * sun
-		   			   	    	 * game
-		   			   	    	 * uran
-		   			   	    	 * airobot
-		   			   	    	 * 2 teleporinggate
-		   			   	    	 * 
-		   			   	    	 * resource
-		   			   	    	 * set layer 1 
-		   			   	    	 * settler
-		   			   	    	 * drill hívás
-		   			   	    	 * bumm
-		   			   	    	 */
+		   			   	    	
+		   			   	    	Game game=new Game();
+		   			   	    	Asteroid asteroid1=new Asteroid();
+		   			   	    	Asteroid asteroid2=new Asteroid();
+		   			   	    	
+		   			   	    	Sun sun=new Sun();
+		   			   	    	sun.addNeighbor(asteroid1);
+		   			   	    	
+		   			   	    	asteroid1.addResource(new Uran());
+		   			   	    	asteroid1.setRockLayerThickness(1);
+		   			   	    	
+		   			   	    	asteroid1.setSun(sun);
+		   			   	    	asteroid2.setSun(sun);
+		   			   	    	
+		   			   	    	asteroid1.setGame(game);
+		   			   	    	asteroid2.setGame(game);
+		   			   	    	
+		   			   	    	asteroid1.addNeighbor(asteroid2);
+		   			   	    	asteroid2.addNeighbor(asteroid1);
+		   			   	    	
+		   			   	    	game.addAsteroid(asteroid1);
+		   			   	    	game.addAsteroid(asteroid2);
+		   			   	    	game.setSun(sun);
+		   			   	    	
+		   			   	    	AIRobot robot=new AIRobot();
+		   			   	    	robot.setPlace(asteroid1);
+		   			   	    
+		   			   	    	
+		   			   	    	Settler settler1=new Settler();
+		   			   	    	Settler settler2=new Settler();
+		   			   	    	
+		   			   	    	asteroid1.accept(robot);
+		   			   	    	asteroid1.accept(settler1);
+		   			   	    	asteroid2.accept(settler2);
+		   			   	    	
+		   			   	    	game.addSettler(settler1);
+		   			   	    	game.addSettler(settler2);
+		   			   	    	
+		   			   	    	settler1.setGame(game);
+		   			   	    	settler2.setGame(game);
+		   			   	    	
+		   			   	    	settler1.setPlace(asteroid1);
+		   			   	    	settler2.setPlace(asteroid2);
+		   			   	    	System.out.println(asteroid1.getSizeOfCharacters());
+		   			   	    	settler1.drill();
+		   			   	    	
+		   			   	    	if(robot.getPlace()==asteroid2&&game.getSizeOfSettlersAlive()==1&&
+		   			   	    			game.getSizeOfAsteroids()==1)
+		   			   	    		System.out.println("Successful radioactive drilling test");
 		   			   	    	break;
 		   			   	    case "c":
 		   			   	    	System.out.println("\t\tDrill icy asteroid's last layer selected:\n");
-		   			   	    	/*
-		   			   	    	 * 
-		   			   	    	 * 
-		   			   	    	 * lásd
-		   			   	    	 * Settler drills and ice sublimates 
-		   			   	    	 */
+		   			   	    	
+		   			   	    	Settler settler3=new Settler();
+		   			   	    	Asteroid asteroid3=new Asteroid();
+		   			   	    	
+		   			   	    	Game g=new Game();
+		   			   	    	g.addSettler(settler3);
+		   			   	    	g.addAsteroid(asteroid3);
+		   			   	    	
+		   			   	    	settler3.setPlace(asteroid3);
+		   			   	    	settler3.setGame(g);
+		   			   	    	
+		   			   	    	asteroid3.setGame(g);
+		   			   	    	asteroid3.accept(settler3);
+		   			   	    	
+		   			   	    	Sun s=new Sun();
+		   			   	    	g.setSun(s);
+		   			   	    	asteroid3.setSun(s);
+		   			   	    	s.addNeighbor(asteroid3);
+		   			   	    	
+		   			   	    	asteroid3.addResource(new Ice());
+		   			   	    	
+		   			   	    	settler3.drill();
+		   			   	    	
+		   			   	    	if(asteroid3.getResource()==null)
+		   			   	    		System.out.println("successful icy drilling test");
 		   			   	    	break;
 		   			   	    case "d":
 		   			   	    	System.out.println("\t\tFail to drill selected:\n");
+		   			   	    	
+		   			   	    	Asteroid asteroid4=new Asteroid();
+		   			   	    	asteroid4.setRockLayerThickness(0);
+		   			   	    	
+		   			   	    	Settler settler4=new Settler();
+		   			   	    	
+		   			   	    	settler4.setPlace(asteroid4);
+		   			   	    	asteroid4.accept(settler4);
+		   			   	    	
+		   			   	    	settler4.drill();
+		   			   	    	
+		   			   	    	if(asteroid4.getRockLayerThickness()==0)
+		   			   	    		System.out.println("Successful fail to drill test");
 		   			   	    	break;
 		   			   	    default :
 		   			   	    	System.out.println("\t\tInvalid choice!\n");

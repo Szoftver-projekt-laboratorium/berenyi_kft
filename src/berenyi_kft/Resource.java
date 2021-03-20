@@ -1,45 +1,45 @@
 package berenyi_kft;
 
 /**
- * A játékban levõ nyersanyagok õsosztálya.
+ * A jï¿½tï¿½kban levï¿½ nyersanyagok ï¿½sosztï¿½lya.
  * @author berenyi_kft
  *
  */
 public abstract class Resource {
 
 	/**
-	 * : a telepes, akinél az adott nyersanyagegység tárolódik
-	 *  (ha éppen telepesnél található)
+	 * : a telepes, akinï¿½l az adott nyersanyagegysï¿½g tï¿½rolï¿½dik
+	 *  (ha ï¿½ppen telepesnï¿½l talï¿½lhatï¿½)
 	 */
-	Settler settler; //Szükséges ismernie settler?
+	Settler settler; //Szï¿½ksï¿½ges ismernie settler?
 	
 	/**
-	 * az aszteroida, amelynek magjában az adott nyersanyag elhelyezkedik 
-	 * (ha éppen aszteroida magjában található)
+	 * az aszteroida, amelynek magjï¿½ban az adott nyersanyag elhelyezkedik 
+	 * (ha ï¿½ppen aszteroida magjï¿½ban talï¿½lhatï¿½)
 	 */
 	Asteroid asteroid;
 	
 	//--------------------------------------------------------------
 	
 	/**
-	 * Azt a helyzetet kezeli, amikor a nyersanyag éppen egy napközelben levõ, 
-	 * megfúrt aszteroida magjában található. A metódus általános esetben nem csinál semmit, 
-	 * de a speciális mûködésû leszármazott osztályokban felüldefiniálható.
+	 * Azt a helyzetet kezeli, amikor a nyersanyag ï¿½ppen egy napkï¿½zelben levï¿½, 
+	 * megfï¿½rt aszteroida magjï¿½ban talï¿½lhatï¿½. A metï¿½dus ï¿½ltalï¿½nos esetben nem csinï¿½l semmit, 
+	 * de a speciï¿½lis mï¿½kï¿½dï¿½sï¿½ leszï¿½rmazott osztï¿½lyokban felï¿½ldefiniï¿½lhatï¿½.
 	 */
 	public void drilledOut(Asteroid a) {
 		 System.out.println("Resource's drilledOut(a: Asteroid) has been called");
 	}
 	
 	
-	//A restore-nál szükséges beállítani az új Asteroid-ot
+	//A restore-nï¿½l szï¿½ksï¿½ges beï¿½llï¿½tani az ï¿½j Asteroid-ot
 	public void setAsteroid(Asteroid a) {
-		asteroid=a;
 		System.out.println("Resource's setAsteroid(a: Asteroid) has been called");
+		asteroid=a;
 	}
 	
 	/**
-	 * Összehasonlítja magát a paraméterként kapott nyersanyaggal és egyezés esetén
-	 * igaz értékkel tér vissza, ellenkezõ esetben hamissal.
+	 * ï¿½sszehasonlï¿½tja magï¿½t a paramï¿½terkï¿½nt kapott nyersanyaggal ï¿½s egyezï¿½s esetï¿½n
+	 * igaz ï¿½rtï¿½kkel tï¿½r vissza, ellenkezï¿½ esetben hamissal.
 	 * @param r
 	 * @return
 	 */
