@@ -3,70 +3,74 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 /**
- * Ez az osztály absztrakt õsosztályként szolgál a játék karaktereihez
+ * Ez az osztï¿½ly absztrakt ï¿½sosztï¿½lykï¿½nt szolgï¿½l a jï¿½tï¿½k karaktereihez
  * @author berenyi_kft
  *
  */
 public abstract class Character {
 	
 	/**
-	 * az aszterioda, amelyen az adott karakter aktuálisan tartózkodik
+	 * az aszterioda, amelyen az adott karakter aktuï¿½lisan tartï¿½zkodik
 	 */
 	Asteroid place;
 	
 	
 	/**
-	 * A karakter által tárolt nyersanyagok listája
+	 * A karakter ï¿½ltal tï¿½rolt nyersanyagok listï¿½ja
 	 */
-	//ArrayList<Resource> collectedResources = new ArrayList<Resource>();
+	ArrayList<Resource> collectedResources = new ArrayList<Resource>();
 	
 	
 	//----------------------------------------------------------------
 	
 	/**
-	 * Visszatér a karakter által tárolt nyersanyagok 
-	 * listájával, alapértelmezetten egy üres listával
+	 * Visszatï¿½r a karakter ï¿½ltal tï¿½rolt nyersanyagok 
+	 * listï¿½jï¿½val, alapï¿½rtelmezetten egy ï¿½res listï¿½val
 	 * @return
 	 */
-	public abstract ArrayList<Resource> getCollectedResources();
+	public ArrayList<Resource> getCollectedResources() {
+		return collectedResources;
+	}
 	
 	/**
-	 * Átmozog az aktuális aszteroidáról annak egy szomszédjára. 
-	 * Elõször lekérdezi az aktuális aszteroida d-edik szomszédját 
-	 * (a getNeighbor(int d) függvénnyel). Ezután eltávolítja magát a 
-	 * jelenlegi aszteroidáról (remove(Character c)), 
-	 * majd a visszakapott szomszéd aszteroidára lép (accept(Character c))
+	 * ï¿½tmozog az aktuï¿½lis aszteroidï¿½rï¿½l annak egy szomszï¿½djï¿½ra. 
+	 * Elï¿½szï¿½r lekï¿½rdezi az aktuï¿½lis aszteroida d-edik szomszï¿½djï¿½t 
+	 * (a getNeighbor(int d) fï¿½ggvï¿½nnyel). Ezutï¿½n eltï¿½volï¿½tja magï¿½t a 
+	 * jelenlegi aszteroidï¿½rï¿½l (remove(Character c)), 
+	 * majd a visszakapott szomszï¿½d aszteroidï¿½ra lï¿½p (accept(Character c))
 	 * @param d
 	 */
 	public void move(int d) {
-		
+		Asteroid neighbor = place.getNeighbor(d);
+		place.remove(this);
+		neighbor.accept(this);
 	}
 	
 	/**
-	 * Csökkenti az aktuális aszteroida köpenyvastagságát: 
-	 * meghívja az aszteroida drilled() metódusát
+	 * Csï¿½kkenti az aktuï¿½lis aszteroida kï¿½penyvastagsï¿½gï¿½t: 
+	 * meghï¿½vja az aszteroida drilled() metï¿½dusï¿½t
 	 */
 	public void drill() {
-		
+		place.drilled();
 	}
 	
 	/**
-	 * A karakter halálát, jelenti: eltávolítja a karaktert 
-	 * az aszteroidájáról (place.remove(Character c)). 
-	 * A leszármazottakban felüldefiniálható.
+	 * A karakter halï¿½lï¿½t, jelenti: eltï¿½volï¿½tja a karaktert 
+	 * az aszteroidï¿½jï¿½rï¿½l (place.remove(Character c)). 
+	 * A leszï¿½rmazottakban felï¿½ldefiniï¿½lhatï¿½.
 	 */
 	public void die() {
-		
+		place.remove(this);
 	}
 	
 	/**
-	 * A metódus, amit a karakternek akkor kell végrehajtania, 
-	 * ha az aszteroida, amelyen tartózkodik, felrobban. 
-	 * Alapértelmezetten a karakter die() függvényét hívja. 
-	 * A leszármazottak felüldefiniálhatják.
+	 * A metï¿½dus, amit a karakternek akkor kell vï¿½grehajtania, 
+	 * ha az aszteroida, amelyen tartï¿½zkodik, felrobban. 
+	 * Alapï¿½rtelmezetten a karakter die() fï¿½ggvï¿½nyï¿½t hï¿½vja. 
+	 * A leszï¿½rmazottak felï¿½ldefiniï¿½lhatjï¿½k.
 	 */
 	public void reactToExplosion() {
-		
+		die();
 	}
 	
 	
