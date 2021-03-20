@@ -200,15 +200,47 @@ public class Skeleton {
 		   			   	    	break;
 		   			   	    case "c":
 		   			   	    	System.out.println("\t\tDrill icy asteroid's last layer selected:\n");
-		   			   	    	/*
-		   			   	    	 * 
-		   			   	    	 * 
-		   			   	    	 * lásd
-		   			   	    	 * Settler drills and ice sublimates 
-		   			   	    	 */
+		   			   	    	
+		   			   	    	Settler settler3=new Settler();
+		   			   	    	Asteroid asteroid3=new Asteroid();
+		   			   	    	
+		   			   	    	Game g=new Game();
+		   			   	    	g.addSettler(settler3);
+		   			   	    	g.addAsteroid(asteroid3);
+		   			   	    	
+		   			   	    	settler3.setPlace(asteroid3);
+		   			   	    	settler3.setGame(g);
+		   			   	    	
+		   			   	    	asteroid3.setGame(g);
+		   			   	    	asteroid3.accept(settler3);
+		   			   	    	
+		   			   	    	Sun s=new Sun();
+		   			   	    	g.setSun(s);
+		   			   	    	asteroid3.setSun(s);
+		   			   	    	s.addNeighbor(asteroid3);
+		   			   	    	
+		   			   	    	asteroid3.addResource(new Ice());
+		   			   	    	
+		   			   	    	settler3.drill();
+		   			   	    	
+		   			   	    	if(asteroid3.getResource()==null)
+		   			   	    		System.out.println("successful icy drilling test");
 		   			   	    	break;
 		   			   	    case "d":
 		   			   	    	System.out.println("\t\tFail to drill selected:\n");
+		   			   	    	
+		   			   	    	Asteroid asteroid4=new Asteroid();
+		   			   	    	asteroid4.setRockLayerThickness(0);
+		   			   	    	
+		   			   	    	Settler settler4=new Settler();
+		   			   	    	
+		   			   	    	settler4.setPlace(asteroid4);
+		   			   	    	asteroid4.accept(settler4);
+		   			   	    	
+		   			   	    	settler4.drill();
+		   			   	    	
+		   			   	    	if(asteroid4.getRockLayerThickness()==0)
+		   			   	    		System.out.println("Successful fail to drill test");
 		   			   	    	break;
 		   			   	    default :
 		   			   	    	System.out.println("\t\tInvalid choice!\n");

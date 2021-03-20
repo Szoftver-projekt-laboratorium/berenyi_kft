@@ -54,10 +54,9 @@ public class AIRobot extends Character implements ISteppable {
 	
 	@Override
 	public void reactToExplosion() {
-		Random random = new Random();
-		//move(random.nextInt(place.getSizeOfNeighbors()));
 		System.out.println("AIRobot's reactToExplosion() has been called");
-		move(0);
+		Random random = new Random();
+		move(random.nextInt(place.getSizeOfNeighbors()));
 	}
 
 }

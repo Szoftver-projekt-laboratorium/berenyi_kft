@@ -34,6 +34,7 @@ public class Settler extends Character{
 	 */
 	@Override
 	public ArrayList<Resource> getCollectedResources(){
+		System.out.println("Settler's getCollectedResources() has been called");
 		return this.collectedResources;
 	}
 	
@@ -42,6 +43,7 @@ public class Settler extends Character{
 	 * @param r
 	 */
 	public void accept(Resource r) {
+		System.out.println("Settler's accept(r: Resource) has been called");
 		collectedResources.add(r);
 	}
 	
@@ -50,6 +52,7 @@ public class Settler extends Character{
 	 * @param r
 	 */
 	public void remove(Resource r) {
+		System.out.println("Settler's remove(r: Resource) has been called");
 		collectedResources.remove(r);
 	}
 	
@@ -60,6 +63,7 @@ public class Settler extends Character{
 	 * akkor a telepes nem tud b�ny�szni, a f�ggv�nynek nincs hat�sa.
 	 */
 	public void mine() {
+		System.out.println("Settler's mine() has been called");
 		if (collectedResources.size() < 10) {
 			place.minedBy(this);
 		}
@@ -74,6 +78,7 @@ public class Settler extends Character{
 	 * @param r
 	 */
 	public void restore(Resource r) {
+		System.out.println("Settler's restore(r: Resource) has been called");
 		place.accept(this,r);
 	}
 	
@@ -87,6 +92,7 @@ public class Settler extends Character{
 	 * amelyben ez�ltal vissza�ll�tja a recept list�j�nak a tartalm�t.
 	 */
 	public void createAIRobot() {
+		System.out.println("Settler's createAIRobot() has been called");
 		Recipe aiRobotRecipe = game.getAIRobotRecipe();
 		for (Resource r : collectedResources) {
 			if (aiRobotRecipe.isEmpty()) {
@@ -113,6 +119,7 @@ public class Settler extends Character{
 	 * amelyben ez�ltal vissza�ll�tja a recept list�j�nak a tartalm�t.
 	 */
 	public void createGatePair() {
+		System.out.println("Settler's createGatePair() has been called");
 		if (!gatesCreated.isEmpty()) {
 			return;
 		}
@@ -143,6 +150,7 @@ public class Settler extends Character{
 	 * (gatesCreated �res), akkor nem t�rt�nik semmi.
 	 */
 	public void releaseGate() {
+		System.out.println("Settler's releaseGate() has been called");
 		if (gatesCreated.size() >= 1) {
 			TeleportingGate tg = gatesCreated.remove(0);
 			place.accept(tg);
@@ -154,6 +162,7 @@ public class Settler extends Character{
 	 * @param tg
 	 */
 	public void remove(TeleportingGate tg) {
+		System.out.println("Settler's remove(tg: TeleportingGate) has been called");
 		gatesCreated.remove(tg);
 	}
 	
@@ -170,6 +179,7 @@ public class Settler extends Character{
 	}
 
 	public void setGame(Game g) {
+		System.out.println("Settler's setGame(g: Game) has been called");
 		game=g;
 	}
 }

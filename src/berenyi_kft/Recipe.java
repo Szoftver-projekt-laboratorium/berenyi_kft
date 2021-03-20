@@ -20,6 +20,7 @@ public class Recipe {
 	 * @param r
 	 */
 	public void addResource(Resource r) {
+		System.out.println("Settler's addResource(r: Resource) has been called");
 		this.resources.add(r);
 	}
 	
@@ -33,6 +34,7 @@ public class Recipe {
 	 */
 	// Lehetne a neve removeIfNeeded, nem booleant sejtető név kellene.
 	public void isNeeded(Resource r) {
+		System.out.println("Settler's isNeeded(r: Resource) has been called");
 		for (Resource rBill : resources) {
 			if (r.isCompatibleWith(rBill)) {
 				resources.remove(rBill);
@@ -56,6 +58,7 @@ public class Recipe {
 	 * @return
 	 */
 	public boolean isEmpty() {
+		System.out.println("Recipe's isEmpty() has been called");
 		return this.resources.isEmpty();
 	}
 }

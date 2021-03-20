@@ -50,17 +50,20 @@ public class Sun implements ISteppable {
 	 * @return
 	 */
 	public boolean isCloseToSun(Asteroid a) {
+		System.out.println("Sun's isCloseToSun(a: Asteroid) has been called");
 		if(this.neighboringAsteroids.contains(a)) {
 			return true;
 		}
 		return false;
 	}
 	
-	public void settimeToSunStorm(long time){
+	public void setTimeToSunStorm(long time){
+		System.out.println("Sun's settimeToStorm(time: long) has been called");
 		timeToSunStorm=time;
 	}
 	
 	public void addNeighbor(Asteroid a) {
+		System.out.println("Sun's addNeighbor(a: Asteroid) has been called");
 		this.neighboringAsteroids.add(a);
 	}
 
