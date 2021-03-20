@@ -75,7 +75,7 @@ public class Settler extends Character{
 	 * @param r
 	 */
 	public void restore(Resource r) {
-		//place.accept(r);;
+		place.accept(this, r);
 	}
 	
 	/**
