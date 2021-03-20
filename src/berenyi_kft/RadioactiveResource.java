@@ -1,20 +1,20 @@
 package berenyi_kft;
 
 /**
- * RadioactiveResource-t megvalósító abstract õsosztály
+ * RadioactiveResource-t megvalï¿½sï¿½tï¿½ abstract ï¿½sosztï¿½ly
  * @author berenyi_kft
  *
  */
 public abstract class RadioactiveResource extends Resource {
 
 	/**
-	 * Meghívja az aszteroidája 
-	 * explodedBy(RadioactiveResource rr) metódusát (robban).
+	 * Meghï¿½vja az aszteroidï¿½ja 
+	 * explodedBy(RadioactiveResource rr) metï¿½dusï¿½t (robban).
 	 */
 	@Override
 	public void drilledOut(Asteroid a) {
+		System.out.println("RadioactiveResource's drilledOut(a: Asteroid) has been called");
 		a.explodedBy(this);
-		 System.out.println("RadioactiveResource's drilledOut(a: Asteroid) has been called");
 	}
 
 	
