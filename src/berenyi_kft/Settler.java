@@ -3,7 +3,7 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 /**
- * A karakterek egyik fajt�ja a telepes
+ * A karakterek egyik fajtája a telepes
  * @author berenyi_kft
  *
  */
@@ -62,9 +62,10 @@ public class Settler extends Character{
 	 */
 	public void mine() {
 		if (collectedResources.size() < 10) {
-			place.minedBySettler(this);
+			place.minedBy(this);
 		}
 	}
+	
 	
 	/**
 	 * Megh�vja a place aszteroida accept(Resource r) met�dus�t. 
@@ -74,7 +75,7 @@ public class Settler extends Character{
 	 * @param r
 	 */
 	public void restore(Resource r) {
-		place.accept(r);
+		//place.accept(r);;
 	}
 	
 	/**
