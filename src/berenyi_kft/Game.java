@@ -5,22 +5,22 @@ import java.util.ArrayList;
 public class Game {
 	
 	/**
-	 * a játékban jelenlévõ aszteroidák kollekciója
+	 * a jï¿½tï¿½kban jelenlï¿½vï¿½ aszteroidï¿½k kollekciï¿½ja
 	 */
 	ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
 	
 	/**
-	 * Az aszteroidaövbeli nap
+	 * Az aszteroidaï¿½vbeli nap
 	 */
 	Sun sun;
 	
 	/**
-	 * az adott pillanatban életben levõ telepesek listája
+	 * az adott pillanatban ï¿½letben levï¿½ telepesek listï¿½ja
 	 */
 	ArrayList<Settler> settlersAlive = new ArrayList<Settler>();
 	
 	/**
-	 * A játékban felépíthetõ dolgok receptjeinek a kollekciója.
+	 * A jï¿½tï¿½kban felï¿½pï¿½thetï¿½ dolgok receptjeinek a kollekciï¿½ja.
 	 * [0...3]
 	 */
 	ArrayList<Recipe> recipes = new ArrayList<Recipe>();
@@ -28,28 +28,28 @@ public class Game {
 	//--------------------------------------------
 	
 	/**
-	 * Inicializálja az aszteroidákat, a Napot, és elhelyezi a telepeseket 
-	 * valamelyik aszteroidán. Egyes aszteroidák magját üresen hagyja,
-	 * másokban pedig véletlenszerûen valamilyen nyersanyagot hoz létre.
-	 * Beállítja az aszteroidák szomszédsági viszonyait is.
+	 * Inicializï¿½lja az aszteroidï¿½kat, a Napot, ï¿½s elhelyezi a telepeseket 
+	 * valamelyik aszteroidï¿½n. Egyes aszteroidï¿½k magjï¿½t ï¿½resen hagyja,
+	 * mï¿½sokban pedig vï¿½letlenszerï¿½en valamilyen nyersanyagot hoz lï¿½tre.
+	 * Beï¿½llï¿½tja az aszteroidï¿½k szomszï¿½dsï¿½gi viszonyait is.
 	 */
 	public void startGame() {
 		
 	}
 	
 	/**
-	 * Ha van még élõ telepes a játékban (settlersAlive nem üres),
-	 * akkor a telepesek gyõzelmét írja ki a képernyõre, ellenkezõ 
-	 * esetben a telepesek vereségérõl szóló üzenetet jelenít meg.
+	 * Ha van mï¿½g ï¿½lï¿½ telepes a jï¿½tï¿½kban (settlersAlive nem ï¿½res),
+	 * akkor a telepesek gyï¿½zelmï¿½t ï¿½rja ki a kï¿½pernyï¿½re, ellenkezï¿½ 
+	 * esetben a telepesek veresï¿½gï¿½rï¿½l szï¿½lï¿½ ï¿½zenetet jelenï¿½t meg.
 	 */
 	public void endGame() {
 		
 	}
 	
 	/**
-	 * Törli a meghaló s telepest a játékból. 
-	 * Ha nincs több életben levõ telepes,
-	 *  akkor meghívja az endGame() függvényt.
+	 * Tï¿½rli a meghalï¿½ s telepest a jï¿½tï¿½kbï¿½l. 
+	 * Ha nincs tï¿½bb ï¿½letben levï¿½ telepes,
+	 *  akkor meghï¿½vja az endGame() fï¿½ggvï¿½nyt.
 	 * @param s
 	 */
 	public void removeSettler(Settler s) {
@@ -57,7 +57,7 @@ public class Game {
 	}
 	
 	/**
-	 * Törli a megsemmisülõ a aszteroidát az asteroids kollekcióból.
+	 * Tï¿½rli a megsemmisï¿½lï¿½ a aszteroidï¿½t az asteroids kollekciï¿½bï¿½l.
 	 * @param a
 	 */
 	public void removeAsteroid(Asteroid a) {
@@ -65,44 +65,43 @@ public class Game {
 	}
 	
 	/**
-	 * Visszaadja a játék összes aszteroidájából álló kollekciót.
+	 * Visszaadja a jï¿½tï¿½k ï¿½sszes aszteroidï¿½jï¿½bï¿½l ï¿½llï¿½ kollekciï¿½t.
 	 * @return
 	 */
 	public ArrayList<Asteroid> getAsteroids(){
 		return this.asteroids;
 	}
 	
+	/**
+	 * Visszaadja az AIRobot felï¿½pï¿½tï¿½sï¿½hez szï¿½ksï¿½ges 
+	 * receptet tï¿½rolï¿½ Recipe objektumot
+	 * @return
+	 */
+	// --------------------------------------------------
+	public Recipe getAIRobotRecipe() {
+		return recipes.get(0);
+	}
 	
 	//???----------------------------------------------
 	/**
-	 * Visszaadja a teleportkapu-pár felépítéséhez szükséges 
-	 * receptet tároló Recipe objektumot.
+	 * Visszaadja a teleportkapu-pï¿½r felï¿½pï¿½tï¿½sï¿½hez szï¿½ksï¿½ges 
+	 * receptet tï¿½rolï¿½ Recipe objektumot.
 	 * @return
 	 */
-	/* -----------------------------------------------
+	// -----------------------------------------------
 	public Recipe getGatePairRecipe() {
-		
+		return recipes.get(1);
 	}
 	
-	/**
-	 * Visszaadja az AIRobot felépítéséhez szükséges 
-	 * receptet tároló Recipe objektumot
-	 * @return
-	 */
-	/* --------------------------------------------------
-	public Recipe getAIRobotRecipe() {
-		
-	}
 	
 	/**
-	 * Visszaadja az ûrbázis felépítéséhez szükséges 
-	 * receptet tároló Recipe objektumot.
+	 * Visszaadja az ï¿½rbï¿½zis felï¿½pï¿½tï¿½sï¿½hez szï¿½ksï¿½ges 
+	 * receptet tï¿½rolï¿½ Recipe objektumot.
 	 * @return
 	 */
-	/*
 	public Recipe getSpaceBaseRecipe() {
-		
+		return recipes.get(2);
 	}
-	*/
+	
 	
 }

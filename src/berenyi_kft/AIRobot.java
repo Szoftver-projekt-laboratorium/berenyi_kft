@@ -14,6 +14,14 @@ public class AIRobot extends Character implements ISteppable {
 	// private Timer timer;
 	
 	/**
+	 * Új AIRobot jön létre. 
+	 * A függvény hozzáadja a timer steppable objektumainak listájához.
+	 */
+	public AIRobot() {
+		// timer.addSteppable(this);
+	}
+	
+	/**
 	 * A robot megk�rdezi az aszteroid�t�l, amelyen �ll, 
 	 * hogy mekkora a k�penyvastags�ga. 
 	 * Ha az aszteroida nincs teljesen �tf�rva, 

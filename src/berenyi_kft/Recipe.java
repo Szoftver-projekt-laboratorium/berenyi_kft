@@ -3,8 +3,8 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 /**
- * Recipe-t reprezentáló osztály
- * A játékban felépíthetõ dolgok létrehozásához szükséges nyersanyagok listáját tartalmazza
+ * Recipe-t reprezentï¿½lï¿½ osztï¿½ly
+ * A jï¿½tï¿½kban felï¿½pï¿½thetï¿½ dolgok lï¿½trehozï¿½sï¿½hoz szï¿½ksï¿½ges nyersanyagok listï¿½jï¿½t tartalmazza
  * @author berenyi_kft
  *
  */
@@ -15,8 +15,8 @@ public class Recipe {
 	//-----------------------------------------------------
 	
 	/**
-	 * A paraméterként kapott nyersanyagot hozzáadja a resources kollekcióhoz. 
-	 * A recept módosításához szükséges, ha változnának a feltételek.
+	 * A paramï¿½terkï¿½nt kapott nyersanyagot hozzï¿½adja a resources kollekciï¿½hoz. 
+	 * A recept mï¿½dosï¿½tï¿½sï¿½hoz szï¿½ksï¿½ges, ha vï¿½ltoznï¿½nak a feltï¿½telek.
 	 * @param r
 	 */
 	public void addResource(Resource r) {
@@ -24,27 +24,28 @@ public class Recipe {
 	}
 	
 	/**
-	 *  A paraméterként kapott r nyersanyagot összehasonlítja a resources
-	 *   kollekcióban lévõ nyersanyagokkal, az isCompatibleWith(r: Resource) 
-	 *   metódussal. Amennyiben az isCompatibleWith(r: Resource) függvény 
-	 *   igaz értékkel tér vissza valamelyik kollekcióbeli nyersanyagra,
-	 *   törli az adott nyersanyagot a resources kollekcióból.
+	 *  A paramï¿½terkï¿½nt kapott r nyersanyagot ï¿½sszehasonlï¿½tja a resources
+	 *   kollekciï¿½ban lï¿½vï¿½ nyersanyagokkal, az isCompatibleWith(r: Resource) 
+	 *   metï¿½dussal. Amennyiben az isCompatibleWith(r: Resource) fï¿½ggvï¿½ny 
+	 *   igaz ï¿½rtï¿½kkel tï¿½r vissza valamelyik kollekciï¿½beli nyersanyagra,
+	 *   tï¿½rli az adott nyersanyagot a resources kollekciï¿½bï¿½l.
 	 * @param r
 	 */
+	// Lehetne a neve removeIfNeeded akÃ¡r.
 	public void isNeeded(Resource r) {
 		
 	}
 	
 	/**
-	 * Visszaállítja az eredeti receptet, azaz a resources gyûjtemény tartalmát
+	 * Visszaï¿½llï¿½tja az eredeti receptet, azaz a resources gyï¿½jtemï¿½ny tartalmï¿½t
 	 */
 	public void reset() {
 		
 	}
 	
 	/**
-	 * Ha a resources kollekció üres, igaz értékkel tér vissza, 
-	 * ellenkezõ esetben pedig hamissal.
+	 * Ha a resources kollekciï¿½ ï¿½res, igaz ï¿½rtï¿½kkel tï¿½r vissza, 
+	 * ellenkezï¿½ esetben pedig hamissal.
 	 * @return
 	 */
 	public boolean isEmpty() {
