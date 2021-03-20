@@ -31,7 +31,6 @@ public class Settler extends Character{
 	/**
 	 * Visszat�r a karakter �ltal t�rolt nyersanyagok 
 	 * list�j�val, alap�rtelmezetten egy �res list�val
-	 * @return
 	 */
 	@Override
 	public ArrayList<Resource> getCollectedResources(){
@@ -164,17 +163,13 @@ public class Settler extends Character{
 	 * v�g�l megh�vja a game removeSettler(Settler s) met�dus�t.
 	 */
 	public void die() {
+		System.out.println("Settler's die() has been called");
 		gatesCreated.forEach((tg) -> {tg.die();});
 		place.remove(this);
 		game.removeSettler(this);
 	}
-	
-	public Asteroid getPlace() {
-			return place;
-	}
-	
-	public void setPlace(Asteroid a) {
-		place=a;
-	}
 
+	public void setGame(Game g) {
+		game=g;
+	}
 }

@@ -62,6 +62,7 @@ public class Game {
 	 * @param s
 	 */
 	public void removeSettler(Settler s) {
+		System.out.println("Game's removeSettler(s: Settler) has been called");
 		settlersAlive.remove(s);
 		if (settlersAlive.isEmpty()) {
 			endGame();
@@ -73,6 +74,7 @@ public class Game {
 	 * @param a
 	 */
 	public void removeAsteroid(Asteroid a) {
+		System.out.println("Game's removeAsteroid(a: Asteroid) has been called");
 		asteroids.remove(a);
 	}
 	
@@ -127,4 +129,24 @@ public class Game {
 		return recipes.get(3);
 	}
 	*/
+	
+	public void addSettler(Settler s) {
+		settlersAlive.add(s);
+	}
+	
+	public void addAsteroid(Asteroid a) {
+		asteroids.add(a);
+	}
+	
+	public void setSun(Sun s) {
+		sun=s;
+	}
+	
+	public int getSizeOfSettlersAlive() {
+		return this.settlersAlive.size();
+	}
+	
+	public int getSizeOfAsteroids() {
+		return this.asteroids.size();
+	}
 }

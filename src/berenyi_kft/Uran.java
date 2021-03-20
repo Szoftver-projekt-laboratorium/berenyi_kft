@@ -20,6 +20,10 @@ public class Uran extends RadioactiveResource {
 			return true;
 		return false;
 	}
-
+	
+	@Override
+	public void drilledOut(Asteroid a) {
+		asteroid.explodedBy(this);
+	}
 	
 }

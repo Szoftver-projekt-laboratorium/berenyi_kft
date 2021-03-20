@@ -71,8 +71,15 @@ public abstract class Character {
 	 * A lesz�rmazottak fel�ldefini�lhatj�k.
 	 */
 	public void reactToExplosion() {
+		System.out.println("Character's reactToExplosion() has been called");
 		die();
 	}
 	
-	
+	public Asteroid getPlace() {
+		return place;
+	}
+
+	public void setPlace(Asteroid a) {
+		place=a;
+	}
 }
