@@ -8,6 +8,7 @@ public class Skeleton {
 	
 	private static Map<Object, String> ids = new HashMap();
 	
+	
 
 	 public static void main(String args[])
 	  {
@@ -47,6 +48,30 @@ public class Skeleton {
 		   	    	 * 
 		   	    	 */
 		   	    	
+		   	    	Game game = new Game();
+		   	    	Asteroid a1 = new Asteroid();
+		   	    	Settler s1 = new Settler();
+		   	    	Settler s2 = new Settler();
+		   	    	Recipe spaceBase = new Recipe();
+		   	    	game.addReceipt(new Recipe());
+		   	    	game.addReceipt(new Recipe());
+		   	    	game.addReceipt(spaceBase);
+		   	    	
+		   	    	Ice ice = new Ice();
+		   	    	Iron iron = new Iron();
+		   	    	Coal coal = new Coal();
+		   	    	spaceBase.addResource(ice);
+		   	    	spaceBase.addResource(iron);
+		   	    	spaceBase.addResource(coal);
+		   	    	a1.accept(s1);
+		   	    	a1.accept(s2);
+		   	    	a1.setGame(game);
+		   	    	
+		   	    	a1.checkSpaceBase();
+		   	    	
+		   	    	
+		   	    	
+		   	    	
 		   	    	break;
 		   	    case "2":
 		   	    	
@@ -63,7 +88,7 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tMove to asteroid selected:\n");
-		   			   	    	
+		   			   	    	/*
 		   			   	    	Settler s1 = new Settler();
 		   			   	    	ids.put(s1, "settler1");
 		   			   	    	
@@ -84,6 +109,7 @@ public class Skeleton {
 		   			   	    	if(s1.getPlace()==a2) {
 		   			   	    		System.out.println("Successful moving!\n");
 		   			   	    	}
+		   			   	    	*/
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tMove through TeleportingGate selected:\n");

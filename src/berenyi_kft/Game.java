@@ -3,6 +3,8 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 public class Game {
+	//praktikus okok miatt + attributum 
+	boolean game = false;
 	
 	/**
 	 * a j�t�kban jelenl�v� aszteroid�k kollekci�ja
