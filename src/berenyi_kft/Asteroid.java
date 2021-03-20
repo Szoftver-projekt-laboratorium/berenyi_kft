@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * 
  * @author berenyi_kft
- * Aszteroidï¿½kat reprezentï¿½lï¿½ osztï¿½ly
+ * Aszteroidákat reprezentáló osztály
  */
 public class Asteroid {
 	 
 	 /**
-	  * az aszteroida kï¿½penyvastagsï¿½ga, vagyis a magot borï¿½tï¿½ sziklarï¿½tegek szï¿½ma
+	  * az aszteroida köpenyvastagsága, vagyis a magot borító sziklarétegek száma
 	  */
 	 int rockLayerThickness;
 	 
