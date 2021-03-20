@@ -66,6 +66,7 @@ public class Settler extends Character{
 		}
 	}
 	
+	
 	/**
 	 * Megh�vja a place aszteroida accept(Resource r) met�dus�t. 
 	 * Ha az aszteroida �res, akkor az aszteroida elt�rolja az r nyersanyagot,
