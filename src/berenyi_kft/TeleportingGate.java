@@ -1,38 +1,38 @@
 package berenyi_kft;
 
 /**
- * Teleportkaput reprezentáló osztály
+ * Teleportkaput reprezentï¿½lï¿½ osztï¿½ly
  * @author berenyi_kft
  *
  */
 public class TeleportingGate {
 
 	/**
-	 * az adott teleportkapu párja, amellyel összeköttetésben áll 
+	 * az adott teleportkapu pï¿½rja, amellyel ï¿½sszekï¿½ttetï¿½sben ï¿½ll 
 	 */
 	TeleportingGate pair;
 	
 	/**
-	 * az aszteroida, amely körül az adott teleportkapu kering
+	 * az aszteroida, amely kï¿½rï¿½l az adott teleportkapu kering
 	 */
 	Asteroid asteroid;
 	
 	/**
-	 * a telepes, aki tárolja a létrehozott, de még pályára nem állított teleportkaput
+	 * a telepes, aki tï¿½rolja a lï¿½trehozott, de mï¿½g pï¿½lyï¿½ra nem ï¿½llï¿½tott teleportkaput
 	 */
 	Settler settler;
 	
 	//--------------------------------------------------------------
 	
 	/**
-	 * Visszaadja a teleportkapu pair párját.
+	 * Visszaadja a teleportkapu pair pï¿½rjï¿½t.
 	 */
 	public TeleportingGate getPair() {
 		return this.pair;
 	}
 	
 	/**
-	 * Beállítja tg-t a teleportkapu párjaként
+	 * Beï¿½llï¿½tja tg-t a teleportkapu pï¿½rjakï¿½nt
 	 * @param tg
 	 */
 	public void setPair(TeleportingGate tg) {
@@ -40,8 +40,8 @@ public class TeleportingGate {
 	}
 	
 	/**
-	 * Visszaadja az aszteroidát, amely körül a teleportkapu kering.
-	 * Ha a kaput még nem állították pályára, akkor null-lal tér vissza.
+	 * Visszaadja az aszteroidï¿½t, amely kï¿½rï¿½l a teleportkapu kering.
+	 * Ha a kaput mï¿½g nem ï¿½llï¿½tottï¿½k pï¿½lyï¿½ra, akkor null-lal tï¿½r vissza.
 	 * @return
 	 */
 	public Asteroid getAsteroid() {
@@ -49,7 +49,7 @@ public class TeleportingGate {
 	}
 	
 	/**
-	 * Beállítja a teleportkapu aszteroidáját, amely körül keringeni fog.
+	 * Beï¿½llï¿½tja a teleportkapu aszteroidï¿½jï¿½t, amely kï¿½rï¿½l keringeni fog.
 	 * @param a
 	 */
 	public void setAsteroid(Asteroid a) {
@@ -57,17 +57,27 @@ public class TeleportingGate {
 	}
 	
 	
+	
 	/**
-	 * Eltávolítja a párját (pair) annak aszteroidájáról/ûrhajójáról attól függõen,
-	 * hogy azt már pályára állították-e (remove(TeleportingGate tg)). 
-	 * Beállítja a párjának a párját null-ra (megszünteti az összeköttetést), 
-	 * végül saját magát is eltávolítja az aszteroidájáról/ûrhajójáról. 
-	 * Ha a függvényhívás elején a teleportkapu párja már null, 
-	 * akkor csak magát távolítja el: ekkor a másik teleportkapu semmisült meg elõbb, 
-	 * és az már megszüntette ennek a kapunak a kapcsolatait is.
+	 * Eltï¿½volï¿½tja a pï¿½rjï¿½t (pair) annak aszteroidï¿½jï¿½rï¿½l/ï¿½rhajï¿½jï¿½rï¿½l attï¿½l fï¿½ggï¿½en,
+	 * hogy azt mï¿½r pï¿½lyï¿½ra ï¿½llï¿½tottï¿½k-e (remove(TeleportingGate tg)). 
+	 * Beï¿½llï¿½tja a pï¿½rjï¿½nak a pï¿½rjï¿½t null-ra (megszï¿½nteti az ï¿½sszekï¿½ttetï¿½st), 
+	 * vï¿½gï¿½l sajï¿½t magï¿½t is eltï¿½volï¿½tja az aszteroidï¿½jï¿½rï¿½l/ï¿½rhajï¿½jï¿½rï¿½l. 
+	 * Ha a fï¿½ggvï¿½nyhï¿½vï¿½s elejï¿½n a teleportkapu pï¿½rja mï¿½r null, 
+	 * akkor csak magï¿½t tï¿½volï¿½tja el: ekkor a mï¿½sik teleportkapu semmisï¿½lt meg elï¿½bb, 
+	 * ï¿½s az mï¿½r megszï¿½ntette ennek a kapunak a kapcsolatait is.
 	 */
+	// TODO: Gondoljuk Ã¡t, hÃ¡tha Ã­gy implementÃ¡lva egyszerÅ±bb.
 	public void die() {
-		
+		if (pair != null) {
+			pair.setPair(null);
+			pair.die();
+		}
+		if (settler != null) {
+			settler.remove(this);
+		} else {
+			asteroid.remove(this);
+		}
 	}
 	
 	

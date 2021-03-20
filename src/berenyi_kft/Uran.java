@@ -1,16 +1,17 @@
 package berenyi_kft;
 
+// TODO: NevezzÃ¼k Ã¡t Uraniumra.
 /**
- * Az urán nyersanyagot reprezentálja.
+ * Az urï¿½n nyersanyagot reprezentï¿½lja.
  * @author berenyi_kft
  *
  */
 public class Uran extends RadioactiveResource {
 
 	/**
-	 * Összehasonlítja magát a paraméterként kapott nyersanyaggal 
-	 * és egyezés esetén igaz értékkel tér vissza, 
-	 * ellenkezõ esetben hamissal.
+	 * ï¿½sszehasonlï¿½tja magï¿½t a paramï¿½terkï¿½nt kapott nyersanyaggal 
+	 * ï¿½s egyezï¿½s esetï¿½n igaz ï¿½rtï¿½kkel tï¿½r vissza, 
+	 * ellenkezï¿½ esetben hamissal.
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
