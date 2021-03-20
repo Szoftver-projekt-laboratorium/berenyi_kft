@@ -3,7 +3,7 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 /**
- * A karakterek egyik fajtája a telepes
+ * A karakterek egyik fajt�ja a telepes
  * @author berenyi_kft
  *
  */
@@ -75,7 +75,7 @@ public class Settler extends Character{
 	 * @param r
 	 */
 	public void restore(Resource r) {
-		place.accept(this, r);
+		place.accept(this,r);
 	}
 	
 	/**
@@ -168,4 +168,13 @@ public class Settler extends Character{
 		place.remove(this);
 		game.removeSettler(this);
 	}
+	
+	public Asteroid getPlace() {
+			return place;
+	}
+	
+	public void setPlace(Asteroid a) {
+		place=a;
+	}
+
 }

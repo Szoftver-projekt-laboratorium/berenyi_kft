@@ -1,10 +1,14 @@
 package berenyi_kft;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Skeleton {
 	
+	private static Map<Object, String> ids = new HashMap();
 	
+
 	 public static void main(String args[])
 	  {
 	   	System.out.println("Welcome in berenyi_kft's Skeleton tester!\n ");
@@ -29,7 +33,21 @@ public class Skeleton {
 		   	    case "1":
 		   	    	
 		   	    	System.out.println("Testing Win Game.\n");
-   
+		   	    	
+		   	    	/*
+		   	    	 * új játék
+		   	    	 * új asteroida
+		   	    	 * 2 settler
+		   	    	 * új recipe spacebase
+		   	    	 * settlerekhez resourceok
+		   	    	 * gamehez asteroid
+		   	    	 * gamehez settlerek
+		   	    	 * settlerek aszteroidához adása
+		   	    	 * asteroid-check hívás - lekérdezi a receptet a gametől
+		   	    	 * 
+		   	    	 */
+		   	    	
+		   	    	break;
 		   	    case "2":
 		   	    	
 		   	    	System.out.println("Testing Move Spaceship...\n Please choose a test-case:\n"); 
@@ -46,12 +64,47 @@ public class Skeleton {
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tMove to asteroid selected:\n");
 		   			   	    	
+		   			   	    	Settler s1 = new Settler();
+		   			   	    	ids.put(s1, "settler1");
+		   			   	    	
+		   			   	    	Asteroid a1 = new Asteroid();
+		   			   	    	ids.put(a1,"asteroid1");
+		   			   	    	
+		   			   	    	Asteroid a2 = new Asteroid();
+		   			   	    	ids.put(a2,"asteroid2");
+		   			   	    	
+		   			   	    	a1.addNeighbor(a2);
+		   			   	    	a2.addNeighbor(a1);
+		   			   	    	
+		   			   	    	a1.accept(s1);
+		   			   	    	s1.setPlace(a1);
+		   			   	    	int dir = 0;
+		   			   	    	s1.move(dir);
+			   			   	    	//ids.get(s1.getPlace())
+		   			   	    	if(s1.getPlace()==a2) {
+		   			   	    		System.out.println("Successful moving!\n");
+		   			   	    	}
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tMove through TeleportingGate selected:\n");
+		   			   	    	/*
+		   			   	    	 * 2 ast, 2 kapu
+		   			   	    	 * 2 kapu egymás párja, aszteroidához vannak adva
+		   			   	    	 * settler, egyik asteroidához
+		   			   	    	 */
+		   			   	    	
 		   			   	    	break;
 		   			   	    case "c":
 		   			   	    	System.out.println("\t\tFail to use TeleportingGate selected:\n");
+		   			   	    	
+		   			   	    	/*
+		   			   	    	 * 2 ast, 2 kapu
+		   			   	    	 * 2 kapu egymás párja, aszteroidához vannak adva
+		   			   	    	 * settler, egyik asteroidához
+		   			   	    	 * egyik kapu még a settlernél van (azért nem tud mozogni, mert a zsebében van a pár)
+		   			   	    	 * error: (nincs lerakva a párja)
+		   			   	    	 */
+		   			   	    	
 		   			   	    	break;
 		   			   	    default :
 		   			   	    	System.out.println("\t\tInvalid choice!\n");
@@ -74,12 +127,41 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tDrill one layer selected:\n");
+		   			   	    	/*
+		   			   	    	 * Asteroid
+		   			   	    	 * set layer
+		   			   	    	 * settler
+		   			   	    	 * drill hívás
+		   			   	    	 * expected layersize = 4
+		   			   	    	 * print layersize
+		   			   	    	 */
 		   			   	    	break;
 		   			   	    case "b":
-		   			   	    	System.out.println("\t\tDrill radioactive asteroid�s last layer selected:\n");
+		   			   	    	System.out.println("\t\tDrill radioactive asteroid's last layer selected:\n");
+		   			   	    	/*
+		   			   	    	 * 2 Asteroid
+		   			   	    	 * settler
+		   			   	    	 * sun
+		   			   	    	 * game
+		   			   	    	 * uran
+		   			   	    	 * airobot
+		   			   	    	 * 2 teleporinggate
+		   			   	    	 * 
+		   			   	    	 * resource
+		   			   	    	 * set layer 1 
+		   			   	    	 * settler
+		   			   	    	 * drill hívás
+		   			   	    	 * bumm
+		   			   	    	 */
 		   			   	    	break;
 		   			   	    case "c":
-		   			   	    	System.out.println("\t\tDrill icy asteroid�s last layer selected:\n");
+		   			   	    	System.out.println("\t\tDrill icy asteroid's last layer selected:\n");
+		   			   	    	/*
+		   			   	    	 * 
+		   			   	    	 * 
+		   			   	    	 * lásd
+		   			   	    	 * Settler drills and ice sublimates 
+		   			   	    	 */
 		   			   	    	break;
 		   			   	    case "d":
 		   			   	    	System.out.println("\t\tFail to drill selected:\n");
