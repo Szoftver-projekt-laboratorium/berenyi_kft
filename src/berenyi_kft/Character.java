@@ -44,6 +44,7 @@ public abstract class Character {
 		Asteroid neighbor = place.getNeighbor(d);
 		place.remove(this);
 		neighbor.accept(this);
+		this.place = neighbor;
 	}
 	
 	/**
