@@ -31,14 +31,21 @@ public class Recipe {
 	 *   t�rli az adott nyersanyagot a resources kollekci�b�l.
 	 * @param r
 	 */
-	// Lehetne a neve removeIfNeeded akár.
+	// Lehetne a neve removeIfNeeded, nem booleant sejtető név kellene.
 	public void isNeeded(Resource r) {
-		
+		for (Resource rBill : resources) {
+			if (r.isCompatibleWith(rBill)) {
+				resources.remove(rBill);
+				break;
+			}
+		}
 	}
 	
 	/**
 	 * Vissza�ll�tja az eredeti receptet, azaz a resources gy�jtem�ny tartalm�t
 	 */
+	// TODO: Pl. kellhet egy statikus változó, amit a konstruktorban
+	// és a reset-eknél klónozhat, így újrateremtve az eredeti receptet.
 	public void reset() {
 		
 	}

@@ -23,6 +23,8 @@ public class Game {
 	 * A j�t�kban fel�p�thet� dolgok receptjeinek a kollekci�ja.
 	 * [0...3]
 	 */
+	// Ezeknek a megkonstruálása még szép.
+	// Ezt talán konstruktor csinálja, ugye, ne a startGame().
 	ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
 	//--------------------------------------------
@@ -34,7 +36,10 @@ public class Game {
 	 * Be�ll�tja az aszteroid�k szomsz�ds�gi viszonyait is.
 	 */
 	public void startGame() {
-		
+		// TODO
+		/* Lehet, hogy most még nem kell konkrétan megvalósítanunk;
+		 ott lesznek helyette a tesztesetek saját inicializálgatásai
+		 a Skeleton-ban. */
 	}
 	
 	/**
@@ -43,7 +48,11 @@ public class Game {
 	 * esetben a telepesek veres�g�r�l sz�l� �zenetet jelen�t meg.
 	 */
 	public void endGame() {
-		
+		if (settlersAlive.size() > 0) {
+			System.out.println("A telepesek nyertek, fel?ep?lt az ?rbazis.");
+		} else {
+			System.out.println("A telepesek vesztettek, mindegyik?k meghalt.");
+		}
 	}
 	
 	/**
@@ -53,7 +62,10 @@ public class Game {
 	 * @param s
 	 */
 	public void removeSettler(Settler s) {
-		
+		settlersAlive.remove(s);
+		if (settlersAlive.isEmpty()) {
+			endGame();
+		}
 	}
 	
 	/**
@@ -61,7 +73,7 @@ public class Game {
 	 * @param a
 	 */
 	public void removeAsteroid(Asteroid a) {
-		
+		asteroids.remove(a);
 	}
 	
 	/**
@@ -82,7 +94,7 @@ public class Game {
 		return recipes.get(0);
 	}
 	
-	//???----------------------------------------------
+	//----------------------------------------------
 	/**
 	 * Visszaadja a teleportkapu-p�r fel�p�t�s�hez sz�ks�ges 
 	 * receptet t�rol� Recipe objektumot.
@@ -104,4 +116,15 @@ public class Game {
 	}
 	
 	
+	/**
+	 * Visszaadja egy receptet, amely az aszteroidaövben található
+	 * mindenfajta nyersanyagból egy-egy példányt tartalmaz.
+	 * @return
+	 */
+	/*
+	Kell ilyen az inicializáláshoz, vagy kikerülhető?
+	public Recipe getAllTypeOfResources() {
+		return recipes.get(3);
+	}
+	*/
 }
