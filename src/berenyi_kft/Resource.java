@@ -11,7 +11,7 @@ public abstract class Resource {
 	 * : a telepes, akinél az adott nyersanyagegység tárolódik
 	 *  (ha éppen telepesnél található)
 	 */
-	Settler settler;
+	Settler settler; //Szükséges ismernie settler?
 	
 	/**
 	 * az aszteroida, amelynek magjában az adott nyersanyag elhelyezkedik 
@@ -26,7 +26,16 @@ public abstract class Resource {
 	 * megfúrt aszteroida magjában található. A metódus általános esetben nem csinál semmit, 
 	 * de a speciális mûködésû leszármazott osztályokban felüldefiniálható.
 	 */
-	public abstract void drilledOut();
+	public void drilledOut(Asteroid a) {
+		 System.out.println("Resource's drilledOut(a: Asteroid) has been called");
+	}
+	
+	
+	//A restore-nál szükséges beállítani az új Asteroid-ot
+	public void setAsteroid(Asteroid a) {
+		asteroid=a;
+		System.out.println("Resource's setAsteroid(a: Asteroid) has been called");
+	}
 	
 	/**
 	 * Összehasonlítja magát a paraméterként kapott nyersanyaggal és egyezés esetén
