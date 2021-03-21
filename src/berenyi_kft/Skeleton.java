@@ -395,40 +395,40 @@ public class Skeleton {
 		   			   	    	System.out.println("\t\tPlace TeleportingGate selected:\n");
 		   			   	    	
 		   			   	    	//letrehozunk mindent ami kell
-		   			   	    	Settler s1=new Settler();
-		   			   	    	Asteroid a1= new Asteroid();
-		   			   	    	Asteroid a2= new Asteroid();
-		   			   	    	TeleportingGate tg1= new TeleportingGate();
-		   			   	    	TeleportingGate tg2= new TeleportingGate();
+		   			   	    	Settler s1_8a=new Settler();
+		   			   	    	Asteroid a1_8a= new Asteroid();
+		   			   	    	Asteroid a2_8a= new Asteroid();
+		   			   	    	TeleportingGate tg1_8a= new TeleportingGate();
+		   			   	    	TeleportingGate tg2_8a= new TeleportingGate();
 		   			   	    	//kapukat paroztatunk
-		   			   	    	tg1.setPair(tg2);
-		   			   	    	tg2.setPair(tg1);
+		   			   	    	tg1_8a.setPair(tg2_8a);
+		   			   	    	tg2_8a.setPair(tg1_8a);
 		   			   	    	//egyik aszteroidahoz bekotjuk az egyik kaput es a kapuhoz az aszteroidat
-		   			   	    	a1.accept(tg1);
-		   			   	    	tg1.setAsteroid(a1);
+		   			   	    	a1_8a.accept(tg1_8a);
+		   			   	    	tg1_8a.setAsteroid(a1_8a);
 		   			   	    	//a masik kapu a telepesnel van, es a telepes a masik aszteroidan
-		   			   	    	s1.gatesCreated.add(tg2);
-		   			   	    	a2.accept(s1);
-		   			   	    	s1.setPlace(a2);
+		   			   	    	s1_8a.gatesCreated.add(tg2_8a);
+		   			   	    	a2_8a.accept(s1_8a);
+		   			   	    	s1_8a.setPlace(a2_8a);
 		   			   	    	//eddig tartott az init resz
 		   			   	    	
-		   			   	    	s1.releaseGate();
+		   			   	    	s1_8a.releaseGate();
 		   			   	    	
 		   			   	    	
 		   			   	    	
-		   			   	    	if(a1==a2.getNeighbor(0) && a2==a1.getNeighbor(0))
+		   			   	    	if(a1==a2_8a.getNeighbor(0) && a2_8a==a1.getNeighbor(0))
 		   			   	    		System.out.println("Successful 'TeleportingGate placing' test");
 		   			   	    	
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tFail to place TeleportingGate selected:\n");
 		   			   	    	
-		   			   	    	Settler s1=new Settler();
-		   			   	    	Asteroid a1= new Asteroid();
-		   			   	    	a1.accept(s1);
-		   			   	    	s1.setPlace(a1);
+		   			   	    	Settler s1_8b =new Settler();
+		   			   	    	Asteroid a1_8b = new Asteroid();
+		   			   	    	a1_8b.accept(s1_8b);
+		   			   	    	s1_8b.setPlace(a1_8b);
 		   			   	    	
-		   			   	    	s1.releaseGate();
+		   			   	    	s1_8a.releaseGate();
 		   			   	    	
 		   			   	    	
 		   			   	    	
@@ -455,67 +455,67 @@ public class Skeleton {
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tAsteroid is mined selected:\n");
 		   			   	    	//letrehoznk mindent ami kell
-		   			   	    	Asteroid a1= new Asteroid();
-		   			   	    	Settler s1= new Settler();
-		   			   	    	AIRobot r= new AIRobot();
-		   			   	    	Game g= new Game();
-		   			   	    	Sun sun= new Sun();
+		   			   	    	Asteroid a1_9a= new Asteroid();
+		   			   	    	Settler s1_9a= new Settler();
+		   			   	    	AIRobot r_9a= new AIRobot();
+		   			   	    	Game g_9a= new Game();
+		   			   	    	Sun sun_9a= new Sun();
 		   			   	    	//az aszteroidának beállítgatjuk a dolgokat
-		   			   	    	a1.accept(r);
-		   			   	    	a1.accept(s1);
-		   			   	    	a1.setSun(sun);
-		   			   	    	a1.setGame(g);
+		   			   	    	a1_9a.accept(r_9a);
+		   			   	    	a1_9a.accept(s1_9a);
+		   			   	    	a1_9a.setSun(sun_9a);
+		   			   	    	a1_9a.setGame(g_9a);
 		   			   	    	//a settlernek is beállítjuk
-		   			   	    	s1.setPlace(a1);
-		   			   	    	s1.setGame(g);
+		   			   	    	s1_9a.setPlace(a1_9a);
+		   			   	    	s1_9a.setGame(g_9a);
 		   			   	    	//az airoboton is beallitjuk az aszteriodajat
-		   			   	    	r.setPlace(a1);
+		   			   	    	r_9a.setPlace(a1_9a);
 		   			   	    	//a gamehez hozzaadjuk a dolgokat
-		   			   	    	g.addAsteroid(a1);
-		   			   	    	g.addSettler(s1);
-		   			   	    	g.setSun(sun);
+		   			   	    	g_9a.addAsteroid(a1_9a);
+		   			   	    	g_9a.addSettler(s1_9a);
+		   			   	    	g_9a.setSun(sun_9a);
 		   			   	    	//sunhoz hozzaadjuk az aszteroidat
-		   			   	    	sun.addNeighbor(a1);
+		   			   	    	sun_9a.addNeighbor(a1_9a);
 		   			   	    	//aszteroida legyen kibányászott
-		   			   	    	a1.setRockLayerThickness(0);
+		   			   	    	a1_9a.setRockLayerThickness(0);
 		   			   	    	//eddig tartott az init
 		   			   	    	
-		   			   	    	sun.step();
+		   			   	    	sun_9a.step();
 		   			   	    	
-		   			   	    	if(a1.getCharacters()!=null)
+		   			   	    	if(a1_9a.getCharacters()!=null)
 		   			   	    		System.out.println("Successful 'Sunstorm on mined Asteroid' test");
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tAsteroid is not mined selected:\n");
 		   			   	    	//letrehoznk mindent ami kell
-		   			   	    	Asteroid a1= new Asteroid();
-		   			   	    	Settler s1= new Settler();
-		   			   	    	AIRobot r= new AIRobot();
-		   			   	    	Game g= new Game();
-		   			   	    	Sun sun= new Sun();
+		   			   	    	Asteroid a1_9b= new Asteroid();
+		   			   	    	Settler s1_9b= new Settler();
+		   			   	    	AIRobot r_9b= new AIRobot();
+		   			   	    	Game g_9b= new Game();
+		   			   	    	Sun sun_9b= new Sun();
 		   			   	    	//az aszteroidának beállítgatjuk a dolgokat
-		   			   	    	a1.accept(r);
-		   			   	    	a1.accept(s1);
-		   			   	    	a1.setSun(sun);
-		   			   	    	a1.setGame(g);
+		   			   	    	a1_9b.accept(r_9b);
+		   			   	    	a1_9b.accept(s1_9b);
+		   			   	    	a1_9b.setSun(sun_9b);
+		   			   	    	a1_9b.setGame(g_9b);
 		   			   	    	//a settlernek is beállítjuk
-		   			   	    	s1.setPlace(a1);
-		   			   	    	s1.setGame(g);
+		   			   	    	s1_9b.setPlace(a1_9b);
+		   			   	    	s1_9b.setGame(g_9b);
 		   			   	    	//az airoboton is beallitjuk az aszteriodajat
-		   			   	    	r.setPlace(a1);
+		   			   	    	r_9b.setPlace(a1_9b);
 		   			   	    	//a gamehez hozzaadjuk a dolgokat
-		   			   	    	g.addAsteroid(a1);
-		   			   	    	g.addSettler(s1);
-		   			   	    	g.setSun(sun);
+		   			   	    	g_9b.addAsteroid(a1_9b);
+		   			   	    	g_9b.addSettler(s1_9b);
+		   			   	    	g_9b.setSun(sun_9b);
 		   			   	    	//sunhoz hozzaadjuk az aszteroidat
-		   			   	    	sun.addNeighbor(a1);
+		   			   	    	sun_9b.addNeighbor(a1_9b);
 		   			   	    	//aszteroida ne legyen kibányászott
-		   			   	    	a1.setRockLayerThickness(5);
+		   			   	    	a1_9b.setRockLayerThickness(5);
 		   			   	    	//eddig tartott az init
 		   			   	    	
-		   			   	    	sun.step();
+		   			   	    	sun_9b.step();
 		   			   	    	
-		   			   	    	if(g.getSizeOfSettlersAlive()==0)
+		   			   	    	if(g_9b.getSizeOfSettlersAlive()==0)
 		   			   	    		System.out.println("Successful 'Sunstorm on not mined Asteroid' test");
    	    	
 		   			   	    	break;
