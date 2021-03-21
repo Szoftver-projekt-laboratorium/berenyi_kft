@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * 
  * @author berenyi_kft
- * Aszteroidákat reprezentáló osztály
+ * Aszteroidï¿½kat reprezentï¿½lï¿½ osztï¿½ly
  */
 public class Asteroid {
 	 
 	 /**
-	  * az aszteroida köpenyvastagsága, vagyis a magot borító sziklarétegek száma
+	  * az aszteroida kï¿½penyvastagsï¿½ga, vagyis a magot borï¿½tï¿½ sziklarï¿½tegek szï¿½ma
 	  */
 	 int rockLayerThickness;
 	 
@@ -23,7 +23,7 @@ public class Asteroid {
 	  * az aszteroida magjï¿½ban talï¿½lhatï¿½ egysï¿½gnyi nyersanyag, 
 	  * ha a mag ï¿½reges, akkor ï¿½rtï¿½ke null
 	  */
-	 Resource resource;
+	 Resource resource= null;
 	 
 	 /**
 	  * az aszteroidaï¿½vben levï¿½ Nap
@@ -299,8 +299,8 @@ public class Asteroid {
 	 public void destroySurface() {
 		 System.out.println("Asteroid's destroySurface() has been called");
 		 if(!this.isMined()) {
-			 for(Character c: characters) {
-				 c.die();
+			 for(int i=characters.size()-1;i>=0;i--) {
+				 characters.get(i).die();
 			 }
 		 }
 	 }
