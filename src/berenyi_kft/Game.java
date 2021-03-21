@@ -170,6 +170,11 @@ public class Game {
 		asteroids.add(a);
 	}
 	
+	public void addRecipe(Recipe r) {
+		System.out.println("Game's addRecipe(r: Recipe) has been called");
+		recipes.add(r);
+	}
+	
 	public void setSun(Sun s) {
 		System.out.println("Game's setSun(s: Sun) has been called");
 		sun=s;
@@ -184,4 +189,6 @@ public class Game {
 		System.out.println("Game's getSizeOfAsteroids() has been called");
 		return this.asteroids.size();
 	}
+	
+	
 }

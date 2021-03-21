@@ -23,7 +23,10 @@ public class Recipe {
 	public void addResource(Resource r) {
 		System.out.println("Settler's addResource(r: Resource) has been called");
 		this.resources.add(r);
-		this.resources_backup.add(r);
+		Resource r_clone = r.clone();
+		if(r_clone == null) System.out.println("r_clone is null");
+		if(r == r_clone) System.out.println("r_clone is similar to r");
+		this.resources.add(r_clone);
 	}
 	
 	/**
@@ -50,7 +53,7 @@ public class Recipe {
 	 * Vissza�ll�tja az eredeti receptet, azaz a resources gy�jtem�ny tartalm�t
 	 */
 	public void reset() {
-		resources = resources_backup;
+		resources = (ArrayList<Resource>)resources_backup.clone();
 	}
 	
 	/**
