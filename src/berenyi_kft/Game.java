@@ -56,6 +56,7 @@ public class Game {
 		} else {
 			System.out.println("A telepesek vesztettek, mindegyik?k meghalt.");
 		}
+		this.end_game_flag = true;
 	}
 	
 	/**
