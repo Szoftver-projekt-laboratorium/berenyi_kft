@@ -80,6 +80,7 @@ public class Asteroid {
 		 System.out.println("Asteroid's remove(a: Asteroid) has been called");
 		 if(neighbors.contains(a)) {
 			 neighbors.remove(a);
+			 a.remove(this);
 		 }
 	 }
 	 
@@ -167,6 +168,9 @@ public class Asteroid {
 	 public void remove(TeleportingGate tg) {
 		 System.out.println("Asteroid's remove(tg: TeleportingGate) has been called");
 		 gates.remove(tg);
+		 if(tg.getPair().getAsteroid() != null) {
+			 tg.getPair().getAsteroid().remove(this);
+		 }
 	 }
 	 
 	 /**

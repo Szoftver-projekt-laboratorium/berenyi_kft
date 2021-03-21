@@ -67,13 +67,6 @@ public class Skeleton {
 	    	
 	    	tg1.setPair(tg2);
 	    	tg2.setPair(tg1);
-	    	
-	    	
-	    	/*
-	    	System.out.println("a1 neighbors" + a1.getNeighbors().size());
-	    	System.out.println("a2 neighbors" + a2.getNeighbors().size());
-	    	System.out.println("a3 neighbors" + a3.getNeighbors().size());
-	    	*/
 		 
 		 
 	   	System.out.println("Welcome in berenyi_kft's Skeleton tester!\n ");
@@ -164,6 +157,10 @@ public class Skeleton {
 	   			   	    		System.out.println("Move through TelePortingGate Test: Failed");
 		   			   	    	}
 		   			   	    	
+		   			   	    	dir = 0;
+		   			   	    	s1.move(dir);
+		   			   	    	a1.remove(tg2);
+		   			   	    	
 		   			   	    	
 		   			   	    	break;
 		   			   	    case "c":
@@ -176,6 +173,13 @@ public class Skeleton {
 		   			   	    	 * egyik kapu még a settlernél van (azért nem tud mozogni, mert a zsebében van a pár)
 		   			   	    	 * error: (nincs lerakva a párja)
 		   			   	    	 */
+		   			   	    	
+		   			   	    	dir = 1;
+		   			   	    	try {
+		   			   	    		s1.move(dir);
+		   			   	    	}catch(Exception e) {
+		   			   	    		System.out.println("Fail to use TeleportingGate Test: Successful");
+		   			   	    	}
 		   			   	    	
 		   			   	    	break;
 		   			   	    default :
