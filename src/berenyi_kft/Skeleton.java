@@ -34,7 +34,9 @@ public class Skeleton {
 					System.out.println("Testing Win Game.\n");
 	
 					/*
-					 * új játék új asteroida 2 settler új recipe spacebase settlerekhez resourceok
+					 * új játék 
+					 * új asteroida 
+					 * 2 settler új recipe spacebase settlerekhez resourceok
 					 * gamehez asteroid gamehez settlerek settlerek aszteroidához adása
 					 * asteroid-check hívás - lekérdezi a receptet a gametől
 					 * 
@@ -185,7 +187,6 @@ public class Skeleton {
 							int dir = 0;
 							s21.move(dir);
 							if (s21.getPlace() == a22) {
-								s21.move(dir);
 								System.out.println("Move to asteroid Test: Successful");
 								
 							} else {
@@ -198,6 +199,11 @@ public class Skeleton {
 							/*
 							 * 2 ast, 2 kapu 2 kapu egymás párja, aszteroidához vannak adva settler, egyik
 							 * asteroidához
+							 */
+							
+							/**
+							 * Létrehozunk két aszteroidát, két teleportkaput amiket egymás párjának beállítjuk, majd
+							 * 
 							 */
 	
 							a21.accept(tg21);
@@ -222,12 +228,14 @@ public class Skeleton {
 						case "c":
 							System.out.println("\t\tFail to use TeleportingGate selected:\n");
 	
-							/*
-							 * 2 ast, 2 kapu 2 kapu egymás párja, aszteroidához vannak adva settler, egyik
-							 * asteroidához egyik kapu még a settlernél van (azért nem tud mozogni, mert a
-							 * zsebében van a pár) error: (nincs lerakva a párja)
+							/**
+							 * Létrehozunk két aszteroidát, és két teleportkaput, melyeket hozzáadjuk az
+							 * aszteroidákhoz, majd eltávolítjuk az egyik teleportkaput az aszteroidájáról,
+							 * akkor a telepes az adott irányban már nem tud lépni a teleportkapun keresztül
 							 */
-	
+							
+							a21.accept(tg21);
+							a21.remove(tg21);
 							dir = 1;
 							try {
 								s21.move(dir);
