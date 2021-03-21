@@ -23,7 +23,7 @@ public class Asteroid {
 	  * az aszteroida magj�ban tal�lhat� egys�gnyi nyersanyag, 
 	  * ha a mag �reges, akkor �rt�ke null
 	  */
-	 Resource resource;
+	 Resource resource=null;
 	 
 	 /**
 	  * az aszteroida�vben lev� Nap
@@ -312,8 +312,8 @@ public class Asteroid {
 	 public void destroySurface() {
 		 System.out.println("Asteroid's destroySurface() has been called");
 		 if(!this.isMined()) {
-			 for(Character c: characters) {
-				 c.die();
+			 for(int i=characters.size()-1;i>=0;i--) {
+				 characters.get(i).die();
 			 }
 		 }
 	 }

@@ -34,7 +34,9 @@ public class Sun implements ISteppable {
 	@Override
 	public void step() {
 		// TODO Auto-generated method stub
-		
+		System.out.println("Sun's step() has been called");
+		//most a teszt kedvéért legyen minden egyes stepre sunStorm
+		sunStorm();
 	}
 	
 	/**
@@ -42,7 +44,10 @@ public class Sun implements ISteppable {
 	 * majd egyes�vel megh�vja mindegyik aszteroida destroySurface() f�ggv�ny�t.
 	 */
 	public void sunStorm() {
-		
+		System.out.println("Sun's sunStorm() has been called");
+		for(int i=neighboringAsteroids.size()-1;i>=0;i--) {
+		neighboringAsteroids.get(i).destroySurface();
+		}
 	}
 	
 	/**
