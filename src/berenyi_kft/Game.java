@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Game {
 	//praktikus okok miatt + attributum 
-	boolean game = false;
+	boolean end_game_flag = false;
 	
 	/**
 	 * a j�t�kban jelenl�v� aszteroid�k kollekci�ja
@@ -147,6 +147,11 @@ public class Game {
 		asteroids.add(a);
 	}
 	
+	public void addRecipe(Recipe r) {
+		System.out.println("Game's addRecipe(r: Recipe) has been called");
+		recipes.add(r);
+	}
+	
 	public void setSun(Sun s) {
 		System.out.println("Game's setSun(s: Sun) has been called");
 		sun=s;
@@ -161,4 +166,6 @@ public class Game {
 		System.out.println("Game's getSizeOfAsteroids() has been called");
 		return this.asteroids.size();
 	}
+	
+	
 }
