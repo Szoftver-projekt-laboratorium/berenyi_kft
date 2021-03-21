@@ -3,33 +3,33 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 /**
- * A Napot reprezentáló osztály
+ * A Napot reprezentï¿½lï¿½ osztï¿½ly
  * @author berenyi_kft
  *
  */
 public class Sun implements ISteppable {
 
 	/**
-	 * a következõ napvihar bekövetkezéséig hátralévõ idõ
+	 * a kï¿½vetkezï¿½ napvihar bekï¿½vetkezï¿½sï¿½ig hï¿½tralï¿½vï¿½ idï¿½
 	 */
 	long timeToSunStorm;
 	
 	/**
-	 * a Nappal közvetlenül szomszédos aszteroidák listája
+	 * a Nappal kï¿½zvetlenï¿½l szomszï¿½dos aszteroidï¿½k listï¿½ja
 	 */
 	ArrayList<Asteroid> neighboringAsteroids = new ArrayList<Asteroid>();
 	
 	/**
-	 * a játékot reprezentáló osztály
+	 * a jï¿½tï¿½kot reprezentï¿½lï¿½ osztï¿½ly
 	 */
 	Game game;
 	
 	//-------------------------------------------------------------
 	
 	/**
-	 * Ha a timeToSunStorm attribútum pozitív, akkor eggyel csökkenti 
-	 * (várakozik). Ha pedig 0, akkor napvihart indít a sunStorm() függvényt hívva,
-	 *  majd a timeToSunStorm-nak beállít egy véletlen egész értéket.
+	 * Ha a timeToSunStorm attribï¿½tum pozitï¿½v, akkor eggyel csï¿½kkenti 
+	 * (vï¿½rakozik). Ha pedig 0, akkor napvihart indï¿½t a sunStorm() fï¿½ggvï¿½nyt hï¿½vva,
+	 *  majd a timeToSunStorm-nak beï¿½llï¿½t egy vï¿½letlen egï¿½sz ï¿½rtï¿½ket.
 	 */
 	@Override
 	public void step() {
@@ -38,29 +38,34 @@ public class Sun implements ISteppable {
 	}
 	
 	/**
-	 * Lekérdezi a Game-tõl az aszteroidák kollekcióját, 
-	 * majd egyesével meghívja mindegyik aszteroida destroySurface() függvényét.
+	 * Lekï¿½rdezi a Game-tï¿½l az aszteroidï¿½k kollekciï¿½jï¿½t, 
+	 * majd egyesï¿½vel meghï¿½vja mindegyik aszteroida destroySurface() fï¿½ggvï¿½nyï¿½t.
 	 */
 	public void sunStorm() {
 		
 	}
 	
 	/**
-	 * Megállapítja, hogy az a aszteroida napközeli-e
+	 * Megï¿½llapï¿½tja, hogy az a aszteroida napkï¿½zeli-e
 	 * @return
 	 */
 	public boolean isCloseToSun(Asteroid a) {
+		System.out.println("Sun's isCloseToSun(a: Asteroid) has been called");
 		if(this.neighboringAsteroids.contains(a)) {
 			return true;
 		}
 		return false;
 	}
 	
-	public void settimeToSunStorm(long time){
+	public void setTimeToSunStorm(long time){
+		System.out.println("Sun's settimeToStorm(time: long) has been called");
 		timeToSunStorm=time;
 	}
 	
-	
+	public void addNeighbor(Asteroid a) {
+		System.out.println("Sun's addNeighbor(a: Asteroid) has been called");
+		this.neighboringAsteroids.add(a);
+	}
 
 	
 }

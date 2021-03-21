@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Recipe {
 
 	ArrayList<Resource> resources = new ArrayList<Resource>();
+	ArrayList<Resource> resources_backup = new ArrayList<Resource>();
 	
 	//-----------------------------------------------------
 	
@@ -20,7 +21,9 @@ public class Recipe {
 	 * @param r
 	 */
 	public void addResource(Resource r) {
+		System.out.println("Settler's addResource(r: Resource) has been called");
 		this.resources.add(r);
+		this.resources_backup.add(r);
 	}
 	
 	/**
@@ -33,6 +36,7 @@ public class Recipe {
 	 */
 	// Lehetne a neve removeIfNeeded, nem booleant sejtető név kellene.
 	public void isNeeded(Resource r) {
+		System.out.println("Settler's isNeeded(r: Resource) has been called");
 		for (Resource rBill : resources) {
 			if (r.isCompatibleWith(rBill)) {
 				resources.remove(rBill);
@@ -44,10 +48,8 @@ public class Recipe {
 	/**
 	 * Vissza�ll�tja az eredeti receptet, azaz a resources gy�jtem�ny tartalm�t
 	 */
-	// TODO: Pl. kellhet egy statikus változó, amit a konstruktorban
-	// és a reset-eknél klónozhat, így újrateremtve az eredeti receptet.
 	public void reset() {
-		
+		resources = resources_backup;
 	}
 	
 	/**
@@ -56,6 +58,7 @@ public class Recipe {
 	 * @return
 	 */
 	public boolean isEmpty() {
+		System.out.println("Recipe's isEmpty() has been called");
 		return this.resources.isEmpty();
 	}
 }

@@ -41,6 +41,7 @@ public abstract class Character {
 	 * @param d
 	 */
 	public void move(int d) {
+		System.out.println("Character's move(d: int) has been called");
 		Asteroid neighbor = place.getNeighbor(d);
 		place.remove(this);
 		neighbor.accept(this);
@@ -52,6 +53,7 @@ public abstract class Character {
 	 * megh�vja az aszteroida drilled() met�dus�t
 	 */
 	public void drill() {
+		System.out.println("Character's drill() has been called");
 		place.drilled();
 	}
 	
@@ -61,6 +63,7 @@ public abstract class Character {
 	 * A lesz�rmazottakban fel�ldefini�lhat�.
 	 */
 	public void die() {
+		System.out.println("Character's die() has been called");
 		place.remove(this);
 	}
 	
@@ -71,8 +74,17 @@ public abstract class Character {
 	 * A lesz�rmazottak fel�ldefini�lhatj�k.
 	 */
 	public void reactToExplosion() {
+		System.out.println("Character's reactToExplosion() has been called");
 		die();
 	}
 	
-	
+	public Asteroid getPlace() {
+		System.out.println("Character's getPlace() has been called");
+		return place;
+	}
+
+	public void setPlace(Asteroid a) {
+		System.out.println("Character's setPlace(a: Asteroid) has been called");
+		place=a;
+	}
 }
