@@ -102,6 +102,7 @@ public class Game {
 	 * Új receptet ad a játéjban levő receptek listájához.
 	 */
 	public void addRecipe(Recipe recipe) {
+		System.out.println("Game's addRecipe(r: Recipe) has been called");
 		recipes.add(recipe);		
 	}
 	
@@ -170,10 +171,6 @@ public class Game {
 		asteroids.add(a);
 	}
 	
-	public void addRecipe(Recipe r) {
-		System.out.println("Game's addRecipe(r: Recipe) has been called");
-		recipes.add(r);
-	}
 	
 	public void setSun(Sun s) {
 		System.out.println("Game's setSun(s: Sun) has been called");

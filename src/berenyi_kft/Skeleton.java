@@ -119,6 +119,7 @@ public class Skeleton {
 					System.out.print("\tMy choice:");
 					choice2 = scan.nextLine();
 					while (choice2.equals("d") == false) {
+						
 						Game game2 = new Game();
 	
 						Recipe aiRobot2 = new Recipe();
@@ -184,8 +185,9 @@ public class Skeleton {
 							int dir = 0;
 							s21.move(dir);
 							if (s21.getPlace() == a22) {
-								System.out.println("Move to asteroid Test: Successful");
 								s21.move(dir);
+								System.out.println("Move to asteroid Test: Successful");
+								
 							} else {
 								System.out.println("Move to asteroid Test: Failed");
 							}
@@ -201,15 +203,20 @@ public class Skeleton {
 							a21.accept(tg21);
 							dir = 1;
 							s21.move(dir);
+							boolean succes_test_flag = false;
 							if (s21.getPlace() == a23) {
-								System.out.println("Move through TelePortingGate Test: Successful");
-							} else {
-								System.out.println("Move through TelePortingGate Test: Failed");
+								succes_test_flag = true;
 							}
 	
 							dir = 0;
 							s21.move(dir);
 							a21.remove(tg22);
+							
+							if (succes_test_flag) {
+								System.out.println("Move through TelePortingGate Test: Successful");
+							} else {
+								System.out.println("Move through TelePortingGate Test: Failed");
+							}
 	
 							break;
 						case "c":
@@ -290,8 +297,8 @@ public class Skeleton {
 		   			   	    	asteroid1.setGame(game);
 		   			   	    	asteroid2.setGame(game);
 		   			   	    	
-		   			   	    	asteroid1.addNeighbor(asteroid2);
-		   			   	    	asteroid2.addNeighbor(asteroid1);
+		   			   	    	asteroid1.accept(asteroid2);
+		   			   	    	asteroid2.accept(asteroid1);
 		   			   	    	
 		   			   	    	game.addAsteroid(asteroid1);
 		   			   	    	game.addAsteroid(asteroid2);
