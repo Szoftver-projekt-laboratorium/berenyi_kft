@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * 
  * @author berenyi_kft
- * Aszteroidákat reprezentáló osztály
+ * Aszteroidï¿½kat reprezentï¿½lï¿½ osztï¿½ly
  */
 public class Asteroid {
 	 
 	 /**
-	  * az aszteroida köpenyvastagsága, vagyis a magot borító sziklarétegek száma
+	  * az aszteroida kï¿½penyvastagsï¿½ga, vagyis a magot borï¿½tï¿½ sziklarï¿½tegek szï¿½ma
 	  */
 	 int rockLayerThickness;
 	 
@@ -53,10 +53,12 @@ public class Asteroid {
 	  */
 	 public Asteroid(){}
 	 
+	 /*
 	 public void addNeighbor(Asteroid a) {
 		 System.out.println("Asteroid's addNeighbor(a: Asteroid) has been called");
 		 neighbors.add(a);
 	 }
+	 */
 	 
 	 /**
 	  * Hozzï¿½adja a neighbor aszteroidï¿½t az aszteroida neighbors kollekciï¿½jï¿½hoz.
@@ -64,7 +66,10 @@ public class Asteroid {
 	  */
 	 public void accept(Asteroid a) {
 		 System.out.println("Asteroid's accept(a: Asteroid) has been called");
-		 neighbors.add(a);
+		 if(!neighbors.contains(a)) {
+			 neighbors.add(a);
+			 a.accept(this);
+		 }
 	 }
 	 
 	 /**
@@ -148,6 +153,10 @@ public class Asteroid {
 	 public void accept(TeleportingGate tg) {
 		 System.out.println("Asteroid's accept(tg: TeleportingGate) has been called");
 		 gates.add(tg);
+		 if(tg.getPair().getAsteroid() != null) {
+			 tg.getPair().getAsteroid().accept(this);
+		 }
+		 
 	 }
 	 
 	 /**
@@ -353,5 +362,10 @@ public class Asteroid {
 	 public int getSizeOfCharacters() {
 		 System.out.println("Asteroid's getSizeOfCharacters() has been called");
 		 return characters.size();
+	 }
+	 
+	 //--------------------------------------------------------------------------
+	 public String toString() {
+		 return "";
 	 }
 }
