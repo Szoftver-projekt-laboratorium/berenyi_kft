@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 /**
  * Egy �rajel jelleg� id�z�t�t reprezent�l, 
@@ -8,14 +9,39 @@ import java.util.ArrayList;
  * @author berenyi_kft
  *
  */
-public class Timer {
-
+public class Timer extends java.util.Timer{
+	/**
+	 * 
+	 */
+	int tick = 0;
+	
+	/**
+	 * 
+	 */
+	long delay, period;
+	
 	/**
 	 * a j�t�k l�ptethet� objektumainak list�ja
 	 */
 	ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
 	
+	/**
+	 * 
+	 */
+	TimerTask timertask = new TimerTask() {
+		@Override
+		public void run() {
+			tick++;
+			tick();
+		}
+	};
+	
 	//----------------------------------------------
+	
+	public Timer(long delay, long period) {
+		this.delay = delay;
+		this.period = period;
+	}
 	
 	/**
 	 * Hozz�adja s-t a steppables list�hoz
@@ -44,6 +70,8 @@ public class Timer {
 		System.out.println("Timer's tick() has been called");
 		this.steppables.forEach((si) -> {si.step();});
 	}
+	
+	
 	
 	
 }

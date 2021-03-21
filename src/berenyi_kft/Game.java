@@ -3,6 +3,8 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 public class Game {
+	//praktikus okok miatt + attributum 
+	boolean end_game_flag = false;
 	
 	/**
 	 * a j�t�kban jelenl�v� aszteroid�k kollekci�ja
@@ -57,6 +59,14 @@ public class Game {
 	}
 	
 	/**
+	 * Új telepest ad a játékban levő telepesek listájához.
+	 * @param s Az új telepes
+	 */
+	public void addSettler(Settler s) {
+		settlersAlive.add(s);
+	}
+	
+	/**
 	 * T�rli a meghal� s telepest a j�t�kb�l. 
 	 * Ha nincs t�bb �letben lev� telepes,
 	 *  akkor megh�vja az endGame() f�ggv�nyt.
@@ -86,6 +96,13 @@ public class Game {
 	public ArrayList<Asteroid> getAsteroids(){
 		System.out.println("Game's getAsteroids() has been called");
 		return this.asteroids;
+	}
+	
+	/**
+	 * Új receptet ad a játéjban levő receptek listájához.
+	 */
+	public void addRecipe(Recipe recipe) {
+		recipes.add(recipe);		
 	}
 	
 	/**
@@ -143,6 +160,11 @@ public class Game {
 	public void addAsteroid(Asteroid a) {
 		System.out.println("Game's addAsteroid(a: Asteroid) has been called");
 		asteroids.add(a);
+	}
+	
+	public void addRecipe(Recipe r) {
+		System.out.println("Game's addRecipe(r: Recipe) has been called");
+		recipes.add(r);
 	}
 	
 	public void setSun(Sun s) {

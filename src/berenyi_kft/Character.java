@@ -43,7 +43,7 @@ public abstract class Character {
 	public void move(int d) {
 		System.out.println("Character's move(d: int) has been called");
 		Asteroid neighbor = place.getNeighbor(d);
-		place.remove(this);
+		//place.remove(this);
 		neighbor.accept(this);
 		this.place = neighbor;
 	}

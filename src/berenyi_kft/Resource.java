@@ -5,7 +5,7 @@ package berenyi_kft;
  * @author berenyi_kft
  *
  */
-public abstract class Resource {
+public abstract class Resource implements Cloneable {
 
 	/**
 	 * : a telepes, akin�l az adott nyersanyagegys�g t�rol�dik
@@ -44,6 +44,19 @@ public abstract class Resource {
 	 * @return
 	 */
 	public abstract boolean isCompatibleWith(Resource r);
+	
+	/**
+	 * 
+	 */
+	public Resource clone() {
+		try {
+			return (Resource)super.clone();	
+		}catch(CloneNotSupportedException e) {
+			 return null;
+		}	
+	}
+	
+	
 	
 	
 }

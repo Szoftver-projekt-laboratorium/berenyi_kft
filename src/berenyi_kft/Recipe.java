@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Recipe {
 
 	ArrayList<Resource> resources = new ArrayList<Resource>();
+	ArrayList<Resource> resources_backup = new ArrayList<Resource>();
 	
 	//-----------------------------------------------------
 	
@@ -22,6 +23,10 @@ public class Recipe {
 	public void addResource(Resource r) {
 		System.out.println("Settler's addResource(r: Resource) has been called");
 		this.resources.add(r);
+		Resource r_clone = r.clone();
+		if(r_clone == null) System.out.println("r_clone is null");
+		if(r == r_clone) System.out.println("r_clone is similar to r");
+		this.resources.add(r_clone);
 	}
 	
 	/**
@@ -46,10 +51,8 @@ public class Recipe {
 	/**
 	 * Vissza�ll�tja az eredeti receptet, azaz a resources gy�jtem�ny tartalm�t
 	 */
-	// TODO: Pl. kellhet egy statikus változó, amit a konstruktorban
-	// és a reset-eknél klónozhat, így újrateremtve az eredeti receptet.
 	public void reset() {
-		
+		resources = (ArrayList<Resource>)resources_backup.clone();
 	}
 	
 	/**

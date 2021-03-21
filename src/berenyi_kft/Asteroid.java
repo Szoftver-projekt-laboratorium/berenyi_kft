@@ -53,10 +53,12 @@ public class Asteroid {
 	  */
 	 public Asteroid(){}
 	 
+	 /*
 	 public void addNeighbor(Asteroid a) {
 		 System.out.println("Asteroid's addNeighbor(a: Asteroid) has been called");
 		 neighbors.add(a);
 	 }
+	 */
 	 
 	 /**
 	  * Hozz�adja a neighbor aszteroid�t az aszteroida neighbors kollekci�j�hoz.
@@ -64,7 +66,10 @@ public class Asteroid {
 	  */
 	 public void accept(Asteroid a) {
 		 System.out.println("Asteroid's accept(a: Asteroid) has been called");
-		 neighbors.add(a);
+		 if(!neighbors.contains(a)) {
+			 neighbors.add(a);
+			 a.accept(this);
+		 }
 	 }
 	 
 	 /**
@@ -75,6 +80,7 @@ public class Asteroid {
 		 System.out.println("Asteroid's remove(a: Asteroid) has been called");
 		 if(neighbors.contains(a)) {
 			 neighbors.remove(a);
+			 a.remove(this);
 		 }
 	 }
 	 
@@ -148,6 +154,10 @@ public class Asteroid {
 	 public void accept(TeleportingGate tg) {
 		 System.out.println("Asteroid's accept(tg: TeleportingGate) has been called");
 		 gates.add(tg);
+		 if(tg.getPair().getAsteroid() != null) {
+			 tg.getPair().getAsteroid().accept(this);
+		 }
+		 
 	 }
 	 
 	 /**
@@ -158,6 +168,9 @@ public class Asteroid {
 	 public void remove(TeleportingGate tg) {
 		 System.out.println("Asteroid's remove(tg: TeleportingGate) has been called");
 		 gates.remove(tg);
+		 if(tg.getPair().getAsteroid() != null) {
+			 tg.getPair().getAsteroid().remove(this);
+		 }
 	 }
 	 
 	 /**
@@ -353,5 +366,10 @@ public class Asteroid {
 	 public int getSizeOfCharacters() {
 		 System.out.println("Asteroid's getSizeOfCharacters() has been called");
 		 return characters.size();
+	 }
+	 
+	 //--------------------------------------------------------------------------
+	 public String toString() {
+		 return "";
 	 }
 }
