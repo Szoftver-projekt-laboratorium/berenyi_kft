@@ -63,7 +63,7 @@ public class Timer extends java.util.Timer{
 	}
 	
 	/**
-	 * : Minden steppable listabeli objektumot l�ptet �gy, 
+	 * Minden steppable listabeli objektumot l�ptet �gy, 
 	 * hogy megh�vja a step() f�ggv�ny�t.
 	 */
 	public void tick() {
@@ -71,7 +71,13 @@ public class Timer extends java.util.Timer{
 		this.steppables.forEach((si) -> {si.step();});
 	}
 	
-	
-	
+	/**
+	 * Visszaadja a játékban levő léptethető dolgokat.
+	 * @return A játék léptethető objektumainak listája
+	 */
+	public ArrayList<ISteppable> getSteppables() {
+		System.out.println("Timer's getSteppables() has been called");
+		return steppables;
+	}
 	
 }

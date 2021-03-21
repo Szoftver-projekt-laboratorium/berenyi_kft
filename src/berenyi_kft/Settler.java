@@ -48,12 +48,26 @@ public class Settler extends Character{
 	}
 	
 	/**
+	 * A telepes elt�rolja a teleportkaput a gatesCreated kollekci�j�ban.
+	 * @param tg A frissen elkészült teleportkapu
+	 */
+	public void accept(TeleportingGate tg) {
+		System.out.println("Settler's accept(tg: TeleportingGate) has been called");
+		gatesCreated.add(tg);
+	}
+	
+	/**
 	 * A telepes elt�vol�tja az r nyersanyagot a resources kollekci�j�b�l.
 	 * @param r
 	 */
 	public void remove(Resource r) {
 		System.out.println("Settler's remove(r: Resource) has been called");
-		collectedResources.remove(r);
+		for (Resource rCollected : collectedResources) {
+			if (r.isCompatibleWith(rCollected)) {
+				collectedResources.remove(rCollected);
+				return;
+			}
+		}
 	}
 	
 	/**
@@ -94,16 +108,23 @@ public class Settler extends Character{
 	public void createAIRobot() {
 		System.out.println("Settler's createAIRobot() has been called.");
 		Recipe aiRobotRecipe = game.getAIRobotRecipe();
-		for (Resource r : collectedResources) {
+		for (int i = collectedResources.size()-1; i >= 0; i--) {
+			Resource r = collectedResources.get(i);
 			if (aiRobotRecipe.isEmpty()) {
 				break;
 			}
 			aiRobotRecipe.isNeeded(r);
 		}
+		
 		if (aiRobotRecipe.isEmpty()) {
+			aiRobotRecipe.reset();
+			for (Resource r : aiRobotRecipe.getResources()) {
+				this.remove(r);
+			}
+			
 			AIRobot air = new AIRobot();
 			place.accept(air);
-			// timer.addSteppable(air);
+			game.getTimer().addSteppable(air);
 		}
 		aiRobotRecipe.reset();
 	}
@@ -126,17 +147,23 @@ public class Settler extends Character{
 		}
 		
 		Recipe gatePairRecipe = game.getGatePairRecipe();
-		for (Resource r : collectedResources) {
+		for (int i = collectedResources.size()-1; i >= 0; i--) {
+			Resource r = collectedResources.get(i);
 			if (gatePairRecipe.isEmpty()) {
 				break;
 			}
 			gatePairRecipe.isNeeded(r);
 		}
+		
 		if (gatePairRecipe.isEmpty()) {
+			gatePairRecipe.reset();
+			for (Resource r : gatePairRecipe.getResources()) {
+				this.remove(r);
+			}
+			
 			TeleportingGate tg1 = new TeleportingGate();
 			TeleportingGate tg2 = new TeleportingGate();
 			tg1.setPair(tg2);
-			tg2.setPair(tg1);
 			gatesCreated.add(tg1);
 			gatesCreated.add(tg2);
 		}
@@ -195,5 +222,10 @@ public class Settler extends Character{
 	
 	public void setGame(Game game) {
 		this.game = game;
+	}
+	
+	public ArrayList<TeleportingGate> getGatesCreated() {
+		System.out.println("Settler's getGatesCreated() has been called");
+		return gatesCreated;
 	}
 }

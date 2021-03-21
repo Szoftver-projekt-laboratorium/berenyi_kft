@@ -6,6 +6,7 @@ public class Game {
 	//praktikus okok miatt + attributum 
 	boolean end_game_flag = false;
 	
+
 	/**
 	 * a j�t�kban jelenl�v� aszteroid�k kollekci�ja
 	 */
@@ -28,7 +29,12 @@ public class Game {
 	// Ezeknek a megkonstruálása még szép.
 	// Ezt talán konstruktor csinálja, ugye, ne a startGame().
 	ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-
+	
+	/**
+	 * A játék időzítője
+	 */
+	Timer timer;
+	
 	//--------------------------------------------
 	
 	/**
@@ -56,15 +62,9 @@ public class Game {
 		} else {
 			System.out.println("A telepesek vesztettek, mindegyik?k meghalt.");
 		}
+		end_game_flag = true;
 	}
 	
-	/**
-	 * Új telepest ad a játékban levő telepesek listájához.
-	 * @param s Az új telepes
-	 */
-	public void addSettler(Settler s) {
-		settlersAlive.add(s);
-	}
 	
 	/**
 	 * T�rli a meghal� s telepest a j�t�kb�l. 
@@ -102,6 +102,7 @@ public class Game {
 	 * Új receptet ad a játéjban levő receptek listájához.
 	 */
 	public void addRecipe(Recipe recipe) {
+		System.out.println("Game's addRecipe(r: Recipe) has been called");
 		recipes.add(recipe);		
 	}
 	
@@ -152,10 +153,24 @@ public class Game {
 	}
 	*/
 	
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+	
+	public void addSettler(Settler s) {
+		System.out.println("Game's addSettler(s: Settler) has been called");
+		settlersAlive.add(s);
+	}
+	
 	public void addAsteroid(Asteroid a) {
 		System.out.println("Game's addAsteroid(a: Asteroid) has been called");
 		asteroids.add(a);
 	}
+	
 	
 	public void setSun(Sun s) {
 		System.out.println("Game's setSun(s: Sun) has been called");
@@ -167,13 +182,15 @@ public class Game {
 		return this.settlersAlive.size();
 	}
 	
+	public ArrayList<Settler> getSettlers() {
+		System.out.println("Game's getSettlers() has been called");
+		return settlersAlive;
+	}
+	
 	public int getSizeOfAsteroids() {
 		System.out.println("Game's getSizeOfAsteroids() has been called");
 		return this.asteroids.size();
 	}
 	
-	public ArrayList<Settler> getSettlers(){
-		return settlersAlive;
-	}
 	
 }

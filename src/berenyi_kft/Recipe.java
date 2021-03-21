@@ -16,6 +16,14 @@ public class Recipe {
 	//-----------------------------------------------------
 	
 	/**
+	 * Visszaadja a receptben található nyersanyagok listáját.
+	 * @return
+	 */
+	public ArrayList<Resource> getResources() {
+		return resources;
+	}
+	
+	/**
 	 * A param�terk�nt kapott nyersanyagot hozz�adja a resources kollekci�hoz. 
 	 * A recept m�dos�t�s�hoz sz�ks�ges, ha v�ltozn�nak a felt�telek.
 	 * @param r
@@ -26,7 +34,7 @@ public class Recipe {
 		Resource r_clone = r.clone();
 		if(r_clone == null) System.out.println("r_clone is null");
 		if(r == r_clone) System.out.println("r_clone is similar to r");
-		this.resources.add(r_clone);
+		this.resources_backup.add(r_clone);
 	}
 	
 	/**
@@ -37,15 +45,16 @@ public class Recipe {
 	 *   t�rli az adott nyersanyagot a resources kollekci�b�l.
 	 * @param r
 	 */
-	// Lehetne a neve removeIfNeeded, nem booleant sejtető név kellene.
-	public void isNeeded(Resource r) {
-		System.out.println("Settler's isNeeded(r: Resource) has been called");
-		for (Resource rBill : resources) {
+	public boolean isNeeded(Resource r) {
+		System.out.println("Recipe's isNeeded(r: Resource) has been called");
+		for (int i = resources.size()-1; i >= 0; i--) {
+			Resource rBill = resources.get(i);
 			if (r.isCompatibleWith(rBill)) {
-				resources.remove(rBill);
-				break;
+				resources.remove(i);
+				return true;
 			}
 		}
+		return false;
 	}
 	
 	/**
