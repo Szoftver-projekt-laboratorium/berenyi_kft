@@ -38,7 +38,11 @@ public class TeleportingGate {
 	 */
 	public void setPair(TeleportingGate tg) {
 		System.out.println("TeleportingGate's setPair(tg: TeleportingGate) has been called");
-		this.pair = tg;
+		if(this.pair != tg ) {
+			this.pair = tg;	
+			tg.setPair(this);
+		}
+		
 	}
 	
 	/**
