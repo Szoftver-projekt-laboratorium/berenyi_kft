@@ -49,103 +49,22 @@ public class Skeleton {
 		   	    	 */
 		   	    	
 		   	    	
-		   	    	a1.checkSpaceBase();
+		   	    /*	a1.checkSpaceBase();
 		   	    	if(game.end_game_flag == true) {
 		   	    		System.out.println("WinGame Test: Successful");
 		   	    	} else {
 		   	    		System.out.println("WinGame Test: Failed");
 		   	    	}
 		   	    		   	    	
-		   	    	
+		   	    	*/
 		   	    	break;
 		   	    case "2":
 		   	    	
-		   	    	System.out.println("Testing Move Spaceship...\n Please choose a test-case:\n"); 
 		   	    	
-		   	    	System.out.println("\ta: Move to asteroid\n");
-		   	    	System.out.println("\tb: Move through TeleportingGate\n");
-		   	    	System.out.println("\tc: Fail to use TeleportingGate\n");
-		   	    	System.out.println("\td: Back to the main menu\n");
-		   	    	
-		   	    	System.out.print("\tMy choice:");
-		   	    	choice2 = scan.nextLine();
-		   	    	while (choice2.equals("d") == false) {
-		   			   	switch (choice2){
-		   			   	    case "a":
-		   			   	    	System.out.println("\t\tMove to asteroid selected:\n");
-		   			   	    	
-		   			   	    	Settler s1 = new Settler();
-		   			   	    	ids.put(s1, "settler1");
-		   			   	    	
-		   			   	    	Asteroid a1 = new Asteroid();
-		   			   	    	ids.put(a1,"asteroid1");
-		   			   	    	
-		   			   	    	Asteroid a2 = new Asteroid();
-		   			   	    	ids.put(a2,"asteroid2");
-		   			   	    	
-		   			   	    	a1.addNeighbor(a2);
-		   			   	    	a2.addNeighbor(a1);
-		   			   	    	
-		   			   	    	a1.accept(s1);
-		   			   	    	s1.setPlace(a1);
-		   			   	    	int dir = 0;
-		   			   	    	s1.move(dir);
-			   			   	    	//ids.get(s1.getPlace())
-		   			   	    	if(s1.getPlace()==a2) {
-		   			   	    		System.out.println("Move to asteroid Test: Successful");
-		   			   	    	}else {
-		   			   	    		System.out.println("Move to asteroid Test: Failed");
-		   			   	    	}
-		   			   	    	
-		   			   	    	break;
-		   			   	    case "b":
-		   			   	    	System.out.println("\t\tMove through TeleportingGate selected:\n");
-		   			   	    	/*
-		   			   	    	 * 2 ast, 2 kapu
-		   			   	    	 * 2 kapu egymás párja, aszteroidához vannak adva
-		   			   	    	 * settler, egyik asteroidához
-		   			   	    	 */
-		   			   	    	
-		   			   	    	a1.accept(tg1);
-		   			   	    	dir = 1;
-		   			   	    	s1.move(dir);
-		   			   	    	if(s1.getPlace()==a3) {
-	   			   	    		System.out.println("Move through TelePortingGate Test: Successful");
-		   			   	    	}else {
-	   			   	    		System.out.println("Move through TelePortingGate Test: Failed");
-		   			   	    	}
-		   			   	    	
-		   			   	    	dir = 0;
-		   			   	    	s1.move(dir);
-		   			   	    	a1.remove(tg2);
 		   			   	    	
 		   			   	    	
-		   			   	    	break;
-		   			   	    case "c":
-		   			   	    	System.out.println("\t\tFail to use TeleportingGate selected:\n");
 		   			   	    	
-		   			   	    	/*
-		   			   	    	 * 2 ast, 2 kapu
-		   			   	    	 * 2 kapu egymás párja, aszteroidához vannak adva
-		   			   	    	 * settler, egyik asteroidához
-		   			   	    	 * egyik kapu még a settlernél van (azért nem tud mozogni, mert a zsebében van a pár)
-		   			   	    	 * error: (nincs lerakva a párja)
-		   			   	    	 */
-		   			   	    	
-		   			   	    	dir = 1;
-		   			   	    	try {
-		   			   	    		s1.move(dir);
-		   			   	    	}catch(Exception e) {
-		   			   	    		System.out.println("Fail to use TeleportingGate Test: Successful");
-		   			   	    	}
-		   			   	    	
-		   			   	    	break;
-		   			   	    default :
-		   			   	    	System.out.println("\t\tInvalid choice!\n");
-		   			   	}
-		   			   	break;
-		   	    	}
-		   	        break;
+		   	     
 		   	    case "3":
 		   	    	System.out.println("Testing Drill Asteroid...\n Please choose a test-case:\n");
 		   	    	
@@ -161,15 +80,7 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tDrill one layer selected:\n");
-		   			   	    	/*
-		   			   	    	 * Asteroid
-		   			   	    	 * set layer
-		   			   	    	 * settler
-		   			   	    	 * drill hívás
-		   			   	    	 * expected layersizeT = 4
-		   			   	    	 * print layersize
-		   			   	    	 */
-		   			   	    	/*---------------------------------------------------------
+		   			   	    	
 		   			   	    	Asteroid asteroid1_3a=new Asteroid();
 		   			   	    	asteroid1_3a.setRockLayerThickness(2);
 		   			   	    	Settler settler1_3a=new Settler();
@@ -179,11 +90,11 @@ public class Skeleton {
 		   			   	    	if(asteroid1_3a.getRockLayerThickness()==1) {
 		   			   	    		System.out.println("Successful drilling test");
 		   			   	    	}
-		   			   	    	*///------------------------------------------------------------
+		   			   	    	
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tDrill radioactive asteroid's last layer selected:\n");
-		   			   	    	/*
+		   			   	    	
 		   			   	    	Game game_3b=new Game();
 		   			   	    	Asteroid asteroid1_3b=new Asteroid();
 		   			   	    	Asteroid asteroid2_3b=new Asteroid();
@@ -200,8 +111,8 @@ public class Skeleton {
 		   			   	    	asteroid1_3b.setGame(game_3b);
 		   			   	    	asteroid2_3b.setGame(game_3b);
 		   			   	    	
-		   			   	    	asteroid1_3b.addNeighbor(asteroid2_3b);
-		   			   	    	asteroid2_3b.addNeighbor(asteroid1_3b);
+		   			   	    	asteroid1_3b.accept(asteroid2_3b);
+		   			   	    	asteroid2_3b.accept(asteroid1_3b);
 		   			   	    	
 		   			   	    	game_3b.addAsteroid(asteroid1_3b);
 		   			   	    	game_3b.addAsteroid(asteroid2_3b);
@@ -231,7 +142,7 @@ public class Skeleton {
 		   			   	    	
 		   			   	    	if(robot_3b.getPlace()==asteroid2_3b&&!game_3b.getAsteroids().contains(asteroid1_3b)&&
 		   			   	    			!game_3b.getSettlers().contains(settler1_3b))
-		   			   	    		System.out.println("Successful Radioactive drilling test");
+		   			   	    		System.out.println("Drill radioactive asteroid's last layer selected: success");
 		   			   	    	break;
 		   			   	    case "c":
 		   			   	    	
@@ -260,11 +171,11 @@ public class Skeleton {
 		   			   	    	
 		   			   	    	if(asteroid1_3c.getResource()==null)
 		   			   	    		System.out.println("successful icy drilling test");
-		   			   	    		*/
+		   			   	    		
 		   			   	    	break;
 		   			   	    case "d":
 		   			   	    	System.out.println("\t\tFail to drill selected:\n");
-		   			   	    	/*
+		   			   	    	
 		   			   	    	Asteroid asteroid1_3d=new Asteroid();
 		   			   	    	asteroid1_3d.setRockLayerThickness(0);
 		   			   	    	
@@ -277,7 +188,7 @@ public class Skeleton {
 		   			   	    	
 		   			   	    	if(asteroid1_3d.getRockLayerThickness()==0)
 		   			   	    		System.out.println("Successful fail to drill test");
-		   			   	    		*/
+		   			   	    		
 		   			   	    	break;
 		   			   	    default :
 		   			   	    	System.out.println("\t\tInvalid choice!\n");
@@ -301,15 +212,112 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tRestore Resource selected:\n");
+		   			   	    	
+								Game game4 = new Game();
+
+								Settler s4 = new Settler();
+								game4.addSettler(s4);
+								Asteroid a4 = new Asteroid();
+								game4.addAsteroid(a4);
+								a4.setGame(game4);
+								Resource r4 = new Coal();
+								s4.accept(r4);
+
+								a4.accept(s4);
+								s4.setPlace(a4);
+
+								a4.setRockLayerThickness(0);
+
+								Sun sun4 = new Sun();
+								// sun4.addNeighbor(a4);
+
+								a4.setSun(sun4);
+								s4.restore(r4);
+
+								if (a4.getResource().equals(r4)) {
+									System.out.println("Successful restore!\n");
+								}
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tFail to restore selected:\n");
+		   			   	    	
+								Game game41 = new Game();
+
+								Settler s41 = new Settler();
+								game41.addSettler(s41);
+								Asteroid a41 = new Asteroid();
+								game41.addAsteroid(a41);
+								a41.setGame(game41);
+								Resource r41 = new Coal();
+								s41.accept(r41);
+
+								a41.accept(s41);
+								s41.setPlace(a41);
+								a41.setRockLayerThickness(1);
+								Sun sun41 = new Sun();
+								// sun4.addNeighbor(a4);
+
+								a41.setSun(sun41);
+
+								s41.restore(r41);
+
+								if (s41.getCollectedResources().isEmpty() == false) {
+									System.out.println(
+											"Successful Test!\nSettler failed to restore Resource, because it's not drilled\n");
+								}
 		   			   	    	break;
 		   			   	    case "c":
 		   			   	    	System.out.println("\t\tRestore Ice when Sun is close selected:\n");
+		   			   	    	
+								Game game411 = new Game();
+
+								Settler s411 = new Settler();
+								game411.addSettler(s411);
+								Asteroid a411 = new Asteroid();
+								game411.addAsteroid(a411);
+								a411.setGame(game411);
+								Resource r411 = new Ice();
+
+								a411.accept(s411);
+								s411.setPlace(a411);
+								a411.setRockLayerThickness(0);
+								Sun sun411 = new Sun();
+
+								a411.setSun(sun411);
+								sun411.addNeighbor(a411);
+
+								s411.restore(r411);
+
+								if (a411.getResource() == null) {
+									System.out.println("Successful Test!\nIce sublimated\n");
+								}
 		   			   	    	break;
 		   			   	    case "d":
 		   			   	    	System.out.println("\t\tRestore Uran when Sun is close selected:\n");
+		   			   	    	
+								Game game4111 = new Game();
+
+								Settler s4111 = new Settler();
+								game4111.addSettler(s4111);
+								s4111.setGame(game4111);
+								Asteroid a4111 = new Asteroid();
+								game4111.addAsteroid(a4111);
+								a4111.setGame(game4111);
+								Resource r4111 = new Uran();
+
+								a4111.accept(s4111);
+								s4111.setPlace(a4111);
+								a4111.setRockLayerThickness(0);
+								Sun sun4111 = new Sun();
+
+								a4111.setSun(sun4111);
+								sun4111.addNeighbor(a4111);
+
+								s4111.restore(r4111);
+
+								if (game4111.getAsteroids().isEmpty()) {
+									System.out.println("Successful Test!\nAsteroid exploded!");
+								}
 		   			   	    	break;
 		   			   	    default :
 		   			   	    	System.out.println("\t\tInvalid choice!\n");
@@ -331,9 +339,70 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tMine Resource selected:\n");
+		   			   	    	
+								Game game5 = new Game();
+
+								Settler s5 = new Settler();
+								// ids.put(s1, "settler1");
+								game5.addSettler(s5);
+								Asteroid a5 = new Asteroid();
+								game5.addAsteroid(a5);
+								a5.setGame(game5);
+								// ids.put(a1,"asteroid1");
+								Resource r5 = new Coal();
+								a5.addResource(r5);
+								a5.accept(s5);
+								s5.setPlace(a5);
+
+								a5.setRockLayerThickness(0);
+								Recipe spaceBase5 = new Recipe();
+								spaceBase5.addResource(new Ice());
+								spaceBase5.addResource(new Iron());
+								spaceBase5.addResource(new Coal());
+
+								game5.addRecipe(new Recipe());
+								game5.addRecipe(new Recipe());
+								game5.addRecipe(spaceBase5);
+
+								s5.mine();
+
+								if (s5.getCollectedResources().contains(r5) && a5.isMined()) {
+									System.out.println("Successful mining!\nSettler mined and collected the resource!");
+								}
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tFail to mine selected:\n");
+		   			   	    	
+		   			   	    	Game game5b = new Game();
+		   			   	    	
+		   			   	    	Settler s5b = new Settler();
+		   			   	    	//ids.put(s1, "settler1");
+		   			   	    	game5b.addSettler(s5b);
+		   			   	    	Asteroid a5b = new Asteroid();
+		   			   	    	game5b.addAsteroid(a5b);
+		   			   	    	a5b.setGame(game5b);
+		   			   	    	//ids.put(a1,"asteroid1");
+		   			   	    	Resource r5b = new Coal();
+		   			   	    	a5b.addResource(r5b);
+		   			   	    	a5b.accept(s5b);
+		   			   	    	s5b.setPlace(a5b);
+		   			   	    	
+		   			   	    	a5b.setRockLayerThickness(1);
+		   			   	    	
+		   			   	    	Recipe spaceBase5b = new Recipe();
+		   			   	    	spaceBase5b.addResource(new Ice());
+		   			   	    	spaceBase5b.addResource(new Iron());
+		   			   	    	spaceBase5b.addResource(new Coal());
+		   			   	    	
+		   			   	    	game5b.addRecipe(new Recipe());
+		   			   	    	game5b.addRecipe(new Recipe());
+		   			   	    	game5b.addRecipe(spaceBase5b);
+			   			   	   
+		   			   	    	s5b.mine();
+		   			   	    	
+				   			   	if(a5b.isMined() == false) {
+			   			   	    		System.out.println("Successful Test!\n Settler could not mine!\n");
+			   			   	    }
 		   			   	    	break;
 
 		   			   	    default :
@@ -401,7 +470,7 @@ public class Skeleton {
 								Asteroid a_6b = new Asteroid();
 								s_6b.setPlace(a_6b);
 								a_6b.accept(s_6b);
-								Timer timer = new Timer();
+								Timer timer = new Timer(0, 1000);
 
 								s_6b.createAIRobot();
 		   			   	    	
@@ -487,9 +556,39 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tPlace TeleportingGate selected:\n");
+		   			   	    	
+								// letrehozunk mindent ami kell
+								Settler s1_8a = new Settler();
+								Asteroid a1_8a = new Asteroid();
+								Asteroid a2_8a = new Asteroid();
+								TeleportingGate tg1_8a = new TeleportingGate();
+								TeleportingGate tg2_8a = new TeleportingGate();
+								// kapukat paroztatunk
+								tg1_8a.setPair(tg2_8a);
+								tg2_8a.setPair(tg1_8a);
+								// egyik aszteroidahoz bekotjuk az egyik kaput es a kapuhoz az aszteroidat
+								a1_8a.accept(tg1_8a);
+								tg1_8a.setAsteroid(a1_8a);
+								// a masik kapu a telepesnel van, es a telepes a masik aszteroidan
+								s1_8a.gatesCreated.add(tg2_8a);
+								a2_8a.accept(s1_8a);
+								s1_8a.setPlace(a2_8a);
+								// eddig tartott az init resz
+
+								s1_8a.releaseGate();
+
+								if (a1_8a == a2_8a.getNeighbor(0) && a2_8a == a1_8a.getNeighbor(0))
+									System.out.println("Successful 'TeleportingGate placing' test");
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tFail to place TeleportingGate selected:\n");
+		   			   	    	
+								Settler s1_8b = new Settler();
+								Asteroid a1_8b = new Asteroid();
+								a1_8b.accept(s1_8b);
+								s1_8b.setPlace(a1_8b);
+
+								s1_8b.releaseGate();
 		   			   	    	break;
 
 		   			   	    default :
@@ -511,9 +610,71 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tAsteroid is mined selected:\n");
+		   			   	    	
+		   			   	    	//letrehoznk mindent ami kell
+		   			   	    	Asteroid a1_9a= new Asteroid();
+		   			   	    	Settler s1_9a= new Settler();
+		   			   	    	AIRobot r_9a= new AIRobot();
+		   			   	    	Game g_9a= new Game();
+		   			   	    	Sun sun_9a= new Sun();
+		   			   	    	//az aszteroidának beállítgatjuk a dolgokat
+		   			   	    	a1_9a.accept(r_9a);
+		   			   	    	a1_9a.accept(s1_9a);
+		   			   	    	a1_9a.setSun(sun_9a);
+		   			   	    	a1_9a.setGame(g_9a);
+		   			   	    	//a settlernek is beállítjuk
+		   			   	    	s1_9a.setPlace(a1_9a);
+		   			   	    	s1_9a.setGame(g_9a);
+		   			   	    	//az airoboton is beallitjuk az aszteriodajat
+		   			   	    	r_9a.setPlace(a1_9a);
+		   			   	    	//a gamehez hozzaadjuk a dolgokat
+		   			   	    	g_9a.addAsteroid(a1_9a);
+		   			   	    	g_9a.addSettler(s1_9a);
+		   			   	    	g_9a.setSun(sun_9a);
+		   			   	    	//sunhoz hozzaadjuk az aszteroidat
+		   			   	    	sun_9a.addNeighbor(a1_9a);
+		   			   	    	//aszteroida legyen kibányászott
+		   			   	    	a1_9a.setRockLayerThickness(0);
+		   			   	    	//eddig tartott az init
+		   			   	    	
+		   			   	    	sun_9a.step();
+		   			   	    	
+		   			   	    	if(a1_9a.getCharacters()!=null)
+		   			   	    		System.out.println("Successful 'Sunstorm on mined Asteroid' test");
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tAsteroid is not mined selected:\n");
+		   			   	    	
+								// letrehoznk mindent ami kell
+								Asteroid a1_9b = new Asteroid();
+								Settler s1_9b = new Settler();
+								AIRobot r_9b = new AIRobot();
+								Game g_9b = new Game();
+								Sun sun_9b = new Sun();
+								// az aszteroidának beállítgatjuk a dolgokat
+								a1_9b.accept(r_9b);
+								a1_9b.accept(s1_9b);
+								a1_9b.setSun(sun_9b);
+								a1_9b.setGame(g_9b);
+								// a settlernek is beállítjuk
+								s1_9b.setPlace(a1_9b);
+								s1_9b.setGame(g_9b);
+								// az airoboton is beallitjuk az aszteriodajat
+								r_9b.setPlace(a1_9b);
+								// a gamehez hozzaadjuk a dolgokat
+								g_9b.addAsteroid(a1_9b);
+								g_9b.addSettler(s1_9b);
+								g_9b.setSun(sun_9b);
+								// sunhoz hozzaadjuk az aszteroidat
+								sun_9b.addNeighbor(a1_9b);
+								// aszteroida ne legyen kibányászott
+								a1_9b.setRockLayerThickness(5);
+								// eddig tartott az init
+
+								sun_9b.step();
+
+								if (g_9b.getSizeOfSettlersAlive() == 0)
+									System.out.println("Successful 'Sunstorm on not mined Asteroid' test");
 		   			   	    	break;
 
 		   			   	    default :

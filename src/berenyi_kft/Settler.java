@@ -153,9 +153,15 @@ public class Settler extends Character{
 	public void releaseGate() {
 		System.out.println("Settler's releaseGate() has been called");
 		if (gatesCreated.size() >= 1) {
-			TeleportingGate tg = gatesCreated.remove(0);
-			place.accept(tg);
+		TeleportingGate tg = gatesCreated.remove(0);
+		place.accept(tg);
+		TeleportingGate tg2=tg.getPair();
+		Asteroid a2 =tg2.getAsteroid();
+		if(a2!=null) {
+		this.getPlace().accept(a2);
+		a2.accept(this.getPlace());
 		}
+		}else {System.out.println("No TeleportingGate available. Can not release a gate. ");}
 	}
 	
 	/**
