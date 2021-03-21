@@ -116,7 +116,6 @@ public class Asteroid {
 		 return neighbors;
 	 }
 	 
-	 
 	 /**
 	  * A c karakter meg�rkezik az aszteroid�ra, 
 	  * az aszteroida hozz�adja a characters kollekci�j�hoz.
@@ -154,7 +153,7 @@ public class Asteroid {
 	 public void accept(TeleportingGate tg) {
 		 System.out.println("Asteroid's accept(tg: TeleportingGate) has been called");
 		 gates.add(tg);
-		 if(tg.getPair().getAsteroid() != null) {
+		 if (tg.getPair().getAsteroid() != null) {
 			 tg.getPair().getAsteroid().accept(this);
 		 }
 		 
@@ -168,7 +167,7 @@ public class Asteroid {
 	 public void remove(TeleportingGate tg) {
 		 System.out.println("Asteroid's remove(tg: TeleportingGate) has been called");
 		 gates.remove(tg);
-		 if(tg.getPair().getAsteroid() != null) {
+		 if (tg.getPair().getAsteroid() != null) {
 			 tg.getPair().getAsteroid().remove(this);
 		 }
 	 }

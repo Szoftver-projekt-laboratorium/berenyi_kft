@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * A karakterek egyik fajtaja a robot, 
- * amely minden idoegysegben furni vagy szomszedos aszteroidara mozogni tud.
+ * amely minden idoegysegben furni vagy szomszedos aszteroidara mozogni tud
  * @author berenyi_kft
  *
  */
@@ -21,6 +21,7 @@ public class AIRobot extends Character implements ISteppable {
 	 * @param timer A jatek idozitoje
 	 */
 	public AIRobot(Timer timer) {
+		System.out.println("AIRobot's AIRobot(Timer timer) has been called");
 		this.timer = timer;
 		timer.addSteppable(this);
 	}
@@ -33,6 +34,7 @@ public class AIRobot extends Character implements ISteppable {
 	 * kulonben valamelyik szomszedos aszteroidara lep (move(int d)).
 	 */
 	public void step() {
+		System.out.println("AIRobot's step() has been called");
 		if (place.getRockLayerThickness() >= 1) {
 			drill();
 		} else {
@@ -46,6 +48,8 @@ public class AIRobot extends Character implements ISteppable {
 	 * meghivja a Timer removeSteppable(ISteppable s) metodusat.
 	 */
 	public void die() {
+		System.out.println("AIRobot's die() has been called");
+		super.die();
 		timer.removeSteppable(this);
 	}
 	
