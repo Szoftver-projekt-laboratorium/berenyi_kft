@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Game {
 	//praktikus okok miatt + attributum 
-	boolean game = false;
+	boolean end_game_flag = false;
 	
 
 	/**
@@ -62,6 +62,7 @@ public class Game {
 		} else {
 			System.out.println("A telepesek vesztettek, mindegyik?k meghalt.");
 		}
+		end_game_flag = true;
 	}
 	
 	
