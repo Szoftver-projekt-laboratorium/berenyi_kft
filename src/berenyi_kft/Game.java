@@ -56,6 +56,14 @@ public class Game {
 	}
 	
 	/**
+	 * Új telepest ad a játékban levő telepesek listájához.
+	 * @param s Az új telepes
+	 */
+	public void addSettler(Settler s) {
+		settlersAlive.add(s);
+	}
+	
+	/**
 	 * T�rli a meghal� s telepest a j�t�kb�l. 
 	 * Ha nincs t�bb �letben lev� telepes,
 	 *  akkor megh�vja az endGame() f�ggv�nyt.
@@ -98,6 +106,7 @@ public class Game {
 	 */
 	// --------------------------------------------------
 	public Recipe getAIRobotRecipe() {
+		System.out.println("Game's Recipe getAIRobotRecipe() has been called.");
 		return recipes.get(0);
 	}
 	

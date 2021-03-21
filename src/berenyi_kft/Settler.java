@@ -88,6 +88,7 @@ public class Settler extends Character{
 	 * amelyben ez�ltal vissza�ll�tja a recept list�j�nak a tartalm�t.
 	 */
 	public void createAIRobot() {
+		System.out.println("Settler's createAIRobot() has been called.");
 		Recipe aiRobotRecipe = game.getAIRobotRecipe();
 		for (Resource r : collectedResources) {
 			if (aiRobotRecipe.isEmpty()) {
@@ -98,6 +99,7 @@ public class Settler extends Character{
 		if (aiRobotRecipe.isEmpty()) {
 			AIRobot air = new AIRobot();
 			place.accept(air);
+			// timer.addSteppable(air);
 		}
 		aiRobotRecipe.reset();
 	}
@@ -175,6 +177,10 @@ public class Settler extends Character{
 	
 	public void setPlace(Asteroid a) {
 		place=a;
+	}
+	
+	public void setGame(Game game) {
+		this.game = game;
 	}
 
 }
