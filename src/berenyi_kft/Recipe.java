@@ -34,15 +34,16 @@ public class Recipe {
 	 *   t�rli az adott nyersanyagot a resources kollekci�b�l.
 	 * @param r
 	 */
-	// Lehetne a neve removeIfNeeded, nem booleant sejtető név kellene.
-	public void isNeeded(Resource r) {
-		System.out.println("Settler's isNeeded(r: Resource) has been called");
-		for (Resource rBill : resources) {
+	public boolean isNeeded(Resource r) {
+		System.out.println("Recipe's isNeeded(r: Resource) has been called");
+		for (int i = resources.size()-1; i >= 0; i--) {
+			Resource rBill = resources.get(i);
 			if (r.isCompatibleWith(rBill)) {
-				resources.remove(rBill);
-				break;
+				resources.remove(i);
+				return true;
 			}
 		}
+		return false;
 	}
 	
 	/**

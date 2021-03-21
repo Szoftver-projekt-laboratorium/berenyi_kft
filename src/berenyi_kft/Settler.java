@@ -48,6 +48,15 @@ public class Settler extends Character{
 	}
 	
 	/**
+	 * A telepes elt�rolja a teleportkaput a gatesCreated kollekci�j�ban.
+	 * @param tg A frissen elkészült teleportkapu
+	 */
+	public void accept(TeleportingGate tg) {
+		System.out.println("Settler's accept(tg: TeleportingGate) has been called");
+		gatesCreated.add(tg);
+	}
+	
+	/**
 	 * A telepes elt�vol�tja az r nyersanyagot a resources kollekci�j�b�l.
 	 * @param r
 	 */
@@ -94,16 +103,19 @@ public class Settler extends Character{
 	public void createAIRobot() {
 		System.out.println("Settler's createAIRobot() has been called.");
 		Recipe aiRobotRecipe = game.getAIRobotRecipe();
-		for (Resource r : collectedResources) {
+		for (int i = collectedResources.size()-1; i >= 0; i--) {
+			Resource r = collectedResources.get(i);
 			if (aiRobotRecipe.isEmpty()) {
 				break;
 			}
-			aiRobotRecipe.isNeeded(r);
+			if (aiRobotRecipe.isNeeded(r)) {
+				remove(r);
+			}
 		}
 		if (aiRobotRecipe.isEmpty()) {
 			AIRobot air = new AIRobot();
 			place.accept(air);
-			// timer.addSteppable(air);
+			game.getTimer().addSteppable(air);
 		}
 		aiRobotRecipe.reset();
 	}
@@ -126,11 +138,14 @@ public class Settler extends Character{
 		}
 		
 		Recipe gatePairRecipe = game.getGatePairRecipe();
-		for (Resource r : collectedResources) {
+		for (int i = collectedResources.size()-1; i >= 0; i--) {
+			Resource r = collectedResources.get(i);
 			if (gatePairRecipe.isEmpty()) {
 				break;
 			}
-			gatePairRecipe.isNeeded(r);
+			if (gatePairRecipe.isNeeded(r)) {
+				remove(r);
+			}
 		}
 		if (gatePairRecipe.isEmpty()) {
 			TeleportingGate tg1 = new TeleportingGate();
@@ -189,5 +204,10 @@ public class Settler extends Character{
 	
 	public void setGame(Game game) {
 		this.game = game;
+	}
+	
+	public int getSizeOfGatesCreated() {
+		System.out.println("Settler's getSizeOfGatesCreated() has been called");
+		return gatesCreated.size();
 	}
 }

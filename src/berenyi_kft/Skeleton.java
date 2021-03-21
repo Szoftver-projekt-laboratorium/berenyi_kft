@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Skeleton {
 	
-	private static Map<Object, String> ids = new HashMap();
+	private static Map<Object, String> ids = new HashMap<Object, String>();
 	
 	
 
@@ -48,14 +48,14 @@ public class Skeleton {
 		   	    	 * 
 		   	    	 */
 		   	    	
-		   	    	Game game = new Game();
+		   	    	/*Game game = new Game();
 		   	    	Asteroid a1 = new Asteroid();
 		   	    	Settler s1 = new Settler();
 		   	    	Settler s2 = new Settler();
 		   	    	Recipe spaceBase = new Recipe();
-		   	    	game.addReceipt(new Recipe());
-		   	    	game.addReceipt(new Recipe());
-		   	    	game.addReceipt(spaceBase);
+		   	    	game.addRecipe(new Recipe());
+		   	    	game.addRecipe(new Recipe());
+		   	    	game.addRecipe(spaceBase);
 		   	    	
 		   	    	Ice ice = new Ice();
 		   	    	Iron iron = new Iron();
@@ -67,7 +67,7 @@ public class Skeleton {
 		   	    	a1.accept(s2);
 		   	    	a1.setGame(game);
 		   	    	
-		   	    	a1.checkSpaceBase();
+		   	    	a1.checkSpaceBase();*/
 		   	    	
 		   	    	
 		   	    	
@@ -171,6 +171,7 @@ public class Skeleton {
 		   			   	    	if(a1.getRockLayerThickness()==1) {
 		   			   	    		System.out.println("Successful drilling");
 		   			   	    	}
+		   			   	    	
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tDrill radioactive asteroid's last layer selected:\n");
@@ -224,6 +225,7 @@ public class Skeleton {
 		   			   	    			game.getSizeOfAsteroids()==1)
 		   			   	    		System.out.println("Successful radioactive drilling test");
 		   			   	    	break;
+		   			   	    	
 		   			   	    case "c":
 		   			   	    	System.out.println("\t\tDrill icy asteroid's last layer selected:\n");
 		   			   	    	
@@ -252,6 +254,7 @@ public class Skeleton {
 		   			   	    	if(asteroid3.getResource()==null)
 		   			   	    		System.out.println("successful icy drilling test");
 		   			   	    	break;
+		   			   	    	
 		   			   	    case "d":
 		   			   	    	System.out.println("\t\tFail to drill selected:\n");
 		   			   	    	
@@ -268,6 +271,7 @@ public class Skeleton {
 		   			   	    	if(asteroid4.getRockLayerThickness()==0)
 		   			   	    		System.out.println("Successful fail to drill test");
 		   			   	    	break;
+		   			   	    	
 		   			   	    default :
 		   			   	    	System.out.println("\t\tInvalid choice!\n");
 		   			   	}
@@ -345,15 +349,10 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tBuild robot selected:\n");
-		   			   	    	
-		   			   	    	/*
-		   			   	    	 * Bővíteni kellett a recept létrehozásával
-		   			   	    	 * és a Settler nyersanyagaival.
-		   			   	    	 * A Timerre is kell referencia.
-		   			   	    	 * Ha nincs elég nyersanyag, ott random
-		   			   	    	 * hoztam létre néhányat.
-		   			   	    	 */
+
 		   			   	    	Game game_6a = new Game();
+		   			   	    	Timer timer_6a = new Timer(1000, 20);
+		   			   	    	game_6a.setTimer(timer_6a);
 		   			   	    	Recipe robotRecipe_6a = new Recipe();
 		   			   	    	game_6a.addRecipe(robotRecipe_6a);
 		   			   	    	robotRecipe_6a.addResource(new Coal());
@@ -368,15 +367,20 @@ public class Skeleton {
 		   			   	    	Asteroid a_6a = new Asteroid();
 		   			   	    	s_6a.setPlace(a_6a);
 		   			   	    	a_6a.accept(s_6a);
-		   			   	    	//Timer timer_6a = new Timer();
 		   			   	    	
 		   			   	    	s_6a.createAIRobot();
-		   			   	    	
+		   			   	    	if (a_6a.getCharacters().size() == 2 &
+		   			   	    			s_6a.getCollectedResources().size() == 0 &
+		   			   	    			timer_6a.getSizeOfSteppables() == 1)
+		   			   	    		System.out.println("Successfully created new AIRobot");
 		   			   	    	break;
+		   			   	    	
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tFail to build selected:\n");
 		   			   	    	
 								Game game_6b = new Game();
+								Timer timer_6b = new Timer(1000, 20);
+		   			   	    	game_6b.setTimer(timer_6b);
 								Recipe robotRecipe_6b = new Recipe();
 								game_6b.addRecipe(robotRecipe_6b);
 								robotRecipe_6b.addResource(new Coal());
@@ -390,10 +394,11 @@ public class Skeleton {
 								Asteroid a_6b = new Asteroid();
 								s_6b.setPlace(a_6b);
 								a_6b.accept(s_6b);
-								Timer timer = new Timer();
 
 								s_6b.createAIRobot();
-		   			   	    	
+								if (a_6b.getCharacters().size() == 1 &
+		   			   	    			s_6b.getCollectedResources().size() == 2)
+		   			   	    		System.out.println("Successful fail to create of AIRobot");
 		   			   	    	break;
 
 		   			   	    default :
@@ -431,10 +436,13 @@ public class Skeleton {
 								s_7a.accept(new Iron());
 								s_7a.accept(new Uran());
 								s_7a.accept(new Iron());
-									
+								
 								s_7a.createGatePair();
-		   			   	    	
+								if (s_7a.getSizeOfGatesCreated() == 2 &
+		   			   	    			s_7a.getCollectedResources().size() == 0)
+		   			   	    		System.out.println("Successful creation of TeleportingGate pair");
 		   			   	    	break;
+		   			   	    	
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tFail to build TeleportingGatePair selected:\n");
 		   			   	    	
@@ -449,12 +457,13 @@ public class Skeleton {
 								Settler s_7b = new Settler();
 								game_7b.addSettler(s_7b);
 		   			   	    	s_7b.setGame(game_7b);
+		   			   	    	s_7b.accept(new TeleportingGate());
 								s_7b.accept(new Iron());
-								s_7b.accept(new Uran());
-								s_7b.accept(new Coal());
 
 								s_7b.createGatePair();
-		   			   	    	
+								if (s_7b.getSizeOfGatesCreated() == 1 &
+		   			   	    			s_7b.getCollectedResources().size() == 1)
+		   			   	    		System.out.println("Successful fail to create TeleportingGate pair");
 		   			   	    	break;
 
 		   			   	    default :

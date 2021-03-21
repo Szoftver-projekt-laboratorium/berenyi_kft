@@ -70,6 +70,11 @@ public class Timer extends java.util.Timer{
 		System.out.println("Timer's tick() has been called");
 		this.steppables.forEach((si) -> {si.step();});
 	}
+
+	public int getSizeOfSteppables() {
+		System.out.println("Timer's getSizeOfSteppables() has been called");
+		return steppables.size();
+	}
 	
 	
 	

@@ -6,6 +6,7 @@ public class Game {
 	//praktikus okok miatt + attributum 
 	boolean game = false;
 	
+
 	/**
 	 * a j�t�kban jelenl�v� aszteroid�k kollekci�ja
 	 */
@@ -28,7 +29,12 @@ public class Game {
 	// Ezeknek a megkonstruálása még szép.
 	// Ezt talán konstruktor csinálja, ugye, ne a startGame().
 	ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-
+	
+	/**
+	 * A játék időzítője
+	 */
+	Timer timer;
+	
 	//--------------------------------------------
 	
 	/**
@@ -58,13 +64,6 @@ public class Game {
 		}
 	}
 	
-	/**
-	 * Új telepest ad a játékban levő telepesek listájához.
-	 * @param s Az új telepes
-	 */
-	public void addSettler(Settler s) {
-		settlersAlive.add(s);
-	}
 	
 	/**
 	 * T�rli a meghal� s telepest a j�t�kb�l. 
@@ -151,6 +150,14 @@ public class Game {
 		return recipes.get(3);
 	}
 	*/
+	
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
 	
 	public void addSettler(Settler s) {
 		System.out.println("Game's addSettler(s: Settler) has been called");
