@@ -6,6 +6,7 @@ public class Game {
 	//praktikus okok miatt + attributum 
 	boolean end_game_flag = false;
 	
+
 	/**
 	 * a j�t�kban jelenl�v� aszteroid�k kollekci�ja
 	 */
@@ -28,7 +29,12 @@ public class Game {
 	// Ezeknek a megkonstruálása még szép.
 	// Ezt talán konstruktor csinálja, ugye, ne a startGame().
 	ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-
+	
+	/**
+	 * A játék időzítője
+	 */
+	Timer timer;
+	
 	//--------------------------------------------
 	
 	/**
@@ -56,8 +62,9 @@ public class Game {
 		} else {
 			System.out.println("A telepesek vesztettek, mindegyik?k meghalt.");
 		}
-		this.end_game_flag = true;
+		end_game_flag = true;
 	}
+	
 	
 	/**
 	 * T�rli a meghal� s telepest a j�t�kb�l. 
@@ -89,6 +96,13 @@ public class Game {
 	public ArrayList<Asteroid> getAsteroids(){
 		System.out.println("Game's getAsteroids() has been called");
 		return this.asteroids;
+	}
+	
+	/**
+	 * Új receptet ad a játéjban levő receptek listájához.
+	 */
+	public void addRecipe(Recipe recipe) {
+		recipes.add(recipe);		
 	}
 	
 	/**
@@ -137,6 +151,14 @@ public class Game {
 		return recipes.get(3);
 	}
 	*/
+	
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
 	
 	public void addSettler(Settler s) {
 		System.out.println("Game's addSettler(s: Settler) has been called");
