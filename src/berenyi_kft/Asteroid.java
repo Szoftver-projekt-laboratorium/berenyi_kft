@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * 
  * @author berenyi_kft
- * Aszteroidákat reprezentáló osztály
+ * Aszteroidï¿½kat reprezentï¿½lï¿½ osztï¿½ly
  */
 public class Asteroid {
 	 
 	 /**
-	  * az aszteroida köpenyvastagsága, vagyis a magot borító sziklarétegek száma
+	  * az aszteroida kï¿½penyvastagsï¿½ga, vagyis a magot borï¿½tï¿½ sziklarï¿½tegek szï¿½ma
 	  */
 	 int rockLayerThickness;
 	 
@@ -51,7 +51,9 @@ public class Asteroid {
 	 /**
 	  * ctor
 	  */
-	 public Asteroid(){}
+	 public Asteroid(){
+		 resource = null;
+	 }
 	 
 	 public void addNeighbor(Asteroid a) {
 		 System.out.println("Asteroid's addNeighbor(a: Asteroid) has been called");
@@ -250,6 +252,8 @@ public class Asteroid {
 			 resource.setAsteroid(null);
 			 this.removeResource();
 			 this.checkSpaceBase();
+		 }else {
+			 System.out.println("Asteroid is not drilled!");
 		 }
 	 }
 	 

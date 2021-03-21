@@ -161,4 +161,9 @@ public class Game {
 		System.out.println("Game's getSizeOfAsteroids() has been called");
 		return this.asteroids.size();
 	}
+	
+	public void addReceipt(Recipe r) {
+		recipes.add(r);
+		
+	}
 }
