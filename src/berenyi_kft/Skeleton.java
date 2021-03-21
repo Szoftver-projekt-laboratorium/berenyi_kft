@@ -345,9 +345,55 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tBuild robot selected:\n");
+		   			   	    	
+		   			   	    	/*
+		   			   	    	 * Bővíteni kellett a recept létrehozásával
+		   			   	    	 * és a Settler nyersanyagaival.
+		   			   	    	 * A Timerre is kell referencia.
+		   			   	    	 * Ha nincs elég nyersanyag, ott random
+		   			   	    	 * hoztam létre néhányat.
+		   			   	    	 */
+		   			   	    	Game game_6a = new Game();
+		   			   	    	Recipe robotRecipe_6a = new Recipe();
+		   			   	    	game_6a.addRecipe(robotRecipe_6a);
+		   			   	    	robotRecipe_6a.addResource(new Coal());
+		   			   	    	robotRecipe_6a.addResource(new Iron());
+		   			   	    	robotRecipe_6a.addResource(new Uran());
+		   			   	    	Settler s_6a = new Settler();
+		   			   	    	game_6a.addSettler(s_6a);
+		   			   	    	s_6a.setGame(game_6a);
+		   			   	    	s_6a.accept(new Coal());
+		   			   	    	s_6a.accept(new Iron());
+		   			   	    	s_6a.accept(new Uran());
+		   			   	    	Asteroid a_6a = new Asteroid();
+		   			   	    	s_6a.setPlace(a_6a);
+		   			   	    	a_6a.accept(s_6a);
+		   			   	    	//Timer timer_6a = new Timer();
+		   			   	    	
+		   			   	    	s_6a.createAIRobot();
+		   			   	    	
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tFail to build selected:\n");
+		   			   	    	
+								Game game_6b = new Game();
+								Recipe robotRecipe_6b = new Recipe();
+								game_6b.addRecipe(robotRecipe_6b);
+								robotRecipe_6b.addResource(new Coal());
+								robotRecipe_6b.addResource(new Iron());
+								robotRecipe_6b.addResource(new Uran());
+								Settler s_6b = new Settler();
+								game_6b.addSettler(s_6b);
+		   			   	    	s_6b.setGame(game_6b);
+								s_6b.accept(new Uran());
+								s_6b.accept(new Ice());
+								Asteroid a_6b = new Asteroid();
+								s_6b.setPlace(a_6b);
+								a_6b.accept(s_6b);
+								Timer timer = new Timer();
+
+								s_6b.createAIRobot();
+		   			   	    	
 		   			   	    	break;
 
 		   			   	    default :
@@ -369,9 +415,46 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tBuild TeleportingGatePair selected:\n");
+		   			   	    	
+								Game game_7a = new Game();
+								Recipe gatePairRecipe_7a = new Recipe();
+								game_7a.addRecipe(new Recipe());
+								game_7a.addRecipe(gatePairRecipe_7a);
+								gatePairRecipe_7a.addResource(new Iron());
+								gatePairRecipe_7a.addResource(new Iron());
+								gatePairRecipe_7a.addResource(new Ice());
+								gatePairRecipe_7a.addResource(new Uran());
+								Settler s_7a = new Settler();
+								game_7a.addSettler(s_7a);
+		   			   	    	s_7a.setGame(game_7a);
+								s_7a.accept(new Ice());
+								s_7a.accept(new Iron());
+								s_7a.accept(new Uran());
+								s_7a.accept(new Iron());
+									
+								s_7a.createGatePair();
+		   			   	    	
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tFail to build TeleportingGatePair selected:\n");
+		   			   	    	
+								Game game_7b = new Game();
+								Recipe gatePairRecipe_7b = new Recipe();
+								game_7b.addRecipe(new Recipe());
+								game_7b.addRecipe(gatePairRecipe_7b);
+								gatePairRecipe_7b.addResource(new Iron());
+								gatePairRecipe_7b.addResource(new Iron());
+								gatePairRecipe_7b.addResource(new Ice());
+								gatePairRecipe_7b.addResource(new Uran());
+								Settler s_7b = new Settler();
+								game_7b.addSettler(s_7b);
+		   			   	    	s_7b.setGame(game_7b);
+								s_7b.accept(new Iron());
+								s_7b.accept(new Uran());
+								s_7b.accept(new Coal());
+
+								s_7b.createGatePair();
+		   			   	    	
 		   			   	    	break;
 
 		   			   	    default :

@@ -59,6 +59,14 @@ public class Game {
 	}
 	
 	/**
+	 * Új telepest ad a játékban levő telepesek listájához.
+	 * @param s Az új telepes
+	 */
+	public void addSettler(Settler s) {
+		settlersAlive.add(s);
+	}
+	
+	/**
 	 * T�rli a meghal� s telepest a j�t�kb�l. 
 	 * Ha nincs t�bb �letben lev� telepes,
 	 *  akkor megh�vja az endGame() f�ggv�nyt.
@@ -88,6 +96,13 @@ public class Game {
 	public ArrayList<Asteroid> getAsteroids(){
 		System.out.println("Game's getAsteroids() has been called");
 		return this.asteroids;
+	}
+	
+	/**
+	 * Új receptet ad a játéjban levő receptek listájához.
+	 */
+	public void addRecipe(Recipe recipe) {
+		recipes.add(recipe);		
 	}
 	
 	/**
