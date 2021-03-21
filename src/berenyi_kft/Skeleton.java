@@ -33,13 +33,13 @@ public class Skeleton {
 				System.out.println("Testing Win Game.\n");
 
 				/**
-				 * Létrehozunk egy játék osztályt, és egy aszteroidát, valamint két telepest,
-				 * melyeket hozzáadjuk az aszteroidához. Létrehozunk 3 nyeranyagot, és egy
-				 * spaceBase recipe-t, amihez hozzáadjuk a nyersanyagokat. A telepesekhez is
-				 * hozzáadunk nyersanyagokat, melyek elégségesek az űrbázis megépítéséhez. A
-				 * teszt alapja az aszteroidán hívott chackSpaceBase() függvény. A teszt
-				 * sikeres, ha a függvényhívás eredményeképpen meghívódik az endgame függvény,
-				 * mely beállítja az 'end_game_flag'-t.
+				 * Letrehozunk egy jatek osztalyt, es egy aszteroidat, valamint ket telepest,
+				 * melyeket hozzaadjuk az aszteroidahoz. Letrehozunk 3 nyeranyagot, es egy
+				 * spaceBase recipe-t, amihez hozzaadjuk a nyersanyagokat. A telepesekhez is
+				 * hozzaadunk nyersanyagokat, melyek elegsegesek az urbazis megepitesehez. A
+				 * teszt alapja az aszteroidan hivott chackSpaceBase() fuggveny. A teszt
+				 * sikeres, ha a fuggvenyhivas eredmenyekeppen meghivodik az endgame fuggveny,
+				 * mely beallitja az 'end_game_flag'-t.
 				 */
 
 				Game game1 = new Game();
@@ -183,10 +183,10 @@ public class Skeleton {
 						System.out.println("\t\tMove to asteroid selected:\n");
 
 						/**
-						 * Létrehozunk két aszteroidát, melyeket beállítjuk egymás szomszédjának.
-						 * Valamint létrehozunk egy telepest, akit ráállítunk az elsőként létrehozott
-						 * aszteroidára, majd meghívjuk a telepes move() függvényét. A teszt sikeres, ha
-						 * a telepes aszteroidáját lekérdezve a másodikként létrehozott aszteroidát
+						 * Letrehozunk ket aszteroidat, melyeket beallitjuk egymas szomszedjanak.
+						 * Valamint letrehozunk egy telepest, akit raallitunk az elsokent letrehozott
+						 * aszteroidara, majd meghivjuk a telepes move() fuggvenyet. A teszt sikeres, ha
+						 * a telepes aszteroidajat lekerdezve a masodikkent letrehozott aszteroidat
 						 * kapjuk.
 						 */
 
@@ -205,11 +205,11 @@ public class Skeleton {
 						System.out.println("\t\tMove through TeleportingGate selected:\n");
 
 						/**
-						 * Létrehozunk két aszteroidát, két teleportkaput, amiket egymás párjának
-						 * beállítjuk, majd hozzáadjuk az egyes aszteroidákhoz, majd a létrehozott
-						 * telepest ráállítjuk az egyik aszteroidára. A teszt sikeres, ha a telepes
-						 * move() fügvényét meghívva az az adott irányban átlép a teleportkapu által
-						 * szomszédos aszteroidára.
+						 * Letrehozunk ket aszteroidat, ket teleportkaput, amiket egymas parjanak
+						 * beallitjuk, majd hozzaadjuk az egyes aszteroidakhoz, majd a letrehozott
+						 * telepest raallitjuk az egyik aszteroidara. A teszt sikeres, ha a telepes
+						 * move() fugvenyet meghivva az az adott iranyban atlep a teleportkapu altal
+						 * szomszedos aszteroidara.
 						 */
 
 						a21.accept(tg21);
@@ -235,9 +235,9 @@ public class Skeleton {
 						System.out.println("\t\tFail to use TeleportingGate selected:\n");
 
 						/**
-						 * Létrehozunk két aszteroidát, és két teleportkaput, melyeket hozzáadjuk az
-						 * aszteroidákhoz, majd eltávolítjuk az egyik teleportkaput az aszteroidájáról,
-						 * akkor a telepes az adott irányban már nem tud lépni a teleportkapun keresztül
+						 * Letrehozunk ket aszteroidat, es ket teleportkaput, melyeket hozzaadjuk az
+						 * aszteroidakhoz, majd eltavolitjuk az egyik teleportkaput az aszteroidajarol,
+						 * akkor a telepes az adott iranyban mar nem tud lepni a teleportkapun keresztul
 						 */
 
 						dir = 1;
@@ -259,8 +259,8 @@ public class Skeleton {
 				System.out.println("Testing Drill Asteroid...\n Please choose a test-case:\n");
 
 				System.out.println("\ta: Drill one layer\n");
-				System.out.println("\tb: Drill radioactive asteroid�s last layer\n");
-				System.out.println("\tc: Drill icy asteroid�s last layer\n");
+				System.out.println("\tb: Drill radioactive asteroid's last layer\n");
+				System.out.println("\tc: Drill icy asteroid's last layer\n");
 				System.out.println("\td: Fail to drill\n");
 				System.out.println("\te: Back to the main menu\n");
 
@@ -271,19 +271,19 @@ public class Skeleton {
 					case "a":
 						System.out.println("\t\tDrill one layer selected:\n");
 
-						// Létrehozunk egy aszteroidát és beállítjuk a réteg vastagságát 2-re
+						// Letrehozunk egy aszteroidat es beallitjuk a reteg vastagsagat 2-re
 						Asteroid asteroid1_3a = new Asteroid();
 						asteroid1_3a.setRockLayerThickness(2);
 
-						// Létrehozunk egy Settler-t és beállítjuk az aktuális aszteroidájának
+						// Letrehozunk egy Settler-t es beallitjuk az aktualis aszteroidajanak
 						// asteroid1_3a-t
 						Settler settler1_3a = new Settler();
 						settler1_3a.setPlace(asteroid1_3a);
 
-						// Meghívjuk settler1_3a drill() metódusát
+						// Meghivjuk settler1_3a drill() metodusat
 						settler1_3a.drill();
 
-						// Ha az aszteroida rétegének vastagsága egyre csökkent, akkor sikeres a teszt
+						// Ha az aszteroida retegenek vastagsaga egyre csokkent, akkor sikeres a teszt
 						if (asteroid1_3a.getRockLayerThickness() == 1) {
 							System.out.println("\nDrill one layer test: successful");
 						}
@@ -292,49 +292,49 @@ public class Skeleton {
 					case "b":
 						System.out.println("\t\tDrill radioactive asteroid's last layer selected:\n");
 
-						// Létrehozzuk a game-t
+						// Letrehozzuk a game-t
 						Game game_3b = new Game();
 
-						// Létrehozunk két aszteroidát
+						// Letrehozunk ket aszteroidat
 						Asteroid asteroid1_3b = new Asteroid();
 						Asteroid asteroid2_3b = new Asteroid();
 
-						// Létrehozunk egy Napot és beállítjuk szomszédjának az asteroid1_3b-t
+						// Letrehozunk egy Napot es beallitjuk szomszedjanak az asteroid1_3b-t
 						Sun sun_3b = new Sun();
 						sun_3b.addNeighbor(asteroid1_3b);
 
-						// Hozzáadjuk a asteroid1_3b magjába az uránt és beállítjuk a réteg vastagságát
+						// Hozzaadjuk a asteroid1_3b magjaba az urant es beallitjuk a reteg vastagsagat
 						// 1-re
 						asteroid1_3b.addResource(new Uran());
 						asteroid1_3b.setRockLayerThickness(1);
 
-						// Beállítjuk az aszteroidák sun attribútumait
+						// Beallitjuk az aszteroidak sun attributumait
 						asteroid1_3b.setSun(sun_3b);
 						asteroid2_3b.setSun(sun_3b);
 
-						// Beállítjuk az aszteroidák game attribútumait
+						// Beallitjuk az aszteroidak game attributumait
 						asteroid1_3b.setGame(game_3b);
 						asteroid2_3b.setGame(game_3b);
 
-						// Beállítjuk a két aszteroidát egymással szomszédosnak
+						// Beallitjuk a ket aszteroidat egymassal szomszedosnak
 						asteroid1_3b.accept(asteroid2_3b);
 						asteroid2_3b.accept(asteroid1_3b);
 
-						// Hozzáadjuk a game_3b-hez az aszteroidákat és beállítjuk a Napot
+						// Hozzaadjuk a game_3b-hez az aszteroidakat es beallitjuk a Napot
 						game_3b.addAsteroid(asteroid1_3b);
 						game_3b.addAsteroid(asteroid2_3b);
 						game_3b.setSun(sun_3b);
 
-						// Létrehozunk egy AIRobotot és beállítjuk aktuális aszteroidájának az
+						// Letrehozunk egy AIRobotot es beallitjuk aktualis aszteroidajanak az
 						// asteroid1_3b-t
-						AIRobot robot_3b = new AIRobot();
+						AIRobot robot_3b = new AIRobot(new Timer(1000, 20));
 						robot_3b.setPlace(asteroid1_3b);
 
-						// Létrehozunk 2 Settler-t
+						// Letrehozunk 2 Settler-t
 						Settler settler1_3b = new Settler();
 						Settler settler2_3b = new Settler();
 
-						// Hozzáadjuk az aszteroidákhoz a robotot és a Settlereket
+						// Hozzaadjuk az aszteroidakhoz a robotot es a Settlereket
 						asteroid1_3b.accept(robot_3b);
 						asteroid1_3b.accept(settler1_3b);
 						asteroid2_3b.accept(settler2_3b);
@@ -343,57 +343,57 @@ public class Skeleton {
 						game_3b.addSettler(settler1_3b);
 						game_3b.addSettler(settler2_3b);
 
-						// Beállítjuk a Settlerek game attribútumait
+						// Beallitjuk a Settlerek game attributumait
 						settler1_3b.setGame(game_3b);
 						settler2_3b.setGame(game_3b);
 
-						// Beállítjuk a Settlerek aktuális aszteroidáit
+						// Beallitjuk a Settlerek aktualis aszteroidait
 						settler1_3b.setPlace(asteroid1_3b);
 						settler2_3b.setPlace(asteroid2_3b);
 
-						// Meghívjuk a settler1_3b drill() metódusát
+						// Meghivjuk a settler1_3b drill() metodusat
 						settler1_3b.drill();
 
-						// Ha a robot aktuális aszteroidája az asteroid2_3b és ha a
-						// játék nem tartalmazza az asteroid1_3b-t,
-						// illetve ha a játék nem tartalmazza a settler1_3b-t, akkor a teszt sikeres
+						// Ha a robot aktualis aszteroidaja az asteroid2_3b es ha a
+						// jatek nem tartalmazza az asteroid1_3b-t,
+						// illetve ha a jatek nem tartalmazza a settler1_3b-t, akkor a teszt sikeres
 						if (robot_3b.getPlace() == asteroid2_3b && !game_3b.getAsteroids().contains(asteroid1_3b)
 								&& !game_3b.getSettlers().contains(settler1_3b))
 							System.out.println("\nDrill radioactive asteroid's last layer test: successful");
 						break;
 					case "c":
 
-						// Létrehozunk egy aszteroidát és egy Settler-t
+						// Letrehozunk egy aszteroidat es egy Settler-t
 						Settler settler1_3c = new Settler();
 						Asteroid asteroid1_3c = new Asteroid();
 
-						// Létrehozzuk a game_3c-t és hozzáadjuk a létrehozott aszteroidát és Settler-t
+						// Letrehozzuk a game_3c-t es hozzaadjuk a letrehozott aszteroidat es Settler-t
 						Game game_3c = new Game();
 						game_3c.addSettler(settler1_3c);
 						game_3c.addAsteroid(asteroid1_3c);
 
-						// Beállítjuk a Settler game attribútumát és az aszteroidáját
+						// Beallitjuk a Settler game attributumat es az aszteroidajat
 						settler1_3c.setPlace(asteroid1_3c);
 						settler1_3c.setGame(game_3c);
 
-						// Beállítjuk az aszteroida game attribútumát és hozzáadjuk a létrehozott
+						// Beallitjuk az aszteroida game attributumat es hozzaadjuk a letrehozott
 						// Settler-t,
-						// valamint beállítjuk a réteg vastagságát 1-re
+						// valamint beallitjuk a reteg vastagsagat 1-re
 						asteroid1_3c.setGame(game_3c);
 						asteroid1_3c.accept(settler1_3c);
 						asteroid1_3c.setRockLayerThickness(1);
 
-						// Létrehozzuk a Napot, melyet beállítunk a játék és az aszteroida számára
-						// és hozzáadjuk szomszédos aszteroidaként az asteroid1_3c-t
+						// Letrehozzuk a Napot, melyet beallitunk a jatek es az aszteroida szamara
+						// es hozzaadjuk szomszedos aszteroidakent az asteroid1_3c-t
 						Sun sun_3c = new Sun();
 						game_3c.setSun(sun_3c);
 						asteroid1_3c.setSun(sun_3c);
 						sun_3c.addNeighbor(asteroid1_3c);
 
-						// Az aszteroida magjába jeget helyezünk
+						// Az aszteroida magjaba jeget helyezunk
 						asteroid1_3c.addResource(new Ice());
 
-						// Meghívjuk a Settler drill() metódusát
+						// Meghivjuk a Settler drill() metodusat
 						settler1_3c.drill();
 
 						// Ha az aszteroida nem tartalmaz nyersanyagot, akkor sikeres a teszt
@@ -404,22 +404,22 @@ public class Skeleton {
 					case "d":
 						System.out.println("\t\tFail to drill selected:\n");
 
-						// Létrehozunk egy aszteroidát és beállítjuk a réteg vastagságát 1-re
+						// Letrehozunk egy aszteroidat es beallitjuk a reteg vastagsagat 1-re
 						Asteroid asteroid1_3d = new Asteroid();
 						asteroid1_3d.setRockLayerThickness(0);
 
-						// Létrehozunk egy Settler-t
+						// Letrehozunk egy Settler-t
 						Settler settler1_3d = new Settler();
 
-						// Beállítjuk a settler1_3d aktuális aszteroidáját és hozzáadjuk a Settler-t az
-						// aszteroidához
+						// Beallitjuk a settler1_3d aktualis aszteroidajat es hozzaadjuk a Settler-t az
+						// aszteroidahoz
 						settler1_3d.setPlace(asteroid1_3d);
 						asteroid1_3d.accept(settler1_3d);
 
-						// Meghívjuk a Settler drill() metódusát
+						// Meghivjuk a Settler drill() metodusat
 						settler1_3d.drill();
 
-						// Ha az aszteroida rétegének vastagsága 0, akkor a teszt sikeres
+						// Ha az aszteroida retegenek vastagsaga 0, akkor a teszt sikeres
 						if (asteroid1_3d.getRockLayerThickness() == 0)
 							System.out.println("\nFail to drill test: successful");
 
@@ -448,9 +448,9 @@ public class Skeleton {
 						System.out.println("\t\tRestore Resource selected:\n");
 
 						/*
-						 * Létrehozunk egy Settler-t, amelyhez hozzáadunk egy szenet. Létrehozunk egy
-						 * aszteroidát és a réteg vastagságát beállítjuk 0-ra. Meghívjuk a Settler
-						 * restore() függvényét és ha az aszteroida magjába bekerül a nyersanyag, akkor
+						 * Letrehozunk egy Settler-t, amelyhez hozzaadunk egy szenet. Letrehozunk egy
+						 * aszteroidat es a reteg vastagsagat beallitjuk 0-ra. Meghivjuk a Settler
+						 * restore() fuggvenyet es ha az aszteroida magjaba bekerul a nyersanyag, akkor
 						 * sikeres a teszt.
 						 */
 						Game game4 = new Game();
@@ -482,10 +482,10 @@ public class Skeleton {
 						System.out.println("\t\tFail to restore selected:\n");
 
 						/*
-						 * Létrehozunk egy egy Settler-t, amelyhez hozzáadunk egy szenet. Létrehozunk
-						 * egy aszteroidát és a réteg vastagságát beállítjuk 1-re. Meghívjuk a Settler
-						 * restore() függvényét és ha a Settler még mindig tárolja a nyersanyagot, tehát
-						 * nem sikerült az aszteroida magjába helyezni a réteg vastagsága miatt, akkor
+						 * Letrehozunk egy egy Settler-t, amelyhez hozzaadunk egy szenet. Letrehozunk
+						 * egy aszteroidat es a reteg vastagsagat beallitjuk 1-re. Meghivjuk a Settler
+						 * restore() fuggvenyet es ha a Settler meg mindig tarolja a nyersanyagot, tehat
+						 * nem sikerult az aszteroida magjaba helyezni a reteg vastagsaga miatt, akkor
 						 * sikeres a teszt.
 						 */
 						Game game41 = new Game();
@@ -516,12 +516,12 @@ public class Skeleton {
 						System.out.println("\t\tRestore Ice when Sun is close selected:\n");
 
 						/*
-						 * Létrehozunk egy Settler-t és egy aszteroidát, amely épp napközelben van,
-						 * rétegvastagsága 0 és üreges. Beállítjuk a Settler aktuális aszteroidájának a
-						 * létrehozott aszteroidát és hozzáadunk a Settler nyersanyagaihoz egy jeget.
-						 * Meghívjuk a Settler restore(r: Resource) függvényét. Ha az aszteroida
-						 * továbbra is üreges, tehát nem tárol nyersanyagot, mert a jég vízzé
-						 * szublimált, akkor sikeres a teszt.
+						 * Letrehozunk egy Settler-t es egy aszteroidat, amely epp napkozelben van,
+						 * retegvastagsaga 0 es ureges. Beallitjuk a Settler aktualis aszteroidajanak a
+						 * letrehozott aszteroidat es hozzaadunk a Settler nyersanyagaihoz egy jeget.
+						 * Meghivjuk a Settler restore(r: Resource) fuggvenyet. Ha az aszteroida
+						 * tovabbra is ureges, tehat nem tarol nyersanyagot, mert a jeg vizze
+						 * szublimalt, akkor sikeres a teszt.
 						 */
 
 						Game game411 = new Game();
@@ -551,11 +551,11 @@ public class Skeleton {
 						System.out.println("\t\tRestore Uran when Sun is close selected:\n");
 
 						/*
-						 * Létrehozunk egy Settler-t és egy aszteroidát, amely épp napközelben van,
-						 * rétegvastagsága 0 és üreges. Beállítjuk a Settler aktuális aszteroidájának a
-						 * létrehozott aszteroidát és hozzáadunk a Settler-hez egy uránt, amely
-						 * radioaktív. Meghívjuk a Settler restore(r: Resource) függvényét. Ha az
-						 * aszteroida felrobban és ezáltal törlődik a játékból, akkor sikeres a teszt.
+						 * Letrehozunk egy Settler-t es egy aszteroidat, amely epp napkozelben van,
+						 * retegvastagsaga 0 es ureges. Beallitjuk a Settler aktualis aszteroidajanak a
+						 * letrehozott aszteroidat es hozzaadunk a Settler-hez egy urant, amely
+						 * radioaktiv. Meghivjuk a Settler restore(r: Resource) fuggvenyet. Ha az
+						 * aszteroida felrobban es ezaltal torlodik a jatekbol, akkor sikeres a teszt.
 						 */
 
 						Game game4111 = new Game();
@@ -604,10 +604,10 @@ public class Skeleton {
 						System.out.println("\t\tMine Resource selected:\n");
 
 						/*
-						 * Létrehozunk egy Settler-t és egy aszteroidát, amelynek a rétegvastagsága 0, és
-						 * eltárol egy szenet, továbbá létrehozzuk az űrbázis receptjét. Meghívjuk a
-						 * Settler mine() metódusát, ha a Settler ezután eltárolja a az aszteroidába
-						 * helyezett szenet és az aszteroida magja üres, akkor sikeres a teszt.
+						 * Letrehozunk egy Settler-t es egy aszteroidat, amelynek a retegvastagsaga 0, es
+						 * eltarol egy szenet, tovabba letrehozzuk az urbazis receptjet. Meghivjuk a
+						 * Settler mine() metodusat, ha a Settler ezutan eltarolja a az aszteroidaba
+						 * helyezett szenet es az aszteroida magja ures, akkor sikeres a teszt.
 						 */
 
 						Game game5 = new Game();
@@ -644,10 +644,10 @@ public class Skeleton {
 						System.out.println("\t\tFail to mine selected:\n");
 						
 						/*
-						 * Létrehozunk egy Settler-t és egy aszteroidát, amelynek a rétegvastagsága 1,
-						 * és eltárol egy szenet, továbbá létrehozzuk az űrbázis receptjét.
-						 * Meghívjuk a Settler mine() metódusát; ha az aszteroida ezek után nincsen
-						 * kibányászva, akkor sikeres a teszt.
+						 * Letrehozunk egy Settler-t es egy aszteroidat, amelynek a retegvastagsaga 1,
+						 * es eltarol egy szenet, tovabba letrehozzuk az urbazis receptjet.
+						 * Meghivjuk a Settler mine() metodusat; ha az aszteroida ezek utan nincsen
+						 * kibanyaszva, akkor sikeres a teszt.
 						 */
 
 						Game game5b = new Game();
@@ -704,11 +704,11 @@ public class Skeleton {
 						System.out.println("\t\tBuild robot selected:\n");
 
 						/*
-						 * Létrehozzuk a robot elkészítéséhez szükséges receptet, amely nyersanyagokat
-						 * tartalmaz és létrehozunk egy Settler-t, amelyhez hozzáadjuk az AIRobot
-						 * megépítéséhez szükséges nyersanyagokat. Meghívjuk a Settler createAIRobot()
-						 * metódusát, ha ketten vannak a Settler aszteroidáján, továbbá ha a Settler
-						 * által eltárolt nyersanyagok elfogytak és a Timerhez hozzáadódott egy
+						 * Letrehozzuk a robot elkeszitesehez szukseges receptet, amely nyersanyagokat
+						 * tartalmaz es letrehozunk egy Settler-t, amelyhez hozzaadjuk az AIRobot
+						 * megepitesehez szukseges nyersanyagokat. Meghivjuk a Settler createAIRobot()
+						 * metodusat, ha ketten vannak a Settler aszteroidajan, tovabba ha a Settler
+						 * altal eltarolt nyersanyagok elfogytak es a Timerhez hozzaadodott egy
 						 * Steppable, akkor sikeres a teszt.
 						 */
 						Game game_6a = new Game();
@@ -738,10 +738,10 @@ public class Skeleton {
 						System.out.println("Fail to build robot selected:");
 
 						/*
-						 * Létrehozzuk a robot elkészítéséhez szükséges receptet, amely nyersanyagokat
-						 * tartalmaz és létrehozunk egy Settler-t, amelyhez hozzáadunk további
-						 * nyersanyagokat. Meghívjuk a Settler createAIRobot() metódusát, ha a Settler
-						 * egyedül van az aszteroidán és továbbra is eltárolja a nyersanyagokat, akkor
+						 * Letrehozzuk a robot elkeszitesehez szukseges receptet, amely nyersanyagokat
+						 * tartalmaz es letrehozunk egy Settler-t, amelyhez hozzaadunk tovabbi
+						 * nyersanyagokat. Meghivjuk a Settler createAIRobot() metodusat, ha a Settler
+						 * egyedul van az aszteroidan es tovabbra is eltarolja a nyersanyagokat, akkor
 						 * sikeres a teszt.
 						 */
 
@@ -789,10 +789,10 @@ public class Skeleton {
 						System.out.println("\t\tBuild TeleportingGate pair selected:\n");
 
 						/*
-						 * Létrehozzuk a teleportkapu-pár elkészítéséhez szükséges receptet, amely
-						 * nyersanyagokat tartalmaz és létrehozunk egy Settler-t, amelyhez hozzáadjuk a
-						 * teleportkapuk megépítéséhez szükséges nyersanyagokat. Meghívjuk a Settler
-						 * createGatePair() metódusát, ha a Settlernél lévő teleportkapuk száma 2 és a
+						 * Letrehozzuk a teleportkapu-par elkeszitesehez szukseges receptet, amely
+						 * nyersanyagokat tartalmaz es letrehozunk egy Settler-t, amelyhez hozzaadjuk a
+						 * teleportkapuk megepitesehez szukseges nyersanyagokat. Meghivjuk a Settler
+						 * createGatePair() metodusat, ha a Settlernel levo teleportkapuk szama 2 es a
 						 * Settler nyersanyagai elfogytak, akkor sikeres a teszt.
 						 */
 
@@ -823,10 +823,10 @@ public class Skeleton {
 						System.out.println("\t\tFail to build TeleportingGate pair selected:\n");
 
 						/*
-						 * Létrehozzuk a teleportkapu-pár elkészítéséhez szükséges receptet, amely
-						 * nyersanyagokat tartalmaz és létrehozunk egy Settler-t, amelyhez hozzáadunk
-						 * egy teleportkaput, illetve nyersanyagot. Meghívjuk a Settler createGatePair()
-						 * metódusát, ha a Settlernél lévő teleportkapuk száma továbbra is 1 és a
+						 * Letrehozzuk a teleportkapu-par elkeszitesehez szukseges receptet, amely
+						 * nyersanyagokat tartalmaz es letrehozunk egy Settler-t, amelyhez hozzaadunk
+						 * egy teleportkaput, illetve nyersanyagot. Meghivjuk a Settler createGatePair()
+						 * metodusat, ha a Settlernel levo teleportkapuk szama tovabbra is 1 es a
 						 * Settlernek megmaradt a nyersanyaga , akkor sikeres a teszt.
 						 */
 
@@ -870,11 +870,11 @@ public class Skeleton {
 						System.out.println("\t\tPlace TeleportingGate selected:\n");
 
 						/*
-						 * Létrehozunk két aszteroidát, egy Settler-t és két teleportkaput, amelyek
-						 * egymásnak a párjai. A két teleportkapuból az egyiket elhelyezzük az a1_8a
-						 * aszteroidán, a másikat pedig a Settlernél, aki az a2_8a aszteroidán
-						 * helyezkedik el. Meghívjuk a Settler releaseGate() metódusát, ha a két
-						 * aszteroida egymásnak a szomszédjai a teleportkapuk által, akkor sikeres a
+						 * Letrehozunk ket aszteroidat, egy Settler-t es ket teleportkaput, amelyek
+						 * egymasnak a parjai. A ket teleportkapubol az egyiket elhelyezzuk az a1_8a
+						 * aszteroidan, a masikat pedig a Settlernel, aki az a2_8a aszteroidan
+						 * helyezkedik el. Meghivjuk a Settler releaseGate() metodusat, ha a ket
+						 * aszteroida egymasnak a szomszedjai a teleportkapuk altal, akkor sikeres a
 						 * teszt.
 						 */
 
@@ -902,9 +902,9 @@ public class Skeleton {
 					case "b":
 
 						/*
-						 * Létrehozunk két aszteroidát, egy Settler-t, amely a Settler aktuális
-						 * aszteroidája, majd pedig meghívjuk a Settler releaseGate() metódusát. Ha az
-						 * aszteroidán lévő teleportkapuk száma 0, akkor sikeres a teszt.
+						 * Letrehozunk ket aszteroidat, egy Settler-t, amely a Settler aktualis
+						 * aszteroidaja, majd pedig meghivjuk a Settler releaseGate() metodusat. Ha az
+						 * aszteroidan levo teleportkapuk szama 0, akkor sikeres a teszt.
 						 */
 
 						System.out.println("\t\tFail to place TeleportingGate selected:\n");
@@ -941,23 +941,23 @@ public class Skeleton {
 						System.out.println("\t\tAsteroid is mined selected:\n");
 
 						/*
-						 * Létrehozunk egy Settler-t, egy aszteroidát, amelynek a rétegvastagsága 0,
-						 * továbbá egy AIRobotot és egy Napot. Meghívjuk a Sun step() metódusát, ezáltal
-						 * megvalósítva a napvihart. A teszt sikeres, ha a játékban megtalálható
-						 * játékosok száma nem 0 a napvihar után.
+						 * Letrehozunk egy Settler-t, egy aszteroidat, amelynek a retegvastagsaga 0,
+						 * tovabba egy AIRobotot es egy Napot. Meghivjuk a Sun step() metodusat, ezaltal
+						 * megvalositva a napvihart. A teszt sikeres, ha a jatekban megtalalhato
+						 * jatekosok szama nem 0 a napvihar utan.
 						 */
 
 						Asteroid a1_9a = new Asteroid();
 						Settler s1_9a = new Settler();
-						AIRobot r_9a = new AIRobot();
+						AIRobot r_9a = new AIRobot(new Timer(1000, 20));
 						Game g_9a = new Game();
 						Sun sun_9a = new Sun();
-						// az aszteroidának beállítgatjuk a dolgokat
+						// az aszteroidanak beallitgatjuk a dolgokat
 						a1_9a.accept(r_9a);
 						a1_9a.accept(s1_9a);
 						a1_9a.setSun(sun_9a);
 						a1_9a.setGame(g_9a);
-						// a settlernek is beállítjuk
+						// a settlernek is beallitjuk
 						s1_9a.setPlace(a1_9a);
 						s1_9a.setGame(g_9a);
 						// az airoboton is beallitjuk az aszteriodajat
@@ -968,7 +968,7 @@ public class Skeleton {
 						g_9a.setSun(sun_9a);
 						// sunhoz hozzaadjuk az aszteroidat
 						sun_9a.addNeighbor(a1_9a);
-						// aszteroida legyen kibányászott
+						// aszteroida legyen kibanyaszott
 						a1_9a.setRockLayerThickness(0);
 						// eddig tartott az init
 
@@ -981,15 +981,15 @@ public class Skeleton {
 						System.out.println("\t\tAsteroid is not mined selected:\n");
 
 						/*
-						 * Létrehozunk egy Settler-t, egy aszteroidát, amelynek a rétegvastagsága 5,
-						 * továbbá egy AIRobotot és egy Napot. Meghívjuk a Sun step() metódusát, ezáltal
-						 * megvalósítva a napvihart. A teszt sikeres, ha a játékban megtalálható
-						 * játékosok száma 0 a napvihar után.
+						 * Letrehozunk egy Settler-t, egy aszteroidat, amelynek a retegvastagsaga 5,
+						 * tovabba egy AIRobotot es egy Napot. Meghivjuk a Sun step() metodusat, ezaltal
+						 * megvalositva a napvihart. A teszt sikeres, ha a jatekban megtalalhato
+						 * jatekosok szama 0 a napvihar utan.
 						 */
 
 						Asteroid a1_9b = new Asteroid();
 						Settler s1_9b = new Settler();
-						AIRobot r_9b = new AIRobot();
+						AIRobot r_9b = new AIRobot(new Timer(1000, 20));
 						Game g_9b = new Game();
 						Sun sun_9b = new Sun();
 
@@ -1013,7 +1013,7 @@ public class Skeleton {
 						sun_9b.step();
 
 						if (g_9b.getSizeOfSettlersAlive() == 0)
-							System.out.println("\nsunstorm on not mined asteroid test: successful");
+							System.out.println("\nSunstorm on not mined asteroid test: successful");
 						break;
 
 					default:

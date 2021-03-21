@@ -3,53 +3,55 @@ package berenyi_kft;
 import java.util.Random;
 
 /**
- * A karakterek egyik fajt�ja a robot, 
- * amely minden id�egys�gben f�rni vagy szomsz�dos aszteroid�ra mozogni tud.
+ * A karakterek egyik fajtaja a robot, 
+ * amely minden idoegysegben furni vagy szomszedos aszteroidara mozogni tud.
  * @author berenyi_kft
  *
  */
 public class AIRobot extends Character implements ISteppable {
-	// A játék időzítője, amely a robotot is lépteti.
-	// TODO: konstruktorban át kell vennie, hogy a halálakor meghívhassa?
-	// private Timer timer;
 	
 	/**
-	 * Új AIRobot jön létre. 
-	 * A függvény hozzáadja a timer steppable objektumainak listájához.
+	 * A jatek idozitoje, amely a robotot is lepteti.
 	 */
-	public AIRobot() {
-		// timer.addSteppable(this);
+	private Timer timer;
+	
+	/**
+	 * Uj AI Robot jon letre, amely parameterkent atveszi az ot lepteto idozitot is.
+	 * A konstruktor egybol hozzaadja a robotot az idozitojehez.
+	 * @param timer A jatek idozitoje
+	 */
+	public AIRobot(Timer timer) {
+		this.timer = timer;
+		timer.addSteppable(this);
 	}
 	
 	/**
-	 * A robot megk�rdezi az aszteroid�t�l, amelyen �ll, 
-	 * hogy mekkora a k�penyvastags�ga. 
-	 * Ha az aszteroida nincs teljesen �tf�rva, 
-	 * akkor a robot drill() m�veletet v�gez,
-	 * k�l�nben valamelyik szomsz�dos aszteroid�ra l�p (move(int d)).
+	 * A robot megkerdezi az aszteroidatol, amelyen all, 
+	 * hogy mekkora a kopenyvastagsaga. 
+	 * Ha az aszteroida nincs teljesen atfurva, 
+	 * akkor a robot drill() muveletet vegez,
+	 * kulonben valamelyik szomszedos aszteroidara lep (move(int d)).
 	 */
 	public void step() {
 		if (place.getRockLayerThickness() >= 1) {
 			drill();
 		} else {
 			Random random = new Random();
-			move(random.nextInt()%place.getNeighbors().size());
+			move(random.nextInt() % place.getNeighbors().size());
 		}
 	}
 	
 	/**
-	 * A robot megsemmis�l: 
-	 * megh�vja a Timer removeSteppable(ISteppable s) met�dus�t.
+	 * A robot megsemmisul: 
+	 * meghivja a Timer removeSteppable(ISteppable s) metodusat.
 	 */
 	public void die() {
-		// A timerre lesz referenciája a robotoknak?
-		// timer.removeSteppable(this);
+		timer.removeSteppable(this);
 	}
 	
 	/**
-	 * A robot egy v�letlenszer� szomsz�dos aszteroid�n landol: 
-	 * sorsol egy d sz�mot, 
-	 * majd megh�vja a move (int d) met�dust.
+	 * A robot egy veletlenszeru szomszedos aszteroidan landol: 
+	 * sorsol egy d szamot, majd meghivja magan a move (int d) metodust.
 	 */
 	
 	@Override

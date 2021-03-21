@@ -122,9 +122,8 @@ public class Settler extends Character{
 				this.remove(r);
 			}
 			
-			AIRobot air = new AIRobot();
+			AIRobot air = new AIRobot(game.getTimer());
 			place.accept(air);
-			game.getTimer().addSteppable(air);
 		}
 		aiRobotRecipe.reset();
 	}
