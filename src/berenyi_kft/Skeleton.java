@@ -136,111 +136,111 @@ public class Skeleton {
 		   			   	    	 * print layersize
 		   			   	    	 */
 		   			   	    	
-		   			   	    	Asteroid a1=new Asteroid();
-		   			   	    	a1.setRockLayerThickness(2);
-		   			   	    	Settler s1=new Settler();
-		   			   	    	s1.setPlace(a1);
-		   			   	    	s1.drill();
-		   			   	    	System.out.println(a1.getRockLayerThickness());
-		   			   	    	if(a1.getRockLayerThickness()==1) {
-		   			   	    		System.out.println("Successful drilling");
+		   			   	    	Asteroid asteroid1_3a=new Asteroid();
+		   			   	    	asteroid1_3a.setRockLayerThickness(2);
+		   			   	    	Settler settler1_3a=new Settler();
+		   			   	    	settler1_3a.setPlace(asteroid1_3a);
+		   			   	    	settler1_3a.drill();
+		   			   	    	System.out.println(asteroid1_3a.getRockLayerThickness());
+		   			   	    	if(asteroid1_3a.getRockLayerThickness()==1) {
+		   			   	    		System.out.println("Successful drilling test");
 		   			   	    	}
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tDrill radioactive asteroid's last layer selected:\n");
 		   			   	    	
-		   			   	    	Game game=new Game();
-		   			   	    	Asteroid asteroid1=new Asteroid();
-		   			   	    	Asteroid asteroid2=new Asteroid();
+		   			   	    	Game game_3b=new Game();
+		   			   	    	Asteroid asteroid1_3b=new Asteroid();
+		   			   	    	Asteroid asteroid2_3b=new Asteroid();
 		   			   	    	
-		   			   	    	Sun sun=new Sun();
-		   			   	    	sun.addNeighbor(asteroid1);
+		   			   	    	Sun sun_3b=new Sun();
+		   			   	    	sun_3b.addNeighbor(asteroid1_3b);
 		   			   	    	
-		   			   	    	asteroid1.addResource(new Uran());
-		   			   	    	asteroid1.setRockLayerThickness(1);
+		   			   	    	asteroid1_3b.addResource(new Uran());
+		   			   	    	asteroid1_3b.setRockLayerThickness(1);
 		   			   	    	
-		   			   	    	asteroid1.setSun(sun);
-		   			   	    	asteroid2.setSun(sun);
+		   			   	    	asteroid1_3b.setSun(sun_3b);
+		   			   	    	asteroid2_3b.setSun(sun_3b);
 		   			   	    	
-		   			   	    	asteroid1.setGame(game);
-		   			   	    	asteroid2.setGame(game);
+		   			   	    	asteroid1_3b.setGame(game_3b);
+		   			   	    	asteroid2_3b.setGame(game_3b);
 		   			   	    	
-		   			   	    	asteroid1.addNeighbor(asteroid2);
-		   			   	    	asteroid2.addNeighbor(asteroid1);
+		   			   	    	asteroid1_3b.addNeighbor(asteroid2_3b);
+		   			   	    	asteroid2_3b.addNeighbor(asteroid1_3b);
 		   			   	    	
-		   			   	    	game.addAsteroid(asteroid1);
-		   			   	    	game.addAsteroid(asteroid2);
-		   			   	    	game.setSun(sun);
+		   			   	    	game_3b.addAsteroid(asteroid1_3b);
+		   			   	    	game_3b.addAsteroid(asteroid2_3b);
+		   			   	    	game_3b.setSun(sun_3b);
 		   			   	    	
-		   			   	    	AIRobot robot=new AIRobot();
-		   			   	    	robot.setPlace(asteroid1);
+		   			   	    	AIRobot robot_3b=new AIRobot();
+		   			   	    	robot_3b.setPlace(asteroid1_3b);
 		   			   	    
 		   			   	    	
-		   			   	    	Settler settler1=new Settler();
-		   			   	    	Settler settler2=new Settler();
+		   			   	    	Settler settler1_3b=new Settler();
+		   			   	    	Settler settler2_3b=new Settler();
 		   			   	    	
-		   			   	    	asteroid1.accept(robot);
-		   			   	    	asteroid1.accept(settler1);
-		   			   	    	asteroid2.accept(settler2);
+		   			   	    	asteroid1_3b.accept(robot_3b);
+		   			   	    	asteroid1_3b.accept(settler1_3b);
+		   			   	    	asteroid2_3b.accept(settler2_3b);
 		   			   	    	
-		   			   	    	game.addSettler(settler1);
-		   			   	    	game.addSettler(settler2);
+		   			   	    	game_3b.addSettler(settler1_3b);
+		   			   	    	game_3b.addSettler(settler2_3b);
 		   			   	    	
-		   			   	    	settler1.setGame(game);
-		   			   	    	settler2.setGame(game);
+		   			   	    	settler1_3b.setGame(game_3b);
+		   			   	    	settler2_3b.setGame(game_3b);
 		   			   	    	
-		   			   	    	settler1.setPlace(asteroid1);
-		   			   	    	settler2.setPlace(asteroid2);
-		   			   	    	System.out.println(asteroid1.getSizeOfCharacters());
-		   			   	    	settler1.drill();
+		   			   	    	settler1_3b.setPlace(asteroid1_3b);
+		   			   	    	settler2_3b.setPlace(asteroid2_3b);
+
+		   			   	    	settler1_3b.drill();
 		   			   	    	
-		   			   	    	if(robot.getPlace()==asteroid2&&!game.getAsteroids().contains(asteroid1)&&
-		   			   	    			!game.getSettlers().contains(settler1))
+		   			   	    	if(robot_3b.getPlace()==asteroid2_3b&&!game_3b.getAsteroids().contains(asteroid1_3b)&&
+		   			   	    			!game_3b.getSettlers().contains(settler1_3b))
 		   			   	    		System.out.println("Successful Radioactive drilling test");
 		   			   	    	break;
 		   			   	    case "c":
 		   			   	    	System.out.println("\t\tDrill icy asteroid's last layer selected:\n");
 		   			   	    	
-		   			   	    	Settler settler3=new Settler();
-		   			   	    	Asteroid asteroid3=new Asteroid();
+		   			   	    	Settler settler1_3c=new Settler();
+		   			   	    	Asteroid asteroid1_3c=new Asteroid();
 		   			   	    	
-		   			   	    	Game g=new Game();
-		   			   	    	g.addSettler(settler3);
-		   			   	    	g.addAsteroid(asteroid3);
+		   			   	    	Game game_3c=new Game();
+		   			   	    	game_3c.addSettler(settler1_3c);
+		   			   	    	game_3c.addAsteroid(asteroid1_3c);
 		   			   	    	
-		   			   	    	settler3.setPlace(asteroid3);
-		   			   	    	settler3.setGame(g);
+		   			   	    	settler1_3c.setPlace(asteroid1_3c);
+		   			   	    	settler1_3c.setGame(game_3c);
 		   			   	    	
-		   			   	    	asteroid3.setGame(g);
-		   			   	    	asteroid3.accept(settler3);
-		   			   	    	asteroid3.setRockLayerThickness(1);
+		   			   	    	asteroid1_3c.setGame(game_3c);
+		   			   	    	asteroid1_3c.accept(settler1_3c);
+		   			   	    	asteroid1_3c.setRockLayerThickness(1);
 		   			   	    	
-		   			   	    	Sun s=new Sun();
-		   			   	    	g.setSun(s);
-		   			   	    	asteroid3.setSun(s);
-		   			   	    	s.addNeighbor(asteroid3);
+		   			   	    	Sun sun_3c=new Sun();
+		   			   	    	game_3c.setSun(sun_3c);
+		   			   	    	asteroid1_3c.setSun(sun_3c);
+		   			   	    	sun_3c.addNeighbor(asteroid1_3c);
 		   			   	    	
-		   			   	    	asteroid3.addResource(new Ice());
+		   			   	    	asteroid1_3c.addResource(new Ice());
 		   			   	    	
-		   			   	    	settler3.drill();
+		   			   	    	settler1_3c.drill();
 		   			   	    	
-		   			   	    	if(asteroid3.getResource()==null)
+		   			   	    	if(asteroid1_3c.getResource()==null)
 		   			   	    		System.out.println("successful icy drilling test");
 		   			   	    	break;
 		   			   	    case "d":
 		   			   	    	System.out.println("\t\tFail to drill selected:\n");
 		   			   	    	
-		   			   	    	Asteroid asteroid4=new Asteroid();
-		   			   	    	asteroid4.setRockLayerThickness(0);
+		   			   	    	Asteroid asteroid1_3d=new Asteroid();
+		   			   	    	asteroid1_3d.setRockLayerThickness(0);
 		   			   	    	
-		   			   	    	Settler settler4=new Settler();
+		   			   	    	Settler settler1_3d=new Settler();
 		   			   	    	
-		   			   	    	settler4.setPlace(asteroid4);
-		   			   	    	asteroid4.accept(settler4);
+		   			   	    	settler1_3d.setPlace(asteroid1_3d);
+		   			   	    	asteroid1_3d.accept(settler1_3d);
 		   			   	    	
-		   			   	    	settler4.drill();
+		   			   	    	settler1_3d.drill();
 		   			   	    	
-		   			   	    	if(asteroid4.getRockLayerThickness()==0)
+		   			   	    	if(asteroid1_3d.getRockLayerThickness()==0)
 		   			   	    		System.out.println("Successful fail to drill test");
 		   			   	    	break;
 		   			   	    default :
