@@ -132,7 +132,7 @@ public class Skeleton {
 		   			   	    	 * set layer
 		   			   	    	 * settler
 		   			   	    	 * drill hívás
-		   			   	    	 * expected layersize = 4
+		   			   	    	 * expected layersizeT = 4
 		   			   	    	 * print layersize
 		   			   	    	 */
 		   			   	    	
@@ -196,7 +196,7 @@ public class Skeleton {
 		   			   	    	
 		   			   	    	if(robot.getPlace()==asteroid2&&!game.getAsteroids().contains(asteroid1)&&
 		   			   	    			!game.getSettlers().contains(settler1))
-		   			   	    		System.out.println("Successful radioactive drilling test");
+		   			   	    		System.out.println("Successful Radioactive drilling test");
 		   			   	    	break;
 		   			   	    case "c":
 		   			   	    	System.out.println("\t\tDrill icy asteroid's last layer selected:\n");
