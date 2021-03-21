@@ -243,9 +243,51 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tBuild robot selected:\n");
+		   			   	    	
+		   			   	    	/*
+		   			   	    	 * Bővíteni kellett a recept létrehozásával
+		   			   	    	 * és a Settler nyersanyagaival.
+		   			   	    	 * A Timerre is kell referencia.
+		   			   	    	 * Ha nincs elég nyersanyag, ott random
+		   			   	    	 * hoztam létre néhányat.
+		   			   	    	 */
+		   			   	    	Game game = new Game();
+		   			   	    	Recipe robotRecipe = new Recipe();
+		   			   	    	game.addRecipe(robotRecipe);
+		   			   	    	robotRecipe.addResource(new Coal());
+		   			   	    	robotRecipe.addResource(new Iron());
+		   			   	    	robotRecipe.addResource(new Uran());
+		   			   	    	Settler s = new Settler();
+		   			   	    	s.accept(new Coal());
+		   			   	    	s.accept(new Iron());
+		   			   	    	s.accept(new Uran());
+		   			   	    	Asteroid a = new Asteroid();
+		   			   	    	s.setPlace(a);
+		   			   	    	a.accept(s);
+		   			   	    	Timer timer = new Timer();
+		   			   	    	
+		   			   	    	s.createAIRobot();
+		   			   	    	
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tFail to build selected:\n");
+		   			   	    	
+								game = new Game();
+								robotRecipe = new Recipe();
+								game.addRecipe(robotRecipe);
+								robotRecipe.addResource(new Coal());
+								robotRecipe.addResource(new Iron());
+								robotRecipe.addResource(new Uran());
+								s = new Settler();
+								s.accept(new Uran());
+								s.accept(new Ice());
+								a = new Asteroid();
+								s.setPlace(a);
+								a.accept(s);
+								timer = new Timer();
+
+								s.createAIRobot();
+		   			   	    	
 		   			   	    	break;
 
 		   			   	    default :
@@ -267,9 +309,42 @@ public class Skeleton {
 		   			   	switch (choice2){
 		   			   	    case "a":
 		   			   	    	System.out.println("\t\tBuild TeleportingGatePair selected:\n");
+		   			   	    	
+								Game game = new Game();
+								Recipe gatePairRecipe = new Recipe();
+								game.addRecipe(new Recipe());
+								game.addRecipe(gatePairRecipe);
+								gatePairRecipe.addResource(new Iron());
+								gatePairRecipe.addResource(new Iron());
+								gatePairRecipe.addResource(new Ice());
+								gatePairRecipe.addResource(new Uran());
+								Settler s = new Settler();
+								s.accept(new Ice());
+								s.accept(new Iron());
+								s.accept(new Uran());
+								s.accept(new Iron());
+									
+								s.createGatePair();
+		   			   	    	
 		   			   	    	break;
 		   			   	    case "b":
 		   			   	    	System.out.println("\t\tFail to build TeleportingGatePair selected:\n");
+		   			   	    	
+								game = new Game();
+								gatePairRecipe = new Recipe();
+								game.addRecipe(new Recipe());
+								game.addRecipe(gatePairRecipe);
+								gatePairRecipe.addResource(new Iron());
+								gatePairRecipe.addResource(new Iron());
+								gatePairRecipe.addResource(new Ice());
+								gatePairRecipe.addResource(new Uran());
+								s = new Settler();
+								s.accept(new Iron());
+								s.accept(new Uran());
+								s.accept(new Coal());
+
+								s.createGatePair();
+		   			   	    	
 		   			   	    	break;
 
 		   			   	    default :

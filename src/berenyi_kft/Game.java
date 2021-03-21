@@ -85,6 +85,13 @@ public class Game {
 	}
 	
 	/**
+	 * Új receptet ad a játéjban levő receptek listájához.
+	 */
+	public void addRecipe(Recipe recipe) {
+		recipes.add(recipe);		
+	}
+	
+	/**
 	 * Visszaadja az AIRobot fel�p�t�s�hez sz�ks�ges 
 	 * receptet t�rol� Recipe objektumot
 	 * @return
