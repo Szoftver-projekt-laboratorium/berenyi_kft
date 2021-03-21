@@ -152,19 +152,9 @@ public class Game {
 	}
 	*/
 	
-	public void addSettler(Settler s) {
-		System.out.println("Game's addSettler(s: Settler) has been called");
-		settlersAlive.add(s);
-	}
-	
 	public void addAsteroid(Asteroid a) {
 		System.out.println("Game's addAsteroid(a: Asteroid) has been called");
 		asteroids.add(a);
-	}
-	
-	public void addRecipe(Recipe r) {
-		System.out.println("Game's addRecipe(r: Recipe) has been called");
-		recipes.add(r);
 	}
 	
 	public void setSun(Sun s) {
@@ -182,5 +172,8 @@ public class Game {
 		return this.asteroids.size();
 	}
 	
+	public ArrayList<Settler> getSettlers(){
+		return settlersAlive;
+	}
 	
 }
