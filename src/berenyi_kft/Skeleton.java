@@ -194,8 +194,8 @@ public class Skeleton {
 		   			   	    	System.out.println(asteroid1.getSizeOfCharacters());
 		   			   	    	settler1.drill();
 		   			   	    	
-		   			   	    	if(robot.getPlace()==asteroid2&&game.getSizeOfSettlersAlive()==1&&
-		   			   	    			game.getSizeOfAsteroids()==1)
+		   			   	    	if(robot.getPlace()==asteroid2&&!game.getAsteroids().contains(asteroid1)&&
+		   			   	    			!game.getSettlers().contains(settler1))
 		   			   	    		System.out.println("Successful radioactive drilling test");
 		   			   	    	break;
 		   			   	    case "c":

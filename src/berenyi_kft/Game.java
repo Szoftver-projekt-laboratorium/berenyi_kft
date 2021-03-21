@@ -159,4 +159,9 @@ public class Game {
 		System.out.println("Game's getSizeOfAsteroids() has been called");
 		return this.asteroids.size();
 	}
+	
+	public ArrayList<Settler> getSettlers(){
+		return settlersAlive;
+	}
+	
 }
