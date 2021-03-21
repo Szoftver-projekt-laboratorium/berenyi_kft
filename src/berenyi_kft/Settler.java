@@ -62,7 +62,12 @@ public class Settler extends Character{
 	 */
 	public void remove(Resource r) {
 		System.out.println("Settler's remove(r: Resource) has been called");
-		collectedResources.remove(r);
+		for (Resource rCollected : collectedResources) {
+			if (r.isCompatibleWith(rCollected)) {
+				collectedResources.remove(rCollected);
+				return;
+			}
+		}
 	}
 	
 	/**
@@ -108,11 +113,15 @@ public class Settler extends Character{
 			if (aiRobotRecipe.isEmpty()) {
 				break;
 			}
-			if (aiRobotRecipe.isNeeded(r)) {
-				remove(r);
-			}
+			aiRobotRecipe.isNeeded(r);
 		}
+		
 		if (aiRobotRecipe.isEmpty()) {
+			aiRobotRecipe.reset();
+			for (Resource r : aiRobotRecipe.getResources()) {
+				this.remove(r);
+			}
+			
 			AIRobot air = new AIRobot();
 			place.accept(air);
 			game.getTimer().addSteppable(air);
@@ -143,15 +152,18 @@ public class Settler extends Character{
 			if (gatePairRecipe.isEmpty()) {
 				break;
 			}
-			if (gatePairRecipe.isNeeded(r)) {
-				remove(r);
-			}
+			gatePairRecipe.isNeeded(r);
 		}
+		
 		if (gatePairRecipe.isEmpty()) {
+			gatePairRecipe.reset();
+			for (Resource r : gatePairRecipe.getResources()) {
+				this.remove(r);
+			}
+			
 			TeleportingGate tg1 = new TeleportingGate();
 			TeleportingGate tg2 = new TeleportingGate();
 			tg1.setPair(tg2);
-			tg2.setPair(tg1);
 			gatesCreated.add(tg1);
 			gatesCreated.add(tg2);
 		}
@@ -206,8 +218,8 @@ public class Settler extends Character{
 		this.game = game;
 	}
 	
-	public int getSizeOfGatesCreated() {
-		System.out.println("Settler's getSizeOfGatesCreated() has been called");
-		return gatesCreated.size();
+	public ArrayList<TeleportingGate> getGatesCreated() {
+		System.out.println("Settler's getGatesCreated() has been called");
+		return gatesCreated;
 	}
 }

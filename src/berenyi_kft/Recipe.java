@@ -16,6 +16,14 @@ public class Recipe {
 	//-----------------------------------------------------
 	
 	/**
+	 * Visszaadja a receptben található nyersanyagok listáját.
+	 * @return
+	 */
+	public ArrayList<Resource> getResources() {
+		return resources;
+	}
+	
+	/**
 	 * A param�terk�nt kapott nyersanyagot hozz�adja a resources kollekci�hoz. 
 	 * A recept m�dos�t�s�hoz sz�ks�ges, ha v�ltozn�nak a felt�telek.
 	 * @param r

@@ -182,6 +182,11 @@ public class Game {
 		return this.settlersAlive.size();
 	}
 	
+	public ArrayList<Settler> getSettlers() {
+		System.out.println("Game's getSettlers() has been called");
+		return settlersAlive;
+	}
+	
 	public int getSizeOfAsteroids() {
 		System.out.println("Game's getSizeOfAsteroids() has been called");
 		return this.asteroids.size();
