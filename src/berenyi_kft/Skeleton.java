@@ -213,6 +213,7 @@ public class Skeleton {
 		   			   	    	
 		   			   	    	asteroid3.setGame(g);
 		   			   	    	asteroid3.accept(settler3);
+		   			   	    	asteroid3.setRockLayerThickness(1);
 		   			   	    	
 		   			   	    	Sun s=new Sun();
 		   			   	    	g.setSun(s);
