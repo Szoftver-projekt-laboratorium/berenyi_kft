@@ -38,7 +38,7 @@ public class AIRobot extends Character implements ISteppable {
 			drill();
 		} else {
 			Random random = new Random();
-			move(random.nextInt() % place.getNeighbors().size());
+			move(random.nextInt());
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class AIRobot extends Character implements ISteppable {
 	public void reactToExplosion() {
 		System.out.println("AIRobot's reactToExplosion() has been called");
 		Random random = new Random();
-		move(random.nextInt(place.getSizeOfNeighbors()));
+		move(random.nextInt());
 	}
 
 }

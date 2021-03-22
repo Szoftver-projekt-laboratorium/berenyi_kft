@@ -9,9 +9,16 @@ import java.util.Scanner;
  * @author berenyi_kft
  */
 public class Skeleton {
-
+	
+	// TODO: Kellenek id-k? Csak az elso tesztesetben vannak, es nem hasznaljuk oket.
 	private static Map<Object, String> ids = new HashMap<Object, String>();
-
+	
+	// TODO: Bizonyos fv-ekben a println()-okat ki kellene kommentezni,
+	//		 mert tul sok az init reszletezes, beallitgatas veluk,
+	//		 (es sok a szekvenciakon sem szerepelt;
+	//		  persze, kell nehany, ami azokon nem volt rajta).
+	
+	//TODO: Indentalas lesz valahogy? Valami utolso pillanatos szep otlet?
 	public static void main(String args[]) {
 		System.out.println("Welcome in berenyi_kft's Skeleton tester!\n ");
 
@@ -102,7 +109,10 @@ public class Skeleton {
 
 				tg11.setPair(tg12);
 				tg12.setPair(tg11);
-
+				
+				// TODO Üres sorok a tesztek inicializalasa
+				// 		es futtatasa koze...
+				// System.out.println();
 				a11.checkSpaceBase();
 
 				if (game1.isEndGameFlag() == true) {

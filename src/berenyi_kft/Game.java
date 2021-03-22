@@ -60,9 +60,9 @@ public class Game {
 	public void endGame() {
 		System.out.println("Game's endGame() has been called");
 		if (settlersAlive.size() > 0) {
-			System.out.println("A telepesek nyertek, fel?ep?lt az ?rbazis.");
+			System.out.println("A telepesek nyertek, felepult az urbazis!");
 		} else {
-			System.out.println("A telepesek vesztettek, mindegyik?k meghalt.");
+			System.out.println("A telepesek vesztettek, mindegyikuk meghalt.");
 		}
 		endGameFlag = true;
 	}
@@ -211,15 +211,6 @@ public class Game {
 	public ArrayList<Settler> getSettlers() {
 		System.out.println("Game's getSettlers() has been called");
 		return settlersAlive;
-	}
-	
-	/**
-	 * Visszater a jatekban letezo aszteroidak szamaval.
-	 * @return Az aszteroidak szama
-	 */
-	public int getSizeOfAsteroids() {
-		System.out.println("Game's getSizeOfAsteroids() has been called");
-		return this.asteroids.size();
 	}
 	
 	public boolean isEndGameFlag() {
