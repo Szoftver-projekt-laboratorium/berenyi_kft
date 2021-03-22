@@ -3,69 +3,93 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 /**
- * A Napot reprezent�l� oszt�ly
+ * A Napot reprezentalo osztaly
  * @author berenyi_kft
- *
  */
 public class Sun implements ISteppable {
 
 	/**
-	 * a k�vetkez� napvihar bek�vetkez�s�ig h�tral�v� id�
+	 * A kovetkezo napvihar bekovetkezeseig hatralevo ido
 	 */
-	long timeToSunStorm;
+	private long timeToSunStorm;
 	
 	/**
-	 * a Nappal k�zvetlen�l szomsz�dos aszteroid�k list�ja
+	 * A Nappal kozvetlenul szomszedos aszteroidak listaja
 	 */
-	ArrayList<Asteroid> neighboringAsteroids = new ArrayList<Asteroid>();
+	private ArrayList<Asteroid> neighboringAsteroids = new ArrayList<Asteroid>();
 	
 	/**
-	 * a j�t�kot reprezent�l� oszt�ly
+	 * A jatekot reprezentalo osztaly
 	 */
-	Game game;
+	private Game game;
 	
 	//-------------------------------------------------------------
 	
 	/**
-	 * Ha a timeToSunStorm attrib�tum pozit�v, akkor eggyel cs�kkenti 
-	 * (v�rakozik). Ha pedig 0, akkor napvihart ind�t a sunStorm() f�ggv�nyt h�vva,
-	 *  majd a timeToSunStorm-nak be�ll�t egy v�letlen eg�sz �rt�ket.
+	 * Beallitja a jatek osztalyt.
+	 * @param game A jatekot reprezentalo osztaly
+	 */
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	/**
+	 * Ha a timeToSunStorm attributum pozitiv, akkor eggyel csokkenti 
+	 * (varakozik). Ha pedig 0, akkor napvihart indit a sunStorm() fuggvenyt
+	 * hivva, majd a timeToSunStorm-nak beallit egy veletlen pozitiv egesz erteket.
 	 */
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Sun's step() has been called");
+		// A teszt kedveert legyen minden egyes step soran napvihar.
+		sunStorm();
 	}
 	
 	/**
-	 * Lek�rdezi a Game-t�l az aszteroid�k kollekci�j�t, 
-	 * majd egyes�vel megh�vja mindegyik aszteroida destroySurface() f�ggv�ny�t.
+	 * Lekerdezi a Game-tol az aszteroidak kollekciojat, majd egyesevel
+	 * meghivja mindegyik aszteroida destroySurface() fuggvenyet.
 	 */
 	public void sunStorm() {
-		
+		System.out.println("Sun's sunStorm() has been called");
+		for(Asteroid a : game.getAsteroids()) {
+			a.destroySurface();
+		}
 	}
 	
 	/**
-	 * Meg�llap�tja, hogy az a aszteroida napk�zeli-e
-	 * @return
+	 * Megallapitja, hogy az a aszteroida napkozeli-e, vagyis hogy
+	 * legfeljebb masodszomszedos-e a Nappal.
+	 * @return Pontosan akkor true, ha az aszteroida napkozelben van
 	 */
 	public boolean isCloseToSun(Asteroid a) {
 		System.out.println("Sun's isCloseToSun(a: Asteroid) has been called");
-		if(this.neighboringAsteroids.contains(a)) {
-			return true;
+		for (Asteroid a1 : neighboringAsteroids) {
+			if (a == a1) {
+				return true;
+			}
+			for (Asteroid a2 : a.getNeighbors()) {
+				if (a == a2)
+					return true;
+			}
 		}
 		return false;
 	}
 	
+	/**
+	 * Beallitja a kovetkezo napvihar idopontjat.
+	 * @param time Az ido a legkozelebbi napviharig
+	 */
 	public void setTimeToSunStorm(long time){
 		System.out.println("Sun's settimeToStorm(time: long) has been called");
-		timeToSunStorm=time;
+		timeToSunStorm = time;
 	}
 	
+	/**
+	 * Uj aszteroidat ad a Nappal szomszedos aszteroidak kollekciojahoz.
+	 * @param a A Nappal szomszedos uj aszteroida
+	 */
 	public void addNeighbor(Asteroid a) {
 		System.out.println("Sun's addNeighbor(a: Asteroid) has been called");
 		this.neighboringAsteroids.add(a);
 	}
-
-	
 }

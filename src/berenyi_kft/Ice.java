@@ -1,16 +1,14 @@
 package berenyi_kft;
 
 /**
- * 
+ * A vizjeg nyersanyagot reprezentalja
  * @author berenyi_kft
- *
  */
 public class Ice extends Resource{
 
 	/**
-	 * Hat�s�ra a v�zj�g elszublim�l: 
-	 * megh�vja az asteroid.removeResource()
-	 * met�dust a saj�t aszteroid�j�n.
+	 * Hatasara a vizjeg elszublimal: meghivja az removeResource()
+	 * metodust a sajat aszteroidajan (asteroid).
 	 */
 	@Override
 	public void drilledOut(Asteroid a) {
@@ -19,16 +17,16 @@ public class Ice extends Resource{
 	}
 
 	/**
-	 * �sszehasonl�tja mag�t a param�terk�nt kapott nyersanyaggal 
-	 * �s egyez�s eset�n igaz �rt�kkel t�r vissza, 
-	 * ellenkez� esetben hamissal.
+	 * Osszehasonlitja magat a parameterkent kapott nyersanyaggal a tipusa szerint,
+	 * es visszater az egyezes logikai ertekevel.
+	 * @param r A masik nyersanyag, amelyikkel ezt a nyersanyagot osszehasonlitjuk
+	 * @return Pontosan akkor true, ha r is Ice tipusu nyersanyag
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
 		System.out.println("Ice's isCompatibleWith(r: Resource) has been called");
-		if(this.getClass().equals(r.getClass()))
+		if (this.getClass().equals(r.getClass()))
 			return true;
 		return false;
 	}
-
 }
