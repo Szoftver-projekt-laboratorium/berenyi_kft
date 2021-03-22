@@ -309,7 +309,7 @@ public class Skeleton {
 
 						// Hozzaadjuk a asteroid1_3b magjaba az urant es beallitjuk a reteg vastagsagat
 						// 1-re
-						asteroid1_3b.addResource(new Uran());
+						asteroid1_3b.addResource(new Uranium());
 						asteroid1_3b.setRockLayerThickness(1);
 
 						// Beallitjuk az aszteroidak sun attributumait
@@ -441,7 +441,7 @@ public class Skeleton {
 				System.out.println("\ta: Restore Resource\n");
 				System.out.println("\tb: Fail to restore\n");
 				System.out.println("\tc: Restore Ice when Sun is close\n");
-				System.out.println("\td: Restore Uran when Sun is close\n");
+				System.out.println("\td: Restore Uranium when Sun is close\n");
 				System.out.println("\te: Back to the main menu\n");
 
 				System.out.print("\tMy choice:");
@@ -552,7 +552,7 @@ public class Skeleton {
 						}
 						break;
 					case "d":
-						System.out.println("\t\tRestore Uran when Sun is close selected:\n");
+						System.out.println("\t\tRestore Uranium when Sun is close selected:\n");
 
 						/*
 						 * Letrehozunk egy Settler-t es egy aszteroidat, amely epp napkozelben van,
@@ -570,7 +570,7 @@ public class Skeleton {
 						Asteroid a4111 = new Asteroid();
 						game4111.addAsteroid(a4111);
 						a4111.setGame(game4111);
-						Resource r4111 = new Uran();
+						Resource r4111 = new Uranium();
 
 						a4111.accept(s4111);
 						s4111.setPlace(a4111);
@@ -583,7 +583,7 @@ public class Skeleton {
 						s4111.restore(r4111);
 
 						if (game4111.getAsteroids().isEmpty()) {
-							System.out.println("\nRestore Uran when Sun is close test: successful");
+							System.out.println("\nRestore Uranium when Sun is close test: successful");
 						}
 						break;
 					default:
@@ -722,13 +722,13 @@ public class Skeleton {
 						game_6a.addRecipe(robotRecipe_6a);
 						robotRecipe_6a.addResource(new Coal());
 						robotRecipe_6a.addResource(new Iron());
-						robotRecipe_6a.addResource(new Uran());
+						robotRecipe_6a.addResource(new Uranium());
 						Settler s_6a = new Settler();
 						game_6a.addSettler(s_6a);
 						s_6a.setGame(game_6a);
 						s_6a.accept(new Coal());
 						s_6a.accept(new Iron());
-						s_6a.accept(new Uran());
+						s_6a.accept(new Uranium());
 						Asteroid a_6a = new Asteroid();
 						s_6a.setPlace(a_6a);
 						a_6a.accept(s_6a);
@@ -756,11 +756,11 @@ public class Skeleton {
 						game_6b.addRecipe(robotRecipe_6b);
 						robotRecipe_6b.addResource(new Coal());
 						robotRecipe_6b.addResource(new Iron());
-						robotRecipe_6b.addResource(new Uran());
+						robotRecipe_6b.addResource(new Uranium());
 						Settler s_6b = new Settler();
 						game_6b.addSettler(s_6b);
 						s_6b.setGame(game_6b);
-						s_6b.accept(new Uran());
+						s_6b.accept(new Uranium());
 						s_6b.accept(new Ice());
 						Asteroid a_6b = new Asteroid();
 						s_6b.setPlace(a_6b);
@@ -807,13 +807,13 @@ public class Skeleton {
 						gatePairRecipe_7a.addResource(new Iron());
 						gatePairRecipe_7a.addResource(new Iron());
 						gatePairRecipe_7a.addResource(new Ice());
-						gatePairRecipe_7a.addResource(new Uran());
+						gatePairRecipe_7a.addResource(new Uranium());
 						Settler s_7a = new Settler();
 						game_7a.addSettler(s_7a);
 						s_7a.setGame(game_7a);
 						s_7a.accept(new Ice());
 						s_7a.accept(new Iron());
-						s_7a.accept(new Uran());
+						s_7a.accept(new Uranium());
 						s_7a.accept(new Iron());
 
 						s_7a.createGatePair();
@@ -841,7 +841,7 @@ public class Skeleton {
 						gatePairRecipe_7b.addResource(new Iron());
 						gatePairRecipe_7b.addResource(new Iron());
 						gatePairRecipe_7b.addResource(new Ice());
-						gatePairRecipe_7b.addResource(new Uran());
+						gatePairRecipe_7b.addResource(new Uranium());
 						Settler s_7b = new Settler();
 						game_7b.addSettler(s_7b);
 						s_7b.setGame(game_7b);

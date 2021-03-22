@@ -195,7 +195,7 @@ public class Asteroid {
 		 System.out.println("Asteroid's accept(s: Settler, r: Resource) has been called");
 		 if(this.isMined()) {
 			 resource=r;
-			 resource.setAsteroid(this);
+			 // resource.setAsteroid(this);
 			 s.remove(r);
 			 if(sun.isCloseToSun(this)) {
 				 resource.drilledOut(this);  //Don�t tan�csait megfogadva ha napk�zelben restore-olunk, akkor h�v�dik meg.
@@ -259,7 +259,7 @@ public class Asteroid {
 		 System.out.println("Asteroid's minedBy() has been called");
 		 if(rockLayerThickness == 0 && resource != null) {
 			 s.accept(resource);
-			 resource.setAsteroid(null);
+			 // resource.setAsteroid(null);
 			 this.removeResource();
 			 this.checkSpaceBase();
 		 }
@@ -344,7 +344,7 @@ public class Asteroid {
 	 public void addResource(Resource r) {
 		 System.out.println("Asteroid's addResource(r: Resource) has been called");
 		 resource=r;
-		 r.setAsteroid(this);
+		 // r.setAsteroid(this);
 	 }
 	 
 	 public int getSizeOfNeighbors() {
