@@ -3,54 +3,52 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 /**
- * Ez az oszt�ly absztrakt �soszt�lyk�nt szolg�l a j�t�k karaktereihez
+ * Ez az osztaly absztrakt ososztalykent szolgal a jatek karaktereihez
  * @author berenyi_kft
- *
  */
 public abstract class Character {
 	
 	/**
-	 * az aszterioda, amelyen az adott karakter aktu�lisan tart�zkodik
+	 * Az aszterioda, amelyen az adott karakter aktualisan tartozkodik
 	 */
-	Asteroid place;
-	
+	protected Asteroid place;
 	
 	/**
-	 * A karakter �ltal t�rolt nyersanyagok list�ja
+	 * A karakter altal tarolt nyersanyagok listaja
 	 */
-	ArrayList<Resource> collectedResources = new ArrayList<Resource>();
-	
+	protected ArrayList<Resource> collectedResources = new ArrayList<Resource>();
 	
 	//----------------------------------------------------------------
 	
 	/**
-	 * Visszat�r a karakter �ltal t�rolt nyersanyagok 
-	 * list�j�val, alap�rtelmezetten egy �res list�val
+	 * Visszater a karakter altal tarolt nyersanyagok 
+	 * listajaval, alapertelmezetten egy ures listaval
 	 * @return
 	 */
 	public ArrayList<Resource> getCollectedResources() {
+		System.out.println("Character's getCollectedResources has been called");
 		return collectedResources;
 	}
 	
 	/**
-	 * �tmozog az aktu�lis aszteroid�r�l annak egy szomsz�dj�ra. 
-	 * El�sz�r lek�rdezi az aktu�lis aszteroida d-edik szomsz�dj�t 
-	 * (a getNeighbor(int d) f�ggv�nnyel). Ezut�n elt�vol�tja mag�t a 
-	 * jelenlegi aszteroid�r�l (remove(Character c)), 
-	 * majd a visszakapott szomsz�d aszteroid�ra l�p (accept(Character c))
-	 * @param d
+	 * Atmozog az aktualis aszteroidarol annak egy szomszedjara. 
+	 * Eloszor lekerdezi az aktualis aszteroida d-edik szomszedjat 
+	 * (a getNeighbor(int d) fuggvennyel). Ezutan eltavolitja magat a 
+	 * jelenlegi aszteroidarol (remove(Character c)), 
+	 * majd a visszakapott szomszed aszteroidara lep (accept(Character c)).
+	 * @param d A szomszed aszteroida sorszamat jelolo szam
 	 */
 	public void move(int d) {
 		System.out.println("Character's move(d: int) has been called");
 		Asteroid neighbor = place.getNeighbor(d);
-		//place.remove(this);
+		place.remove(this);
 		neighbor.accept(this);
 		this.place = neighbor;
 	}
 	
 	/**
-	 * Cs�kkenti az aktu�lis aszteroida k�penyvastags�g�t: 
-	 * megh�vja az aszteroida drilled() met�dus�t
+	 * Furassal csokkenti az aktualis aszteroida kopenyvastagsagat: 
+	 * meghivja az aszteroida drilled() metodusat
 	 */
 	public void drill() {
 		System.out.println("Character's drill() has been called");
@@ -58,9 +56,9 @@ public abstract class Character {
 	}
 	
 	/**
-	 * A karakter hal�l�t, jelenti: elt�vol�tja a karaktert 
-	 * az aszteroid�j�r�l (place.remove(Character c)). 
-	 * A lesz�rmazottakban fel�ldefini�lhat�.
+	 * A karakter halalat, jelenti: eltavolitja a karaktert 
+	 * az aszteroidajarol (place.remove(Character c)). 
+	 * A leszarmazottakban feluldefinialhato.
 	 */
 	public void die() {
 		System.out.println("Character's die() has been called");
@@ -68,23 +66,31 @@ public abstract class Character {
 	}
 	
 	/**
-	 * A met�dus, amit a karakternek akkor kell v�grehajtania, 
-	 * ha az aszteroida, amelyen tart�zkodik, felrobban. 
-	 * Alap�rtelmezetten a karakter die() f�ggv�ny�t h�vja. 
-	 * A lesz�rmazottak fel�ldefini�lhatj�k.
+	 * A metodus, amit a karakternek akkor kell vegrehajtania, 
+	 * ha az aszteroida, amelyen tartozkodik, felrobban. 
+	 * Alapertelmezetten a karakter die() fuggvenyet hivja. 
+	 * A leszarmazottak feluldefinialhatjak.
 	 */
 	public void reactToExplosion() {
 		System.out.println("Character's reactToExplosion() has been called");
 		die();
 	}
 	
+	/**
+	 * Visszater az aszteroidaval, amelyen a karakter aktualisan tartozkodik.
+	 * @return
+	 */
 	public Asteroid getPlace() {
 		System.out.println("Character's getPlace() has been called");
 		return place;
 	}
 
+	/**
+	 * Beallitja a karakter tartozkodasi helyet.
+	 * @param a Az aszteroida, amelyre a karaktert raallitjuk
+	 */
 	public void setPlace(Asteroid a) {
 		System.out.println("Character's setPlace(a: Asteroid) has been called");
-		place=a;
+		place = a;
 	}
 }

@@ -3,15 +3,27 @@ package berenyi_kft;
 import java.util.ArrayList;
 
 /**
- * Recipe-t reprezent�l� oszt�ly
- * A j�t�kban fel�p�thet� dolgok l�trehoz�s�hoz sz�ks�ges nyersanyagok list�j�t tartalmazza
+ * Epiteshez szukseges receptet reprezentalo osztaly.
+ * Feladata a jatekban felepitheto dolgok letrehozasahoz
+ * szukseges nyersanyagok listazasa
  * @author berenyi_kft
- *
  */
 public class Recipe {
-
-	ArrayList<Resource> resources = new ArrayList<Resource>();
-	ArrayList<Resource> resources_backup = new ArrayList<Resource>();
+	
+	/**
+	 * A receptben szereplo nyersanyagok (Resource-ok) listaja.
+	 * Egy-egy fajta nyersanyagbol tobb egyseget is tartalmazhat.
+	 * A szukseges nyersanyagok megletenek ellenorzese checklist-szeruen
+	 * tortenik: epites eseten az epiteni szandekozo telepesnel meglevo,
+	 * szukseges nyersanyagok eltavolitodnak a listabol.
+	 */
+	private ArrayList<Resource> resources = new ArrayList<Resource>();
+	
+	/**
+	 * Masolat az eredeti listarol.
+	 * A resources lista visszaallitasahoz szukseges az ellenorzesek utan
+	 */
+	private ArrayList<Resource> resources_backup = new ArrayList<Resource>();
 	
 	//-----------------------------------------------------
 	
@@ -24,26 +36,24 @@ public class Recipe {
 	}
 	
 	/**
-	 * A param�terk�nt kapott nyersanyagot hozz�adja a resources kollekci�hoz. 
-	 * A recept m�dos�t�s�hoz sz�ks�ges, ha v�ltozn�nak a felt�telek.
-	 * @param r
+	 * A parameterkent kapott nyersanyagot hozzaadja a resources kollekciohoz. 
+	 * A recept modositasahoz szukseges, ha valtoznanak a feltetelek.
+	 * @param r A receptet bovito nyersanyagegyseg.
 	 */
 	public void addResource(Resource r) {
 		System.out.println("Settler's addResource(r: Resource) has been called");
 		this.resources.add(r);
 		Resource r_clone = r.clone();
-		if(r_clone == null) System.out.println("r_clone is null");
-		if(r == r_clone) System.out.println("r_clone is similar to r");
 		this.resources_backup.add(r_clone);
 	}
 	
 	/**
-	 *  A param�terk�nt kapott r nyersanyagot �sszehasonl�tja a resources
-	 *   kollekci�ban l�v� nyersanyagokkal, az isCompatibleWith(r: Resource) 
-	 *   met�dussal. Amennyiben az isCompatibleWith(r: Resource) f�ggv�ny 
-	 *   igaz �rt�kkel t�r vissza valamelyik kollekci�beli nyersanyagra,
-	 *   t�rli az adott nyersanyagot a resources kollekci�b�l.
-	 * @param r
+	 *  A parameterkent kapott r nyersanyagot osszehasonlitja a resources
+	 *  kollekcioban levo nyersanyagokkal, az isCompatibleWith(r: Resource) 
+	 *  metodussal. Amennyiben az isCompatibleWith(r: Resource) fuggveny 
+	 *  igaz ertekkel ter vissza valamelyik kollekciobeli nyersanyagra,
+	 *  akkor torli az adott nyersanyagot a resources kollekciobol.
+	 * @param r A receptbol eltavolitando tipusu nyersanyagegyseg
 	 */
 	public boolean isNeeded(Resource r) {
 		System.out.println("Recipe's isNeeded(r: Resource) has been called");
@@ -58,16 +68,16 @@ public class Recipe {
 	}
 	
 	/**
-	 * Vissza�ll�tja az eredeti receptet, azaz a resources gy�jtem�ny tartalm�t
+	 * Visszaallitja az eredeti receptet, azaz a resources gyujtemeny tartalmat.
 	 */
 	public void reset() {
 		resources = (ArrayList<Resource>)resources_backup.clone();
 	}
 	
 	/**
-	 * Ha a resources kollekci� �res, igaz �rt�kkel t�r vissza, 
-	 * ellenkez� esetben pedig hamissal.
-	 * @return
+	 * Ha a resources kollekcio ures, igaz ertekkel ter vissza, 
+	 * ellenkezo esetben pedig hamissal.
+	 * @return Pontosan akkor true, ha a recept ures (kiuresedett)
 	 */
 	public boolean isEmpty() {
 		System.out.println("Recipe's isEmpty() has been called");
