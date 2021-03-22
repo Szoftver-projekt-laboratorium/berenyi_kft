@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Szkeleton osztaly a jatek modelljenek tesztelesehez
+ * @author berenyi_kft
+ */
 public class Skeleton {
 
 	private static Map<Object, String> ids = new HashMap<Object, String>();
@@ -39,7 +43,7 @@ public class Skeleton {
 				 * hozzaadunk nyersanyagokat, melyek elegsegesek az urbazis megepitesehez. A
 				 * teszt alapja az aszteroidan hivott chackSpaceBase() fuggveny. A teszt
 				 * sikeres, ha a fuggvenyhivas eredmenyekeppen meghivodik az endgame fuggveny,
-				 * mely beallitja az 'end_game_flag'-t.
+				 * mely beallitja az 'endGameFlag'-et.
 				 */
 
 				Game game1 = new Game();
@@ -91,17 +95,17 @@ public class Skeleton {
 				a12.accept(a11);
 
 				TeleportingGate tg11 = new TeleportingGate();
-				tg11.asteroid = a11;
+				tg11.setAsteroid(a11);
 
 				TeleportingGate tg12 = new TeleportingGate();
-				tg12.asteroid = a13;
+				tg12.setAsteroid(a13);
 
 				tg11.setPair(tg12);
 				tg12.setPair(tg11);
 
 				a11.checkSpaceBase();
 
-				if (game1.end_game_flag == true) {
+				if (game1.isEndGameFlag() == true) {
 					System.out.println("\nWinGame Test: Successful");
 				} else {
 					System.out.println("WinGame Test: Failed");
@@ -170,10 +174,10 @@ public class Skeleton {
 					a22.accept(a21);
 
 					TeleportingGate tg21 = new TeleportingGate();
-					tg21.asteroid = a21;
+					tg21.setAsteroid(a21);
 
 					TeleportingGate tg22 = new TeleportingGate();
-					tg22.asteroid = a23;
+					tg22.setAsteroid(a23);
 
 					tg21.setPair(tg22);
 					tg22.setPair(tg21);
@@ -952,6 +956,7 @@ public class Skeleton {
 						AIRobot r_9a = new AIRobot(new Timer(1000, 20));
 						Game g_9a = new Game();
 						Sun sun_9a = new Sun();
+						sun_9a.setGame(g_9a);
 						// az aszteroidanak beallitgatjuk a dolgokat
 						a1_9a.accept(r_9a);
 						a1_9a.accept(s1_9a);
@@ -992,6 +997,7 @@ public class Skeleton {
 						AIRobot r_9b = new AIRobot(new Timer(1000, 20));
 						Game g_9b = new Game();
 						Sun sun_9b = new Sun();
+						sun_9b.setGame(g_9b);
 
 						a1_9b.accept(r_9b);
 						a1_9b.accept(s1_9b);

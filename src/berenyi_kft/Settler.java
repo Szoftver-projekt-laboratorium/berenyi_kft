@@ -5,7 +5,6 @@ import java.util.ArrayList;
 /**
  * A karakterek egyik fajtaja a telepes, mindegyiket egy-egy jatekos iranyitja
  * @author berenyi_kft
- *
  */
 public class Settler extends Character {
 	

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 /**
  * Ez az osztaly absztrakt ososztalykent szolgal a jatek karaktereihez
  * @author berenyi_kft
- *
  */
 public abstract class Character {
 	

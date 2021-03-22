@@ -6,7 +6,6 @@ import java.util.Random;
  * A karakterek egyik fajtaja a robot, 
  * amely minden idoegysegben furni vagy szomszedos aszteroidara mozogni tud
  * @author berenyi_kft
- *
  */
 public class AIRobot extends Character implements ISteppable {
 	
