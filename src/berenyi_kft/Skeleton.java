@@ -1,7 +1,5 @@
 package berenyi_kft;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -10,15 +8,8 @@ import java.util.Scanner;
  */
 public class Skeleton {
 	
-	// TODO: Kellenek id-k? Csak az elso tesztesetben vannak, es nem hasznaljuk oket.
-	private static Map<Object, String> ids = new HashMap<Object, String>();
-	
-	// TODO: Bizonyos fv-ekben a println()-okat ki kellene kommentezni,
-	//		 mert tul sok az init reszletezes, beallitgatas veluk,
-	//		 (es sok a szekvenciakon sem szerepelt;
-	//		  persze, kell nehany, ami azokon nem volt rajta).
-	
-	//TODO: Indentalas lesz valahogy? Valami utolso pillanatos szep otlet?
+	// private static Map<Object, String> ids = new HashMap<Object, String>();
+
 	public static void main(String args[]) {
 		System.out.println("Welcome in berenyi_kft's Skeleton tester!\n ");
 
@@ -70,7 +61,7 @@ public class Skeleton {
 				spaceBase1.addResource(coal1);
 
 				Settler s11 = new Settler();
-				ids.put(s11, "settler11");
+				// ids.put(s11, "settler11");
 				game1.addSettler(s11);
 				s11.accept(iron1);
 				s11.accept(ice1);
@@ -80,7 +71,7 @@ public class Skeleton {
 				s12.accept(coal1);
 
 				Asteroid a11 = new Asteroid();
-				ids.put(a11, "asteroid11");
+				// ids.put(a11, "asteroid11");
 				game1.addAsteroid(a11);
 				a11.setGame(game1);
 				a11.accept(s11);
@@ -89,12 +80,12 @@ public class Skeleton {
 				s12.setPlace(a11);
 
 				Asteroid a12 = new Asteroid();
-				ids.put(a12, "asteroid12");
+				// ids.put(a12, "asteroid12");
 				game1.addAsteroid(a12);
 				a12.setGame(game1);
 
 				Asteroid a13 = new Asteroid();
-				ids.put(a13, "asteroid13");
+				// ids.put(a13, "asteroid13");
 				game1.addAsteroid(a13);
 				a13.setGame(game1);
 
@@ -110,8 +101,6 @@ public class Skeleton {
 				tg11.setPair(tg12);
 				tg12.setPair(tg11);
 				
-				// TODO Üres sorok a tesztek inicializalasa
-				// 		es futtatasa koze...
 				// System.out.println();
 				a11.checkSpaceBase();
 
@@ -127,12 +116,11 @@ public class Skeleton {
 
 				System.out.println("\ta: Move to asteroid\n");
 				System.out.println("\tb: Move through TeleportingGate\n");
-				System.out.println("\tc: Fail to use TeleportingGate\n");
-				System.out.println("\td: Back to the main menu\n");
+				System.out.println("\tc: Back to the main menu\n");
 
 				System.out.print("\tMy choice:");
 				choice2 = scan.nextLine();
-				while (choice2.equals("d") == false) {
+				while (choice2.equals("c") == false) {
 
 					Game game2 = new Game();
 
@@ -151,7 +139,7 @@ public class Skeleton {
 					spaceBase2.addResource(coal2);
 
 					Settler s21 = new Settler();
-					ids.put(s21, "settler21");
+					// ids.put(s21, "settler21");
 					game2.addSettler(s21);
 					s21.accept(iron2);
 					s21.accept(ice2);
@@ -161,7 +149,7 @@ public class Skeleton {
 					s22.accept(coal2);
 
 					Asteroid a21 = new Asteroid();
-					ids.put(a21, "asteroid2");
+					// ids.put(a21, "asteroid2");
 					game2.addAsteroid(a21);
 					a21.setGame(game2);
 					a21.accept(s21);
@@ -170,12 +158,12 @@ public class Skeleton {
 					s22.setPlace(a21);
 
 					Asteroid a22 = new Asteroid();
-					ids.put(a22, "asteroid22");
+					// ids.put(a22, "asteroid22");
 					game2.addAsteroid(a22);
 					a22.setGame(game2);
 
 					Asteroid a23 = new Asteroid();
-					ids.put(a23, "asteroid3");
+					// ids.put(a23, "asteroid3");
 					game2.addAsteroid(a23);
 					a23.setGame(game2);
 
@@ -242,23 +230,6 @@ public class Skeleton {
 							System.out.println("\nMove through TelePortingGate Test: Successful");
 						} else {
 							System.out.println("Move through TelePortingGate Test: Failed");
-						}
-
-						break;
-					case "c":
-						System.out.println("\t\tFail to use TeleportingGate selected:\n");
-
-						/**
-						 * Letrehozunk ket aszteroidat, es ket teleportkaput, melyeket hozzaadjuk az
-						 * aszteroidakhoz, majd eltavolitjuk az egyik teleportkaput az aszteroidajarol,
-						 * akkor a telepes az adott iranyban mar nem tud lepni a teleportkapun keresztul
-						 */
-
-						dir = 1;
-						try {
-							s21.move(dir);
-						} catch (Exception e) {
-							System.out.println("\nFail to use TeleportingGate Test: Successful");
 						}
 
 						break;

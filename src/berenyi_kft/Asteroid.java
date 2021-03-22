@@ -176,8 +176,6 @@ public class Asteroid {
 	  * az aszteroida torli a gates kollekciojabol. 
 	  * @param tg A torolt teleportkapu
 	  */
-	 // TODO: Igy torlodnek a kezdetben meglevo szomszedsagok,
-	 // 	  ahova kerult kesobb torlodo teleportkapu-par is!
 	 public void remove(TeleportingGate tg) {
 		 System.out.println("Asteroid's remove(tg: TeleportingGate) has been called");
 		 gates.remove(tg);
@@ -342,8 +340,6 @@ public class Asteroid {
 		 for (Character c: characters) {
 			 temp.addAll(c.getCollectedResources());
 		 }
-		 // TODO: Hozza kell adni a megfurt aszteroida magjaban
-		 // levo nyersanyagot is a temp-hez?
 		 /*if (rockLayerThickness == 0) {
 			 temp.add(resource);
 		 }*/
