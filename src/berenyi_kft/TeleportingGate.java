@@ -1,31 +1,35 @@
 package berenyi_kft;
 
 /**
- * Teleportkaput reprezent�l� oszt�ly
+ * Teleportkaput reprezentalo osztaly,
+ * amelyek mindig parban leteznek
  * @author berenyi_kft
  *
  */
 public class TeleportingGate {
 
 	/**
-	 * az adott teleportkapu p�rja, amellyel �sszek�ttet�sben �ll 
+	 * Az adott teleportkapu parja, amellyel osszekottetesben all 
 	 */
-	TeleportingGate pair;
+	private TeleportingGate pair;
 	
 	/**
-	 * az aszteroida, amely k�r�l az adott teleportkapu kering
+	 * Az aszteroida, amely korul az adott teleportkapu kering.
+	 * Ha a kaput meg nem allitottak palyara, akkor értéke null
 	 */
-	Asteroid asteroid;
+	private Asteroid asteroid;
 	
 	/**
-	 * a telepes, aki t�rolja a l�trehozott, de m�g p�ly�ra nem �ll�tott teleportkaput
+	 * A telepes, aki tarolja a letrehozott teleportkaput.
+	 * Ha mar palyara van allitva, akkor settler erteke null
 	 */
-	Settler settler;
+	private Settler settler;
 	
 	//--------------------------------------------------------------
 	
 	/**
-	 * Visszaadja a teleportkapu pair p�rj�t.
+	 * Visszaadja a teleportkapu parjat (pair).
+	 * @return A teleportkapu parja, amellyel osszekottetesben all
 	 */
 	public TeleportingGate getPair() {
 		System.out.println("TeleportingGate's getPair() has been called");
@@ -33,18 +37,23 @@ public class TeleportingGate {
 	}
 	
 	/**
-	 * Be�ll�tja tg-t a teleportkapu p�rjak�nt
-	 * @param tg
+	 * Beallitja a teleportkaput a tg kapu parjakent oda-vissza,
+	 * amihez tg-n is meghivja ezt a fuggvenyt.
+	 * @param tg A teleportkapunak beallitando par
 	 */
 	public void setPair(TeleportingGate tg) {
 		System.out.println("TeleportingGate's setPair(tg: TeleportingGate) has been called");
-		this.pair = tg;
+		if (this.pair != tg ) {
+			this.pair = tg;	
+			tg.setPair(this);
+		}
 	}
 	
 	/**
-	 * Visszaadja az aszteroid�t, amely k�r�l a teleportkapu kering.
-	 * Ha a kaput m�g nem �ll�tott�k p�ly�ra, akkor null-lal t�r vissza.
-	 * @return
+	 * Visszaadja az aszteroidat, amely korul a teleportkapu kering.
+	 * Ha a kaput meg nem allitottak palyara, akkor null-lal ter vissza.
+	 * @return Az aszteroida, amely korul a teleportkapu kering.
+	 * 		   Ha nics palyara allitva, akkor null-lal ter vissza.
 	 */
 	public Asteroid getAsteroid() {
 		System.out.println("TeleportingGate's getAsteroid() has been called");
@@ -52,26 +61,24 @@ public class TeleportingGate {
 	}
 	
 	/**
-	 * Be�ll�tja a teleportkapu aszteroid�j�t, amely k�r�l keringeni fog.
-	 * @param a
+	 * Beallitja a teleportkapu aszteroidajat, amely korul keringeni fog.
+	 * @param a Az aszteroida, amely korul a teleportkapu palyara all
 	 */
 	public void setAsteroid(Asteroid a) {
 		System.out.println("TeleportingGate's setAsteroid(a: Asteroid) has been called");
 		this.asteroid = a;
 	}
 	
-	
-	
 	/**
-	 * Elt�vol�tja a p�rj�t (pair) annak aszteroid�j�r�l/�rhaj�j�r�l att�l f�gg�en,
-	 * hogy azt m�r p�ly�ra �ll�tott�k-e (remove(TeleportingGate tg)). 
-	 * Be�ll�tja a p�rj�nak a p�rj�t null-ra (megsz�nteti az �sszek�ttet�st), 
-	 * v�g�l saj�t mag�t is elt�vol�tja az aszteroid�j�r�l/�rhaj�j�r�l. 
-	 * Ha a f�ggv�nyh�v�s elej�n a teleportkapu p�rja m�r null, 
-	 * akkor csak mag�t t�vol�tja el: ekkor a m�sik teleportkapu semmis�lt meg el�bb, 
-	 * �s az m�r megsz�ntette ennek a kapunak a kapcsolatait is.
+	 * A teleportkapu a parjaval egyutt megsemmisul. A kapu ehhez
+	 * beallitja a parjanak a parjat null-ra (megszunteti az osszekottetest),
+	 * meghivja a parjanak die() fuggvenyet, majd sajat magat is
+	 * eltavolitja az aszteroidajarol/urhajojarol.
+	 * 
+	 * Ha a fuggvenyhivas elejen a teleportkapu parja mar null, 
+	 * az csak akkor fordul elo, ha a parjan hivodott elobb a die() fuggveny.
+	 * Ilyenkor csak magat tavolitja el a megfelelo helyrol.
 	 */
-	// TODO: Gondoljuk át, hátha így implementálva egyszerűbb.
 	public void die() {
 		System.out.println("TeleportingGate's die() has been called");
 		if (pair != null) {
@@ -83,8 +90,5 @@ public class TeleportingGate {
 		} else {
 			asteroid.remove(this);
 		}
-	}
-	
-	
-	
+	}	
 }
