@@ -204,9 +204,7 @@ public class Settler extends Character {
 				a2.accept(this.getPlace());
 			}
 		} else {
-			System.out.println("No TeleportingGate available. Cannot release a gate.");
-			}
-		}else {System.out.println("No TeleportingGate available. Can not release a gate. ");}
+			System.out.println("No TeleportingGate available. Cannot release a gate.");	
 		}
 	}
 	

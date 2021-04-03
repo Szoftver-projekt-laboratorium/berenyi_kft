@@ -673,17 +673,6 @@ public class Skeleton {
 					break;
 				}
 				break;
-		   			   	    	//kapukat paroztatunk
-		   			   	    	tg1_8a.setPair(tg2_8a);
-		   			   	    	tg2_8a.setPair(tg1_8a);
-		   			   	    	//egyik aszteroidahoz bekotjuk az egyik kaput es a kapuhoz az aszteroidat
-		   			   	    	a1_8a.accept(tg1_8a);
-		   			   	    	tg1_8a.setAsteroid(a1_8a);
-		   			   	    	//a masik kapu a telepesnel van, es a telepes a masik aszteroidan
-		   			   	    	s1_8a.gatesCreated.add(tg2_8a);
-		   			   	    	a2_8a.accept(s1_8a);
-		   			   	    	s1_8a.setPlace(a2_8a);
-		   			   	    	//eddig tartott az init resz
 
 			case "6":
 				System.out.println("Testing Build AI Robot...\n Please choose a test-case:\n");
