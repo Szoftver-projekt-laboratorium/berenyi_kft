@@ -38,6 +38,47 @@ public class Game {
 	
 	//--------------------------------------------
 	
+	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="Game "+id+"\n";
+		
+		String timerId=Proto.getId(timer);
+		str+="\ttimer "+timerId+"\n";
+		
+		str+="\trecipes robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe\n";
+		
+		String sunId=Proto.getId(sun);
+		str+="\tsun "+sunId+"\n";
+		
+		if(!asteroids.isEmpty()) {   
+			str+="\tasteroids";
+			for(Asteroid a : asteroids) {
+				String asteroidId=Proto.getId(a);
+				str+=" "+asteroidId;
+			}
+			str+="\n";
+		}
+		else
+			str+="\tasteroids null\n";
+		
+		if(!settlersAlive.isEmpty()) {   
+			str+="\tsettlersAlive";
+			for(Settler s : settlersAlive) {
+				String settlerId=Proto.getId(s);
+				str+=" "+settlerId;
+			}
+			str+="\n";
+		}
+		else
+			str+="\tsettlersAlive null\n";
+		
+		return str;	
+	}
+	
 	/**
 	 * Inicializalja az aszteroidakat, a Napot, es elhelyezi a telepeseket 
 	 * valamelyik aszteroidan. Egyes aszteroidak magjat uresen hagyja,

@@ -33,6 +33,47 @@ public class Settler extends Character {
 	
 	//---------------------------------
 	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="Settler "+id+"\n";
+		
+		String gameId=Proto.getId(game);
+		str+="\tgame "+gameId+"\n";
+		
+		String timerId=Proto.getId(timer);
+		str+="\ttimer "+timerId+"\n";
+		
+		String placeId=Proto.getId(place);
+		str+="\tplace "+placeId+"\n";
+		
+		if(!collectedResources.isEmpty()) {   
+			str+="\tresources";
+			for(Resource r : collectedResources) {
+				String resourceId=Proto.getId(r);
+				str+=" "+resourceId;
+			}
+			str+="\n";
+		}
+		else
+			str+="\tresources null\n";
+		
+		if(!gatesCreated.isEmpty()) {   
+			str+="\tgatesCreated";
+			for(TeleportingGate tg : gatesCreated) {
+				String gateId=Proto.getId(tg);
+				str+=" "+gateId;
+			}
+			str+="\n";
+		}
+		else
+			str+="\tgatesCreated null\n";
+		
+		return str;	
+	}
+	
 	/**
 	 * Visszater a karakter altal tarolt nyersanyagok 
 	 * listajaval, alapertelmezetten egy ures listaval

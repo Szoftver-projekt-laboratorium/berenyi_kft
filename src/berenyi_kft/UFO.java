@@ -4,6 +4,20 @@ import java.util.Random;
 
 public class UFO extends Character implements ISteppable {
 	
+	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="UFO "+id+"\n";
+		
+		String timerId=Proto.getId(timer);
+		str+="\ttimer "+timerId+"\n";
+		
+		return str;	
+	}
+
 	@Override
 	public void die() {
 		super.die();

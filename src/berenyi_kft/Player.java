@@ -19,6 +19,28 @@ public class Player {
 	
 	private boolean isAlive=true;
 	
+	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="Player "+id+"\n";
+		
+		String nameId=Proto.getId(name);
+		str+="\tname "+nameId+"\n";
+		
+		String settlerId=Proto.getId(settler);
+		str+="\tsettler "+settlerId+"\n";
+		
+		if(isAlive)
+			str+="isAlive true\n";
+		else
+			str+="isAlive false\n";
+		
+		return str;	
+	}
+	
 	public void setSettler(Settler s) {
 		settler=s;
 	}

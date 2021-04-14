@@ -8,6 +8,19 @@ public class Uranium extends RadioactiveResource {
 	
 	private int life=3;
 	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="Uranium "+id+"\n";
+		
+		String lifeId=Proto.getId(life);
+		str+="\tlives "+lifeId+"\n";
+		
+		return str;	
+	}
+	
 	/**
 	 * Osszehasonlitja magat a parameterkent kapott nyersanyaggal a tipusa szerint,
 	 * es visszater az egyezes logikai ertekevel.

@@ -31,6 +31,28 @@ public class TeleportingGate implements ISteppable {
 	
 	//--------------------------------------------------------------
 	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="TeleportingGate "+id+"\n";
+		
+		String timerId=Proto.getId(timer);
+		str+="\ttimer "+timerId+"\n";
+		
+		String pairId=Proto.getId(pair);
+		str+="\tpair "+pairId+"\n";
+		
+		String settlerId=Proto.getId(settler);
+		str+="\tsettler "+settlerId+"\n";
+		
+		String asteroidId=Proto.getId(asteroid);
+		str+="\tasteroid "+asteroidId+"\n";
+		
+		return str;	
+	}
+	
 	/**
 	 * Visszaadja a teleportkapu parjat (pair).
 	 * @return A teleportkapu parja, amellyel osszekottetesben all
