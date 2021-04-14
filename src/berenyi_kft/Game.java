@@ -34,9 +34,6 @@ public class Game {
 	 */
 	private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 	
-	/**
-	 * A játék időzítője
-	 */
 	private Timer timer;
 	
 	//--------------------------------------------
@@ -137,18 +134,6 @@ public class Game {
 		System.out.println("Game's getSpaceBaseRecipe() has been called");
 		return recipes.get(2);
 	}
-	
-	/**
-	 * Visszaad egy receptet, amely az aszteroidaovben talalhato
-	 * mindenfajta nyersanyagbol egy-egy peldanyt tartalmaz.
-	 * @return A jatekban elofordulo nyersanyagtipusok listaja
-	 */
-	/*
-	public Recipe getAllTypeOfResources() {
-		System.out.println("Game's getAllTypeOfResources() has been called");
-		return recipes.get(3);
-	}
-	*/
 	
 	/**
 	 * Visszaadja a jatek idozitojet.

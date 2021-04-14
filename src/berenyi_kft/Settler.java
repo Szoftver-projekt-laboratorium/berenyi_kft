@@ -154,7 +154,7 @@ public class Settler extends Character {
 	 */
 	public void createGatePair() {
 		System.out.println("Settler's createGatePair() has been called");
-		if (!gatesCreated.isEmpty()) {
+		if (gatesCreated.size()>1) {
 			return;
 		}
 		
@@ -194,15 +194,8 @@ public class Settler extends Character {
 	public void releaseGate() {
 		System.out.println("Settler's releaseGate() has been called");
 		if (gatesCreated.size() >= 1) {
-			TeleportingGate tg = gatesCreated.remove(0);
-			place.accept(tg);
-			
-			TeleportingGate tg2 = tg.getPair();
-			Asteroid a2 = tg2.getAsteroid();
-			if (a2 != null) {
-				this.getPlace().accept(a2);
-				a2.accept(this.getPlace());
-			}
+			place.accept(gatesCreated.get(0));
+			gatesCreated.remove(0);
 		} else {
 			System.out.println("No TeleportingGate available. Cannot release a gate.");
 		}
@@ -226,8 +219,9 @@ public class Settler extends Character {
 	public void die() {
 		System.out.println("Settler's die() has been called");
 		super.die();
-		gatesCreated.forEach((tg) -> {tg.die();});
-		place.remove(this);
+		//gatesCreated.forEach((tg) -> {tg.die();});
+		for(int i=gatesCreated.size()-1;i>=0;i--)
+			gatesCreated.get(i).die();
 		game.removeSettler(this);
 	}
 	
@@ -247,5 +241,9 @@ public class Settler extends Character {
 	public ArrayList<TeleportingGate> getGatesCreated() {
 		System.out.println("Settler's getGatesCreated() has been called");
 		return gatesCreated;
+	}
+	
+	public void drill() {
+		place.drilled();
 	}
 }
