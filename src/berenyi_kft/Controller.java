@@ -57,7 +57,7 @@ public class Controller {
 			String actPlayerId=Proto.getId(actPlayer);
 			str+="\tactPlayer "+actPlayerId+"\n";
 			
-			if(Proto.getState()==Proto.State.RUNNING)
+			if(state==State.RUNNING)
 				str+="\tgameRunning true\n";
 			else
 				str+="\tgameRunning false\n";
