@@ -51,6 +51,60 @@ public class Asteroid {
 	
 //------------------------------------------------------------------------
 	 
+	 public String getDescription() { 
+			
+			String str="";
+			
+			String id=Proto.getId(this);
+			str+="Asteroid "+id+"\n";
+			
+			String thicknessId=Proto.getId(rockLayerThickness);
+			str+="\trockLayerThickness "+thicknessId+"\n";
+			
+			String gameId=Proto.getId(game);
+			str+="\tgame "+gameId+"\n";
+			
+			String sunId=Proto.getId(sun);
+			str+="\tsun "+sunId+"\n";
+			
+			if(!neighbors.isEmpty()) {
+				str+="\tneighbors";
+				for(Asteroid a : neighbors) {
+					String neighborId=Proto.getId(a);
+					str+=" "+neighborId;
+				}
+				str+="\n";
+			}
+			else
+				str+="\tneighbors null\n";
+			
+			String resourceId=Proto.getId(resource);
+			str+="\tresource "+resourceId+"\n";
+			
+			if(!characters.isEmpty()) {
+				str+="\tcharacters";
+				for(Character c : characters) {
+					String characterId=Proto.getId(c);
+					str+=" "+characterId;
+				}
+				str+="\n";
+			}
+			else
+				str+="\tcharacters null\n";
+			
+			if(!gates.isEmpty()) {
+				str+="\tgates";
+				for(TeleportingGate tg : gates) {
+					String teleportingGateId=Proto.getId(tg);
+					str+=" "+teleportingGateId;
+				}
+				str+="\n";
+			}
+			else
+				str+="\tgates null\n";
+			
+			return str;	
+		}
 	 
 	 /**
 	  * Hozzaadja a neighbor aszteroidat az aszteroida neighbors kollekciojahoz.

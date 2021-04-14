@@ -11,7 +11,7 @@ public class Skeleton {
 	// private static Map<Object, String> ids = new HashMap<Object, String>();
 
 	public static void main(String args[]) {
-		System.out.println("Welcome in berenyi_kft's Skeleton tester!\n ");
+		System.out.println("\tWelcome in berenyi_kft's Skeleton tester!\n ");
 
 		System.out.println("Please choose from our test cases:\n");
 		System.out.println("1: Win game");

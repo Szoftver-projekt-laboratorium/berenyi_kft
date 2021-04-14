@@ -27,6 +27,28 @@ public class Recipe {
 	
 	//-----------------------------------------------------
 	
+	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="Recipe "+id+"\n";
+		
+		if(!resources.isEmpty()) {   
+			str+="\tresources";
+			for(Resource r : resources) {
+				String resourceId=Proto.getId(r);
+				str+=" "+resourceId;
+			}
+			str+="\n";
+		}
+		else
+			str+="\tresources null\n";
+		
+		return str;	
+	}
+	
 	/**
 	 * Visszaadja a receptben található nyersanyagok listáját.
 	 * @return
