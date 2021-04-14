@@ -6,6 +6,8 @@ package berenyi_kft;
  */
 public class Uranium extends RadioactiveResource {
 	
+	private int life=3;
+	
 	/**
 	 * Osszehasonlitja magat a parameterkent kapott nyersanyaggal a tipusa szerint,
 	 * es visszater az egyezes logikai ertekevel.
@@ -18,5 +20,16 @@ public class Uranium extends RadioactiveResource {
 		if(this.getClass().equals(r.getClass()))
 			return true;
 		return false;
+	}
+	
+	public void decLife() {
+		life--;
+	}
+	
+	@Override
+	public void drilledOut(Asteroid a) {
+		decLife();
+		if(life==0)
+			a.explodedBy(this);
 	}
 }

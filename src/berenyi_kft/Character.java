@@ -13,10 +13,7 @@ public abstract class Character {
 	 */
 	protected Asteroid place;
 	
-	/**
-	 * A karakter altal tarolt nyersanyagok listaja
-	 */
-	protected ArrayList<Resource> collectedResources = new ArrayList<Resource>();
+	protected Timer timer;
 	
 	//----------------------------------------------------------------
 	
@@ -27,7 +24,8 @@ public abstract class Character {
 	 */
 	public ArrayList<Resource> getCollectedResources() {
 		System.out.println("Character's getCollectedResources has been called");
-		return collectedResources;
+		ArrayList<Resource> list=new ArrayList<Resource>();
+		return list;
 	}
 	
 	/**
@@ -44,15 +42,6 @@ public abstract class Character {
 		place.remove(this);
 		neighbor.accept(this);
 		this.place = neighbor;
-	}
-	
-	/**
-	 * Furassal csokkenti az aktualis aszteroida kopenyvastagsagat: 
-	 * meghivja az aszteroida drilled() metodusat
-	 */
-	public void drill() {
-		System.out.println("Character's drill() has been called");
-		place.drilled();
 	}
 	
 	/**

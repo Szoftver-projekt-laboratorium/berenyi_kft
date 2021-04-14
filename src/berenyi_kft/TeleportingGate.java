@@ -1,12 +1,14 @@
 package berenyi_kft;
 
+import java.util.Random;
+
 /**
  * Teleportkaput reprezentalo osztaly,
  * amelyek mindig parban leteznek
  * @author berenyi_kft
  *
  */
-public class TeleportingGate {
+public class TeleportingGate implements ISteppable {
 
 	/**
 	 * Az adott teleportkapu parja, amellyel osszekottetesben all 
@@ -17,13 +19,15 @@ public class TeleportingGate {
 	 * Az aszteroida, amely korul az adott teleportkapu kering.
 	 * Ha a kaput meg nem allitottak palyara, akkor értéke null
 	 */
-	private Asteroid asteroid;
+	private Asteroid asteroid=null;
 	
 	/**
 	 * A telepes, aki tarolja a letrehozott teleportkaput.
 	 * Ha mar palyara van allitva, akkor settler erteke null
 	 */
 	private Settler settler;
+	
+	private Timer timer;
 	
 	//--------------------------------------------------------------
 	
@@ -84,11 +88,30 @@ public class TeleportingGate {
 		if (pair != null) {
 			pair.setPair(null);
 			pair.die();
+			this.setPair(null);
 		}
 		if (settler != null) {
 			settler.remove(this);
 		} else {
 			asteroid.remove(this);
 		}
-	}	
+		
+		if(timer.getSteppables().contains(this))
+			timer.removeSteppable(this);
+	}
+	
+	public void step() {
+		Random random = new Random();
+		move(random.nextInt());
+	}
+	
+	public void move(int d) {
+		Asteroid a=asteroid.getNeighbor(d);
+		asteroid.remove(this);
+		a.accept(this);
+	}
+	
+	public void goMad() {
+		timer.addSteppable(this);
+	}
 }

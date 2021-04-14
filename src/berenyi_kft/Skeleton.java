@@ -342,7 +342,7 @@ public class Skeleton {
 						// Ha a robot aktualis aszteroidaja az asteroid2_3b es ha a
 						// jatek nem tartalmazza az asteroid1_3b-t,
 						// illetve ha a jatek nem tartalmazza a settler1_3b-t, akkor a teszt sikeres
-						if (robot_3b.getPlace() == asteroid2_3b && !game_3b.getAsteroids().contains(asteroid1_3b)
+						if (robot_3b.getPlace()==asteroid2_3b && !game_3b.getAsteroids().contains(asteroid1_3b)
 								&& !game_3b.getSettlers().contains(settler1_3b))
 							System.out.println("\nDrill radioactive asteroid's last layer test: successful");
 						break;
