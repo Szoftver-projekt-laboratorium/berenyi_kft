@@ -5,6 +5,8 @@ import java.util.*;
 public class Proto {
 	
 	private static Map<Object, String> ids = new HashMap<Object, String>();
+
+	
 	
 	enum State{
 		INIT,
@@ -23,7 +25,7 @@ public class Proto {
 		for(int i=0;i<tabs;i++) {
 			System.out.print('\t');
 		}
-		
+	
 		System.out.println(line);
 	}
 	
@@ -39,5 +41,27 @@ public class Proto {
 		while(state!=State.EXIT) {
 			//TODO 
 		}
+	}
+		
+	public static String getId(Object o) {
+		if(ids.containsKey(o)) {
+			return ids.get(o);
+		}
+		return "null";
+	}
+		
+	public static Object getObject(String id) {
+			
+		for (Map.Entry<Object, String> e: ids.entrySet())
+			{
+			    if(e.getValue().equals(id))
+			    	return e.getKey();
+			}
+		
+		return null;
+	}
+	
+	public static State getState() {
+		return state;
 	}
 }

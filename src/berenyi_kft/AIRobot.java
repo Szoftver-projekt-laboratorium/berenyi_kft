@@ -10,6 +10,22 @@ import java.util.Random;
 public class AIRobot extends Character implements ISteppable {
 	
 	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="AIRobot "+id+"\n";
+		
+		String timerId=Proto.getId(timer);
+		str+="\ttimer "+timerId+"\n";
+		
+		String placeId=Proto.getId(place);
+		str+="\tplace "+placeId+"\n";
+		
+		return str;	
+	}
+	
 	/**
 	 * Uj AI Robot jon letre, amely parameterkent atveszi az ot lepteto idozitot is.
 	 * A konstruktor egybol hozzaadja a robotot az idozitojehez.
