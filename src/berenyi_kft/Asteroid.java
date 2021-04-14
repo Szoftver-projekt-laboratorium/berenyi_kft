@@ -51,12 +51,6 @@ public class Asteroid {
 	
 //------------------------------------------------------------------------
 	 
-	 /*
-	 public void addNeighbor(Asteroid a) {
-		 System.out.println("Asteroid's addNeighbor(a: Asteroid) has been called");
-		 neighbors.add(a);
-	 }
-	 */
 	 
 	 /**
 	  * Hozzaadja a neighbor aszteroidat az aszteroida neighbors kollekciojahoz.
@@ -66,7 +60,6 @@ public class Asteroid {
 		 System.out.println("Asteroid's accept(a: Asteroid) has been called");
 		 if (!neighbors.contains(a)) {
 			 neighbors.add(a);
-			 a.accept(this);
 		 }
 	 }
 	 
@@ -92,8 +85,14 @@ public class Asteroid {
 	  */
 	 public Asteroid getNeighbor(int d) {
 		 System.out.println("Asteroid's getNeighbor(d: int) has been called");
-		 d = d % this.getNeighbors().size();
-		 return neighbors.get(d);
+		 ArrayList<Asteroid> list=new ArrayList<Asteroid>();
+		 list.addAll(neighbors);
+		 for(TeleportingGate tg : gates) {
+			 list.add(tg.getPair().getAsteroid());
+		 }
+		 System.out.println(list.size());
+		 d = d % list.size();
+		 return list.get(d);
 	 }
 	 
 	 /**
@@ -134,7 +133,7 @@ public class Asteroid {
 	 public void accept(Character c) {
 		 System.out.println("Asteroid's accept(c: Character) has been called");
 		 characters.add(c);
-		 // this.checkSpaceBase();
+		 this.checkSpaceBase();
 	 }
 	 
 	 /**
@@ -166,9 +165,6 @@ public class Asteroid {
 	 public void accept(TeleportingGate tg) {
 		 System.out.println("Asteroid's accept(tg: TeleportingGate) has been called");
 		 gates.add(tg);
-		 if (tg.getPair().getAsteroid() != null) {
-			 tg.getPair().getAsteroid().accept(this);
-		 }
 	 }
 	 
 	 /**
@@ -179,9 +175,6 @@ public class Asteroid {
 	 public void remove(TeleportingGate tg) {
 		 System.out.println("Asteroid's remove(tg: TeleportingGate) has been called");
 		 gates.remove(tg);
-		 if (tg.getPair().getAsteroid() != null) {
-			 tg.getPair().getAsteroid().remove(this);
-		 }
 	 }
 	 
 	 /**
@@ -247,16 +240,11 @@ public class Asteroid {
 	 public void drilled() {
 		 System.out.println("Asteroid's drilled() has been called");
 		 if (rockLayerThickness >= 1) {
-			 int value = rockLayerThickness-1;
-			 this.setRockLayerThickness(value);
+			 rockLayerThickness--;
 		 }
-		 if (rockLayerThickness==0) {
-			 if (resource != null) {
-				 if (sun.isCloseToSun(this)) {
-					 resource.drilledOut(this);
-				 }
-			 }
-		 }
+		 if (rockLayerThickness==0 && resource!=null&&sun.isCloseToSun(this)) {
+			 resource.drilledOut(this);
+		 	}
 	 }
 	 
 	 /**
@@ -326,6 +314,10 @@ public class Asteroid {
 			 for (int i = characters.size()-1;i>=0;i--) {
 				 characters.get(i).die();
 			 }
+			 
+			 for(TeleportingGate tg: gates) {
+				 tg.goMad();
+			 }
 		 }
 	 }
 	 
@@ -384,5 +376,13 @@ public class Asteroid {
 	 public void setSun(Sun s) {
 		 System.out.println("Asteroid's setSun(s: Sun) has been called");
 		 sun = s;
+	 }
+	 
+	 public Sun getSun() {
+		 return sun;
+	 }
+	 
+	 public void minedByUFO() {
+			 this.removeResource();
 	 }
 }
