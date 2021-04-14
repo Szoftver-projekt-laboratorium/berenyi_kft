@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A Napot reprezentalo osztaly
@@ -42,7 +43,13 @@ public class Sun implements ISteppable {
 	public void step() {
 		System.out.println("Sun's step() has been called");
 		// A teszt kedveert legyen minden egyes step soran napvihar.
-		sunStorm();
+		if(timeToSunStorm>0)
+			timeToSunStorm--;
+		else {
+			sunStorm();
+			Random r=new Random();
+			timeToSunStorm=r.nextInt(300);
+		}
 	}
 	
 	/**
@@ -51,7 +58,18 @@ public class Sun implements ISteppable {
 	 */
 	public void sunStorm() {
 		System.out.println("Sun's sunStorm() has been called");
-		for(Asteroid a : game.getAsteroids()) {
+		
+		ArrayList<Asteroid> list=new ArrayList<Asteroid>();
+		for(Asteroid a1 : neighboringAsteroids) {
+			for(Asteroid a2 : a1.getNeighbors()) {
+				if(!list.contains(a2))
+					list.add(a2);
+			}
+			if(!list.contains(a1))
+				list.add(a1);
+		}
+		
+		for(Asteroid a : list) {
 			a.destroySurface();
 		}
 	}
@@ -63,15 +81,14 @@ public class Sun implements ISteppable {
 	 */
 	public boolean isCloseToSun(Asteroid a) {
 		System.out.println("Sun's isCloseToSun(a: Asteroid) has been called");
-		for (Asteroid a1 : neighboringAsteroids) {
-			if (a == a1) {
+		
+		if(neighboringAsteroids.contains(a))
+			return true;
+		
+		for(Asteroid a2 : a.getNeighbors())
+			if(neighboringAsteroids.contains(a2))
 				return true;
-			}
-			for (Asteroid a2 : a.getNeighbors()) {
-				if (a == a2)
-					return true;
-			}
-		}
+	
 		return false;
 	}
 	
