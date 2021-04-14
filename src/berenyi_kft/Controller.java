@@ -31,7 +31,39 @@ public class Controller {
 	private Player actPlayer;
 	
 	private State state = State.INIT;
+	private Proto proto;
 	
+	 public String getDescription() { 
+			
+			String str="";
+			
+			String id=Proto.getId(this);
+			str+="Controller "+id+"\n";
+			
+			String gameId=Proto.getId(game);
+			str+="\tgame "+gameId+"\n";
+			
+			if(!playersAlive.isEmpty()) {   // A doksiban allPlayers az attribútum neve
+				str+="\tplayersAlive";
+				for(Player p : playersAlive) {
+					String playerId=Proto.getId(p);
+					str+=" "+playerId;
+				}
+				str+="\n";
+			}
+			else
+				str+="\tplayersAlive null\n";
+			
+			String actPlayerId=Proto.getId(actPlayer);
+			str+="\tactPlayer "+actPlayerId+"\n";
+			
+			if(Proto.getState()==Proto.State.RUNNING)
+				str+="\tgameRunning true\n";
+			else
+				str+="\tgameRunning false\n";
+			
+			return str;	
+		}
 	
 	public void startGame() {
 		

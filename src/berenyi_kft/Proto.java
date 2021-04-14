@@ -1,5 +1,6 @@
 package berenyi_kft;
 
+import java.util.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,8 +8,9 @@ import java.util.Map;
 public class Proto {
 	
 	private static Map<Object, String> ids = new HashMap<Object, String>();
-	
+
 	private static int tabs;
+	
 	
 	private static boolean random = true;
 	
@@ -39,6 +41,7 @@ public class Proto {
 		for (int i = 0; i < tabs; i++) {
 			System.out.print('\t');
 		}
+	
 		System.out.println(line);
 	}
 	

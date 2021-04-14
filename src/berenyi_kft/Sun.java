@@ -26,6 +26,30 @@ public class Sun implements ISteppable {
 	
 	//-------------------------------------------------------------
 	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="Sun "+id+"\n";
+		
+		String timeId=Proto.getId(timeToSunStorm);
+		str+="\ttimeToSunStorm "+timeId+"\n";
+		
+		if(!neighboringAsteroids.isEmpty()) {   
+			str+="\tneighboringAsteroids";
+			for(Asteroid a : neighboringAsteroids) {
+				String asteroidId=Proto.getId(a);
+				str+=" "+asteroidId;
+			}
+			str+="\n";
+		}
+		else
+			str+="\tneighboringAsteroids null\n";
+		
+		return str;	
+	}
+	
 	/**
 	 * Beallitja a jatek osztalyt.
 	 * @param game A jatekot reprezentalo osztaly

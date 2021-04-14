@@ -24,6 +24,36 @@ public class Timer extends java.util.Timer {
 	 */
 	private ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
 	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="Timer "+id+"\n";
+		
+		String tickId=Proto.getId(tick);
+		str+="\tticks "+tickId+"\n";
+		
+		String delayId=Proto.getId(delay);
+		str+="\tdelay "+delayId+"\n";
+		
+		String periodId=Proto.getId(period);
+		str+="\tperiod "+periodId+"\n";
+		
+		if(!steppables.isEmpty()) {   
+			str+="\tsteppables";
+			for(ISteppable is : steppables) {
+				String steppableId=Proto.getId(is);
+				str+=" "+steppableId;
+			}
+			str+="\n";
+		}
+		else
+			str+="\tsteppables null\n";
+		
+		return str;	
+	}
+	
 	/**
 	 * Idozitett taszk, amelyben a leptetesek megvalosulnak.
 	 * Minden lepesben lepteti a jatek osszes leptetheto objektumat
