@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * A jatekot reprezentalo osztaly, amely
@@ -241,5 +242,64 @@ public class Game {
 	
 	public boolean isEndGameFlag() {
 		return endGameFlag;
+	}
+	
+	/**
+	 * Beolvassa a jatek attributumait az sc Scanner aktualis poziciojatol.
+	 * @param sc A beolvasast vegzo Scanner
+	 */
+	public void load(Scanner sc) {
+		String line = sc.nextLine(); // fejlecsor
+		line = sc.next();
+		while (!line.equals("")) {
+			String[] tokens = line.split("\\s");
+			
+			switch (tokens[0]) {
+				case "timer":
+					timer = (Timer)Proto.getObject(tokens[1]);
+					break;
+					
+				case "sun":
+					sun = (Sun)Proto.getObject(tokens[1]);
+					break;
+					
+				case "asteroids":
+					for (int i = 1; i < tokens.length; i++) {
+						Asteroid a = (Asteroid)Proto.getObject(tokens[i]);
+						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
+						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
+						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
+						if (a != null)
+							asteroids.add(a);
+					}
+					break;
+					
+				case "settlersAlive":
+					for (int i = 1; i < tokens.length; i++) {
+						Settler s = (Settler)Proto.getObject(tokens[i]);
+						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
+						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
+						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
+						if (s != null)
+							settlersAlive.add(s);
+					}
+					break;
+					
+				case "recipes":
+					for (int i = 1; i < tokens.length; i++) {
+						Recipe r = (Recipe)Proto.getObject(tokens[i]);
+						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
+						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
+						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
+						if (r != null)
+							recipes.add(r);
+					}
+					break;
+					
+				default:
+					break;
+			}
+			line = sc.next();
+		}
 	}
 }

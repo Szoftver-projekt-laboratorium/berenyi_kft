@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.TimerTask;
 
 /**
@@ -115,5 +116,46 @@ public class Timer extends java.util.Timer {
 	public ArrayList<ISteppable> getSteppables() {
 		System.out.println("Timer's getSteppables() has been called");
 		return steppables;
+	}
+	
+	/**
+	 * Beolvassa a jatek attributumait az sc Scanner aktualis poziciojatol.
+	 * @param sc A beolvasast vegzo Scanner
+	 */
+	public void load(Scanner sc) {
+		String line = sc.nextLine(); // fejlecsor
+		line = sc.next();
+		while (!line.equals("")) {
+			String[] tokens = line.split("\\s");
+			
+			switch (tokens[0]) {
+				case "ticks":
+					tick = (int)Proto.getObject(tokens[1]);
+					break;
+					
+				case "delay":
+					delay= (long)Proto.getObject(tokens[1]);
+					break;
+					
+				case "period":
+					period = (long)Proto.getObject(tokens[1]);
+					break;
+					
+				case "steppables":
+					for (int i = 1; i < tokens.length; i++) {
+						ISteppable p = (ISteppable)Proto.getObject(tokens[i]);
+						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
+						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
+						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
+						if (p != null)
+							steppables.add(p);
+					}
+					break;
+					
+				default:
+					break;
+			}
+			line = sc.next();
+		}
 	}
 }
