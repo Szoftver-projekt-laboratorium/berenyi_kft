@@ -270,13 +270,19 @@ public class Proto {
 					// nextLine() utan kell null check?
 					String line = sc.nextLine();
 					
-					String[] tokens = line.split("\\s");
+					String[] tokens = line.split("\\s+");
 					String cmd = tokens[0];
 					
 					switch (cmd) {
 						case "load":
 							if (tokens.length >= 2) {
 								load(tokens[1]);
+							}
+							break;
+						
+						case "show":
+							if (tokens.length == 1) {
+								showAll();
 							}
 							break;
 						

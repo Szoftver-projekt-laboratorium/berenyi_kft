@@ -104,11 +104,15 @@ public class Controller {
 	 * Beolvassa a jatek attributumait az sc Scanner aktualis poziciojatol.
 	 * @param sc A beolvasast vegzo Scanner
 	 */
+	// load src/test_data/test_inputs/test_0.txt
 	public void load(Scanner sc) {
 		String line = sc.nextLine(); // fejlecsor
 		line = sc.nextLine();
 		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+			
+			// Szedje le a tabokat is a sor elejerol!
+			line.stripLeading();
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "game":
@@ -137,7 +141,7 @@ public class Controller {
 				default:
 					break;
 			}
-			line = sc.next();
+			line = sc.nextLine();
 		}
 	}
 	
