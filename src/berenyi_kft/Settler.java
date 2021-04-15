@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * A karakterek egyik fajtaja a telepes, mindegyiket egy-egy jatekos iranyitja
@@ -30,6 +31,7 @@ public class Settler extends Character {
 	 * A jatekot reprezentalo osztaly
 	 */
 	private Game game;
+
 	
 	//---------------------------------
 	
@@ -73,6 +75,69 @@ public class Settler extends Character {
 		
 		return str;	
 	}
+	
+	/*
+	 * Minta:
+	 * Settler 
+			game game
+			timer timer
+			place a1
+			resources ir2 ir3 ic1 ur2
+			gatesCreated tg1 tg2
+	 * 
+	 * 
+	 */
+	
+	public void load(Scanner sc) {
+		String line = sc.nextLine(); // fejlecsor
+		line = sc.next();
+		while (!line.equals("")) {
+			String[] tokens = line.split("\\s");
+			
+			switch (tokens[0]) {
+				case "game":
+					game = (Game)Proto.getObject(tokens[1]);
+					break;
+					
+					
+				case "timer":
+					timer = (Timer)Proto.getObject(tokens[1]);
+					break;
+					
+				case "place":
+					place = (Asteroid)Proto.getObject(tokens[1]);
+					break;
+					
+				case "resources":
+					for (int i = 1; i < tokens.length; i++) {
+						Resource r = (Resource)Proto.getObject(tokens[i]);
+						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
+						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
+						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
+						if (r != null)
+							collectedResources.add(r);
+					}
+					break;
+					
+				case "gatesCreated":
+					for (int i = 1; i < tokens.length; i++) {
+						TeleportingGate tg = (TeleportingGate)Proto.getObject(tokens[i]);
+						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
+						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
+						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
+						if (tg != null)
+							gatesCreated.add(tg);
+					}
+					break;
+					
+				default:
+					break;
+			}
+			line = sc.next();
+		}
+	}
+	
+	
 	
 	/**
 	 * Visszater a karakter altal tarolt nyersanyagok 

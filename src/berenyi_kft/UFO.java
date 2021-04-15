@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class UFO extends Character implements ISteppable {
 	
@@ -16,6 +17,37 @@ public class UFO extends Character implements ISteppable {
 		str+="\ttimer "+timerId+"\n";
 		
 		return str;	
+	}
+	
+	/*
+	 * minta:
+	 * UFO ufo1
+	 * 	timer timer
+	 *  place a1
+	 */
+	
+	public void load(Scanner sc) {
+		String line = sc.nextLine(); // fejlecsor
+		line = sc.next();
+		while (!line.equals("")) {
+			String[] tokens = line.split("\\s");
+
+			switch (tokens[0]) {
+				case "timer":
+					timer = (Timer)Proto.getObject(tokens[1]);
+					break;
+					
+					
+				case "place":
+					place = (Asteroid)Proto.getObject(tokens[1]);
+					break;
+					
+					
+				default:
+					break;
+			}
+			line = sc.next();
+		}
 	}
 
 	@Override

@@ -1,5 +1,10 @@
 package berenyi_kft_test;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 import berenyi_kft.Proto;
@@ -12,9 +17,33 @@ public class Tester {
 	private static final int testCount = 38;
 	
 	// Atirtam String paramterure, de majd meglatjuk, a File jobb-e.
-	public static boolean compare(String fName1, String fName2) {
-		// Bármely két fájl egyelore ugyanolyan...
-		return true;
+	
+	//seged:
+	static boolean compareTextFiles ( String file1, String file2) throws FileNotFoundException, IOException{
+		  BufferedReader r1 = new BufferedReader(new FileReader(file1));
+			BufferedReader r2 = new BufferedReader(new FileReader(file2));
+			int c1=0, c2=0;
+			while(true){
+				c1 = r1.read();
+				c2 = r2.read();
+				if(c1==-1 && c2==-1)
+					return true;
+				else if(c1==-1 || c2==-1 || c1!=c2){
+					return false;
+				}
+			}       
+	  }
+	public static void compare(String fName1path, String fName2path) throws IOException {
+
+		String file1 = fName1path;
+		String file2 = fName2path;
+		
+		if(compareTextFiles(file1, file2)){
+			System.out.println("Files are same");
+		}
+		else{
+			System.out.println("Files are different");
+		}    
 	}
 	
 	/**
@@ -63,8 +92,10 @@ public class Tester {
 	 * A standard bemeneten test <test_num>, test, illetve exit parancsokra
 	 * figyel, soronkent feldolgozva azokat.
 	 * @param args A proto program altal atadott parancssori argumentumok
+	 * @throws IOException 
 	 */
-	public static void testerMain(String[] args) {
+	public static void testerMain(String[] args) throws IOException {
+		// csak kipróbáltam : compare("src/berenyi_kft_test/txt_tarto/test1.txt","src/berenyi_kft_test/txt_tarto/test2.txt");
 		Scanner sc = new Scanner(System.in);
 		boolean exit = false;
 		String line = sc.nextLine();
@@ -88,6 +119,7 @@ public class Tester {
 				
 				default:
 					System.out.println("Invalid operation, please type in a new command.");
+					
 					break;
 			}
 		}

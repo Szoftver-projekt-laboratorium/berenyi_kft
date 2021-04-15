@@ -1,5 +1,7 @@
 package berenyi_kft;
 
+import java.util.Scanner;
+
 public class Player {
 	
 	private enum Command{
@@ -40,6 +42,39 @@ public class Player {
 		
 		return str;	
 	}
+	
+	/*
+	Player
+		name Bela
+		settler s1
+		isAlive true
+	*/
+	public void load(Scanner sc) {
+		String line = sc.nextLine(); // fejlecsor
+		line = sc.next();
+		while (!line.equals("")) {
+			String[] tokens = line.split("\\s");
+			
+			switch (tokens[0]) {
+				case "name":
+					name = (String)Proto.getObject(tokens[1]);
+					break;
+					
+				case "settler":
+					settler = (Settler)Proto.getObject(tokens[1]);
+					break;
+					
+				case "isAlive":
+					isAlive = (Boolean)Proto.getObject(tokens[1]);
+					break;
+					
+				default:
+					break;
+			}
+			line = sc.next();
+		}
+	}
+	
 	
 	public void setSettler(Settler s) {
 		settler=s;
