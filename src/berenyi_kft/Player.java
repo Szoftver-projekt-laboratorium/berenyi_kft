@@ -34,9 +34,9 @@ public class Player {
 		str+="\tsettler "+settlerId+"\n";
 		
 		if(isAlive)
-			str+="isAlive true\n";
+			str+="\tisAlive true\n";
 		else
-			str+="isAlive false\n";
+			str+="\tisAlive false\n";
 		
 		return str;	
 	}

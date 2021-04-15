@@ -1,5 +1,6 @@
 package berenyi_kft;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -18,24 +19,26 @@ import berenyi_kft_test.Tester;
 public class Proto {
 	
 	private static class Objects {
-		static Map<Object, String> ids = new HashMap<Object, String>();
+		Map<Object, String> ids = new HashMap<Object, String>();
 		
-		static Controller controller = null;
-		static List<Player> players = new ArrayList<Player>();
-		static Game game = null;
-		static List<Recipe> recipes = new ArrayList<Recipe>();
-		static Timer timer = null;
-		static Sun sun = null;
-		static List<Asteroid> asteroids = new ArrayList<Asteroid>();
-		static List<Coal> coals = new ArrayList<Coal>();
-		static List<Iron> irons = new ArrayList<Iron>();
-		static List<Ice> ices = new ArrayList<Ice>();
-		static List<Uranium> uraniums = new ArrayList<Uranium>();
-		static List<Settler> settlers = new ArrayList<Settler>();
-		static List<AIRobot> robots = new ArrayList<AIRobot>();
-		static List<UFO> ufos = new ArrayList<UFO>();
-		static List<TeleportingGate> gates = new ArrayList<TeleportingGate>();
+		Controller controller = null;
+		List<Player> players = new ArrayList<Player>();
+		Game game = null;
+		List<Recipe> recipes = new ArrayList<Recipe>();
+		Timer timer = null;
+		Sun sun = null;
+		List<Asteroid> asteroids = new ArrayList<Asteroid>();
+		List<Coal> coals = new ArrayList<Coal>();
+		List<Iron> irons = new ArrayList<Iron>();
+		List<Ice> ices = new ArrayList<Ice>();
+		List<Uranium> uraniums = new ArrayList<Uranium>();
+		List<Settler> settlers = new ArrayList<Settler>();
+		List<AIRobot> robots = new ArrayList<AIRobot>();
+		List<UFO> ufos = new ArrayList<UFO>();
+		List<TeleportingGate> gates = new ArrayList<TeleportingGate>();
 	}
+	
+	private static Proto.Objects allObjects = new Proto.Objects();
 	
 	// private static Map<Object, String> ids = new HashMap<Object, String>();
 
@@ -67,8 +70,8 @@ public class Proto {
 	}
 	
 	public static String getId(Object o) {
-        if (Proto.Objects.ids.containsKey(o)) {
-            return Proto.Objects.ids.get(o);
+        if (allObjects.ids.containsKey(o)) {
+            return allObjects.ids.get(o);
         }
         return "null";
     }
@@ -79,7 +82,7 @@ public class Proto {
 		// if (id.equals("null"))
 		//	  return null;
 		
-		for (Map.Entry<Object, String> e : Proto.Objects.ids.entrySet()) {
+		for (Map.Entry<Object, String> e : allObjects.ids.entrySet()) {
 			if (e.getValue().equals(id))
 				return e.getKey();
 		}
@@ -106,29 +109,40 @@ public class Proto {
 	 * @param typename A letrehozando objektum tipusa szoveges azonositoval
 	 * @return A letrehozott uj objektum
 	 */
-	private static Object createObject(String typename) {
+	private static void createObject(String typename, String id) {
+		if (id == null)
+			return;
+		
 		switch (typename) {
-			case "Controller": return new Controller();
-			case "Player": return new Player();
-			case "Game": return new Game();
-			case "Recipe": return new Recipe();
-			case "Timer": return new Timer(0, 0);
-			case "Sun": return new Sun();
-			case "Asteroid": return new Asteroid();
-			case "Coal": return new Coal();
-			case "Iron": return new Iron();
-			case "Ice": return new Ice();
-			case "Uranium": return new Uranium();
-			case "Settler": return new Settler();
-			case "AIRobot": return new AIRobot(null);
-			case "UFO": return new UFO();
-			case "TeleportingGate": return new TeleportingGate();
+			case "Controller":
+				Controller controller = new Controller();
+				allObjects.ids.put(controller, id);
+				allObjects.controller = controller;
+				break;
 			
-			// TODO: Ha invalid a tipus, akkor itt dobjunk kivetelt?
-			// Egyelore null-lal ter vissza.
+			case "Player":
+				Player p = new Player();
+				allObjects.ids.put(p, id);
+				allObjects.players.add(p);
+				break;
+			
+			//...
+			//case "Game": return new Game();
+			//case "Recipe": return new Recipe();
+			//case "Timer": return new Timer(0, 0);
+			//case "Sun": return new Sun();
+			//case "Asteroid": return new Asteroid();
+			//case "Coal": return new Coal();
+			//case "Iron": return new Iron();
+			//case "Ice": return new Ice();
+			//case "Uranium": return new Uranium();
+			//case "Settler": return new Settler();
+			//case "AIRobot": return new AIRobot(null);
+			//case "UFO": return new UFO();
+			//case "TeleportingGate": return new TeleportingGate();
+			
 			default:
-			//	throw new NullPointerException("Invalid class name: " + typename);
-				return null;
+				throw new NullPointerException("Invalid class name: " + typename);
 		}
 	}
 	
@@ -138,26 +152,30 @@ public class Proto {
 	 * @param typename Az objektum tipusa szoveges azonositoval
 	 * @param sc Az objektum attributumai beolvasasat vegzo Scanner
 	 */
-	private static void loadObjectAttributes(Object o, String typename, Scanner sc) {
-		switch (typename) {
-			case "Controller": Controller controller = (Controller)o; controller.load(sc); break;
-			case "Player": Player p = (Player)o; /*p.load(sc);*/ break;
-			case "Game": Game game = (Game)o; /*game.load(sc);*/ break;
-			case "Recipe": Recipe r = (Recipe)o; /*r.load(sc);*/ break;
-			case "Timer": Timer timer = (Timer)o; /*timer.load(sc);*/ break;
-			case "Sun": Sun sun = (Sun)o; sun.load(sc); break;
-			case "Asteroid": Asteroid a = (Asteroid)o; a.load(sc); break;
-			case "Coal": Coal co = (Coal)o; /*co.load(sc);*/ break;
-			case "Iron": Iron ir = (Iron)o; /*ir.load(sc);*/ break;
-			case "Ice": Ice ic = (Ice)o; /*ic.load(sc);*/ break;
-			case "Uranium": Uranium ur = (Uranium)o; /*ur.load(sc);*/ break;
-			case "Settler": Settler s = (Settler)o; /*s.load(sc);*/ break;
-			case "AIRobot": AIRobot air = (AIRobot)o; /*air.load(sc);*/ break;
-			case "UFO": UFO ufo = (UFO)o; /*ufo.load(sc);*/ break;
-			case "TeleportingGate": TeleportingGate tg = (TeleportingGate)o; /*tg.load(sc);*/ break;
-			default: break;
+	private static void loadObjectAttributes(Scanner sc) {
+		allObjects.controller.load(sc);
+		for (Player p : allObjects.players) {
+			//p.load(sc);
 		}
-	}
+		//...
+		
+//			case "Controller": Controller controller = (Controller)o; controller.load(sc); break;
+	//		//case "Player": Player p = (Player)o; /*p.load(sc);*/ break;
+		//	case "Game": Game game = (Game)o; /*game.load(sc);*/ break;
+			//case "Recipe": Recipe r = (Recipe)o; /*r.load(sc);*/ break;
+			//case "Timer": Timer timer = (Timer)o; /*timer.load(sc);*/ break;
+			//case "Sun": Sun sun = (Sun)o; sun.load(sc); break;
+			//case "Asteroid": Asteroid a = (Asteroid)o; a.load(sc); break;
+	//case "Coal": Coal co = (Coal)o; /*co.load(sc);*/ break;
+	//case "Iron": Iron ir = (Iron)o; /*ir.load(sc);*/ break;
+	//case "Ice": Ice ic = (Ice)o; /*ic.load(sc);*/ break;
+			//case "Uranium": Uranium ur = (Uranium)o; /*ur.load(sc);*/ break;
+	//case "Settler": Settler s = (Settler)o; /*s.load(sc);*/ break;
+	//case "AIRobot": AIRobot air = (AIRobot)o; /*air.load(sc);*/ break;
+	//case "UFO": UFO ufo = (UFO)o; /*ufo.load(sc);*/ break;
+	//case "TeleportingGate": TeleportingGate tg = (TeleportingGate)o; /*tg.load(sc);*/ break;
+
+}
 	
 	/**
 	 * Betolti a megadott nevu konfiguracios fajl tartalmat,
@@ -176,35 +194,34 @@ public class Proto {
 		 *    Az attributumait sorban beolvassa (mindegyiket meg kell adni?).
 		 *    Elfogyaszt egy ures sort is, majd visszater.
 		 */
-		Proto.Objects.ids.clear();
-		Map<Object, String> objectTypes = new HashMap<Object, String>();
 		
-		Scanner sc = new Scanner(filename);
+		//Proto.Objects.ids.clear();
+		//Map<Object, String> objectTypes = new HashMap<Object, String>();
+		allObjects = new Proto.Objects();
+		
+		Scanner sc = new Scanner(new File(filename));
 		String line = sc.nextLine();
 		while (!line.equals("")) {
 			String[] tokens = line.split("\\s");
 			String typename = tokens[0];
 			
 			for (int i = 1; i < tokens.length; i++) {
-				Object o = createObject(typename);
-				// TODO: Ha invalid a tipus, akkor itt dobjunk kivetelt?
-				// if (o == null)
-				//    throw new NullPointerException("Invalid class name: " + typename);
-				// (Lehet IllegalArgumentException is akar.)
-				if (o != null) {
-					Proto.Objects.ids.put(o, tokens[i]);
-					objectTypes.put(o, typename);
-				}
+				createObject(typename, tokens[i]);
 			}
 			line = sc.nextLine();
 		}
 		
-		for (Map.Entry<Object, String> e : objectTypes.entrySet()) {
-			Object o = e.getKey();
-			String typename = e.getValue();
-			loadObjectAttributes(o, typename, sc);
-		}
+		loadObjectAttributes(sc);
 		sc.close();
+	}
+	
+	// Kozos segedfuggveny a save-hez es a showAll-hoz.
+	private static void saveToStream(PrintStream ps) {
+		ps.println(allObjects.controller.getDescription());
+		for (Player p : allObjects.players) {
+			ps.println(p.getDescription());
+		}
+		//...
 	}
 	
 	/**
@@ -214,18 +231,17 @@ public class Proto {
 	 */
 	public static void save(String filename) throws FileNotFoundException {
 		PrintStream ps = new PrintStream(filename);
-		// TODO
-		
+		saveToStream(ps);
 		ps.close();
 	}
 	
-	/*public static void showOne() {
-		
-	}
+	/*public static void showOne(String id) {
+		System.out.println(allObjects.getObject(id).getDescription());
+	}*/
 	
 	public static void showAll() {
-		
-	}*/
+		saveToStream(System.out);
+	}
 	
 	
 	
@@ -248,6 +264,39 @@ public class Proto {
 			else {
 				System.out.println("Now you can play the game.");
 				// TODO
+				
+				boolean exit = false;
+				while (sc.hasNextLine() /*line != null & !exit*/) {
+					// nextLine() utan kell null check?
+					String line = sc.nextLine();
+					
+					String[] tokens = line.split("\\s+");
+					String cmd = tokens[0];
+					
+					switch (cmd) {
+						case "load":
+							if (tokens.length >= 2) {
+								load(tokens[1]);
+							}
+							break;
+						
+						case "show":
+							if (tokens.length == 1) {
+								showAll();
+							}
+							break;
+						
+						case "exit":
+							exit = true;
+							//System.exit(0);
+							break;
+						
+						default:
+							System.out.println("Invalid operation, please type in a new command.");
+							break;
+					}
+				}
+				sc.close();
 			}
 		}
 		catch (Exception e) {
