@@ -1,6 +1,5 @@
 package berenyi_kft;
 
-import java.util.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
