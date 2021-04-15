@@ -242,4 +242,9 @@ public class Game {
 	public boolean isEndGameFlag() {
 		return endGameFlag;
 	}
+	
+	public void addReceipt(Recipe r) {
+		recipes.add(r);
+		
+	}
 }
