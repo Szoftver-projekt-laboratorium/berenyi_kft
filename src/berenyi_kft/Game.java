@@ -37,6 +37,8 @@ public class Game {
 	
 	private Timer timer;
 	
+	private Proto proto;
+	
 	//--------------------------------------------
 	
 	

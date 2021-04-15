@@ -15,6 +15,8 @@ public abstract class Character {
 	
 	protected Timer timer;
 	
+	protected Proto proto;
+	
 	//----------------------------------------------------------------
 	
 	/**

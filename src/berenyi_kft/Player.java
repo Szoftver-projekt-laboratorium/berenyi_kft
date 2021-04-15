@@ -19,6 +19,8 @@ public class Player {
 	
 	private boolean isAlive=true;
 	
+	private Proto proto;
+	
 	
 	public String getDescription() { 
 		

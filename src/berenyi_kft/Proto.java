@@ -215,6 +215,141 @@ public class Proto {
 	public static void save(String filename) throws FileNotFoundException {
 		PrintStream ps = new PrintStream(filename);
 		// TODO
+		String controllerId=getId(Objects.controller);
+		ps.println("Controller "+controllerId);
+		
+		ps.print("Player");
+		for(Player p : Objects.players) {
+			String playerId=getId(p);
+			ps.print(" "+playerId);
+		}
+		ps.println();
+		
+		String gameId=getId(Objects.game);
+		ps.println("Game "+gameId);
+		
+		ps.println("Recipe robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe");
+		
+		String timerId=getId(Objects.timer);
+		ps.println("Timer "+timerId);
+		
+		String sunId=getId(Objects.sun);
+		ps.println("Sun "+sunId);
+		
+		ps.print("Asteroid");
+		for(Asteroid a : Objects.asteroids) {
+			String asteroidId=getId(a);
+			ps.print(" "+asteroidId);
+		}
+		ps.println();
+		
+		ps.print("Coal");
+		for(Coal c : Objects.coals) {
+			String coalId=getId(c);
+			ps.print(" "+coalId);
+		}
+		ps.println();
+		
+		ps.print("Iron");
+		for(Iron i : Objects.irons) {
+			String ironId=getId(i);
+			ps.print(" "+ironId);
+		}
+		ps.println();
+		
+		ps.print("Ice");
+		for(Ice i : Objects.ices) {
+			String iceId=getId(i);
+			ps.print(" "+iceId);
+		}
+		ps.println();
+		
+		ps.print("Uranium");
+		for(Uranium u : Objects.uraniums) {
+			String uraniumId=getId(u);
+			ps.print(" "+uraniumId);
+		}
+		ps.println();
+		
+		ps.print("Settler");
+		for(Settler s : Objects.settlers) {
+			String settlerId=getId(s);
+			ps.print(" "+settlerId);
+		}
+		ps.println();
+		
+		ps.print("AIRobot");
+		for(AIRobot ai : Objects.robots) {
+			String robotId=getId(ai);
+			ps.print(" "+robotId);
+		}
+		ps.println();
+		
+		ps.print("UFO");
+		for(UFO u : Objects.ufos) {
+			String ufoId=getId(u);
+			ps.print(" "+ufoId);
+		}
+		ps.println();
+		
+		ps.print("TeleportingGate");
+		for(TeleportingGate tg : Objects.gates) {
+			String gateId=getId(tg);
+			ps.print(" "+gateId);
+		}
+		ps.println();
+		
+		ps.println(Objects.controller.getDescription());
+		ps.println();
+		
+		for(Player p : Objects.players) {
+			ps.println(p.getDescription());
+			ps.println();
+		}
+		
+		ps.println(Objects.game.getDescription());
+		ps.println();
+		
+		for(Recipe r : Objects.recipes) {
+			ps.println(r.getDescription());
+			ps.println();
+		}
+		
+		ps.println(Objects.timer.getDescription());
+		ps.println();
+		
+		ps.println(Objects.sun.getDescription());
+		ps.println();
+		
+		for(Asteroid a : Objects.asteroids) {
+			ps.println(a.getDescription());
+			ps.println();
+		}
+		
+		for(Uranium u : Objects.uraniums) {
+			ps.println(u.getDescription());
+			ps.println();
+		}
+		
+		for(Settler s : Objects.settlers) {
+			ps.println(s.getDescription());
+			ps.println();
+		}
+		
+		for(AIRobot ai : Objects.robots) {
+			ps.println(ai.getDescription());
+			ps.println();
+		}
+		
+		for(UFO u : Objects.ufos) {
+			ps.println(u.getDescription());
+			ps.println();
+		}
+		
+		for(TeleportingGate tg : Objects.gates) {
+			ps.println(tg.getDescription());
+			ps.println();
+		}
 		
 		ps.close();
 	}
