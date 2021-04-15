@@ -167,9 +167,16 @@ public class Proto {
 		
 	}
 	
+	/**
+	 * A prototipus program belepesi pontja.
+	 * A tesztelesi uzemmod es a jatek uzemmod kozotti valasztast teszi
+	 * lehetove a konzolon. Teszteles valasztasa eseten atiranyitja a Tester.main()-be
+	 * a vezerlest. Jatek uzemmodban pedig ez a metodus vegzi a parancsok feldolgozasat.
+	 * @param args A program parancssori argumentumai
+	 */
 	public static void main(String[] args) {
 		try {
-			Scanner sc = new Scanner();
+			Scanner sc = new Scanner(System.in);
 			System.out.println("Welcome in berenyi_kft's Proto program!");
 			System.out.println("Please select whether you wish to test (Y) or play (n) the prototype game. [Y/n]: ");
 			String choice = sc.next();
@@ -180,6 +187,9 @@ public class Proto {
 				System.out.println("Now you can play the game.");
 				// TODO
 			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
