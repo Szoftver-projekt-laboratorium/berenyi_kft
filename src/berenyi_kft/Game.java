@@ -34,12 +34,50 @@ public class Game {
 	 */
 	private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 	
-	/**
-	 * A játék időzítője
-	 */
 	private Timer timer;
 	
 	//--------------------------------------------
+	
+	
+	public String getDescription() { 
+		
+		String str="";
+		
+		String id=Proto.getId(this);
+		str+="Game "+id+"\n";
+		
+		String timerId=Proto.getId(timer);
+		str+="\ttimer "+timerId+"\n";
+		
+		str+="\trecipes robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe\n";
+		
+		String sunId=Proto.getId(sun);
+		str+="\tsun "+sunId+"\n";
+		
+		if(!asteroids.isEmpty()) {   
+			str+="\tasteroids";
+			for(Asteroid a : asteroids) {
+				String asteroidId=Proto.getId(a);
+				str+=" "+asteroidId;
+			}
+			str+="\n";
+		}
+		else
+			str+="\tasteroids null\n";
+		
+		if(!settlersAlive.isEmpty()) {   
+			str+="\tsettlersAlive";
+			for(Settler s : settlersAlive) {
+				String settlerId=Proto.getId(s);
+				str+=" "+settlerId;
+			}
+			str+="\n";
+		}
+		else
+			str+="\tsettlersAlive null\n";
+		
+		return str;	
+	}
 	
 	/**
 	 * Inicializalja az aszteroidakat, a Napot, es elhelyezi a telepeseket 
@@ -137,18 +175,6 @@ public class Game {
 		System.out.println("Game's getSpaceBaseRecipe() has been called");
 		return recipes.get(2);
 	}
-	
-	/**
-	 * Visszaad egy receptet, amely az aszteroidaovben talalhato
-	 * mindenfajta nyersanyagbol egy-egy peldanyt tartalmaz.
-	 * @return A jatekban elofordulo nyersanyagtipusok listaja
-	 */
-	/*
-	public Recipe getAllTypeOfResources() {
-		System.out.println("Game's getAllTypeOfResources() has been called");
-		return recipes.get(3);
-	}
-	*/
 	
 	/**
 	 * Visszaadja a jatek idozitojet.

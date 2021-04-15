@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Aszteroida osztaly: nyersanyagot tartalmazhat,
@@ -51,12 +52,118 @@ public class Asteroid {
 	
 //------------------------------------------------------------------------
 	 
-	 /*
-	 public void addNeighbor(Asteroid a) {
-		 System.out.println("Asteroid's addNeighbor(a: Asteroid) has been called");
-		 neighbors.add(a);
-	 }
+	/**
+	 * Beallitja az aszteroida attributumait az sc Scanner aktualis poziciojatol.
+	 * @param sc A beolvasast vegzo Scanner
 	 */
+	public void load(Scanner sc) {
+		String line = sc.nextLine();
+		line = sc.next();
+		while (!line.equals("")) {
+			String[] tokens = line.split("\\s");
+			
+			switch (tokens[0]) {
+				case "rockLayerThickness":
+					rockLayerThickness = Integer.parseInt(tokens[1]);
+					break;
+				
+				case "game":
+					game = (Game)Proto.getObject(tokens[1]);
+					break;
+				
+				case "sun":
+					sun = (Sun)Proto.getObject(tokens[1]);
+					break;
+	
+				case "neighbors":
+					for (int i = 1; i < tokens.length; i++) {
+						Asteroid a = (Asteroid)Proto.getObject(tokens[i]);
+						if (a != null)
+							neighbors.add(a);
+					}
+					break;
+				
+				case "resource":
+					resource = (Resource)Proto.getObject(tokens[1]);
+					break;
+	
+				case "characters":
+					for (int i = 1; i < tokens.length; i++) {
+						Character c = (Character)Proto.getObject(tokens[i]);
+						if (c != null)
+							characters.add(c);
+					}
+					break;
+				
+				case "gates":
+					for (int i = 1; i < tokens.length; i++) {
+						TeleportingGate tg = (TeleportingGate)Proto.getObject(tokens[i]);
+						if (tg != null)
+							gates.add(tg);
+					}
+					break;
+	
+				default:
+					break;
+			}
+			line = sc.next();
+		}
+	}	 	 
+	 
+	 public String getDescription() { 
+			
+			String str="";
+			
+			String id=Proto.getId(this);
+			str+="Asteroid "+id+"\n";
+			
+			String thicknessId=Proto.getId(rockLayerThickness);
+			str+="\trockLayerThickness "+thicknessId+"\n";
+			
+			String gameId=Proto.getId(game);
+			str+="\tgame "+gameId+"\n";
+			
+			String sunId=Proto.getId(sun);
+			str+="\tsun "+sunId+"\n";
+			
+			if(!neighbors.isEmpty()) {
+				str+="\tneighbors";
+				for(Asteroid a : neighbors) {
+					String neighborId=Proto.getId(a);
+					str+=" "+neighborId;
+				}
+				str+="\n";
+			}
+			else
+				str+="\tneighbors null\n";
+			
+			String resourceId=Proto.getId(resource);
+			str+="\tresource "+resourceId+"\n";
+			
+			if(!characters.isEmpty()) {
+				str+="\tcharacters";
+				for(Character c : characters) {
+					String characterId=Proto.getId(c);
+					str+=" "+characterId;
+				}
+				str+="\n";
+			}
+			else
+				str+="\tcharacters null\n";
+			
+			if(!gates.isEmpty()) {
+				str+="\tgates";
+				for(TeleportingGate tg : gates) {
+					String teleportingGateId=Proto.getId(tg);
+					str+=" "+teleportingGateId;
+				}
+				str+="\n";
+			}
+			else
+				str+="\tgates null\n";
+			
+			return str;	
+		}
 	 
 	 /**
 	  * Hozzaadja a neighbor aszteroidat az aszteroida neighbors kollekciojahoz.
@@ -66,7 +173,6 @@ public class Asteroid {
 		 System.out.println("Asteroid's accept(a: Asteroid) has been called");
 		 if (!neighbors.contains(a)) {
 			 neighbors.add(a);
-			 a.accept(this);
 		 }
 	 }
 	 
@@ -92,8 +198,14 @@ public class Asteroid {
 	  */
 	 public Asteroid getNeighbor(int d) {
 		 System.out.println("Asteroid's getNeighbor(d: int) has been called");
-		 d = d % this.getNeighbors().size();
-		 return neighbors.get(d);
+		 ArrayList<Asteroid> list=new ArrayList<Asteroid>();
+		 list.addAll(neighbors);
+		 for(TeleportingGate tg : gates) {
+			 list.add(tg.getPair().getAsteroid());
+		 }
+		 System.out.println(list.size());
+		 d = d % list.size();
+		 return list.get(d);
 	 }
 	 
 	 /**
@@ -134,7 +246,7 @@ public class Asteroid {
 	 public void accept(Character c) {
 		 System.out.println("Asteroid's accept(c: Character) has been called");
 		 characters.add(c);
-		 // this.checkSpaceBase();
+		 this.checkSpaceBase();
 	 }
 	 
 	 /**
@@ -166,9 +278,6 @@ public class Asteroid {
 	 public void accept(TeleportingGate tg) {
 		 System.out.println("Asteroid's accept(tg: TeleportingGate) has been called");
 		 gates.add(tg);
-		 if (tg.getPair().getAsteroid() != null) {
-			 tg.getPair().getAsteroid().accept(this);
-		 }
 	 }
 	 
 	 /**
@@ -176,14 +285,9 @@ public class Asteroid {
 	  * az aszteroida torli a gates kollekciojabol. 
 	  * @param tg A torolt teleportkapu
 	  */
-	 // TODO: Igy torlodnek a kezdetben meglevo szomszedsagok,
-	 // 	  ahova kerult kesobb torlodo teleportkapu-par is!
 	 public void remove(TeleportingGate tg) {
 		 System.out.println("Asteroid's remove(tg: TeleportingGate) has been called");
 		 gates.remove(tg);
-		 if (tg.getPair().getAsteroid() != null) {
-			 tg.getPair().getAsteroid().remove(this);
-		 }
 	 }
 	 
 	 /**
@@ -249,16 +353,11 @@ public class Asteroid {
 	 public void drilled() {
 		 System.out.println("Asteroid's drilled() has been called");
 		 if (rockLayerThickness >= 1) {
-			 int value = rockLayerThickness-1;
-			 this.setRockLayerThickness(value);
+			 rockLayerThickness--;
 		 }
-		 if (rockLayerThickness==0) {
-			 if (resource != null) {
-				 if (sun.isCloseToSun(this)) {
-					 resource.drilledOut(this);
-				 }
-			 }
-		 }
+		 if (rockLayerThickness==0 && resource!=null&&sun.isCloseToSun(this)) {
+			 resource.drilledOut(this);
+		 	}
 	 }
 	 
 	 /**
@@ -328,6 +427,10 @@ public class Asteroid {
 			 for (int i = characters.size()-1;i>=0;i--) {
 				 characters.get(i).die();
 			 }
+			 
+			 for(TeleportingGate tg: gates) {
+				 tg.goMad();
+			 }
 		 }
 	 }
 	 
@@ -342,8 +445,6 @@ public class Asteroid {
 		 for (Character c: characters) {
 			 temp.addAll(c.getCollectedResources());
 		 }
-		 // TODO: Hozza kell adni a megfurt aszteroida magjaban
-		 // levo nyersanyagot is a temp-hez?
 		 /*if (rockLayerThickness == 0) {
 			 temp.add(resource);
 		 }*/
@@ -388,5 +489,13 @@ public class Asteroid {
 	 public void setSun(Sun s) {
 		 System.out.println("Asteroid's setSun(s: Sun) has been called");
 		 sun = s;
+	 }
+	 
+	 public Sun getSun() {
+		 return sun;
+	 }
+	 
+	 public void minedByUFO() {
+			 this.removeResource();
 	 }
 }
