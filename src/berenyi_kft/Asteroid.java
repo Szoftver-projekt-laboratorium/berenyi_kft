@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Aszteroida osztaly: nyersanyagot tartalmazhat,
@@ -50,6 +51,64 @@ public class Asteroid {
 	 private ArrayList<TeleportingGate> gates = new ArrayList<TeleportingGate>();
 	
 //------------------------------------------------------------------------
+	 
+	/**
+	 * Beallitja az aszteroida attributumait az sc Scanner aktualis poziciojatol.
+	 * @param sc A beolvasast vegzo Scanner
+	 */
+	public void load(Scanner sc) {
+		String line = sc.nextLine();
+		line = sc.next();
+		while (!line.equals("")) {
+			String[] tokens = line.split("\\s");
+			
+			switch (tokens[0]) {
+				case "rockLayerThickness":
+					rockLayerThickness = Integer.parseInt(tokens[1]);
+					break;
+				
+				case "game":
+					game = (Game)Proto.getObject(tokens[1]);
+					break;
+				
+				case "sun":
+					sun = (Sun)Proto.getObject(tokens[1]);
+					break;
+	
+				case "neighbors":
+					for (int i = 1; i < tokens.length; i++) {
+						Asteroid a = (Asteroid)Proto.getObject(tokens[i]);
+						if (a != null)
+							neighbors.add(a);
+					}
+					break;
+				
+				case "resource":
+					resource = (Resource)Proto.getObject(tokens[1]);
+					break;
+	
+				case "characters":
+					for (int i = 1; i < tokens.length; i++) {
+						Character c = (Character)Proto.getObject(tokens[i]);
+						if (c != null)
+							characters.add(c);
+					}
+					break;
+				
+				case "gates":
+					for (int i = 1; i < tokens.length; i++) {
+						TeleportingGate tg = (TeleportingGate)Proto.getObject(tokens[i]);
+						if (tg != null)
+							gates.add(tg);
+					}
+					break;
+	
+				default:
+					break;
+			}
+			line = sc.next();
+		}
+	}	 	 
 	 
 	 public String getDescription() { 
 			

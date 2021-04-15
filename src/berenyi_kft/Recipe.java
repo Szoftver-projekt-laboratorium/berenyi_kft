@@ -93,7 +93,15 @@ public class Recipe {
 	 * Visszaallitja az eredeti receptet, azaz a resources gyujtemeny tartalmat.
 	 */
 	public void reset() {
-		resources = (ArrayList<Resource>)resources_backup.clone();
+		// TODO: Eredetileg shallow copy volt, de deep copy kell, jo igy?
+		// Az elemeket egyenkent kell klonozni es hozzaadni.
+		// Regi:
+		// resources = (ArrayList<Resource>)resources_backup.clone();
+		
+		resources.clear();
+		for (Resource r : resources_backup) {
+			resources.add(r.clone());
+		}
 	}
 	
 	/**

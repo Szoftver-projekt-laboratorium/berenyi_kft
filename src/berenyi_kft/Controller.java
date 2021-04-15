@@ -66,7 +66,7 @@ public class Controller {
 		}
 	
 	public void startGame() {
-		
+		// TODO
 	}
 	
 	
@@ -101,8 +101,8 @@ public class Controller {
 	}
 	
 	/**
-	 * 
-	 * @param sc
+	 * Beolvassa a jatek attributumait az sc Scanner aktualis poziciojatol.
+	 * @param sc A beolvasast vegzo Scanner
 	 */
 	public void load(Scanner sc) {
 		String line = sc.nextLine(); // fejlecsor
@@ -117,7 +117,12 @@ public class Controller {
 					
 				case "allPlayers":
 					for (int i = 1; i < tokens.length; i++) {
-						playersAlive.add((Player)Proto.getObject(tokens[i]));
+						Player p = (Player)Proto.getObject(tokens[i]);
+						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
+						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
+						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
+						if (p != null)
+							playersAlive.add(p);
 					}
 					break;
 					
@@ -128,9 +133,12 @@ public class Controller {
 				case "state":
 					state = State.fromString(tokens[1]);
 					break;
+					
+				default:
+					break;
 			}
 			line = sc.next();
 		}
-
 	}
+	
 }
