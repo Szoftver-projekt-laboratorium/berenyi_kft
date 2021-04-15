@@ -3,7 +3,9 @@ package berenyi_kft;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -15,7 +17,27 @@ import berenyi_kft_test.Tester;
  */
 public class Proto {
 	
-	private static Map<Object, String> ids = new HashMap<Object, String>();
+	private static class Objects {
+		static Map<Object, String> ids = new HashMap<Object, String>();
+		
+		static Controller controller = null;
+		static List<Player> players = new ArrayList<Player>();
+		static Game game = null;
+		static List<Recipe> recipes = new ArrayList<Recipe>();
+		static Timer timer = null;
+		static Sun sun = null;
+		static List<Asteroid> asteroids = new ArrayList<Asteroid>();
+		static List<Coal> coals = new ArrayList<Coal>();
+		static List<Iron> irons = new ArrayList<Iron>();
+		static List<Ice> ices = new ArrayList<Ice>();
+		static List<Uranium> uraniums = new ArrayList<Uranium>();
+		static List<Settler> settlers = new ArrayList<Settler>();
+		static List<AIRobot> robots = new ArrayList<AIRobot>();
+		static List<UFO> ufos = new ArrayList<UFO>();
+		static List<TeleportingGate> gates = new ArrayList<TeleportingGate>();
+	}
+	
+	// private static Map<Object, String> ids = new HashMap<Object, String>();
 
 	private static int tabs;
 	
@@ -23,7 +45,7 @@ public class Proto {
 	
 	private static boolean log = true;
 	
-	private static Controller controller = null;
+	// private static Controller controller = null;
 	
 	/**
 	 * Beallitja, hogy a prototipus program objektumai megvalosithatnak-e
@@ -45,8 +67,8 @@ public class Proto {
 	}
 	
 	public static String getId(Object o) {
-        if (ids.containsKey(o)) {
-            return ids.get(o);
+        if (Proto.Objects.ids.containsKey(o)) {
+            return Proto.Objects.ids.get(o);
         }
         return "null";
     }
@@ -57,7 +79,7 @@ public class Proto {
 		// if (id.equals("null"))
 		//	  return null;
 		
-		for (Map.Entry<Object, String> e : ids.entrySet()) {
+		for (Map.Entry<Object, String> e : Proto.Objects.ids.entrySet()) {
 			if (e.getValue().equals(id))
 				return e.getKey();
 		}
@@ -154,7 +176,7 @@ public class Proto {
 		 *    Az attributumait sorban beolvassa (mindegyiket meg kell adni?).
 		 *    Elfogyaszt egy ures sort is, majd visszater.
 		 */
-		ids.clear();
+		Proto.Objects.ids.clear();
 		Map<Object, String> objectTypes = new HashMap<Object, String>();
 		
 		Scanner sc = new Scanner(filename);
@@ -170,7 +192,7 @@ public class Proto {
 				//    throw new NullPointerException("Invalid class name: " + typename);
 				// (Lehet IllegalArgumentException is akar.)
 				if (o != null) {
-					ids.put(o, tokens[i]);
+					Proto.Objects.ids.put(o, tokens[i]);
 					objectTypes.put(o, typename);
 				}
 			}
@@ -185,13 +207,25 @@ public class Proto {
 		sc.close();
 	}
 	
-	// TODO: Hogyan rendezzuk sorba az osztalyokat?
+	/**
+	 * 
+	 * @param filename
+	 * @throws FileNotFoundException
+	 */
 	public static void save(String filename) throws FileNotFoundException {
 		PrintStream ps = new PrintStream(filename);
-		
+		// TODO
 		
 		ps.close();
 	}
+	
+	/*public static void showOne() {
+		
+	}
+	
+	public static void showAll() {
+		
+	}*/
 	
 	
 	
