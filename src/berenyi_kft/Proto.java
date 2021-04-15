@@ -207,13 +207,25 @@ public class Proto {
 		sc.close();
 	}
 	
-	// TODO: Hogyan rendezzuk sorba az osztalyokat?
+	/**
+	 * 
+	 * @param filename
+	 * @throws FileNotFoundException
+	 */
 	public static void save(String filename) throws FileNotFoundException {
 		PrintStream ps = new PrintStream(filename);
-		
+		// TODO
 		
 		ps.close();
 	}
+	
+	/*public static void showOne() {
+		
+	}
+	
+	public static void showAll() {
+		
+	}*/
 	
 	
 	

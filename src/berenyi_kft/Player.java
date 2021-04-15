@@ -2,7 +2,7 @@ package berenyi_kft;
 
 public class Player {
 	
-	private enum Command{
+	enum Command{
 		PASS,
 		MOVE,
 		DRILL,
@@ -65,7 +65,7 @@ public class Player {
 		this.isAlive = isAlive;
 	}
 	
-	public void actOnSettler(Command cmd) {
+	public void actOnSettler(Command cmd, Object[] params) {
 		//TODO switch-case a commandoknak
 	}
 	
