@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Epiteshez szukseges receptet reprezentalo osztaly.
@@ -112,5 +113,30 @@ public class Recipe {
 	public boolean isEmpty() {
 		System.out.println("Recipe's isEmpty() has been called");
 		return this.resources.isEmpty();
+	}
+	
+	public void load(Scanner sc) {
+		String line = sc.nextLine(); // fejlecsor
+		line = sc.next();
+		while (!line.equals("")) {
+			String[] tokens = line.split("\\s");
+			
+			switch (tokens[0]) {					
+				case "resources":
+					for (int i = 1; i < tokens.length; i++) {
+						Resource r = (Resource)Proto.getObject(tokens[i]);
+						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
+						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
+						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
+						if (r != null)
+							resources.add(r);
+					}
+					break;
+					
+				default:
+					break;
+			}
+			line = sc.next();
+		}
 	}
 }
