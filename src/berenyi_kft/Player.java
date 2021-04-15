@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Player {
 	
-	private enum Command{
+	enum Command{
 		PASS,
 		MOVE,
 		DRILL,
@@ -36,9 +36,9 @@ public class Player {
 		str+="\tsettler "+settlerId+"\n";
 		
 		if(isAlive)
-			str+="isAlive true\n";
+			str+="\tisAlive true\n";
 		else
-			str+="isAlive false\n";
+			str+="\tisAlive false\n";
 		
 		return str;	
 	}
@@ -100,7 +100,7 @@ public class Player {
 		this.isAlive = isAlive;
 	}
 	
-	public void actOnSettler(Command cmd) {
+	public void actOnSettler(Command cmd, Object[] params) {
 		//TODO switch-case a commandoknak
 	}
 	

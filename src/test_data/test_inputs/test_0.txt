@@ -1,0 +1,13 @@
+Controller controller
+Player p1
+
+Controller controller
+	game null
+	allPlayers p1
+	actPlayer p1
+	state paused
+
+Player p1
+	name Berenyi_kft
+	settler null
+	isAlive true
