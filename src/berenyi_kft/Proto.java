@@ -1,18 +1,23 @@
 package berenyi_kft;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 import berenyi_kft_test.Tester;
 
+/**
+ * Proto osztaly a prototipus program vezerlesehez, tesztelesehez
+ * @author berenyi_kft
+ */
 public class Proto {
 	
 	private static Map<Object, String> ids = new HashMap<Object, String>();
 
 	private static int tabs;
-	
 	
 	private static boolean random = true;
 	
@@ -20,6 +25,24 @@ public class Proto {
 	
 	private static Controller controller = null;
 	
+	/**
+	 * Beallitja, hogy a prototipus program objektumai megvalosithatnak-e
+	 * veletlenszeru mukodest (isRandom == true), vagy kotelezoen
+	 * determinisztikusan kell, hogy fussanak (isRandom == false).
+	 * @param isRandom A randomizalt mukodest engedelyezo/letilto logikai valtozo
+	 */
+	public static void setRandom(boolean isRandom) {
+		random = isRandom;
+	}
+	
+	/**
+	 * Beallitja, hogy a prototipus program naplozza-e a legfontosabb meghivott 
+	 * metodusokat a konzolon (isLogging == true), vagy ne (isLogging = false).
+	 * @param isLogging A konzolos metodusnaplozast engedelyezo/letilto logikai valtozo
+	 */
+	public static void enableLogging(boolean isLogging) {
+		log = isLogging;
+	}
 	
 	public static String getId(Object o) {
         if (ids.containsKey(o)) {
@@ -45,7 +68,6 @@ public class Proto {
 		for (int i = 0; i < tabs; i++) {
 			System.out.print('\t');
 		}
-	
 		System.out.println(line);
 	}
 	
@@ -163,9 +185,15 @@ public class Proto {
 		sc.close();
 	}
 	
-	public static void save(String filename) {
+	// TODO: Hogyan rendezzuk sorba az osztalyokat?
+	public static void save(String filename) throws FileNotFoundException {
+		PrintStream ps = new PrintStream(filename);
 		
+		
+		ps.close();
 	}
+	
+	
 	
 	/**
 	 * A prototipus program belepesi pontja.
