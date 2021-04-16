@@ -8,7 +8,7 @@ package berenyi_kft;
 public interface ISteppable {
 	
 	/**
-	 * A mu�velet, amelyet az objektum az adott lepesben vegez.
+	 * A muvelet, amelyet az objektum az adott lepesben vegez.
 	 */
 	public void step();
 
