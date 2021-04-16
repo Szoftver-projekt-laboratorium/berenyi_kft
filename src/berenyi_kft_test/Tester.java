@@ -127,7 +127,7 @@ public class Tester {
 		boolean exit = false;
 		String line = sc.nextLine();
 		while (line != null & !exit) { // nextLine() utan kell null check?
-			String[] tokens = line.split("\\s");
+			String[] tokens = line.split("\\s+");
 			String cmd = tokens[0];
 			
 			switch (cmd) {

@@ -32,14 +32,14 @@ public class Timer extends java.util.Timer {
 		String id=Proto.getId(this);
 		str+="Timer "+id+"\n";
 		
-		String tickId=Proto.getId(tick);
-		str+="\tticks "+tickId+"\n";
+		String tickStr=Integer.toString(tick);
+		str+="\tticks "+tickStr+"\n";
 		
-		String delayId=Proto.getId(delay);
-		str+="\tdelay "+delayId+"\n";
+		String delayStr=Long.toString(delay);
+		str+="\tdelay "+delayStr+"\n";
 		
-		String periodId=Proto.getId(period);
-		str+="\tperiod "+periodId+"\n";
+		String periodStr=Long.toString(period);
+		str+="\tperiod "+periodStr+"\n";
 		
 		if(!steppables.isEmpty()) {   
 			str+="\tsteppables";
@@ -126,19 +126,19 @@ public class Timer extends java.util.Timer {
 		String line = sc.nextLine(); // fejlecsor
 		line = sc.nextLine();
 		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "ticks":
-					tick = (int)Proto.getObject(tokens[1]);
+					tick = Integer.parseInt(tokens[1]);
 					break;
 					
 				case "delay":
-					delay= (long)Proto.getObject(tokens[1]);
+					delay= Long.parseLong(tokens[1]);
 					break;
 					
 				case "period":
-					period = (long)Proto.getObject(tokens[1]);
+					period = Long.parseLong(tokens[1]);
 					break;
 					
 				case "steppables":

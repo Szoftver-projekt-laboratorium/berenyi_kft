@@ -60,7 +60,7 @@ public class Asteroid {
 		String line = sc.nextLine();
 		line = sc.nextLine();
 		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "rockLayerThickness":
@@ -117,8 +117,8 @@ public class Asteroid {
 			String id=Proto.getId(this);
 			str+="Asteroid "+id+"\n";
 			
-			String thickness=Integer.toString(rockLayerThickness);
-			str+="\trockLayerThickness "+thickness+"\n";
+			String thicknessStr=Integer.toString(rockLayerThickness);
+			str+="\trockLayerThickness "+thicknessStr+"\n";
 			
 			String gameId=Proto.getId(game);
 			str+="\tgame "+gameId+"\n";

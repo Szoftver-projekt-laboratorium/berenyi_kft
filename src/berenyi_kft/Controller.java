@@ -3,7 +3,7 @@ package berenyi_kft;
 import java.util.*;
 
 /**
- * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot.
+ * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot
  * @author berenyi_kft
  */
 public class Controller {
@@ -41,7 +41,7 @@ public class Controller {
 			String gameId=Proto.getId(game);
 			str+="\tgame "+gameId+"\n";
 			
-			if(!playersAlive.isEmpty()) {   // A doksiban allPlayers az attribútum neve
+			if(!playersAlive.isEmpty()) {   // A doksiban allPlayers az attributum neve
 				str+="\tplayersAlive";
 				for(Player p : playersAlive) {
 					String playerId=Proto.getId(p);
@@ -54,11 +54,8 @@ public class Controller {
 			
 			String actPlayerId=Proto.getId(actPlayer);
 			str+="\tactPlayer "+actPlayerId+"\n";
-			
-			if(state==State.RUNNING)
-				str+="\tgameRunning true\n";
-			else
-				str+="\tgameRunning false\n";
+
+			str+="\tstate "+State.toString(state)+"\n";
 			
 			return str;	
 		}
@@ -80,6 +77,10 @@ public class Controller {
 	public Player getActPlayer() {
 		return actPlayer;
 	}
+	
+	// TODO: A jatekosokat nem kellene kozvetlenul hivnunk majd,
+	// hanem a Controlleren keresztul tudnak meg, hogy milyen parancsot
+	// adtak meg nekik a Proton keresztul.
 	
 	public void nextPlayer() {
 		int idx=playersAlive.indexOf(actPlayer);

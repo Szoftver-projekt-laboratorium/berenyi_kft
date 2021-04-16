@@ -28,7 +28,7 @@ public class AIRobot extends Character implements ISteppable {
 	}
 	
 	/*
-	 * minta:
+	 * Minta:
 	 * AIRobot air1
 	 *	timer timer
 	 *	place a1
@@ -38,19 +38,17 @@ public class AIRobot extends Character implements ISteppable {
 		String line = sc.nextLine(); 
 		line = sc.nextLine();
 		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "timer":
 					timer = (Timer)Proto.getObject(tokens[1]);
 					break;
-					
-					
+								
 				case "place":
 					place = (Asteroid)Proto.getObject(tokens[1]);
-					break;
-					
-					
+					break;					
+				
 				default:
 					break;
 			}

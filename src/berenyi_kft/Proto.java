@@ -12,6 +12,9 @@ import java.util.Scanner;
 
 import berenyi_kft_test.Tester;
 
+// Az IO metodusokat jobb lenne kiszervezni vagy beszervezni egy masik osztalyba.
+// Lehetne akar Proto.IO is. Nem tudom, jobb-e ugy, csak kompaktabb lenne.
+
 /**
  * Proto osztaly a prototipus program vezerlesehez, tesztelesehez
  * @author berenyi_kft
@@ -123,6 +126,17 @@ public class Proto {
 	public static void decrTabs() {
 		tabs--;
 	}
+	
+	// Ez a nextLine()-ok alternativaja lehet. Annyival tud tobbet,
+	// hogy magunknak kezelhetjuk a kiveteleket, ha nem sikerul a beolvasas.
+	/*public static String getLine(Scanner sc) throws Exception {
+		if (sc.hasNextLine()) {
+			return sc.nextLine();
+		}
+		else {
+			throw new Exception("Proto.getLine() - Unsuccessful line parsing.");
+		}
+	}*/
 	
 	/**
 	 * Segedfuggveny a beolvasott objektumok peldanyositasahoz.
@@ -296,7 +310,7 @@ public class Proto {
 		Scanner sc = new Scanner(new File(filename));
 		String line = sc.nextLine();
 		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+			String[] tokens = line.split("\\s+");
 			String typename = tokens[0];
 			
 			for (int i = 1; i < tokens.length; i++) {
@@ -458,6 +472,7 @@ public class Proto {
 	 */
 	private static void saveToStream(PrintStream ps) {
 		saveObjectIds(ps);
+		ps.println();
 		saveObjectAttributes(ps);
 	}
 	

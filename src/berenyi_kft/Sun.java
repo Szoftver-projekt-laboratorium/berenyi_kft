@@ -23,6 +23,7 @@ public class Sun implements ISteppable {
 	/**
 	 * A jatekot reprezentalo osztaly
 	 */
+	// TODO: Elvileg nem szukseges.
 	private Game game;
 	
 	//-------------------------------------------------------------
@@ -35,7 +36,7 @@ public class Sun implements ISteppable {
 		String line = sc.nextLine();
 		line = sc.nextLine();
 		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "timeToSunStorm":

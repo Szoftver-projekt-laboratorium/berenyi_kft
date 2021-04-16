@@ -35,12 +35,12 @@ public enum State {
 	 */
 	public static String toString(State state) {
 		switch (state) {
-			case INIT: return "Initiaizing...";
-			case RUNNING: return "The game has started/resumed.";
-			case PAUSED: return "The game has been stopped.";
-			case WON: return "Congratulations, you settlers have won the game!";
-			case LOST: return "It is the end mates, you have lost the game.";
-			default: return "Exiting the game...";
+			case INIT: return "init";
+			case RUNNING: return "running";
+			case PAUSED: return "paused";
+			case WON: return "won";
+			case LOST: return "lost";
+			default: return "exited";
 		}
 	}
 }

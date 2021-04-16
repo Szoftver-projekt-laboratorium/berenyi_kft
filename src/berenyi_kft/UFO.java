@@ -30,7 +30,7 @@ public class UFO extends Character implements ISteppable {
 		String line = sc.nextLine(); // fejlecsor
 		line = sc.nextLine();
 		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+			String[] tokens = line.split("\\s+");
 
 			switch (tokens[0]) {
 				case "timer":

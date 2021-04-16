@@ -2,32 +2,10 @@ package berenyi_kft;
 
 import java.util.Scanner;
 
-enum PlayerCommand {
-	PASS,
-	MOVE,
-	DRILL,
-	MINE,
-	RESTORE,
-	CREATE_ROBOT,
-	CREATE_GATE_PAIR,
-	RELEASE_GATE,
-	INVALID;
-	
-	public static PlayerCommand fromString(String s) {
-		switch (s) {
-			case "pass": return PASS;
-			case "move": return MOVE;
-			case "drill": return DRILL;
-			case "mine": return MINE;
-			case "restore": return RESTORE;
-			case "create_robot": return CREATE_ROBOT;
-			case "create_gate_pair": return CREATE_GATE_PAIR;
-			case "release_gate": return RELEASE_GATE;
-			default: return INVALID;
-		}
-	}
-}
-
+/**
+ * Jatekos felhasznalo, aki a sajat telepeset iranyitja a jatekban
+ * @author berenyi_kft
+ */
 public class Player {
 	
 	private String name;
@@ -35,7 +13,7 @@ public class Player {
 	private Settler settler;
 	
 	private boolean isAlive=true;
-	
+	 
 	
 	public String getDescription() { 
 		
@@ -44,7 +22,6 @@ public class Player {
 		String id=Proto.getId(this);
 		str+="Player "+id+"\n";
 		
-		// A primitiv tipusoknal atirtam a kiirast.
 		str+="\tname "+name+"\n";
 		
 		String settlerId=Proto.getId(settler);
@@ -65,13 +42,12 @@ public class Player {
 		isAlive true
 	*/
 	public void load(Scanner sc) {
-		String line = sc.nextLine(); // fejlecsor
+		String line = sc.nextLine();
 		line = sc.nextLine();
 		while (!line.equals("")) {
 			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
-				// A primitiv tipusoknal atirtam a beolvasast. 
 				case "name":
 					name = tokens[1];
 					break;
@@ -122,7 +98,26 @@ public class Player {
 	 * @param allParams A parancs argumentumai; allParams[0] maganak a parancsnak a neve
 	 */
 	public void actOnSettler(PlayerCommand cmd, Object[] allParams) {
-		//TODO switch-case a commandoknak
+		switch (cmd) {
+			case PASS: /* No op */ break;
+			case MOVE:
+				int dir = (Integer)allParams[1];
+				settler.move(dir); break;
+				
+			case DRILL: settler.drill(); break;
+			case MINE: settler.mine(); break;
+			case RESTORE:
+				// Mukodokepes a cast-olas?
+				Resource r = (Resource)allParams[1];
+				settler.restore(r); break;
+			
+			case CREATE_ROBOT: settler.createAIRobot(); break;
+			case CREATE_GATE_PAIR: settler.createGatePair(); break;
+			case RELEASE_GATE: settler.releaseGate(); break;
+			
+			default: throw new IllegalArgumentException(
+					"Invalid PlayerCommand: " + allParams[0]);
+		}
 	}
 	
 }
