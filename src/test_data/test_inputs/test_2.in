@@ -30,6 +30,12 @@ Game game
 	asteroids a1 a2
 	settlersAlive s1 s2
 
+Recipe nullRecipe1
+	resources null
+	
+Recipe nullRecipe2
+	resources null
+
 Recipe spaceBaserecipe
 	resources co1 co2 co3 ir1 ir2 ir3 ic1 ic2 ic3 ur1 ur2 ur3
 
@@ -59,6 +65,7 @@ Uranium ur4
 
 Uranium ur5
 	life 3
+
 Uranium ur6
 	life 3
 

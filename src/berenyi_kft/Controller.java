@@ -28,7 +28,8 @@ public class Controller {
 		if (Proto.isLogging()) {
 			System.out.println(State.toString(state));
 		}
-		this.state = state;
+		if(this.state != State.WON & this.state != State.LOST )
+			this.state = state;
 	}
 
 	public String getDescription() { 
@@ -42,7 +43,7 @@ public class Controller {
 			str+="\tgame "+gameId+"\n";
 			
 			if(!playersAlive.isEmpty()) {   // A doksiban allPlayers az attributum neve
-				str+="\tplayersAlive";
+				str+="\tallPlayers";
 				for(Player p : playersAlive) {
 					String playerId=Proto.getId(p);
 					str+=" "+playerId;
@@ -50,7 +51,7 @@ public class Controller {
 				str+="\n";
 			}
 			else
-				str+="\tplayersAlive null\n";
+				str+="\tallPlayers null\n";
 			
 			String actPlayerId=Proto.getId(actPlayer);
 			str+="\tactPlayer "+actPlayerId+"\n";
@@ -66,6 +67,7 @@ public class Controller {
 	
 	
 	public void endGame(State state) {
+		this.state = state;
 		if(state==State.WON)
 			System.out.println("Settlers won");
 		else if(state==State.LOST)

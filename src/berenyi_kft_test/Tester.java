@@ -1,13 +1,18 @@
 package berenyi_kft_test;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 import berenyi_kft.Controller;
 import berenyi_kft.Player;
+import berenyi_kft.PlayerCommand;
 import berenyi_kft.Proto;
+import berenyi_kft.Resource;
 import berenyi_kft.State;
 
 /**
@@ -21,31 +26,37 @@ public class Tester {
 	
 	// Eleresi ut
 	private static String path = "src\\test_data\\";
-	
-	
-	static boolean compareTextFiles(String file1, String file2) throws IOException {
-		BufferedReader r1 = new BufferedReader(new FileReader(file1));
-		BufferedReader r2 = new BufferedReader(new FileReader(file2));
-		int c1 = 0, c2 = 0;
-		while (true) {
-			c1 = r1.read();
-			c2 = r2.read();
-			if (c1 == -1 && c2 == -1)
-				return true;
-			else if (c1 == -1 || c2 == -1 || c1 != c2) {
-				return false;
-			}
-		}
-	}
+
 	
 	// Atirtam String paramterure, de majd meglatjuk, a File jobb-e.
 	public static boolean compare(String fpath1, String fpath2)
 														throws IOException {
+	
 		
-		String file1 = fpath1;
-		String file2 = fpath2;
 		
-		if (compareTextFiles(file1, file2)){
+		
+		Scanner input1 = new Scanner(new File(fpath1));//read first file
+		Scanner input2 = new Scanner(new File(fpath2));//read second file
+
+		String line1, line2;
+		
+		while(input1.hasNextLine() && input2.hasNextLine()){
+			line1 = input1.nextLine();   
+			line2 = input2.nextLine(); 
+
+		    if(!line1.equals(line2)){
+		        System.out.println("Differences found: "+"\n"+line1+'\n'+line2);
+		        return false;
+		    }
+		   
+		}
+		System.out.println("Files contents are equal");
+		return true;
+		/*
+		String file1Content = Files.readString(Path.of(fpath1));
+		String file2Content = Files.readString(Path.of(fpath2));
+		
+		if (file1Content.equals(file2Content)){
 			System.out.println("Files' contents are the same.");
 			return true;
 		}
@@ -55,6 +66,7 @@ public class Tester {
 			System.out.println("Files are different.");
 			return false;
 		} 
+		*/
 		
 	}
 	
@@ -62,19 +74,33 @@ public class Tester {
 	 * Metodus a tesztspecifikus muvelet elvegzesehez.
 	 * @param controller A jatekot iranyito vezerlo
 	 */
-	private static void executeTestSpecificCommand(Controller controller) {
+	private static void executeTestSpecificCommand(Controller controller, int testNum) {
 		// TODO: Ez a par sor egyelore csak foltozgatas.
 		// Minden jatekos inditotta tesztesethez kellene Controller is, hogy teljes legyen.
-		Player actPlayer;
+		Player actPlayer = null;
 		if (controller != null)
 			actPlayer = controller.getActPlayer();
 		else {
-			Proto.getObject("p1");
+			actPlayer = (Player) Proto.getObject("p1");
 		}
 		
 		// TODO: Sorszam szerinti if-else agak es metodushivasok az actPlayeren.
 		// (Az idozitett inditas megtortenik a startban, azoknal itt nem kell semmi.)
-		
+		if (testNum == 1) {
+			Object[] params = { "pass" };
+			actPlayer.actOnSettler(PlayerCommand.PASS, params);
+		} else if (testNum == 2 | (testNum >= 4 & testNum <= 5)) {
+			Object[] params = { "move", 0 };
+			actPlayer.actOnSettler(PlayerCommand.MOVE, params);
+		} else if (testNum == 3) {
+			Object[] params = { "mine" };
+			actPlayer.actOnSettler(PlayerCommand.MINE, params);
+		} else if (testNum == 13) {
+			Object[] params = { "restore", (Resource) Proto.getObject("ur1") };
+			actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
+		} else if (testNum >= 29 & testNum <= 35) {
+			/* (A start parancs inditja a tesztet, egy ISteppable lep magatol) */
+		}
 	}
 	
 	/**
@@ -108,7 +134,7 @@ public class Tester {
 				controller.setState(State.RUNNING);
 			}
 			
-			executeTestSpecificCommand(controller);
+			executeTestSpecificCommand(controller, testNum);
 			
 			if (controller != null) {
 				controller.setState(State.PAUSED);
