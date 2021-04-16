@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Aszteroida osztaly: nyersanyagot tartalmazhat,
@@ -51,6 +52,64 @@ public class Asteroid {
 	
 //------------------------------------------------------------------------
 	 
+	/**
+	 * Beallitja az aszteroida attributumait az sc Scanner aktualis poziciojatol.
+	 * @param sc A beolvasast vegzo Scanner
+	 */
+	public void load(Scanner sc) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
+			
+			switch (tokens[0]) {
+				case "rockLayerThickness":
+					rockLayerThickness = Integer.parseInt(tokens[1]);
+					break;
+				
+				case "game":
+					game = (Game)Proto.getObject(tokens[1]);
+					break;
+				
+				case "sun":
+					sun = (Sun)Proto.getObject(tokens[1]);
+					break;
+	
+				case "neighbors":
+					for (int i = 1; i < tokens.length; i++) {
+						Asteroid a = (Asteroid)Proto.getObject(tokens[i]);
+						if (a != null)
+							neighbors.add(a);
+					}
+					break;
+				
+				case "resource":
+					resource = (Resource)Proto.getObject(tokens[1]);
+					break;
+	
+				case "characters":
+					for (int i = 1; i < tokens.length; i++) {
+						Character c = (Character)Proto.getObject(tokens[i]);
+						if (c != null)
+							characters.add(c);
+					}
+					break;
+				
+				case "gates":
+					for (int i = 1; i < tokens.length; i++) {
+						TeleportingGate tg = (TeleportingGate)Proto.getObject(tokens[i]);
+						if (tg != null)
+							gates.add(tg);
+					}
+					break;
+	
+				default:
+					break;
+			}
+		}
+	}	 	 
+	 
 	 public String getDescription() { 
 			
 			String str="";
@@ -58,8 +117,8 @@ public class Asteroid {
 			String id=Proto.getId(this);
 			str+="Asteroid "+id+"\n";
 			
-			String thicknessId=Proto.getId(rockLayerThickness);
-			str+="\trockLayerThickness "+thicknessId+"\n";
+			String thicknessStr=Integer.toString(rockLayerThickness);
+			str+="\trockLayerThickness "+thicknessStr+"\n";
 			
 			String gameId=Proto.getId(game);
 			str+="\tgame "+gameId+"\n";
@@ -316,6 +375,8 @@ public class Asteroid {
 			 s.accept(resource);
 			 this.removeResource();
 			 this.checkSpaceBase();
+		 }else {
+			 System.out.println("Asteroid is not drilled!");
 		 }
 	 }
 	 

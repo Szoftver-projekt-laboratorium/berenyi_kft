@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Epiteshez szukseges receptet reprezentalo osztaly.
@@ -93,7 +94,10 @@ public class Recipe {
 	 * Visszaallitja az eredeti receptet, azaz a resources gyujtemeny tartalmat.
 	 */
 	public void reset() {
-		resources = (ArrayList<Resource>)resources_backup.clone();
+		resources.clear();
+		for (Resource r : resources_backup) {
+			resources.add(r.clone());
+		}
 	}
 	
 	/**
@@ -104,5 +108,39 @@ public class Recipe {
 	public boolean isEmpty() {
 		System.out.println("Recipe's isEmpty() has been called");
 		return this.resources.isEmpty();
+	}
+	
+	public void load(Scanner sc) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
+			
+			switch (tokens[0]) {					
+				case "resources":
+					for (int i = 1; i < tokens.length; i++) {
+						
+						// TODO: Mukodik ez a sor? Nem cast-olodnak
+						// vissza a specialis Resource-ok?
+						// Ha nem mukodne, akkor szukseg lesz a Protoban
+						// getResource() es getCharacter() fuggvenyekre,
+						// es ket ids-hoz hasonlo extra Map-re a
+						// Resource-okkal es a Characterekkel.
+						// Sot, meg a Steppable-okhoz is kellhet ilyen.
+						//
+						// Heterogen kollekcio attributumok:
+						// resources, characters, steppables 
+						// 
+						Resource r = (Resource)Proto.getObject(tokens[i]);
+						if (r != null)
+							resources.add(r);
+					}
+					break;
+					
+				default:
+					break;
+			}
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.TimerTask;
 
 /**
@@ -31,14 +32,14 @@ public class Timer extends java.util.Timer {
 		String id=Proto.getId(this);
 		str+="Timer "+id+"\n";
 		
-		String tickId=Proto.getId(tick);
-		str+="\tticks "+tickId+"\n";
+		String tickStr=Integer.toString(tick);
+		str+="\tticks "+tickStr+"\n";
 		
-		String delayId=Proto.getId(delay);
-		str+="\tdelay "+delayId+"\n";
+		String delayStr=Long.toString(delay);
+		str+="\tdelay "+delayStr+"\n";
 		
-		String periodId=Proto.getId(period);
-		str+="\tperiod "+periodId+"\n";
+		String periodStr=Long.toString(period);
+		str+="\tperiod "+periodStr+"\n";
 		
 		if(!steppables.isEmpty()) {   
 			str+="\tsteppables";
@@ -115,5 +116,46 @@ public class Timer extends java.util.Timer {
 	public ArrayList<ISteppable> getSteppables() {
 		System.out.println("Timer's getSteppables() has been called");
 		return steppables;
+	}
+	
+	/**
+	 * Beolvassa a jatek attributumait az sc Scanner aktualis poziciojatol.
+	 * @param sc A beolvasast vegzo Scanner
+	 */
+	public void load(Scanner sc) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
+			
+			switch (tokens[0]) {
+				case "ticks":
+					tick = Integer.parseInt(tokens[1]);
+					break;
+					
+				case "delay":
+					delay= Long.parseLong(tokens[1]);
+					break;
+					
+				case "period":
+					period = Long.parseLong(tokens[1]);
+					break;
+					
+				case "steppables":
+					for (int i = 1; i < tokens.length; i++) {
+						ISteppable p = (ISteppable)Proto.getObject(tokens[i]);
+						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
+						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
+						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
+						if (p != null)
+							steppables.add(p);
+					}
+					break;
+					
+				default:
+					break;
+			}
+		}
 	}
 }

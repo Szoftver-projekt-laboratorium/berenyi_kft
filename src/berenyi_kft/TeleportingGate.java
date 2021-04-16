@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Teleportkaput reprezentalo osztaly,
@@ -135,5 +136,39 @@ public class TeleportingGate implements ISteppable {
 	
 	public void goMad() {
 		timer.addSteppable(this);
+	}
+	
+	/**
+	 * Beolvassa a jatek attributumait az sc Scanner aktualis poziciojatol.
+	 * @param sc A beolvasast vegzo Scanner
+	 */
+	public void load(Scanner sc) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
+			
+			switch (tokens[0]) {
+				case "timer":
+					timer = (Timer)Proto.getObject(tokens[1]);
+					break;
+				
+				case "pair":
+					pair = (TeleportingGate)Proto.getObject(tokens[1]);
+					break;	
+					
+				case "asteroid":
+					asteroid = (Asteroid)Proto.getObject(tokens[1]);
+					break;
+					
+				case "settler":
+					settler = (Settler)Proto.getObject(tokens[1]);
+					break;
+					
+				default:
+					break;
+			}
+		}
 	}
 }

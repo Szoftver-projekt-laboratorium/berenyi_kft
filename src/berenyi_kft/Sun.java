@@ -2,6 +2,7 @@ package berenyi_kft;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * A Napot reprezentalo osztaly
@@ -22,9 +23,40 @@ public class Sun implements ISteppable {
 	/**
 	 * A jatekot reprezentalo osztaly
 	 */
+	// TODO: Elvileg nem szukseges.
 	private Game game;
 	
 	//-------------------------------------------------------------
+	
+	/**
+	 * Betolti a Nap attributumait az sc Scanner aktualis poziciojatol.
+	 * @param sc A beolvasast vegzo Scanner
+	 */
+	public void load(Scanner sc) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
+			
+			switch (tokens[0]) {
+				case "timeToSunStorm":
+					timeToSunStorm = Integer.parseInt(tokens[1]);
+					break;
+					
+				case "neighboringAsteroids":
+					for (int i = 1; i < tokens.length; i++) {
+						Asteroid a = (Asteroid)Proto.getObject(tokens[i]);
+						if (a != null)
+							neighboringAsteroids.add(a);
+					}
+					break;
+				
+				default:
+					break;
+			}
+		}
+	}
 	
 	public String getDescription() { 
 		

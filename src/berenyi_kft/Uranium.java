@@ -1,12 +1,37 @@
 package berenyi_kft;
 
+import java.util.Scanner;
+
 /**
  * Az uran nyersanyagot reprezentalja
  * @author berenyi_kft
  */
 public class Uranium extends RadioactiveResource {
 	
-	private int life=3;
+	private int life = 3;
+	
+	
+	/**
+	 * Betolti az uran attributumait az sc Scanner aktualis poziciojatol.
+	 * @param sc A beolvasast vegzo Scanner
+	 */
+	public void load(Scanner sc) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
+			
+			switch (tokens[0]) {
+				case "life":
+					life = Integer.parseInt(tokens[1]);
+					break;
+					
+				default:
+					break;
+			}
+		}
+	}
 	
 	public String getDescription() { 
 		
@@ -15,8 +40,10 @@ public class Uranium extends RadioactiveResource {
 		String id=Proto.getId(this);
 		str+="Uranium "+id+"\n";
 		
-		String lifeId=Proto.getId(life);
-		str+="\tlives "+lifeId+"\n";
+		// TODO: A primitiv attributumokhoz nem kell a Proto.getId(),
+		// azokat egy az egyben kell sztringkent kiirni.
+		String lifeStr=Integer.toString(life);
+		str+="\tlives "+lifeStr+"\n";
 		
 		return str;	
 	}
