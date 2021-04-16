@@ -58,8 +58,9 @@ public class Asteroid {
 	 */
 	public void load(Scanner sc) {
 		String line = sc.nextLine();
-		line = sc.nextLine();
-		while (!line.equals("")) {
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
 			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
@@ -106,7 +107,6 @@ public class Asteroid {
 				default:
 					break;
 			}
-			line = sc.nextLine();
 		}
 	}	 	 
 	 

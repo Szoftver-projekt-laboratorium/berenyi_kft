@@ -515,7 +515,7 @@ public class Proto {
 			System.out.println("Welcome in berenyi_kft's Proto program!");
 			System.out.print("Please select whether you wish to test (Y) "
 					+ " or play (n) the prototype game. [Y/n]: ");
-			String choice = sc.next();
+			String choice = sc.nextLine();
 			if (choice.substring(0, 1).toLowerCase().equals("y")) {
 				Tester.testerMain(args);
 			}
@@ -525,6 +525,7 @@ public class Proto {
 				
 				boolean exit = false;
 				// TODO: Minden nextLine() ele kell hasNextLine() a kodban?
+				// Esetleg egy getLine(), ami osszerakna a kettot?
 				while (!exit & sc.hasNextLine()) {
 					String line = sc.nextLine();
 					
@@ -580,7 +581,7 @@ public class Proto {
 							
 							// A 0. az csak teszt tesztfajl, 1-tol 38-ig mennek majd
 							// az igazi tesztek.
-							// load src/test_data/test_inputs/test_0.in
+							// Pelda: load src/test_data/test_inputs/test_0.in
 							case "load":
 								if (tokens.length >= 2) {
 									load(tokens[1]);

@@ -35,9 +35,10 @@ public class AIRobot extends Character implements ISteppable {
 	 */
 	
 	public void load(Scanner sc) {
-		String line = sc.nextLine(); 
-		line = sc.nextLine();
-		while (!line.equals("")) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
 			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
@@ -52,7 +53,6 @@ public class AIRobot extends Character implements ISteppable {
 				default:
 					break;
 			}
-			line = sc.nextLine();
 		}
 	}
 	
@@ -64,7 +64,8 @@ public class AIRobot extends Character implements ISteppable {
 	public AIRobot(Timer timer) {
 		System.out.println("AIRobot's AIRobot(Timer timer) has been called");
 		this.timer = timer;
-		timer.addSteppable(this);
+		if (timer != null)
+			timer.addSteppable(this);
 	}
 	
 	/**

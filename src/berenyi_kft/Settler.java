@@ -84,20 +84,18 @@ public class Settler extends Character {
 			place a1
 			resources ir2 ir3 ic1 ur2
 			gatesCreated tg1 tg2
-	 * 
-	 * 
 	 */
 	public void load(Scanner sc) {
-		String line = sc.nextLine(); // fejlecsor
-		line = sc.nextLine();
-		while (!line.equals("")) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
 			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "game":
 					game = (Game)Proto.getObject(tokens[1]);
-					break;
-					
+					break;			
 					
 				case "timer":
 					timer = (Timer)Proto.getObject(tokens[1]);
@@ -132,7 +130,6 @@ public class Settler extends Character {
 				default:
 					break;
 			}
-			line = sc.nextLine();
 		}
 	}
 	

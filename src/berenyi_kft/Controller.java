@@ -105,12 +105,10 @@ public class Controller {
 	 */
 	// pelda fajl teszteleshez: load src/test_data/test_inputs/test_0.in
 	public void load(Scanner sc) {
-		String line = sc.nextLine(); // fejlecsor
-		line = sc.nextLine();
-		while (!line.equals("")) {
-			
-			// Szedje le a tabokat is a sor elejerol!
-			line.stripLeading();
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
 			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
@@ -140,7 +138,6 @@ public class Controller {
 				default:
 					break;
 			}
-			line = sc.nextLine();
 		}
 	}
 	

@@ -123,9 +123,10 @@ public class Timer extends java.util.Timer {
 	 * @param sc A beolvasast vegzo Scanner
 	 */
 	public void load(Scanner sc) {
-		String line = sc.nextLine(); // fejlecsor
-		line = sc.nextLine();
-		while (!line.equals("")) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
 			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
@@ -155,7 +156,6 @@ public class Timer extends java.util.Timer {
 				default:
 					break;
 			}
-			line = sc.nextLine();
 		}
 	}
 }

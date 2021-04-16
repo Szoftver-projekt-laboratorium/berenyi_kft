@@ -19,6 +19,9 @@ public class Tester {
 	// az igazi tesztek.
 	private static final int testCount = 38;
 	
+	// Eleresi ut
+	private static String path = "src\\test_data\\";
+	
 	
 	static boolean compareTextFiles(String file1, String file2) throws IOException {
 		BufferedReader r1 = new BufferedReader(new FileReader(file1));
@@ -76,14 +79,14 @@ public class Tester {
 	 * @param testNum
 	 */
 	public static void testOne(int testNum) {
-		String testName = "test_" + Integer.toString(testNum);
-		String inputName = testName + ".in";
-		String resultName = testName + ".result";
-		String outputName = testName + ".out";
+		String testName ="test_" + Integer.toString(testNum);
+		String inputName = Tester.path + "test_inputs\\" + testName + ".in";
+		String resultName = Tester.path + "test_results\\" + testName + ".result";
+		String outputName = Tester.path + "test_outs\\" + testName + ".out";
 		
 		try {
 			// (A statikus Proto osztalyra es annak statikus metodusaira hivatkozik,
-			// plusz a Tester.compare()-re).
+			// plusz a Tester.compare()-re)
 			Proto.setRandom(true);
 			Proto.enableLogging(true);
 			Proto.load(inputName);
@@ -125,8 +128,8 @@ public class Tester {
 		compare("src/berenyi_kft_test/txt_tarto/test1.txt","src/berenyi_kft_test/txt_tarto/test1.txt");
 		Scanner sc = new Scanner(System.in);
 		boolean exit = false;
-		String line = sc.nextLine();
-		while (line != null & !exit) { // nextLine() utan kell null check?
+		while (!exit & sc.hasNextLine()) {
+			String line = sc.nextLine();
 			String[] tokens = line.split("\\s+");
 			String cmd = tokens[0];
 			

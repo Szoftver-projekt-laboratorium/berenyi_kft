@@ -27,9 +27,10 @@ public class UFO extends Character implements ISteppable {
 	 */
 	
 	public void load(Scanner sc) {
-		String line = sc.nextLine(); // fejlecsor
-		line = sc.nextLine();
-		while (!line.equals("")) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
 			String[] tokens = line.split("\\s+");
 
 			switch (tokens[0]) {
@@ -46,7 +47,6 @@ public class UFO extends Character implements ISteppable {
 				default:
 					break;
 			}
-			line = sc.nextLine();
 		}
 	}
 	
@@ -58,7 +58,8 @@ public class UFO extends Character implements ISteppable {
 	public UFO(Timer timer) {
 		System.out.println("UFO's UFO(Timer timer) has been called");
 		this.timer = timer;
-		timer.addSteppable(this);
+		if (timer != null)
+			timer.addSteppable(this);
 	}
 
 	@Override

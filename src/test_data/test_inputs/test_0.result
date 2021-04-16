@@ -5,9 +5,6 @@ Recipe robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe
 Timer timer
 Sun sun
 Asteroid a1 a2 a3 a4
-Coal co1 co2 co3 co4 co5 co6 co7 co8
-Iron ir1 ir2 ir3 ir4 ir5 ir6 ir7 ir8 ir9 ir10
-Ice ic1 ic2 ic3 ic4 ic5 ic6 ic7
 Uranium ur1 ur2 ur3 ur4 ur5 ur6 ur7 ur8 ur9
 Settler s1 s2
 AIRobot air1
@@ -16,9 +13,9 @@ TeleportingGate tg1 tg2 tg3 tg4
 
 Controller controller
 	game game
-	allPlayers p1 p2
+	playersAlive p1 p2
 	actPlayer p1
-	state running
+	state paused
 
 Player p1
 	name Bela
@@ -56,7 +53,7 @@ Timer timer
 	steppables sun air1 ufo1 tg1
 
 Sun sun
-	timeToSunStorm 3000
+	timeToSunStorm null
 	neighboringAsteroids a1 a2
 
 Asteroid a1
@@ -96,31 +93,31 @@ Asteroid a4
 	gates tg2
 
 Uranium ur1
-	life 3
+	lives 3
 
 Uranium ur2
-	life 3
+	lives 3
 
 Uranium ur3
-	life 3
+	lives 3
 
 Uranium ur4
-	life 3
+	lives 3
 
 Uranium ur5
-	life 3
+	lives 3
 
 Uranium ur6
-	life 3
+	lives 3
 
 Uranium ur7
-	life 1
+	lives 1
 
 Uranium ur8
-	life 3
+	lives 3
 
 Uranium ur9
-	life 3
+	lives 3
 
 Settler s1
 	game game
@@ -142,7 +139,6 @@ AIRobot air1
 
 UFO ufo1
 	timer timer
-	place a2
 
 TeleportingGate tg1
 	timer timer
