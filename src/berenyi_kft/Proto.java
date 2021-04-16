@@ -47,6 +47,10 @@ public class Proto {
 	private static boolean log = true;
 	
 	
+	public static boolean isRandom() {
+		return random;
+	}
+	
 	/**
 	 * Beallitja, hogy a prototipus program objektumai megvalosithatnak-e
 	 * veletlenszeru mukodest (isRandom == true), vagy kotelezoen
@@ -55,6 +59,10 @@ public class Proto {
 	 */
 	public static void setRandom(boolean isRandom) {
 		random = isRandom;
+	}
+	
+	public static boolean isLogging() {
+		return log;
 	}
 	
 	/**
@@ -208,7 +216,8 @@ public class Proto {
 				break;
 			
 			default:
-				throw new NullPointerException("Invalid class name: " + typename);
+				throw new IllegalArgumentException(
+					"Invalid class name: " + typename + ".");
 		}
 	}
 	
@@ -221,47 +230,52 @@ public class Proto {
 	private static void loadObjectAttributes(Scanner sc) {
 		allObjects.controller.load(sc);
 		for (Player p : allObjects.players) {
-			//p.load(sc);
+			p.load(sc);
 		}
-		//...
 		
-//			case "Controller": Controller controller = (Controller)o; controller.load(sc); break;
-	//		//case "Player": Player p = (Player)o; /*p.load(sc);*/ break;
-		//	case "Game": Game game = (Game)o; /*game.load(sc);*/ break;
-			//case "Recipe": Recipe r = (Recipe)o; /*r.load(sc);*/ break;
-			//case "Timer": Timer timer = (Timer)o; /*timer.load(sc);*/ break;
-			//case "Sun": Sun sun = (Sun)o; sun.load(sc); break;
-			//case "Asteroid": Asteroid a = (Asteroid)o; a.load(sc); break;
-	//case "Coal": Coal co = (Coal)o; /*co.load(sc);*/ break;
-	//case "Iron": Iron ir = (Iron)o; /*ir.load(sc);*/ break;
-	//case "Ice": Ice ic = (Ice)o; /*ic.load(sc);*/ break;
-			//case "Uranium": Uranium ur = (Uranium)o; /*ur.load(sc);*/ break;
-	//case "Settler": Settler s = (Settler)o; /*s.load(sc);*/ break;
-	//case "AIRobot": AIRobot air = (AIRobot)o; /*air.load(sc);*/ break;
-	//case "UFO": UFO ufo = (UFO)o; /*ufo.load(sc);*/ break;
-	//case "TeleportingGate": TeleportingGate tg = (TeleportingGate)o; /*tg.load(sc);*/ break;
+		allObjects.game.load(sc);
+		for (Recipe recipe : allObjects.recipes) {
+			recipe.load(sc);
+		}
+		
+		allObjects.timer.load(sc);
+		allObjects.sun.load(sc);
+		for (Asteroid a : allObjects.asteroids) {
+			a.load(sc);
+		}
+		
+		for (Coal co : allObjects.coals) {
+			co.load(sc);
+		}
+		for (Iron ir : allObjects.irons) {
+			ir.load(sc);
+		}
+		for (Ice ic : allObjects.ices) {
+			ic.load(sc);
+		}
+		for (Uranium ur : allObjects.uraniums) {
+			ur.load(sc);
+		}
 
-}
+		for (Settler s : allObjects.settlers) {
+			s.load(sc);
+		}
+		for (AIRobot air : allObjects.robots) {
+			air.load(sc);
+		}
+		for (UFO ufo : allObjects.ufos) {
+			ufo.load(sc);
+		}
+		for (TeleportingGate tg : allObjects.gates) {
+			tg.load(sc);
+		}
+	}
 	
 	/**
 	 * Betolti a megadott nevu konfiguracios fajl tartalmat.
 	 * @param filename A beolvasando jatekkonfiguracios fajl neve
 	 */
 	public static void load(String filename) throws IOException {
-		/* 0. Kitakaritja a meglevo ids Map-et.
-		 * 
-		 * 1. Beolvassa a fejlecet, ures sorig
-		 *    kozben peldanyosit mindenkit es bepakolja oket az ids-be,
-		 *    plusz egy ArrayList<Object>-be is, hogy sorban maradjanak (vagy TreeMap).
-		 *    
-		 * 2. A lista szerint minden objektumot beolvas. A Scannert atveszi.
-		 *    (A fejlec ellenorzesre jo lesz, de nem fontos.)
-		 *    Az attributumait sorban beolvassa (mindegyiket meg kell adni?).
-		 *    Elfogyaszt egy ures sort is, majd visszater.
-		 */
-		
-		//Proto.Objects.ids.clear();
-		//Map<Object, String> objectTypes = new HashMap<Object, String>();
 		allObjects = new Proto.Objects();
 		
 		Scanner sc = new Scanner(new File(filename));
@@ -290,9 +304,11 @@ public class Proto {
 	}
 	
 	/**
-	 * 
-	 * @param filename
-	 * @throws FileNotFoundException
+	 * A filename nevu szoveges fajlba irja az aktualis jatekkonfiguraciot
+	 * a konfiguracios fajl formatuma szerint.
+	 * @param filename A kimeneti fajl neve, ahova a jatekallapot mentodik
+	 * @throws FileNotFoundException Akkor dobodik, ha a filename fajl
+	 * 		   nem hozhato letre vagy nem nyithato meg.
 	 */
 	public static void save(String filename) throws FileNotFoundException {
 		PrintStream ps = new PrintStream(filename);
@@ -300,15 +316,18 @@ public class Proto {
 		ps.close();
 	}
 	
-	/*public static void showOne(String id) {
-		System.out.println(allObjects.getObject(id).getDescription());
+	// Ezzel a fuggvennyel kezdjunk valamit?
+	/* public static void showOne(String id) {
+	 *	System.out.println(allObjects.getObject(id).getDescription());
 	}*/
 	
+	/**
+	 * A standard kimenetre irja az aktualis jatekkonfiguraciot
+	 * a konfiguracios fajl formatuma szerint.
+	 */
 	public static void showAll() {
 		saveToStream(System.out);
 	}
-	
-	
 	
 	/**
 	 * A prototipus program belepesi pontja.
@@ -321,51 +340,112 @@ public class Proto {
 		try {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Welcome in berenyi_kft's Proto program!");
-			System.out.println("Please select whether you wish to test (Y) or play (n) the prototype game. [Y/n]: ");
+			System.out.println("Please select whether you wish to test (Y) "
+					+ " or play (n) the prototype game. [Y/n]: ");
 			String choice = sc.next();
 			if (choice.substring(0, 1).toLowerCase().equals("y")) {
 				Tester.testerMain(args);
 			}
 			else {
 				System.out.println("Now you can play the game.");
-				// TODO
+				// TODO Menu
 				
 				boolean exit = false;
-				while (sc.hasNextLine() /*line != null & !exit*/) {
-					// nextLine() utan kell null check?
+				// TODO: Minden nextLine() ele kell hasNextLine() a kodban?
+				while (!exit & sc.hasNextLine()) {
 					String line = sc.nextLine();
 					
 					String[] tokens = line.split("\\s+");
 					String cmd = tokens[0];
-					
-					switch (cmd) {
-						case "load":
-							if (tokens.length >= 2) {
-								load(tokens[1]);
-							}
-							break;
+					PlayerCommand playerCmd = PlayerCommand.fromString(cmd);
+					if (playerCmd != PlayerCommand.INVALID) {
+						Player pAct = allObjects.controller.getActPlayer();
+						pAct.actOnSettler(playerCmd, tokens);
+					}
+					else {
+						switch (cmd) {
+							case "exit":
+								exit = true;
+								System.out.println("The prototype program has terminated.");
+								//System.exit(0);
+								break;
 						
-						case "show":
-							if (tokens.length == 1) {
-								showAll();
-							}
-							break;
-						
-						case "exit":
-							exit = true;
-							//System.exit(0);
-							break;
-						
-						default:
-							System.out.println("Invalid operation, please type in a new command.");
-							break;
+							case "random":
+								if (tokens.length >= 2) {
+									if (tokens[1].equals("true"))
+										random = true;
+									else if (tokens[1].equals("false"))
+										random = false;
+									else
+										throw new IllegalArgumentException(
+											"Invalid argument for <is_random>: "
+													+ tokens[1] + ".");
+								} else
+									throw new IllegalArgumentException(
+										"Argument for command 'random' is missing.");
+								break;
+								
+							case "log":
+								if (tokens.length >= 2) {
+									if (tokens[1].equals("true"))
+										log = true;
+									else if (tokens[1].equals("false"))
+										log = false;
+									else
+										throw new IllegalArgumentException(
+											"Invalid argument for <is _logging>: "
+													+ tokens[1] + ".");
+								} else
+									throw new IllegalArgumentException(
+										"Argument for command 'log' is missing.");
+								break;
+							
+							case "init":
+								allObjects.controller.startGame();
+								break;
+								
+							case "load":
+								if (tokens.length >= 2) {
+									load(tokens[1]);
+								}
+								break;
+							
+							case "start":
+								allObjects.controller.setState(State.RUNNING);
+								break;
+							
+							case "stop":
+								allObjects.controller.setState(State.PAUSED);
+								break;
+							
+							case "save":
+								if (tokens.length >= 2) {
+									save(tokens[1]);
+								}
+								break;	
+							
+							case "show":
+								if (tokens.length == 1) {
+									showAll();
+								} /*else if (tokens.length >= 2) {
+									showOne(tokens[1]);
+								}*/
+								break;
+	
+							default:
+								System.out.println("Invalid operation, please type in "
+										+ "a valid command.");
+								break;
+						}
 					}
 				}
 				sc.close();
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			System.out.println("The prototype program has been ended by an exception.");
+			// System.exit(1);
 		}
 	}
 	

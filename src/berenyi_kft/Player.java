@@ -2,18 +2,33 @@ package berenyi_kft;
 
 import java.util.Scanner;
 
-public class Player {
+enum PlayerCommand {
+	PASS,
+	MOVE,
+	DRILL,
+	MINE,
+	RESTORE,
+	CREATE_ROBOT,
+	CREATE_GATE_PAIR,
+	RELEASE_GATE,
+	INVALID;
 	
-	enum Command{
-		PASS,
-		MOVE,
-		DRILL,
-		MINE,
-		RESTORE,
-		CREATE_ROBOT,
-		CREATE_GATE_PAIR,
-		RELEASE_GATE
+	public static PlayerCommand fromString(String s) {
+		switch (s) {
+			case "pass": return PASS;
+			case "move": return MOVE;
+			case "drill": return DRILL;
+			case "mine": return MINE;
+			case "restore": return RESTORE;
+			case "create_robot": return CREATE_ROBOT;
+			case "create_gate_pair": return CREATE_GATE_PAIR;
+			case "release_gate": return RELEASE_GATE;
+			default: return INVALID;
+		}
 	}
+}
+
+public class Player {
 	
 	private String name;
 	
@@ -100,7 +115,12 @@ public class Player {
 		this.isAlive = isAlive;
 	}
 	
-	public void actOnSettler(Command cmd, Object[] params) {
+	/**
+	 * Vegrehajtja a jatekos telepesevel a cmd muveletet.
+	 * @param cmd PlayerCommand tipusu muvelet, amit a telepesnek vegre kell hajtania
+	 * @param allParams A parancs argumentumai; allParams[0] maganak a parancsnak a neve
+	 */
+	public void actOnSettler(PlayerCommand cmd, Object[] allParams) {
 		//TODO switch-case a commandoknak
 	}
 	

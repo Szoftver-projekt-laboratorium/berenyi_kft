@@ -20,6 +20,17 @@ enum State {
 			default: return EXITED;
 		}
 	}
+	
+	public static String toString(State state) {
+		switch (state) {
+			case INIT: return "Initiaizing...";
+			case RUNNING: return "The game has started/resumed.";
+			case PAUSED: return "The game has been stopped.";
+			case WON: return "Congratulations, you settlers have won the game!";
+			case LOST: return "It is the end mates, you have lost the game.";
+			default: return "Exiting the game...";
+		}
+	}
 }
 
 public class Controller {
@@ -31,9 +42,23 @@ public class Controller {
 	private Player actPlayer;
 	
 	private State state = State.INIT;
+	
+	// Kell ref. a Protora?
 	private Proto proto;
 	
-	 public String getDescription() { 
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		if (Proto.isLogging()) {
+			System.out.println(State.toString(state));
+		}
+		this.state = state;
+	}
+
+	public String getDescription() { 
 			
 			String str="";
 			
