@@ -1,0 +1,159 @@
+Player p1 p2
+Game game
+Recipe robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe
+Timer timer
+Sun sun
+Asteroid a1 a2 a3 a4
+Uranium ur1 ur2 ur3 ur4 ur5 ur6 ur7 ur8 ur9
+Settler s1 s2
+AIRobot air1
+UFO ufo1
+TeleportingGate tg1 tg2 tg3 tg4
+
+Player p1
+	name null
+	settler null
+	isAlive true
+
+Player p2
+	name Bela
+	settler s1
+	isAlive true
+
+Game game
+	timer null
+	asteroids null
+	sun null
+	asteroids null
+	settlersAlive null
+
+Recipe robotRecipe
+	resources null
+
+Recipe gatePairRecipe
+	resources co1 ir1 ur1
+
+Recipe spaceBaserecipe
+	resources ir2 ir3 ic1 ur2
+
+Recipe allResourcesRecipe
+	resources co2 co3 co4 ic2 ic3 ic4 ir4 ir5 ir6 ur3 ur4 ur5
+
+Timer timer
+	ticks 0
+	delay 0
+	period 0
+	steppables null
+
+Sun sun
+	timeToSunStorm null
+	neighboringAsteroids null
+
+Asteroid a1
+	rockLayerThickness 0
+	game null
+	sun null
+	neighbors null
+	resource null
+	characters null
+	gates null
+
+Asteroid a2
+	rockLayerThickness 0
+	game game
+	sun sun
+	neighbors a2 a3
+	resource null
+	characters s1
+	gates tg1 tg3
+
+Asteroid a3
+	rockLayerThickness 3
+	game game
+	sun sun
+	neighbors a1 a4
+	resource co6
+	characters s2
+	gates null
+
+Asteroid a4
+	rockLayerThickness 5
+	game game
+	sun sun
+	neighbors a1 a4
+	resource ur7
+	characters air1
+	gates null
+
+Uranium ur1
+	lives 3
+
+Uranium ur2
+	lives 3
+
+Uranium ur3
+	lives 3
+
+Uranium ur4
+	lives 3
+
+Uranium ur5
+	lives 3
+
+Uranium ur6
+	lives 3
+
+Uranium ur7
+	lives 3
+
+Uranium ur8
+	lives 1
+
+Uranium ur9
+	lives 3
+
+Settler s1
+	game null
+	timer null
+	place null
+	resources null
+	gatesCreated null
+
+Settler s2
+	game game
+	timer timer
+	place a1
+	resources co7 co8 ir9 ic5 ur8
+	gatesCreated null
+
+AIRobot air1
+	timer timer
+	place a2
+
+UFO ufo1
+	timer timer
+
+TeleportingGate tg1
+	timer timer
+	pair null
+	settler null
+	asteroid null
+
+TeleportingGate tg2
+	timer timer
+	pair tg2
+	settler null
+	asteroid a1
+
+TeleportingGate tg3
+	timer null
+	pair tg1
+	settler null
+	asteroid a4
+
+TeleportingGate tg4
+	timer null
+	pair tg4
+	settler null
+	asteroid a1
+

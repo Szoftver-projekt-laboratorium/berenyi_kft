@@ -52,7 +52,17 @@ public class Game {
 		String timerId=Proto.getId(timer);
 		str+="\ttimer "+timerId+"\n";
 		
-		str+="\trecipes robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe\n";
+		// str+="\trecipes robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe\n";
+		if(!recipes.isEmpty()) {   
+			str+="\trecipes";
+			for(Recipe recipe : recipes) {
+				String recipeId=Proto.getId(recipe);
+				str+=" "+recipeId;
+			}
+			str+="\n";
+		}
+		else
+			str+="\tasteroids null\n";
 		
 		String sunId=Proto.getId(sun);
 		str+="\tsun "+sunId+"\n";
@@ -251,10 +261,11 @@ public class Game {
 	 * @param sc A beolvasast vegzo Scanner
 	 */
 	public void load(Scanner sc) {
-		String line = sc.nextLine(); // fejlecsor
-		line = sc.next();
-		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "timer":
@@ -268,9 +279,6 @@ public class Game {
 				case "asteroids":
 					for (int i = 1; i < tokens.length; i++) {
 						Asteroid a = (Asteroid)Proto.getObject(tokens[i]);
-						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
-						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
-						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
 						if (a != null)
 							asteroids.add(a);
 					}
@@ -279,9 +287,6 @@ public class Game {
 				case "settlersAlive":
 					for (int i = 1; i < tokens.length; i++) {
 						Settler s = (Settler)Proto.getObject(tokens[i]);
-						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
-						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
-						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
 						if (s != null)
 							settlersAlive.add(s);
 					}
@@ -290,9 +295,6 @@ public class Game {
 				case "recipes":
 					for (int i = 1; i < tokens.length; i++) {
 						Recipe r = (Recipe)Proto.getObject(tokens[i]);
-						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
-						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
-						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
 						if (r != null)
 							recipes.add(r);
 					}
@@ -301,7 +303,6 @@ public class Game {
 				default:
 					break;
 			}
-			line = sc.next();
 		}
 	}
 }

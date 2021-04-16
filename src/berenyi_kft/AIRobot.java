@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * A karakterek egyik fajtaja a robot, 
@@ -26,6 +27,35 @@ public class AIRobot extends Character implements ISteppable {
 		return str;	
 	}
 	
+	/*
+	 * Minta:
+	 * AIRobot air1
+	 *	timer timer
+	 *	place a1
+	 */
+	
+	public void load(Scanner sc) {
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
+			
+			switch (tokens[0]) {
+				case "timer":
+					timer = (Timer)Proto.getObject(tokens[1]);
+					break;
+								
+				case "place":
+					place = (Asteroid)Proto.getObject(tokens[1]);
+					break;					
+				
+				default:
+					break;
+			}
+		}
+	}
+	
 	/**
 	 * Uj AI Robot jon letre, amely parameterkent atveszi az ot lepteto idozitot is.
 	 * A konstruktor egybol hozzaadja a robotot az idozitojehez.
@@ -34,7 +64,8 @@ public class AIRobot extends Character implements ISteppable {
 	public AIRobot(Timer timer) {
 		System.out.println("AIRobot's AIRobot(Timer timer) has been called");
 		this.timer = timer;
-		timer.addSteppable(this);
+		if (timer != null)
+			timer.addSteppable(this);
 	}
 	
 	/**

@@ -17,9 +17,10 @@ public class Uranium extends RadioactiveResource {
 	 */
 	public void load(Scanner sc) {
 		String line = sc.nextLine();
-		line = sc.next();
-		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "life":
@@ -29,7 +30,6 @@ public class Uranium extends RadioactiveResource {
 				default:
 					break;
 			}
-			line = sc.next();
 		}
 	}
 	
@@ -42,8 +42,8 @@ public class Uranium extends RadioactiveResource {
 		
 		// TODO: A primitiv attributumokhoz nem kell a Proto.getId(),
 		// azokat egy az egyben kell sztringkent kiirni.
-		String lifeId=Proto.getId(life);
-		str+="\tlives "+lifeId+"\n";
+		String lifeStr=Integer.toString(life);
+		str+="\tlives "+lifeStr+"\n";
 		
 		return str;	
 	}

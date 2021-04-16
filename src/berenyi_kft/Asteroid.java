@@ -60,9 +60,10 @@ public class Asteroid {
 	 */
 	public void load(Scanner sc) {
 		String line = sc.nextLine();
-		line = sc.next();
-		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "rockLayerThickness":
@@ -108,7 +109,6 @@ public class Asteroid {
 				default:
 					break;
 			}
-			line = sc.next();
 		}
 	}	 	 
 	 
@@ -119,8 +119,8 @@ public class Asteroid {
 			String id=Proto.getId(this);
 			str+="Asteroid "+id+"\n";
 			
-			String thicknessId=Proto.getId(rockLayerThickness);
-			str+="\trockLayerThickness "+thicknessId+"\n";
+			String thicknessStr=Integer.toString(rockLayerThickness);
+			str+="\trockLayerThickness "+thicknessStr+"\n";
 			
 			String gameId=Proto.getId(game);
 			str+="\tgame "+gameId+"\n";
@@ -388,6 +388,8 @@ public class Asteroid {
 			 s.accept(resource);
 			 this.removeResource();
 			 this.checkSpaceBase();
+		 }else {
+			 System.out.println("Asteroid is not drilled!");
 		 }
 		 proto.decrTabs();
 	 }

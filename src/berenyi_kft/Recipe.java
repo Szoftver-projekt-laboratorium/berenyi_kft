@@ -94,11 +94,6 @@ public class Recipe {
 	 * Visszaallitja az eredeti receptet, azaz a resources gyujtemeny tartalmat.
 	 */
 	public void reset() {
-		// TODO: Eredetileg shallow copy volt, de deep copy kell, jo igy?
-		// Az elemeket egyenkent kell klonozni es hozzaadni.
-		// Regi:
-		// resources = (ArrayList<Resource>)resources_backup.clone();
-		
 		resources.clear();
 		for (Resource r : resources_backup) {
 			resources.add(r.clone());
@@ -116,18 +111,28 @@ public class Recipe {
 	}
 	
 	public void load(Scanner sc) {
-		String line = sc.nextLine(); // fejlecsor
-		line = sc.next();
-		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {					
 				case "resources":
 					for (int i = 1; i < tokens.length; i++) {
+						
+						// TODO: Mukodik ez a sor? Nem cast-olodnak
+						// vissza a specialis Resource-ok?
+						// Ha nem mukodne, akkor szukseg lesz a Protoban
+						// getResource() es getCharacter() fuggvenyekre,
+						// es ket ids-hoz hasonlo extra Map-re a
+						// Resource-okkal es a Characterekkel.
+						// Sot, meg a Steppable-okhoz is kellhet ilyen.
+						//
+						// Heterogen kollekcio attributumok:
+						// resources, characters, steppables 
+						// 
 						Resource r = (Resource)Proto.getObject(tokens[i]);
-						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
-						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
-						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
 						if (r != null)
 							resources.add(r);
 					}
@@ -136,7 +141,6 @@ public class Recipe {
 				default:
 					break;
 			}
-			line = sc.next();
 		}
 	}
 }

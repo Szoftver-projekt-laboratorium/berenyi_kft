@@ -2,26 +2,10 @@ package berenyi_kft;
 
 import java.util.*;
 
-enum State {
-	INIT,
-	RUNNING,
-	PAUSED,
-	WON,
-	LOST,
-	EXITED;
-	
-	public static State fromString(String s) {
-		switch (s) {
-			case "init": return INIT;
-			case "running": return RUNNING;
-			case "paused": return PAUSED;
-			case "won": return WON;
-			case "lost": return LOST;
-			default: return EXITED;
-		}
-	}
-}
-
+/**
+ * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot
+ * @author berenyi_kft
+ */
 public class Controller {
 	
 	private Game game;
@@ -31,9 +15,23 @@ public class Controller {
 	private Player actPlayer;
 	
 	private State state = State.INIT;
-	private Proto proto;
 	
-	 public String getDescription() { 
+	// Kell ref. a Protora?
+	// private Proto proto;
+	
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		if (Proto.isLogging()) {
+			System.out.println(State.toString(state));
+		}
+		this.state = state;
+	}
+
+	public String getDescription() { 
 			
 			String str="";
 			
@@ -43,7 +41,7 @@ public class Controller {
 			String gameId=Proto.getId(game);
 			str+="\tgame "+gameId+"\n";
 			
-			if(!playersAlive.isEmpty()) {   // A doksiban allPlayers az attribútum neve
+			if(!playersAlive.isEmpty()) {   // A doksiban allPlayers az attributum neve
 				str+="\tplayersAlive";
 				for(Player p : playersAlive) {
 					String playerId=Proto.getId(p);
@@ -56,11 +54,8 @@ public class Controller {
 			
 			String actPlayerId=Proto.getId(actPlayer);
 			str+="\tactPlayer "+actPlayerId+"\n";
-			
-			if(state==State.RUNNING)
-				str+="\tgameRunning true\n";
-			else
-				str+="\tgameRunning false\n";
+
+			str+="\tstate "+State.toString(state)+"\n";
 			
 			return str;	
 		}
@@ -83,6 +78,10 @@ public class Controller {
 		return actPlayer;
 	}
 	
+	// TODO: A jatekosokat nem kellene kozvetlenul hivnunk majd,
+	// hanem a Controlleren keresztul tudnak meg, hogy milyen parancsot
+	// adtak meg nekik a Proton keresztul.
+	
 	public void nextPlayer() {
 		int idx=playersAlive.indexOf(actPlayer);
 		if(idx==playersAlive.size()-1) {
@@ -104,11 +103,13 @@ public class Controller {
 	 * Beolvassa a jatek attributumait az sc Scanner aktualis poziciojatol.
 	 * @param sc A beolvasast vegzo Scanner
 	 */
+	// pelda fajl teszteleshez: load src/test_data/test_inputs/test_0.in
 	public void load(Scanner sc) {
-		String line = sc.nextLine(); // fejlecsor
-		line = sc.next();
-		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+		String line = sc.nextLine();
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
+			line = line.stripLeading();
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "game":
@@ -137,7 +138,6 @@ public class Controller {
 				default:
 					break;
 			}
-			line = sc.next();
 		}
 	}
 	
