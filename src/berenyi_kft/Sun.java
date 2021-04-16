@@ -33,7 +33,7 @@ public class Sun implements ISteppable {
 	 */
 	public void load(Scanner sc) {
 		String line = sc.nextLine();
-		line = sc.next();
+		line = sc.nextLine();
 		while (!line.equals("")) {
 			String[] tokens = line.split("\\s");
 			
@@ -53,7 +53,7 @@ public class Sun implements ISteppable {
 				default:
 					break;
 			}
-			line = sc.next();
+			line = sc.nextLine();
 		}
 	}
 	

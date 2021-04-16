@@ -178,8 +178,7 @@ public class Proto {
 }
 	
 	/**
-	 * Betolti a megadott nevu konfiguracios fajl tartalmat,
-	 * es az ids Map-ben nyilvantartja a beolvasott objektumokat.
+	 * Betolti a megadott nevu konfiguracios fajl tartalmat.
 	 * @param filename A beolvasando jatekkonfiguracios fajl neve
 	 */
 	public static void load(String filename) throws IOException {
