@@ -244,15 +244,6 @@ public class Proto {
 			a.load(sc);
 		}
 		
-		for (Coal co : allObjects.coals) {
-			co.load(sc);
-		}
-		for (Iron ir : allObjects.irons) {
-			ir.load(sc);
-		}
-		for (Ice ic : allObjects.ices) {
-			ic.load(sc);
-		}
 		for (Uranium ur : allObjects.uraniums) {
 			ur.load(sc);
 		}
