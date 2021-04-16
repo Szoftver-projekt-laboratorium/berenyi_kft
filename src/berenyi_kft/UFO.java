@@ -28,7 +28,7 @@ public class UFO extends Character implements ISteppable {
 	
 	public void load(Scanner sc) {
 		String line = sc.nextLine(); // fejlecsor
-		line = sc.next();
+		line = sc.nextLine();
 		while (!line.equals("")) {
 			String[] tokens = line.split("\\s");
 
@@ -46,7 +46,7 @@ public class UFO extends Character implements ISteppable {
 				default:
 					break;
 			}
-			line = sc.next();
+			line = sc.nextLine();
 		}
 	}
 
