@@ -306,17 +306,16 @@ public class Proto {
 	 */
 	public static void load(String filename) throws IOException {
 		allObjects = new Proto.Objects();
-		
 		Scanner sc = new Scanner(new File(filename));
+		
 		String line = sc.nextLine();
 		while (!line.equals("") & sc.hasNextLine()) {
-			line = sc.nextLine();
 			String[] tokens = line.split("\\s+");
 			String typename = tokens[0];
-			
 			for (int i = 1; i < tokens.length; i++) {
 				createObject(typename, tokens[i]);
 			}
+			line = sc.nextLine();
 		}
 		
 		loadObjectAttributes(sc);
@@ -365,6 +364,30 @@ public class Proto {
 			ps.print("Asteroid");
 			for (Asteroid a : allObjects.asteroids) {
 				ps.print(" " + getId(a));
+			}
+			ps.println();
+		}
+		
+		if (!allObjects.coals.isEmpty()) {
+			ps.print("Coal");
+			for (Coal co : allObjects.coals) {
+				ps.print(" " + getId(co));
+			}
+			ps.println();
+		}
+		
+		if (!allObjects.irons.isEmpty()) {
+			ps.print("Iron");
+			for (Iron ir : allObjects.irons) {
+				ps.print(" " + getId(ir));
+			}
+			ps.println();
+		}
+		
+		if (!allObjects.ices.isEmpty()) {
+			ps.print("Ice");
+			for (Ice ic : allObjects.ices) {
+				ps.print(" " + getId(ic));
 			}
 			ps.println();
 		}
