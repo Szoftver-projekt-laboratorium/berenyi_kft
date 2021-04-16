@@ -1,15 +1,23 @@
 Player p1
-Asteroid a1
+Game game
+Asteroid a1 a2
 Settler s1
 
-Player p1
-	name Marci
+Player p1 
+	name Barni
 	settler s1
 	isAlive true
 
+Game game
+	asteroids a1
+	settlersAlive s1
+
 Asteroid a1
-	rockLayerThickness 1
+	rockLayerThickness 2
+	game game
+	neighbors null
 	characters s1
 
 Settler s1
+	game game
 	place a1

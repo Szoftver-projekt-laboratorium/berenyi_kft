@@ -9,7 +9,17 @@ Player p1
 
 Asteroid a1
 	rockLayerThickness 1
+	game null
+	sun null
+	neighbors null
+	resource null
 	characters s1
+	gates null
 
 Settler s1
+	game null
+	timer null
 	place a1
+	resources null
+	gatesCreated null
+

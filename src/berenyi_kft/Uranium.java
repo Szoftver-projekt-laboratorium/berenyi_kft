@@ -43,7 +43,7 @@ public class Uranium extends RadioactiveResource {
 		// TODO: A primitiv attributumokhoz nem kell a Proto.getId(),
 		// azokat egy az egyben kell sztringkent kiirni.
 		String lifeStr=Integer.toString(life);
-		str+="\tlives "+lifeStr+"\n";
+		str+="\tlife "+lifeStr+"\n";
 		
 		return str;	
 	}
