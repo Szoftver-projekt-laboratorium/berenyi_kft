@@ -331,6 +331,7 @@ public class Proto {
 		if (allObjects.controller != null) {
 			ps.println("Controller " + getId(allObjects.controller));
 		}
+		String controllerId=getId(Objects.controller);
 		
 		if (!allObjects.players.isEmpty()) {
 			ps.print("Player");

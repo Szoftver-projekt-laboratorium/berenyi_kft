@@ -49,6 +49,8 @@ public class Asteroid {
 	  * Az aszteroida korul kozvetlenul keringo teleportkapuk kollekcioja
 	  */
 	 private ArrayList<TeleportingGate> gates = new ArrayList<TeleportingGate>();
+	 
+	 private Proto proto;
 	
 //------------------------------------------------------------------------
 	 
@@ -197,7 +199,9 @@ public class Asteroid {
 	  * @return A d-edik szomszedos aszteroida
 	  */
 	 public Asteroid getNeighbor(int d) {
-		 System.out.println("Asteroid's getNeighbor(d: int) has been called");
+		 //System.out.println("Asteroid's getNeighbor(d: int) has been called");
+		 proto.println(proto.getId(this)+".getNeighbor(int d)");
+		 proto.incrTabs();
 		 ArrayList<Asteroid> list=new ArrayList<Asteroid>();
 		 list.addAll(neighbors);
 		 for(TeleportingGate tg : gates) {
@@ -205,6 +209,7 @@ public class Asteroid {
 		 }
 		 System.out.println(list.size());
 		 d = d % list.size();
+		 proto.decrTabs();
 		 return list.get(d);
 	 }
 	 
@@ -311,7 +316,9 @@ public class Asteroid {
 	  * @param r A visszatoltott nyersanyagegyseg
 	  */
 	 public void accept(Settler s, Resource r) {
-		 System.out.println("Asteroid's accept(s: Settler, r: Resource) has been called");
+		// System.out.println("Asteroid's accept(s: Settler, r: Resource) has been called");
+		 proto.println(proto.getId(this)+".accept(Settler s, Resource r)");
+		 proto.incrTabs();
 		 if (this.isMined()) {
 			 resource = r;
 			 s.remove(r);
@@ -319,6 +326,7 @@ public class Asteroid {
 				 resource.drilledOut(this);
 			 }
 		 }
+		 proto.decrTabs();
 	 }
 	 
 	 /**
@@ -351,13 +359,16 @@ public class Asteroid {
 	  * jelezve, hogy napkozeli aszteroidan felszinre kerult.
 	  */
 	 public void drilled() {
-		 System.out.println("Asteroid's drilled() has been called");
+		 proto.println(proto.getId(this)+".drilled()");
+		 proto.incrTabs();
+		// System.out.println("Asteroid's drilled() has been called");
 		 if (rockLayerThickness >= 1) {
 			 rockLayerThickness--;
 		 }
 		 if (rockLayerThickness==0 && resource!=null&&sun.isCloseToSun(this)) {
 			 resource.drilledOut(this);
 		 	}
+		 proto.decrTabs();
 	 }
 	 
 	 /**
@@ -370,7 +381,9 @@ public class Asteroid {
 	  * @param s
 	  */
 	 public void minedBy(Settler s) {
-		 System.out.println("Asteroid's minedBy() has been called");
+		 proto.println(proto.getId(this)+".minedBy(Settler s)");
+		 proto.incrTabs();
+		 //System.out.println("Asteroid's minedBy() has been called");
 		 if (rockLayerThickness == 0 && resource != null) {
 			 s.accept(resource);
 			 this.removeResource();
@@ -378,6 +391,7 @@ public class Asteroid {
 		 }else {
 			 System.out.println("Asteroid is not drilled!");
 		 }
+		 proto.decrTabs();
 	 }
 	 
 	 /**
@@ -402,7 +416,10 @@ public class Asteroid {
 	  * @param rr
 	  */
 	 public void explodedBy(RadioactiveResource rr) {
-		 System.out.println("Asteroid's explodedBy(rr: RadioactiveResource) has been called");
+		// System.out.println("Asteroid's explodedBy(rr: RadioactiveResource) has been called");
+		 
+		 proto.println(proto.getId(this)+".explodedBy(RadioactiveResource rr)");
+		 proto.incrTabs();
 		 for (int i = characters.size()-1; i >= 0; i--) {
 			 characters.get(i).reactToExplosion();
 		 }
@@ -416,6 +433,7 @@ public class Asteroid {
 		 }
 		 
 		 game.removeAsteroid(this);
+		 proto.decrTabs();
 	 }
 	 
 	 /**
@@ -424,7 +442,9 @@ public class Asteroid {
 	  * a fuggveny meghivja az aszteroidan tartozkodo karakterek die() fuggvenyet.
 	  */
 	 public void destroySurface() {
-		 System.out.println("Asteroid's destroySurface() has been called");
+		 //System.out.println("Asteroid's destroySurface() has been called");
+		 proto.println(proto.getId(this)+".destroySurface()");
+		 proto.incrTabs();
 		 if (!this.isMined()) {
 			 for (int i = characters.size()-1;i>=0;i--) {
 				 characters.get(i).die();
@@ -434,6 +454,8 @@ public class Asteroid {
 				 tg.goMad();
 			 }
 		 }
+		 
+		 proto.decrTabs();
 	 }
 	 
 	 /**
@@ -442,7 +464,9 @@ public class Asteroid {
 	  * Ha igen, akkor meghivja a Game endGame() metodusat.
 	  */
 	 public void checkSpaceBase() {
-		 System.out.println("Asteroid's checkSpaceBase() has been called");
+		 proto.println(proto.getId(this)+".checkSpaceBase()");
+		 proto.incrTabs();
+		 //System.out.println("Asteroid's checkSpaceBase() has been called");
 		 ArrayList<Resource> temp = new ArrayList<Resource>();
 		 for (Character c: characters) {
 			 temp.addAll(c.getCollectedResources());
@@ -463,6 +487,7 @@ public class Asteroid {
 			 game.endGame();
 		 } 
 		 recipe.reset();
+		 proto.decrTabs();
 	 }
 	 
 	 /**
@@ -498,6 +523,9 @@ public class Asteroid {
 	 }
 	 
 	 public void minedByUFO() {
-			 this.removeResource();
+		 proto.println(proto.getId(this)+".minedByUFO()");
+		 proto.incrTabs();
+		 this.removeResource();
+		 proto.decrTabs();
 	 }
 }

@@ -30,6 +30,8 @@ public class TeleportingGate implements ISteppable {
 	
 	private Timer timer;
 	
+	private Proto proto;
+	
 	//--------------------------------------------------------------
 	
 	public String getDescription() { 
@@ -107,7 +109,11 @@ public class TeleportingGate implements ISteppable {
 	 * Ilyenkor csak magat tavolitja el a megfelelo helyrol.
 	 */
 	public void die() {
-		System.out.println("TeleportingGate's die() has been called");
+		
+		//System.out.println("TeleportingGate's die() has been called");
+		proto.println(proto.getId(this)+".die()");
+		proto.incrTabs();
+		
 		if (pair != null) {
 			pair.setPair(null);
 			pair.die();
@@ -121,6 +127,8 @@ public class TeleportingGate implements ISteppable {
 		
 		if(timer.getSteppables().contains(this))
 			timer.removeSteppable(this);
+		
+		proto.decrTabs();
 	}
 	
 	public void step() {
@@ -129,13 +137,24 @@ public class TeleportingGate implements ISteppable {
 	}
 	
 	public void move(int d) {
+		proto.println(proto.getId(this)+".move(int d)");
+		 proto.incrTabs();
+		
 		Asteroid a=asteroid.getNeighbor(d);
 		asteroid.remove(this);
 		a.accept(this);
+		
+		proto.decrTabs();
 	}
 	
 	public void goMad() {
+		
+		proto.println(proto.getId(this)+".goMad()");
+		proto.incrTabs();
+		 
 		timer.addSteppable(this);
+		
+		proto.decrTabs();
 	}
 	
 	/**

@@ -56,7 +56,7 @@ public class Uranium extends RadioactiveResource {
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
-		System.out.println("Uranium's isCompatibleWith(r: Resource) has been called");
+		//System.out.println("Uranium's isCompatibleWith(r: Resource) has been called");
 		if(this.getClass().equals(r.getClass()))
 			return true;
 		return false;
@@ -68,6 +68,8 @@ public class Uranium extends RadioactiveResource {
 	
 	@Override
 	public void drilledOut(Asteroid a) {
+		proto.println(proto.getId(this)+".drilledOut(Asteroid a)");
+		proto.incrTabs();
 		decLife();
 		if(life==0)
 			a.explodedBy(this);
