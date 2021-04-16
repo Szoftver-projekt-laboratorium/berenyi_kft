@@ -375,6 +375,8 @@ public class Asteroid {
 			 s.accept(resource);
 			 this.removeResource();
 			 this.checkSpaceBase();
+		 }else {
+			 System.out.println("Asteroid is not drilled!");
 		 }
 	 }
 	 

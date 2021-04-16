@@ -1,6 +1,7 @@
 package berenyi_kft;
 
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * A karakterek egyik fajtaja a robot, 
@@ -24,6 +25,37 @@ public class AIRobot extends Character implements ISteppable {
 		str+="\tplace "+placeId+"\n";
 		
 		return str;	
+	}
+	
+	/*
+	 * minta:
+	 * AIRobot air1
+	 *	timer timer
+	 *	place a1
+	 */
+	
+	public void load(Scanner sc) {
+		String line = sc.nextLine(); 
+		line = sc.nextLine();
+		while (!line.equals("")) {
+			String[] tokens = line.split("\\s");
+			
+			switch (tokens[0]) {
+				case "timer":
+					timer = (Timer)Proto.getObject(tokens[1]);
+					break;
+					
+					
+				case "place":
+					place = (Asteroid)Proto.getObject(tokens[1]);
+					break;
+					
+					
+				default:
+					break;
+			}
+			line = sc.nextLine();
+		}
 	}
 	
 	/**
