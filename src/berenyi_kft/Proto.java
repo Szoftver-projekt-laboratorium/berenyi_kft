@@ -309,14 +309,14 @@ public class Proto {
 		
 		Scanner sc = new Scanner(new File(filename));
 		String line = sc.nextLine();
-		while (!line.equals("")) {
+		while (!line.equals("") & sc.hasNextLine()) {
+			line = sc.nextLine();
 			String[] tokens = line.split("\\s+");
 			String typename = tokens[0];
 			
 			for (int i = 1; i < tokens.length; i++) {
 				createObject(typename, tokens[i]);
 			}
-			line = sc.nextLine();
 		}
 		
 		loadObjectAttributes(sc);
@@ -579,8 +579,8 @@ public class Proto {
 								allObjects.controller.startGame();
 								break;
 							
-							// A 0. az csak teszt tesztfajl, 1-tol 38-ig mennek majd
-							// az igazi tesztek.
+							// TODO: A 0. az csak teszt tesztfajl,
+							// 1-tol 38-ig mennek majd az igazi tesztek.
 							// Pelda: load src/test_data/test_inputs/test_0.in
 							case "load":
 								if (tokens.length >= 2) {

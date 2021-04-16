@@ -1,4 +1,3 @@
-Controller controller
 Player p1 p2
 Game game
 Recipe robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe
@@ -11,52 +10,55 @@ AIRobot air1
 UFO ufo1
 TeleportingGate tg1 tg2 tg3 tg4
 
-Controller controller
-	game game
-	playersAlive p1 p2
-	actPlayer p1
-	state paused
-
 Player p1
+	name null
+	settler null
+	isAlive true
+
+Player p2
 	name Bela
 	settler s1
 	isAlive true
 
-Player p2
-	name Eugen
-	settler s2
-	isAlive true
-
 Game game
-	timer timer
-	recipes robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe
-	sun sun
-	asteroids a1 a2 a3 a4
-	settlersAlive s1 s2
+	timer null
+	asteroids null
+	sun null
+	asteroids null
+	settlersAlive null
 
 Recipe robotRecipe
-	resources co1 ir1 ur1
+	resources null
 
 Recipe gatePairRecipe
-	resources ir2 ir3 ic1 ur2
+	resources co1 ir1 ur1
 
 Recipe spaceBaserecipe
-	resources co2 co3 co4 ic2 ic3 ic4 ir4 ir5 ir6 ur3 ur4 ur5
+	resources ir2 ir3 ic1 ur2
 
 Recipe allResourcesRecipe
-	resources co5 ic5 ir7 ur6
+	resources co2 co3 co4 ic2 ic3 ic4 ir4 ir5 ir6 ur3 ur4 ur5
 
 Timer timer
-	ticks 36
-	delay 1000
-	period 500
-	steppables sun air1 ufo1 tg1
+	ticks 0
+	delay 0
+	period 0
+	steppables null
 
 Sun sun
 	timeToSunStorm null
-	neighboringAsteroids a1 a2
+	neighboringAsteroids null
 
 Asteroid a1
+	rockLayerThickness 0
+	game null
+	sun null
+	neighbors null
+	resource null
+	characters null
+	gates null
+
+Asteroid a2
 	rockLayerThickness 0
 	game game
 	sun sun
@@ -65,7 +67,7 @@ Asteroid a1
 	characters s1
 	gates tg1 tg3
 
-Asteroid a2
+Asteroid a3
 	rockLayerThickness 3
 	game game
 	sun sun
@@ -74,7 +76,7 @@ Asteroid a2
 	characters s2
 	gates null
 
-Asteroid a3
+Asteroid a4
 	rockLayerThickness 5
 	game game
 	sun sun
@@ -82,15 +84,6 @@ Asteroid a3
 	resource ur7
 	characters air1
 	gates null
-
-Asteroid a4
-	rockLayerThickness 1
-	game game
-	sun sun
-	neighbors a2 a3
-	resource ir8
-	characters null
-	gates tg2
 
 Uranium ur1
 	lives 3
@@ -111,56 +104,56 @@ Uranium ur6
 	lives 3
 
 Uranium ur7
-	lives 1
+	lives 3
 
 Uranium ur8
-	lives 3
+	lives 1
 
 Uranium ur9
 	lives 3
 
 Settler s1
+	game null
+	timer null
+	place null
+	resources null
+	gatesCreated null
+
+Settler s2
 	game game
 	timer timer
 	place a1
 	resources co7 co8 ir9 ic5 ur8
 	gatesCreated null
 
-Settler s2
-	game game
-	timer timer
-	place a2
-	resources ir10 ic6 ic7 ur9
-	gatesCreated tg4
-
 AIRobot air1
 	timer timer
-	place a4
+	place a2
 
 UFO ufo1
 	timer timer
 
 TeleportingGate tg1
 	timer timer
+	pair null
+	settler null
+	asteroid null
+
+TeleportingGate tg2
+	timer timer
 	pair tg2
 	settler null
 	asteroid a1
 
-TeleportingGate tg2
+TeleportingGate tg3
 	timer null
 	pair tg1
 	settler null
 	asteroid a4
 
-TeleportingGate tg3
+TeleportingGate tg4
 	timer null
 	pair tg4
 	settler null
 	asteroid a1
-
-TeleportingGate tg4
-	timer null
-	pair tg3
-	settler s2
-	asteroid null
 

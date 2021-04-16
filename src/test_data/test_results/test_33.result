@@ -1,0 +1,19 @@
+Asteroid a1
+Settler s1
+
+Asteroid a1
+	rockLayerThickness 0
+	game null
+	sun null
+	neighbors null
+	resource null
+	characters null
+	gates null
+
+Settler s1
+	game null
+	timer null
+	place null
+	resources null
+	gatesCreated null
+

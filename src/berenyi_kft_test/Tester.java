@@ -39,11 +39,11 @@ public class Tester {
 	}
 	
 	// Atirtam String paramterure, de majd meglatjuk, a File jobb-e.
-	public static boolean compare(String fName1path, String fName2path)
+	public static boolean compare(String fpath1, String fpath2)
 														throws IOException {
 		
-		String file1 = fName1path;
-		String file2 = fName2path;
+		String file1 = fpath1;
+		String file2 = fpath2;
 		
 		if (compareTextFiles(file1, file2)){
 			System.out.println("Files' contents are the same.");
@@ -63,10 +63,17 @@ public class Tester {
 	 * @param controller A jatekot iranyito vezerlo
 	 */
 	private static void executeTestSpecificCommand(Controller controller) {
-		Player actPlayer = controller.getActPlayer();
+		// TODO: Ez a par sor egyelore csak foltozgatas.
+		// Minden jatekos inditotta tesztesethez kellene Controller is, hogy teljes legyen.
+		Player actPlayer;
+		if (controller != null)
+			actPlayer = controller.getActPlayer();
+		else {
+			Proto.getObject("p1");
+		}
 		
-		// TODO: Sorszam szerinti if-else agak es metodushivasok az actPlayeren;
-		// az idozitett inditas megtortenik a startban, azoknal itt nem kell semmi
+		// TODO: Sorszam szerinti if-else agak es metodushivasok az actPlayeren.
+		// (Az idozitett inditas megtortenik a startban, azoknal itt nem kell semmi.)
 		
 	}
 	
@@ -79,26 +86,33 @@ public class Tester {
 	 * @param testNum
 	 */
 	public static void testOne(int testNum) {
+		if (testNum < 1 | testNum > testCount) {
+			System.out.println("Please give a test number between 1 and "
+															+ testCount + ".");
+			return;
+		}
+		
 		String testName ="test_" + Integer.toString(testNum);
 		String inputName = Tester.path + "test_inputs\\" + testName + ".in";
 		String resultName = Tester.path + "test_results\\" + testName + ".result";
 		String outputName = Tester.path + "test_outs\\" + testName + ".out";
 		
 		try {
-			// (A statikus Proto osztalyra es annak statikus metodusaira hivatkozik,
-			// plusz a Tester.compare()-re)
 			Proto.setRandom(true);
 			Proto.enableLogging(true);
 			Proto.load(inputName);
-			// Proto.start();
 			
 			Proto.Objects allObjects = Proto.getAllObjects();
 			Controller controller = allObjects.getController();
-			controller.setState(State.RUNNING);
+			if (controller != null) {
+				controller.setState(State.RUNNING);
+			}
 			
 			executeTestSpecificCommand(controller);
 			
-			controller.setState(State.PAUSED);
+			if (controller != null) {
+				controller.setState(State.PAUSED);
+			}
 			Proto.save(resultName);
 			Tester.compare(resultName, outputName);
 		}
@@ -112,7 +126,7 @@ public class Tester {
 	 * a Tester.testCount valtozoval jelolt utolsoig.
 	 */
 	public static void testAll() {
-		for (int i = 0; i < Tester.testCount; i++) {
+		for (int i = 0; i <= Tester.testCount; i++) {
 			testOne(i);
 		}
 	}
