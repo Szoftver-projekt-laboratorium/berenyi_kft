@@ -108,12 +108,16 @@ public class Game {
 	 */
 	public void endGame() {
 		System.out.println("Game's endGame() has been called");
+		Controller controller = Proto.getAllObjects().getController();
 		if (settlersAlive.size() > 0) {
 			System.out.println("A telepesek nyertek, felepult az urbazis!");
+			controller.endGame(State.WON);
+			
 		} else {
 			System.out.println("A telepesek vesztettek, mindegyikuk meghalt.");
+			controller.endGame(State.LOST);
 		}
-		endGameFlag = true;
+		
 	}
 	
 	/**

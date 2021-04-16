@@ -12,7 +12,7 @@ Settler s1 s2
 Controller controller
 	game game
 	allPlayers p1 p2
-	actPlayer p2
+	actPlayer p1
 	state won
 
 Player p1
@@ -26,24 +26,38 @@ Player p2
 	isAlive true
 
 Game game
+	timer null
 	recipes nullRecipe1 nullRecipe2 spaceBaseRecipe
+	sun null
 	asteroids a1 a2
 	settlersAlive s1 s2
 
-Recipe spaceBaserecipe
-	resources co1 co2 co3 ir1 ir2 ir3 ic1 ic2 ic3 ur1 ur2 ur3
+Recipe nullRecipe1
+	resources null
+
+Recipe nullRecipe2
+	resources null
+
+Recipe spaceBaseRecipe
+	resources null
 
 Asteroid a1
 	rockLayerThickness 5
 	game game
+	sun null
 	neighbors a2
+	resource null
 	characters null
+	gates null
 
 Asteroid a2
 	rockLayerThickness 2
 	game game
+	sun null
 	neighbors a1
-	characters s1 s2
+	resource null
+	characters s2 s1
+	gates null
 
 Uranium ur1
 	life 3
@@ -54,12 +68,26 @@ Uranium ur2
 Uranium ur3
 	life 3
 
+Uranium ur4
+	life 3
+
+Uranium ur5
+	life 3
+
+Uranium ur6
+	life 3
+
 Settler s1
 	game game
+	timer null
 	place a2
 	resources co4 ir4 ir5 ic4 ir6 ur4 co5 ic5
+	gatesCreated null
 
 Settler s2
 	game game
+	timer null
 	place a2
 	resources ur5 co6 ur6 ic6
+	gatesCreated null
+
