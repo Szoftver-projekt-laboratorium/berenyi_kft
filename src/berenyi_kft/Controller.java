@@ -2,37 +2,10 @@ package berenyi_kft;
 
 import java.util.*;
 
-enum State {
-	INIT,
-	RUNNING,
-	PAUSED,
-	WON,
-	LOST,
-	EXITED;
-	
-	public static State fromString(String s) {
-		switch (s) {
-			case "init": return INIT;
-			case "running": return RUNNING;
-			case "paused": return PAUSED;
-			case "won": return WON;
-			case "lost": return LOST;
-			default: return EXITED;
-		}
-	}
-	
-	public static String toString(State state) {
-		switch (state) {
-			case INIT: return "Initiaizing...";
-			case RUNNING: return "The game has started/resumed.";
-			case PAUSED: return "The game has been stopped.";
-			case WON: return "Congratulations, you settlers have won the game!";
-			case LOST: return "It is the end mates, you have lost the game.";
-			default: return "Exiting the game...";
-		}
-	}
-}
-
+/**
+ * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot.
+ * @author berenyi_kft
+ */
 public class Controller {
 	
 	private Game game;
@@ -44,7 +17,7 @@ public class Controller {
 	private State state = State.INIT;
 	
 	// Kell ref. a Protora?
-	private Proto proto;
+	// private Proto proto;
 	
 
 	public State getState() {
@@ -129,7 +102,7 @@ public class Controller {
 	 * Beolvassa a jatek attributumait az sc Scanner aktualis poziciojatol.
 	 * @param sc A beolvasast vegzo Scanner
 	 */
-	// load src/test_data/test_inputs/test_0.txt
+	// pelda fajl teszteleshez: load src/test_data/test_inputs/test_0.in
 	public void load(Scanner sc) {
 		String line = sc.nextLine(); // fejlecsor
 		line = sc.nextLine();

@@ -124,7 +124,11 @@ public class Recipe {
 			switch (tokens[0]) {					
 				case "resources":
 					for (int i = 1; i < tokens.length; i++) {
+						
+						// TODO: Mukodik ez a sor? Nem cast-olodnak
+						// vissza a specialis Resource-ok?
 						Resource r = (Resource)Proto.getObject(tokens[i]);
+						
 						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
 						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
 						// Ha tehat null-t olvasunk be, azt ki kell hagyni.

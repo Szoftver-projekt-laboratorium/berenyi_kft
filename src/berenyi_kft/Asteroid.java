@@ -117,8 +117,8 @@ public class Asteroid {
 			String id=Proto.getId(this);
 			str+="Asteroid "+id+"\n";
 			
-			String thicknessId=Proto.getId(rockLayerThickness);
-			str+="\trockLayerThickness "+thicknessId+"\n";
+			String thickness=Integer.toString(rockLayerThickness);
+			str+="\trockLayerThickness "+thickness+"\n";
 			
 			String gameId=Proto.getId(game);
 			str+="\tgame "+gameId+"\n";

@@ -92,7 +92,7 @@ public class Settler extends Character {
 		String line = sc.nextLine(); // fejlecsor
 		line = sc.nextLine();
 		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
 				case "game":

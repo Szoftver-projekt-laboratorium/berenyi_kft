@@ -18,7 +18,8 @@ import berenyi_kft_test.Tester;
  */
 public class Proto {
 	
-	private static class Objects {
+	// Publikus, hogy a Tester is lekerdezhesse
+	public static class Objects {
 		private Map<Object, String> ids = new HashMap<Object, String>();
 		
 		private Controller controller = null;
@@ -36,9 +37,13 @@ public class Proto {
 		private List<AIRobot> robots = new ArrayList<AIRobot>();
 		private List<UFO> ufos = new ArrayList<UFO>();
 		private List<TeleportingGate> gates = new ArrayList<TeleportingGate>();
+		
+		public Controller getController() {
+			return controller;
+		}
 	}
 	
-	private static Proto.Objects allObjects = new Proto.Objects();
+	public static Proto.Objects allObjects = new Proto.Objects();
 
 	private static int tabs;
 	
@@ -46,6 +51,10 @@ public class Proto {
 	
 	private static boolean log = true;
 	
+	
+	public static Proto.Objects getAllObjects() {
+		return allObjects;
+	}
 	
 	public static boolean isRandom() {
 		return random;
@@ -228,18 +237,30 @@ public class Proto {
 	 * @param sc Az objektum attributumai beolvasasat vegzo Scanner
 	 */
 	private static void loadObjectAttributes(Scanner sc) {
-		allObjects.controller.load(sc);
+		if (allObjects.controller != null) {
+			allObjects.controller.load(sc);
+		}
+		
 		for (Player p : allObjects.players) {
 			p.load(sc);
 		}
 		
-		allObjects.game.load(sc);
+		if (allObjects.game != null) {
+			allObjects.game.load(sc);
+		}
+		
 		for (Recipe recipe : allObjects.recipes) {
 			recipe.load(sc);
 		}
 		
-		allObjects.timer.load(sc);
-		allObjects.sun.load(sc);
+		if (allObjects.timer != null) {
+			allObjects.timer.load(sc);
+		}
+		
+		if (allObjects.sun != null) {
+			allObjects.sun.load(sc);
+		}
+		
 		for (Asteroid a : allObjects.asteroids) {
 			a.load(sc);
 		}
@@ -251,12 +272,15 @@ public class Proto {
 		for (Settler s : allObjects.settlers) {
 			s.load(sc);
 		}
+		
 		for (AIRobot air : allObjects.robots) {
 			air.load(sc);
 		}
+		
 		for (UFO ufo : allObjects.ufos) {
 			ufo.load(sc);
 		}
+		
 		for (TeleportingGate tg : allObjects.gates) {
 			tg.load(sc);
 		}
@@ -285,13 +309,156 @@ public class Proto {
 		sc.close();
 	}
 	
-	// Kozos segedfuggveny a save-hez es a showAll-hoz.
-	private static void saveToStream(PrintStream ps) {
-		ps.println(allObjects.controller.getDescription());
+	/**
+	 * Segedfuggveny az objektumok deklaracioinak kiirasahoz
+	 * (a konfiguracios fajl elso reszehez).
+	 * @param ps A kimenet, ahova az iras tortenik
+	 */
+	private static void saveObjectIds(PrintStream ps) {
+		if (allObjects.controller != null) {
+			ps.println("Controller " + getId(allObjects.controller));
+		}
+		
+		if (!allObjects.players.isEmpty()) {
+			ps.print("Player");
+			for (Player p : allObjects.players) {
+				ps.print(" " + getId(p));
+			}
+			ps.println();
+		}
+		
+		if (allObjects.game != null) {
+			ps.println("Game " + getId(allObjects.game));
+		}
+		
+		if (!allObjects.recipes.isEmpty()) {
+			ps.print("Recipe");
+			for (Recipe recipe : allObjects.recipes) {
+				ps.print(" " + getId(recipe));
+			}
+			ps.println();
+		}
+		
+		if (allObjects.timer != null) {
+			ps.println("Timer " + getId(allObjects.timer));
+		}
+		
+		if (allObjects.sun != null) {
+			ps.println("Sun " + getId(allObjects.sun));
+		}
+		
+		if (!allObjects.asteroids.isEmpty()) {
+			ps.print("Asteroid");
+			for (Asteroid a : allObjects.asteroids) {
+				ps.print(" " + getId(a));
+			}
+			ps.println();
+		}
+		
+		if (!allObjects.uraniums.isEmpty()) {
+			ps.print("Uranium");
+			for (Uranium ur : allObjects.uraniums) {
+				ps.print(" " + getId(ur));
+			}
+			ps.println();
+		}
+
+		if (!allObjects.settlers.isEmpty()) {
+			ps.print("Settler");
+			for (Settler s : allObjects.settlers) {
+				ps.print(" " + getId(s));
+			}
+			ps.println();
+		}
+		
+		if (!allObjects.robots.isEmpty()) {
+			ps.print("AIRobot");
+			for (AIRobot air : allObjects.robots) {
+				ps.print(" " + getId(air));
+			}
+			ps.println();
+		}
+		
+		if (!allObjects.ufos.isEmpty()) {
+			ps.print("UFO");
+			for (UFO ufo : allObjects.ufos) {
+				ps.print(" " + getId(ufo));
+			}
+			ps.println();
+		}
+		
+		if (!allObjects.gates.isEmpty()) {
+			ps.print("TeleportingGate");
+			for (TeleportingGate tg : allObjects.gates) {
+				ps.print(" " + getId(tg));
+			}
+			ps.println();
+		}
+	}
+	
+	/**
+	 * Segedfuggveny az objektumok definicioinak kiirasahoz
+	 * (a konfiguracios fajl masodik resze, az attributumok ertekeivel).
+	 * @param ps A kimenet, ahova az iras tortenik
+	 */
+	private static void saveObjectAttributes(PrintStream ps) {
+		if (allObjects.controller != null) {
+			ps.println(allObjects.controller.getDescription());
+		}
+		
 		for (Player p : allObjects.players) {
 			ps.println(p.getDescription());
 		}
-		//...
+		
+		if (allObjects.game != null) {
+			ps.println(allObjects.game.getDescription());
+		}
+		
+		for (Recipe recipe : allObjects.recipes) {
+			ps.println(recipe.getDescription());
+		}
+		
+		if (allObjects.timer != null) {
+			ps.println(allObjects.timer.getDescription());
+		}
+		
+		if (allObjects.sun != null) {
+			ps.println(allObjects.sun.getDescription());
+		}
+		
+		for (Asteroid a : allObjects.asteroids) {
+			ps.println(a.getDescription());
+		}
+		
+		for (Uranium ur : allObjects.uraniums) {
+			ps.println(ur.getDescription());
+		}
+
+		for (Settler s : allObjects.settlers) {
+			ps.println(s.getDescription());
+		}
+		
+		for (AIRobot air : allObjects.robots) {
+			ps.println(air.getDescription());
+		}
+		
+		for (UFO ufo : allObjects.ufos) {
+			ps.println(ufo.getDescription());
+		}
+		
+		for (TeleportingGate tg : allObjects.gates) {
+			ps.println(tg.getDescription());
+		}
+	}
+	
+	/**
+	 * Kozos segedfuggveny a save-hez es a showAll-hoz:
+	 * a ps PrintStream-re nyomtatja az aktualis jatekkonfiguraciot.
+	 * @param ps A PrintStream, ahova a mentes tortenik
+	 */
+	private static void saveToStream(PrintStream ps) {
+		saveObjectIds(ps);
+		saveObjectAttributes(ps);
 	}
 	
 	/**
@@ -331,7 +498,7 @@ public class Proto {
 		try {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Welcome in berenyi_kft's Proto program!");
-			System.out.println("Please select whether you wish to test (Y) "
+			System.out.print("Please select whether you wish to test (Y) "
 					+ " or play (n) the prototype game. [Y/n]: ");
 			String choice = sc.next();
 			if (choice.substring(0, 1).toLowerCase().equals("y")) {
@@ -339,7 +506,7 @@ public class Proto {
 			}
 			else {
 				System.out.println("Now you can play the game.");
-				// TODO Menu
+				// TODO Rövid help/leiras, vagy azonnal init es induljon?
 				
 				boolean exit = false;
 				// TODO: Minden nextLine() ele kell hasNextLine() a kodban?
@@ -354,6 +521,7 @@ public class Proto {
 						pAct.actOnSettler(playerCmd, tokens);
 					}
 					else {
+						Controller controller = allObjects.controller; // segedvaltozo
 						switch (cmd) {
 							case "exit":
 								exit = true;
@@ -384,7 +552,7 @@ public class Proto {
 										log = false;
 									else
 										throw new IllegalArgumentException(
-											"Invalid argument for <is _logging>: "
+											"Invalid argument for <is_logging>: "
 													+ tokens[1] + ".");
 								} else
 									throw new IllegalArgumentException(
@@ -394,19 +562,25 @@ public class Proto {
 							case "init":
 								allObjects.controller.startGame();
 								break;
-								
+							
+							// A 0. az csak teszt tesztfajl, 1-tol 38-ig mennek majd
+							// az igazi tesztek.
+							// load src/test_data/test_inputs/test_0.in
 							case "load":
 								if (tokens.length >= 2) {
 									load(tokens[1]);
 								}
 								break;
 							
+							//TODO: hibauzenetek, ahol kellenek
 							case "start":
-								allObjects.controller.setState(State.RUNNING);
+								if (controller != null)
+									controller.setState(State.RUNNING);
 								break;
 							
 							case "stop":
-								allObjects.controller.setState(State.PAUSED);
+								if (controller != null)
+									controller.setState(State.PAUSED);
 								break;
 							
 							case "save":
@@ -434,7 +608,7 @@ public class Proto {
 			}
 		}
 		catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			System.out.println("The prototype program has been ended by an exception.");
 			// System.exit(1);
 		}

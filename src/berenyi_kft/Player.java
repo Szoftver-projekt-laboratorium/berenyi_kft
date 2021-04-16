@@ -44,8 +44,8 @@ public class Player {
 		String id=Proto.getId(this);
 		str+="Player "+id+"\n";
 		
-		String nameId=Proto.getId(name);
-		str+="\tname "+nameId+"\n";
+		// A primitiv tipusoknal atirtam a kiirast.
+		str+="\tname "+name+"\n";
 		
 		String settlerId=Proto.getId(settler);
 		str+="\tsettler "+settlerId+"\n";
@@ -68,11 +68,12 @@ public class Player {
 		String line = sc.nextLine(); // fejlecsor
 		line = sc.nextLine();
 		while (!line.equals("")) {
-			String[] tokens = line.split("\\s");
+			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
+				// A primitiv tipusoknal atirtam a beolvasast. 
 				case "name":
-					name = (String)Proto.getObject(tokens[1]);
+					name = tokens[1];
 					break;
 					
 				case "settler":
@@ -80,7 +81,7 @@ public class Player {
 					break;
 					
 				case "isAlive":
-					isAlive = (Boolean)Proto.getObject(tokens[1]);
+					isAlive = (tokens[1].equals("true"));
 					break;
 					
 				default:
