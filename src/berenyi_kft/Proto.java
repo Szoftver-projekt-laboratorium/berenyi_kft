@@ -19,28 +19,26 @@ import berenyi_kft_test.Tester;
 public class Proto {
 	
 	private static class Objects {
-		Map<Object, String> ids = new HashMap<Object, String>();
+		private Map<Object, String> ids = new HashMap<Object, String>();
 		
-		Controller controller = null;
-		List<Player> players = new ArrayList<Player>();
-		Game game = null;
-		List<Recipe> recipes = new ArrayList<Recipe>();
-		Timer timer = null;
-		Sun sun = null;
-		List<Asteroid> asteroids = new ArrayList<Asteroid>();
-		List<Coal> coals = new ArrayList<Coal>();
-		List<Iron> irons = new ArrayList<Iron>();
-		List<Ice> ices = new ArrayList<Ice>();
-		List<Uranium> uraniums = new ArrayList<Uranium>();
-		List<Settler> settlers = new ArrayList<Settler>();
-		List<AIRobot> robots = new ArrayList<AIRobot>();
-		List<UFO> ufos = new ArrayList<UFO>();
-		List<TeleportingGate> gates = new ArrayList<TeleportingGate>();
+		private Controller controller = null;
+		private List<Player> players = new ArrayList<Player>();
+		private Game game = null;
+		private List<Recipe> recipes = new ArrayList<Recipe>();
+		private Timer timer = null;
+		private Sun sun = null;
+		private List<Asteroid> asteroids = new ArrayList<Asteroid>();
+		private List<Coal> coals = new ArrayList<Coal>();
+		private List<Iron> irons = new ArrayList<Iron>();
+		private List<Ice> ices = new ArrayList<Ice>();
+		private List<Uranium> uraniums = new ArrayList<Uranium>();
+		private List<Settler> settlers = new ArrayList<Settler>();
+		private List<AIRobot> robots = new ArrayList<AIRobot>();
+		private List<UFO> ufos = new ArrayList<UFO>();
+		private List<TeleportingGate> gates = new ArrayList<TeleportingGate>();
 	}
 	
 	private static Proto.Objects allObjects = new Proto.Objects();
-	
-	// private static Map<Object, String> ids = new HashMap<Object, String>();
 
 	private static int tabs;
 	
@@ -48,7 +46,6 @@ public class Proto {
 	
 	private static boolean log = true;
 	
-	// private static Controller controller = null;
 	
 	/**
 	 * Beallitja, hogy a prototipus program objektumai megvalosithatnak-e
@@ -69,19 +66,25 @@ public class Proto {
 		log = isLogging;
 	}
 	
+	/**
+	 * Megadja az o jatekbeli objektumot azonosito stringet.
+	 * @param o A kerdezett objektum referenciaja
+	 * @return Az objektum azonosito neve; o==null eseten a "null" szoveg
+	 */
 	public static String getId(Object o) {
         if (allObjects.ids.containsKey(o)) {
             return allObjects.ids.get(o);
         }
         return "null";
     }
-
+	
+	/**
+	 * Visszaadja az id azonositoju jatekbeli objekumot.
+	 * @param id A kerdezett objektum azonositoja
+	 * @return Referencia az objektumra; ha nem letezik ilyen nevu
+	 * 		   objektum, akkor null a visszateresi ertek
+	 */
 	public static Object getObject(String id) {
-		// TODO: Megengedjunk null id-ju objektumot? Inkabb ne.
-		// De amugy sem olvasnank be oket.
-		// if (id.equals("null"))
-		//	  return null;
-		
 		for (Map.Entry<Object, String> e : allObjects.ids.entrySet()) {
 			if (e.getValue().equals(id))
 				return e.getKey();
@@ -126,20 +129,83 @@ public class Proto {
 				allObjects.players.add(p);
 				break;
 			
-			//...
-			//case "Game": return new Game();
-			//case "Recipe": return new Recipe();
-			//case "Timer": return new Timer(0, 0);
-			//case "Sun": return new Sun();
-			//case "Asteroid": return new Asteroid();
-			//case "Coal": return new Coal();
-			//case "Iron": return new Iron();
-			//case "Ice": return new Ice();
-			//case "Uranium": return new Uranium();
-			//case "Settler": return new Settler();
-			//case "AIRobot": return new AIRobot(null);
-			//case "UFO": return new UFO();
-			//case "TeleportingGate": return new TeleportingGate();
+			case "Game":
+				Game game = new Game();
+				allObjects.ids.put(game, id);
+				allObjects.game = game;
+				break;
+			
+			case "Recipe":
+				Recipe recipe = new Recipe();
+				allObjects.ids.put(recipe, id);
+				allObjects.recipes.add(recipe);
+				break;
+			
+			case "Timer":
+				Timer timer = new Timer(0, 0);
+				allObjects.ids.put(timer, id);
+				allObjects.timer = timer;
+				break;
+				
+			case "Sun":
+				Sun sun = new Sun();
+				allObjects.ids.put(sun, id);
+				allObjects.sun = sun;
+				break;
+			
+			case "Asteroid":
+				Asteroid a = new Asteroid();
+				allObjects.ids.put(a, id);
+				allObjects.asteroids.add(a);
+				break;
+			
+			case "Coal":
+				Coal co = new Coal();
+				allObjects.ids.put(co, id);
+				allObjects.coals.add(co);
+				break;
+			
+			case "Iron":
+				Iron ir = new Iron();
+				allObjects.ids.put(ir, id);
+				allObjects.irons.add(ir);
+				break;
+			
+			case "Ice":
+				Ice ic = new Ice();
+				allObjects.ids.put(ic, id);
+				allObjects.ices.add(ic);
+				break;
+			
+			case "Uranium":
+				Uranium ur = new Uranium();
+				allObjects.ids.put(ur, id);
+				allObjects.uraniums.add(ur);
+				break;
+			
+			case "Settler":
+				Settler s = new Settler();
+				allObjects.ids.put(s, id);
+				allObjects.settlers.add(s);
+				break;
+			
+			case "AIRobot":
+				AIRobot air = new AIRobot(null);
+				allObjects.ids.put(air, id);
+				allObjects.robots.add(air);
+				break;
+			
+			case "UFO":
+				UFO ufo = new UFO(null);
+				allObjects.ids.put(ufo, id);
+				allObjects.ufos.add(ufo);
+				break;
+			
+			case "TeleportingGate":
+				TeleportingGate tg = new TeleportingGate();
+				allObjects.ids.put(tg, id);
+				allObjects.gates.add(tg);
+				break;
 			
 			default:
 				throw new NullPointerException("Invalid class name: " + typename);

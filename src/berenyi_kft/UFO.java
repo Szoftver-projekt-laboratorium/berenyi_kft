@@ -49,6 +49,17 @@ public class UFO extends Character implements ISteppable {
 			line = sc.nextLine();
 		}
 	}
+	
+	/**
+	 * Uj UFO jon letre, amely parameterkent atveszi az ot lepteto idozitot is.
+	 * A konstruktor egybol hozzaadja az ufot az idozitojehez.
+	 * @param timer A jatek idozitoje
+	 */
+	public UFO(Timer timer) {
+		System.out.println("UFO's UFO(Timer timer) has been called");
+		this.timer = timer;
+		timer.addSteppable(this);
+	}
 
 	@Override
 	public void die() {
