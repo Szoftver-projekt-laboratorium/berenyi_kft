@@ -42,7 +42,7 @@ public class Tester {
 		
 		while(input1.hasNextLine() && input2.hasNextLine()){
 			line1 = input1.nextLine();   
-			line2 = input2.nextLine(); 
+			line2 = input2.nextLine();  
 
 		    if(!line1.equals(line2)){
 		        System.out.println("Differences found: "+"\n"+line1+'\n'+line2);
