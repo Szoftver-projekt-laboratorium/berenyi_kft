@@ -9,15 +9,21 @@ Player p1
 	isAlive true
 
 Game game
+	recipes null
 	asteroids a1
 	settlersAlive s1
 
 Asteroid a1
 	rockLayerThickness 2
 	game game
+	sun null
 	neighbors null
 	characters s1
+	gates null
 
 Settler s1
 	game game
+	timer null
 	place a1
+	resources null
+	gatesCreated null
