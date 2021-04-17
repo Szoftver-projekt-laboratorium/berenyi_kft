@@ -15,7 +15,6 @@ Game game
 Asteroid a1
 	rockLayerThickness 2
 	game game
-	neighbors null
 	characters s1
 
 Settler s1
