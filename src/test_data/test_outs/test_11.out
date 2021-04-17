@@ -1,11 +1,10 @@
 Player p1
 Game game
-Timer timer
 Sun sun
 Asteroid a1
 Settler s1
 
-Player p1 
+Player p1
 	name Marci
 	settler s1
 	isAlive true
@@ -18,6 +17,7 @@ Game game
 	settlersAlive s1
 
 Sun sun
+	timeToSunStorm 0
 	neighboringAsteroids a1
 
 Asteroid a1
@@ -31,7 +31,7 @@ Asteroid a1
 
 Settler s1
 	game game
-	timer timer
+	timer null
 	place a1
 	resources null
 	gatesCreated null

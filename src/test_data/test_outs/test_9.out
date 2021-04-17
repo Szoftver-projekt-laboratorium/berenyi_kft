@@ -3,7 +3,7 @@ Game game
 Asteroid a1
 Settler s1
 
-Player p1 
+Player p1
 	name Balazs
 	settler s1
 	isAlive true
