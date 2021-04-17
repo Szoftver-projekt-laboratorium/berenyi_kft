@@ -29,4 +29,15 @@ public class Ice extends Resource{
 			return true;
 		return false;
 	}
+	
+	/**
+	 * Visszater a vizjeg nyersanyagegyseg egy klonjaval.
+	 * @return A nyersanyag klonozott masolata
+	 */
+	@Override
+	public Ice clone() {
+		Ice icClone = (Ice)super.clone();
+		Proto.getAllObjects().addIce(icClone);
+		return icClone;
+	}
 }

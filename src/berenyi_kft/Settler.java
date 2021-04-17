@@ -235,6 +235,7 @@ public class Settler extends Character {
 			
 			AIRobot air = new AIRobot(game.getTimer());
 			place.accept(air);
+			Proto.getAllObjects().addAIRobot(air);
 		}
 		aiRobotRecipe.reset();
 	}
@@ -280,6 +281,8 @@ public class Settler extends Character {
 			tg1.setPair(tg2);
 			gatesCreated.add(tg1);
 			gatesCreated.add(tg2);
+			Proto.getAllObjects().addTeleportingGate(tg1);
+			Proto.getAllObjects().addTeleportingGate(tg2);
 		}
 		gatePairRecipe.reset();
 	}

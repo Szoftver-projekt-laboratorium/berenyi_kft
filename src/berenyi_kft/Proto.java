@@ -12,8 +12,11 @@ import java.util.Scanner;
 
 import berenyi_kft_test.Tester;
 
-// Az IO metodusokat jobb lenne kiszervezni vagy beszervezni egy masik osztalyba.
-// Lehetne akar Proto.IO is. Nem tudom, jobb-e ugy, csak kompaktabb lenne.
+// Teszteleshez masolhato parancs (pelda tesztfajl betoltese):
+// load src/test_data/test_inputs/test_0.in
+
+// (Az IO metodusokat jobb lenne kiszervezni vagy beszervezni egy masik osztalyba.
+// Lehetne akar Proto.IO is. Nem tudom, jobb-e ugy, csak kompaktabb lenne.)
 
 /**
  * Proto osztaly a prototipus program vezerlesehez, tesztelesehez
@@ -21,7 +24,7 @@ import berenyi_kft_test.Tester;
  */
 public class Proto {
 	
-	// Publikus, hogy a Tester is lekerdezhesse
+	// Publikus, hogy a Tester is lekerdezhesse.
 	public static class Objects {
 		private Map<Object, String> ids = new HashMap<Object, String>();
 		
@@ -43,6 +46,54 @@ public class Proto {
 		
 		public Controller getController() {
 			return controller;
+		}
+		
+		// TODO: Lehet meg szep generikus metodusokkal egyszerusiteni a kodot?
+		/**
+		 * Generikus segedfuggveny uj azonosithato objektum bejegyzesehez.
+		 * A <T> tipusu object jatekbeli objektum hozzaadodik a megfelelo objects 
+		 * lista vegere, illetve bekerul az ids Map-be is. A metodus azonositot 
+		 * general az ujonnan hozzaadott objektumnak, ehhez a <T> tipusra jellemzo 
+		 * typePrefix elotagot hasznalja.
+		 * @param <T> Generikus parameter, a hozzaadando objektum peldanyositott tipusa
+		 * @param object Az azonosithato jatekobjektum, amelyet a prototipus eltarol
+		 * @param objects Az ugyanilyen tipusu Proto.Objects-beli objektumok listaja
+		 * @param typePrefix A <T> tipusu objektumok kozos elotagja
+		 */
+		// Szerintem jo igy, mert generikusan mukodik, (nincs Object-re kasztolas pl.)
+		private <T> void addObject(T object, List<T> objects, String typePrefix) {
+			Object lastObject = objects.get(objects.size() - 1);
+			String lastObjectName = ids.get(lastObject);
+			String seqString = lastObjectName.substring(typePrefix.length());
+			Integer seqNumber = Integer.parseInt(seqString);
+			String newObjectName = typePrefix + Integer.toString(seqNumber + 1);
+			
+			objects.add(object);
+			ids.put(object, newObjectName);
+		}
+		
+		public void addCoal(Coal co) {
+			addObject(co, coals, "co");
+		}
+		
+		public void addIron(Iron ir) {
+			addObject(ir, irons, "ir");
+		}
+		
+		public void addIce(Ice ic) {
+			addObject(ic, ices, "ic");
+		}
+		
+		public void addUranium(Uranium ur) {
+			addObject(ur, uraniums, "ur");
+		}
+		
+		public void addAIRobot(AIRobot air) {
+			addObject(air, robots, "air");
+		}
+		
+		public void addTeleportingGate(TeleportingGate tg) {
+			addObject(tg, gates, "tg");
 		}
 	}
 	
@@ -601,10 +652,7 @@ public class Proto {
 							case "init":
 								allObjects.controller.startGame();
 								break;
-							
-							// TODO: A 0. az csak teszt tesztfajl,
-							// 1-tol 38-ig mennek majd az igazi tesztek.
-							// Pelda: load src/test_data/test_inputs/test_0.in
+
 							case "load":
 								if (tokens.length >= 2) {
 									load(tokens[1]);

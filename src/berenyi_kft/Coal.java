@@ -19,4 +19,15 @@ public class Coal extends Resource {
 			return true;
 		return false;
 	}
+	
+	/**
+	 * Visszater a szen nyersanyagegyseg egy klonjaval.
+	 * @return A nyersanyag klonozott masolata
+	 */
+	@Override
+	public Coal clone() {
+		Coal coClone = (Coal)super.clone();
+		Proto.getAllObjects().addCoal(coClone);
+		return coClone;
+	}
 }

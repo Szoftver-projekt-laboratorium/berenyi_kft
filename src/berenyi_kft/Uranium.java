@@ -72,4 +72,15 @@ public class Uranium extends RadioactiveResource {
 		if(life==0)
 			a.explodedBy(this);
 	}
+	
+	/**
+	 * Visszater az uran nyersanyagegyseg egy klonjaval.
+	 * @return A nyersanyag klonozott masolata
+	 */
+	@Override
+	public Uranium clone() {
+		Uranium urClone = (Uranium)super.clone();
+		Proto.getAllObjects().addUranium(urClone);
+		return urClone;
+	}
 }

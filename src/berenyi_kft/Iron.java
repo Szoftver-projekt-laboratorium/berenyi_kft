@@ -19,4 +19,15 @@ public class Iron extends Resource{
 			return true;
 		return false;
 	}
+	
+	/**
+	 * Visszater a vas nyersanyagegyseg egy klonjaval.
+	 * @return A nyersanyag klonozott masolata
+	 */
+	@Override
+	public Iron clone() {
+		Iron irClone = (Iron)super.clone();
+		Proto.getAllObjects().addIron(irClone);
+		return irClone;
+	}
 }

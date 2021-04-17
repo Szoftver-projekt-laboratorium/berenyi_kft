@@ -90,7 +90,7 @@ public class Tester {
 			Object[] params = { "pass" };
 			actPlayer.actOnSettler(PlayerCommand.PASS, params);
 		} else if (testNum == 2 | (testNum >= 4 & testNum <= 5)) {
-			Object[] params = { "move", 0 };
+			Object[] params = { "move", "0" };	// Vigyazz, szovegesen kell atadni a szamokat is!
 			actPlayer.actOnSettler(PlayerCommand.MOVE, params);
 		} else if (testNum == 3) {
 			Object[] params = { "mine" };

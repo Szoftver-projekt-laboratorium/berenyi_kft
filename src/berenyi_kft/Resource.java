@@ -50,7 +50,6 @@ public abstract class Resource implements Cloneable {
 	public Resource clone() {
 		try {
 			return (Resource)super.clone();
-			
 		} catch (CloneNotSupportedException e) {
 			 return null;
 		}	
