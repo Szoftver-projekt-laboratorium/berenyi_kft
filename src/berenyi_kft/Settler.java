@@ -108,9 +108,6 @@ public class Settler extends Character {
 				case "resources":
 					for (int i = 1; i < tokens.length; i++) {
 						Resource r = (Resource)Proto.getObject(tokens[i]);
-						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
-						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
-						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
 						if (r != null)
 							collectedResources.add(r);
 					}
@@ -119,9 +116,6 @@ public class Settler extends Character {
 				case "gatesCreated":
 					for (int i = 1; i < tokens.length; i++) {
 						TeleportingGate tg = (TeleportingGate)Proto.getObject(tokens[i]);
-						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
-						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
-						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
 						if (tg != null)
 							gatesCreated.add(tg);
 					}
@@ -133,11 +127,9 @@ public class Settler extends Character {
 		}
 	}
 	
-	
-	
 	/**
 	 * Visszater a karakter altal tarolt nyersanyagok 
-	 * listajaval, alapertelmezetten egy ures listaval
+	 * listajaval, alapertelmezetten egy ures listaval.
 	 */
 	@Override
 	public ArrayList<Resource> getCollectedResources(){
@@ -147,7 +139,7 @@ public class Settler extends Character {
 	
 	/**
 	 * A telepes eltarolja a kibanyaszott r nyersanyagot a resources kollekciojaban.
-	 * @param r Az elraktarozando nyersanyagegyseg
+	 * @param r Az elraktarozando nyersanyagegyseg.
 	 */
 	public void accept(Resource r) {
 		System.out.println("Settler's accept(r: Resource) has been called");
@@ -156,7 +148,7 @@ public class Settler extends Character {
 	
 	/**
 	 * A telepes eltarolja a teleportkaput a gatesCreated kollekciojaban.
-	 * @param tg A frissen elkészült teleportkapu
+	 * @param tg A frissen elkészült teleportkapu.
 	 */
 	public void accept(TeleportingGate tg) {
 		System.out.println("Settler's accept(tg: TeleportingGate) has been called");
@@ -165,16 +157,25 @@ public class Settler extends Character {
 	
 	/**
 	 * A telepes eltavolitja az r nyersanyagot a resources kollekciojabol.
-	 * @param r Az eltavolitando nyersanyagegyseg
+	 * @param r Az eltavolitando nyersanyagegyseg.
 	 */
 	public void remove(Resource r) {
 		System.out.println("Settler's remove(r: Resource) has been called");
 		for (Resource rCollected : collectedResources) {
 			if (r.isCompatibleWith(rCollected)) {
 				collectedResources.remove(rCollected);
+				rCollected.removeFromGame();
 				return;
 			}
 		}
+	}
+	
+	/**
+	 * A telepes furja az aszteroidat, ehhez meghivja az
+	 * aszteroidaja drilled() metodusat.
+	 */
+	public void drill() {
+		place.drilled();
 	}
 	
 	/**
@@ -235,6 +236,7 @@ public class Settler extends Character {
 			
 			AIRobot air = new AIRobot(game.getTimer());
 			place.accept(air);
+			Proto.getAllObjects().addAIRobot(air);
 		}
 		aiRobotRecipe.reset();
 	}
@@ -280,6 +282,8 @@ public class Settler extends Character {
 			tg1.setPair(tg2);
 			gatesCreated.add(tg1);
 			gatesCreated.add(tg2);
+			Proto.getAllObjects().addTeleportingGate(tg1);
+			Proto.getAllObjects().addTeleportingGate(tg2);
 		}
 		gatePairRecipe.reset();
 	}
@@ -321,10 +325,18 @@ public class Settler extends Character {
 	public void die() {
 		System.out.println("Settler's die() has been called");
 		super.die();
-		//gatesCreated.forEach((tg) -> {tg.die();});
-		for(int i=gatesCreated.size()-1;i>=0;i--)
+		for (Resource r : collectedResources) {
+			r.removeFromGame();
+		}
+		
+		// gatesCreated.forEach((tg) -> {tg.die();});
+		for (int i = gatesCreated.size() - 1 ; i >= 0 ; i--) {
 			gatesCreated.get(i).die();
+		}
+		
+		// A Game ertesiti a Controllert es a Playert is errol.
 		game.removeSettler(this);
+		Proto.getAllObjects().removeSettler(this);
 	}
 	
 	/**
@@ -345,7 +357,4 @@ public class Settler extends Character {
 		return gatesCreated;
 	}
 	
-	public void drill() {
-		place.drilled();
-	}
 }

@@ -1,7 +1,7 @@
 Controller controller
 Player p1 p2
 Game game
-Recipe robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe
+Recipe robotRecipe gatePairRecipe spaceBaseRecipe allResourcesRecipe
 Timer timer
 Sun sun
 Asteroid a1 a2 a3 a4
@@ -43,7 +43,7 @@ Recipe robotRecipe
 Recipe gatePairRecipe
 	resources ir2 ir3 ic1 ur2
 
-Recipe spaceBaserecipe
+Recipe spaceBaseRecipe
 	resources co2 co3 co4 ic2 ic3 ic4 ir4 ir5 ir6 ur3 ur4 ur5
 
 Recipe allResourcesRecipe

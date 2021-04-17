@@ -89,10 +89,12 @@ public class AIRobot extends Character implements ISteppable {
 	 * A robot megsemmisul: 
 	 * meghivja a Timer removeSteppable(ISteppable s) metodusat.
 	 */
+	@Override
 	public void die() {
 		System.out.println("AIRobot's die() has been called");
 		super.die();
 		timer.removeSteppable(this);
+		Proto.getAllObjects().removeAIRobot(this);
 	}
 	
 	/**

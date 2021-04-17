@@ -61,13 +61,22 @@ public class UFO extends Character implements ISteppable {
 		if (timer != null)
 			timer.addSteppable(this);
 	}
-
+	
+	/**
+	 * Az UFO megsemmisul:
+	 * meghivja a Timer removeSteppable(ISteppable s) metodusat.
+	 */
 	@Override
 	public void die() {
 		super.die();
 		timer.removeSteppable(this);
+		Proto.getAllObjects().removeUFO(this);
 	}
 	
+	/**
+	 * Az UFO lep. Ha az aszteroidaja meg van furva, es talal benne nyersanyagot,
+	 * akkor kibanyassza; kulonben egy veletlenszeru szomszedos aszteroidara repul.
+	 */
 	public void step() {
 		if(place.getRockLayerThickness()==0 && place.getResource()!=null) {
 			this.mine();
@@ -78,6 +87,10 @@ public class UFO extends Character implements ISteppable {
 		}
 	}
 	
+	/**
+	 * Az UFO banyaszik az aszteroidajan.
+	 * Ha sikerult kibanyasznia a magban levo nyersanyagot, az eltunik.
+	 */
 	public void mine() {
 		place.minedByUFO();
 	}

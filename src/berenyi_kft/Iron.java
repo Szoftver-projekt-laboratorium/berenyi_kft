@@ -14,9 +14,28 @@ public class Iron extends Resource{
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
-		System.out.println("Iron's isCompatibleWith(r: Resource) has been called");
+		// System.out.println("Iron's isCompatibleWith(r: Resource) has been called");
 		if (this.getClass().equals(r.getClass()))
 			return true;
 		return false;
+	}
+	
+	/**
+	 * Visszater a vas nyersanyagegyseg egy klonjaval.
+	 * @return A nyersanyag klonozott masolata
+	 */
+	@Override
+	public Iron clone() {
+		Iron irClone = (Iron)super.clone();
+		Proto.getAllObjects().addIron(irClone);
+		return irClone;
+	}
+	
+	/**
+	 * A vas nyersanyagegyseg megsemmisul, eltunik a jatekbol.
+	 */
+	@Override
+	public void removeFromGame() {
+		Proto.getAllObjects().removeIron(this);
 	}
 }
