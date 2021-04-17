@@ -67,7 +67,7 @@ public class Sun implements ISteppable {
 		String id=Proto.getId(this);
 		str+="Sun "+id+"\n";
 		
-		String timeId=Proto.getId(timeToSunStorm);
+		String timeId=Long.toString(timeToSunStorm);
 		str+="\ttimeToSunStorm "+timeId+"\n";
 		
 		if(!neighboringAsteroids.isEmpty()) {   

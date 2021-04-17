@@ -205,12 +205,20 @@ public class Asteroid {
 		 ArrayList<Asteroid> list=new ArrayList<Asteroid>();
 		 list.addAll(neighbors);
 		 for(TeleportingGate tg : gates) {
-			 list.add(tg.getPair().getAsteroid());
+			 Asteroid other=tg.getPair().getAsteroid();
+			 if(other!=null) {
+				 list.add(other);
+			 }
 		 }
 		 System.out.println(list.size());
-		 d = d % list.size();
 		 proto.decrTabs();
-		 return list.get(d);
+		 if(list.size()!=0) {
+			 d = d % list.size();
+			 return list.get(d);
+		 }
+		 
+		
+		 return null;
 	 }
 	 
 	 /**

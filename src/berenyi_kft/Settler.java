@@ -55,6 +55,10 @@ public class Settler extends Character {
 			str+="\tresources";
 			for(Resource r : collectedResources) {
 				String resourceId=Proto.getId(r);
+				if(resourceId.equals("null")) {
+					str+=" "+resourceId;
+					break;
+				}
 				str+=" "+resourceId;
 			}
 			str+="\n";
@@ -288,8 +292,8 @@ public class Settler extends Character {
 				this.remove(r);
 			}
 			
-			TeleportingGate tg1 = new TeleportingGate();
-			TeleportingGate tg2 = new TeleportingGate();
+			TeleportingGate tg1 = new TeleportingGate(timer);
+			TeleportingGate tg2 = new TeleportingGate(timer);
 			tg1.setPair(tg2);
 			gatesCreated.add(tg1);
 			gatesCreated.add(tg2);

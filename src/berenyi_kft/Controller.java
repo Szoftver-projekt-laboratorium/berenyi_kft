@@ -85,20 +85,32 @@ public class Controller {
 	// adtak meg nekik a Proton keresztul.
 	
 	public void nextPlayer() {
-		int idx=playersAlive.indexOf(actPlayer);
-		if(idx==playersAlive.size()-1) {
-			actPlayer=playersAlive.get(0);
-			
-			//Jelenleg itt van a léptetése a steppable-eknek
-			game.getTimer().tick();  
-		}
+		if (playersAlive.size() == 0)
+			actPlayer = null;
 		else {
-			actPlayer=playersAlive.get(idx+1);
+			int idx = playersAlive.indexOf(actPlayer);
+			if (idx == playersAlive.size() - 1) {
+				actPlayer = playersAlive.get(0);
+
+				// Jelenleg itt van a léptetése a steppable-eknek
+				game.getTimer().tick();
+			} else {
+				actPlayer = playersAlive.get(idx + 1);
+			}
 		}
 	}
 	
-	public void removePlayer(Player p) {
-		playersAlive.remove(p);
+	/*Torli a parameterkent kapott Settlerhez tartozo jatekost*/
+	public void removePlayer(Settler s) {
+		if(!this.playersAlive.isEmpty()) {
+			for(int i=playersAlive.size()-1; i>=0; i--) {
+				if(playersAlive.get(i).getSettler()==s) {
+					Player p=playersAlive.get(i);
+					playersAlive.remove(p);
+					Proto.getAllObjects().removePlayer(p);
+				}
+			}
+		}
 	}
 	
 	/**

@@ -3,7 +3,7 @@ Game game
 Asteroid a1
 Settler s1
 
-Player p1 
+Player p1
 	name Balazs
 	settler s1
 	isAlive true
@@ -20,6 +20,7 @@ Asteroid a1
 	game game
 	sun null
 	neighbors null
+	resource null
 	characters s1
 	gates null
 

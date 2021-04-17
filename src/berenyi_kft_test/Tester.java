@@ -87,19 +87,32 @@ public class Tester {
 		// TODO: Sorszam szerinti if-else agak es metodushivasok az actPlayeren.
 		// (Az idozitett inditas megtortenik a startban, azoknal itt nem kell semmi.)
 		if (testNum == 1) {
-			Object[] params = { "pass" };
-			actPlayer.actOnSettler(PlayerCommand.PASS, params);
-		} else if (testNum == 2 | (testNum >= 4 & testNum <= 5)) {
-			Object[] params = { "move", "0" };	// Vigyazz, szovegesen kell atadni a szamokat is!
-			actPlayer.actOnSettler(PlayerCommand.MOVE, params);
-		} else if (testNum == 3) {
-			Object[] params = { "mine" };
-			actPlayer.actOnSettler(PlayerCommand.MINE, params);
+			if(actPlayer!=null) {
+				Object[] params = { "pass" };
+				actPlayer.actOnSettler(PlayerCommand.PASS, params);
+			}
+		} else if (testNum == 2 | (testNum >= 4 & testNum<=7)) {
+			if(actPlayer!=null) {
+				Object[] params = { "move", "0" };	// Vigyazz, szovegesen kell atadni a szamokat is!
+				actPlayer.actOnSettler(PlayerCommand.MOVE, params);
+			}
+		} else if (testNum==3||testNum==17) {
+			if(actPlayer!=null) {
+				Object[] params = { "mine" };
+				actPlayer.actOnSettler(PlayerCommand.MINE, params);
+			}
 		} else if (testNum == 13) {
-			Object[] params = { "restore", (Resource) Proto.getObject("ur1") };
-			actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
+			if(actPlayer!=null) {
+				Object[] params = { "restore", (Resource) Proto.getObject("ur1") };
+				actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
+			}
 		} else if (testNum >= 29 & testNum <= 35) {
 			/* (A start parancs inditja a tesztet, egy ISteppable lep magatol) */
+		} else if(testNum>=8&&testNum<=11) {
+			if(actPlayer!=null) {
+				Object[] params = { "drill" };
+				actPlayer.actOnSettler(PlayerCommand.DRILL, params);
+			}
 		}
 	}
 	

@@ -16,6 +16,8 @@ public class Player {
 	 
 	private Proto proto;
 	
+	//private Controller controller;  
+	
 	
 	public String getDescription() { 
 		
@@ -120,6 +122,11 @@ public class Player {
 			default: throw new IllegalArgumentException(
 					"Invalid PlayerCommand: " + allParams[0]);
 		}
+		
+		//TODO Controller és a Game beolvasasat meg kell valositani
+		Controller controller=Proto.getAllObjects().getController();
+		if(controller!=null)  //eles jatekban lesz majd kontroller
+			controller.nextPlayer();
 	}
 	
 }
