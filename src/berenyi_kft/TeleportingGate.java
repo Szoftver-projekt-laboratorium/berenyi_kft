@@ -119,8 +119,10 @@ public class TeleportingGate implements ISteppable {
 			asteroid.remove(this);
 		}
 		
-		if(timer.getSteppables().contains(this))
+		if (timer.getSteppables().contains(this)) { // (a feltetel nem szukseges)
 			timer.removeSteppable(this);
+		}
+		Proto.getAllObjects().removeTeleportingGate(this);
 	}
 	
 	public void step() {

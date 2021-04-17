@@ -322,8 +322,8 @@ public class Asteroid {
 	 }
 	 
 	 /**
-	  * Egy az aszteroidan tartozkodo telepes eltavolitja a magban talalhato nyersanyagot. 
-	  * Az aszteroida a resource attributumat null-ra allitja.
+	  * A magban talalhato nyersanyag eltavolitodik az aszteroidabol (peldaul
+	  * banyaszas hatasara). Az aszteroida a resource attributumat null-ra allitja.
 	  * Ha kezdetben resource erteke null volt, a fuggvenynek nincs mellekhatasa.
 	  * @return
 	  */
@@ -403,19 +403,22 @@ public class Asteroid {
 	  */
 	 public void explodedBy(RadioactiveResource rr) {
 		 System.out.println("Asteroid's explodedBy(rr: RadioactiveResource) has been called");
+		// Az aszteroida torolje a robbanoanyagot,
+		 // mert igy latszodik minden fuggvenyhivas.
+		 resource.removeFromGame();
+		 
 		 for (int i = characters.size()-1; i >= 0; i--) {
 			 characters.get(i).reactToExplosion();
 		 }
-		 
 		 for(int i = gates.size()-1; i>=0; i--) {
 			 gates.get(i).die();
 		 }
-		 
 		 for (int i = neighbors.size() - 1; i >= 0; i--) {
 			 neighbors.get(i).remove(this);
 		 }
 		 
 		 game.removeAsteroid(this);
+		 Proto.getAllObjects().removeAsteroid(this);
 	 }
 	 
 	 /**
@@ -461,8 +464,11 @@ public class Asteroid {
 		 
 		 if (recipe.isEmpty()) {
 			 game.endGame();
-		 } 
-		 recipe.reset();
+		 }
+		 // TODO: A recept egyelore nehezen all vissza,
+		 // es nem biztos, hogy az out-ban jol varjuk az eredmenyt.
+		 // Megnezzuk meg a test 2-3-at.
+		 recipe.reset(); 
 	 }
 	 
 	 /**
@@ -497,7 +503,16 @@ public class Asteroid {
 		 return sun;
 	 }
 	 
+	 /**
+	  * Az aszteroidat UFO probalja banyaszni. Ha az aszteroida
+	  * meg van furva (es van benne nyersanyag), akkor a benne levo
+	  * nyersanyagegyseg eltunik a jatekbol.
+	  */
 	 public void minedByUFO() {
+		 if (this.isMined()) {
+			 Resource r = resource;
 			 this.removeResource();
+			 r.removeFromGame();
+		 }
 	 }
 }

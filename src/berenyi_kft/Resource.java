@@ -54,4 +54,10 @@ public abstract class Resource implements Cloneable {
 			 return null;
 		}	
 	}
+	
+	/**
+	 * A nyersanyagegyseg megsemmisul, eltunik a jatekbol.
+	 */
+	public abstract void removeFromGame();
+	
 }

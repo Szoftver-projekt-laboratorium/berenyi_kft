@@ -57,19 +57,30 @@ public class Proto {
 		 * typePrefix elotagot hasznalja.
 		 * @param <T> Generikus parameter, a hozzaadando objektum peldanyositott tipusa
 		 * @param object Az azonosithato jatekobjektum, amelyet a prototipus eltarol
-		 * @param objects Az ugyanilyen tipusu Proto.Objects-beli objektumok listaja
+		 * @param objects Az ugyanilyen tipusu nyilvantartott objektumok listaja
 		 * @param typePrefix A <T> tipusu objektumok kozos elotagja
 		 */
 		// Szerintem jo igy, mert generikusan mukodik, (nincs Object-re kasztolas pl.)
 		private <T> void addObject(T object, List<T> objects, String typePrefix) {
-			Object lastObject = objects.get(objects.size() - 1);
-			String lastObjectName = ids.get(lastObject);
-			String seqString = lastObjectName.substring(typePrefix.length());
-			Integer seqNumber = Integer.parseInt(seqString);
-			String newObjectName = typePrefix + Integer.toString(seqNumber + 1);
-			
-			objects.add(object);
-			ids.put(object, newObjectName);
+			try {
+				Object lastObject = objects.get(objects.size() - 1);
+				String lastObjectName = ids.get(lastObject);
+				String seqString = lastObjectName.substring(typePrefix.length());
+				Integer seqNumber = Integer.parseInt(seqString);
+				String newObjectName = typePrefix + Integer.toString(seqNumber + 1);
+				
+				// Elvileg a szamozas nem dob kivetelt, ha kikotjuk, hogy novekvoen
+				// szerepeljenek az objektumok az inputban (pl. "ur1 ur2 ur4 ...").
+				if (objects.contains(object)) {
+					throw new IllegalArgumentException("Proto.Objects.addObject(): "
+							+ "Unavailable ID for the new object.");
+				}
+				objects.add(object);
+				ids.put(object, newObjectName);
+			}
+			catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		public void addCoal(Coal co) {
@@ -94,6 +105,54 @@ public class Proto {
 		
 		public void addTeleportingGate(TeleportingGate tg) {
 			addObject(tg, gates, "tg");
+		}
+		
+		/**
+		 * Eltavolitja a <T> tipusu object objektumot a program nyilvantartasabol.
+		 * A sajat tipusanak megfelelo objektumok listajabol (objects) is torli.
+		 * @param <T> Generikus parameter, az eltavolitando objektum peldanyositott tipusa
+		 * @param object A prototipus programbol torlendo azonositott objektum
+		 * @param objects A <T> tipusu nyilvantartott objektumok listaja
+		 */
+		private <T> void removeObject(T object, List<T> objects) {
+			ids.remove(object);
+			objects.remove(object);
+		}
+		
+		public void removeAsteroid(Asteroid a) {
+			removeObject(a, asteroids);
+		}
+		
+		public void removeCoal(Coal co) {
+			removeObject(co, coals);
+		}
+		
+		public void removeIron(Iron ir) {
+			removeObject(ir, irons);
+		}
+		
+		public void removeIce(Ice ic) {
+			removeObject(ic, ices);
+		}
+		
+		public void removeUranium(Uranium ur) {
+			removeObject(ur, uraniums);
+		}
+		
+		public void removeSettler(Settler s) {
+			removeObject(s, settlers);
+		}
+		
+		public void removeAIRobot(AIRobot air) {
+			removeObject(air, robots);
+		}
+		
+		public void removeUFO(UFO ufo) {
+			removeObject(ufo, ufos);
+		}
+		
+		public void removeTeleportingGate(TeleportingGate tg) {
+			removeObject(tg, gates);
 		}
 	}
 	
