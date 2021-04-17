@@ -125,10 +125,10 @@ public class TeleportingGate implements ISteppable {
 			asteroid.remove(this);
 		}
 		
-		if(timer.getSteppables().contains(this))
+		if (timer.getSteppables().contains(this)) { // (a feltetel nem szukseges)
 			timer.removeSteppable(this);
-		
-		proto.decrTabs();
+		}
+		Proto.getAllObjects().removeTeleportingGate(this);
 	}
 	
 	public void step() {
@@ -137,24 +137,13 @@ public class TeleportingGate implements ISteppable {
 	}
 	
 	public void move(int d) {
-		proto.println(proto.getId(this)+".move(int d)");
-		 proto.incrTabs();
-		
 		Asteroid a=asteroid.getNeighbor(d);
 		asteroid.remove(this);
 		a.accept(this);
-		
-		proto.decrTabs();
 	}
 	
 	public void goMad() {
-		
-		proto.println(proto.getId(this)+".goMad()");
-		proto.incrTabs();
-		 
 		timer.addSteppable(this);
-		
-		proto.decrTabs();
 	}
 	
 	/**

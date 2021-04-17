@@ -9,8 +9,8 @@ import java.util.Scanner;
  * @author berenyi_kft
  */
 public class Game {
-	/* Segedvaltozo a jatek vegenek ellenorzesehez,
-	 * csak a teszteleshez.
+	/* Segedvaltozo csak a szekeletonhoz,
+	 * a jatek vegenek ellenorzesehez.
 	 */ 
 	private boolean endGameFlag = false;
 
@@ -35,9 +35,14 @@ public class Game {
 	 */
 	private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 	
+	/**
+	 * A jatekbeli idozito
+	 */
 	private Timer timer;
 	
-	private Proto proto;
+	// TODO: (Sajnos) ugy tunik, kell referenciat tarolni a controllerre,
+	//  kulonben korulmenyes az endGame tovabbitasa a vezerlo fele.)
+	// private Controller controller;
 	
 	//--------------------------------------------
 	
@@ -100,7 +105,7 @@ public class Game {
 	 */
 	public void startGame() {
 		// TODO
-		// A teszteles soran egyelore mashogyan inicializalunk.
+		// Palya inicializalasa...
 	}
 	
 	/**
@@ -256,6 +261,7 @@ public class Game {
 		return settlersAlive;
 	}
 	
+	// Csak a szkeleton tesztelesehez hasznalt fuggveny.
 	public boolean isEndGameFlag() {
 		return endGameFlag;
 	}

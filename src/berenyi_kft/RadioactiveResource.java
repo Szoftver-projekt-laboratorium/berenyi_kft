@@ -7,12 +7,13 @@ package berenyi_kft;
 public abstract class RadioactiveResource extends Resource {
 
 	/**
-	 * Meghivja az aszteroidaja explodedBy(RadioactiveResource rr) metodusat
-	 * (aminek hatasara az aszteroida fel fog robbanni).
+	 * A radioaktiv nyersanyagegyseg berobban. Meghivja az aszteroidaja
+	 * explodedBy(RadioactiveResource rr) metodusat, amelynek hatasara
+	 * az aszteroida is felrobban.
 	 */
 	@Override
 	public void drilledOut(Asteroid a) {
-		System.out.println("RadioactiveResource's drilledOut(a: Asteroid) has been called");
+		// System.out.println("RadioactiveResource's drilledOut(a: Asteroid) has been called");
 		a.explodedBy(this);
 	}
 }

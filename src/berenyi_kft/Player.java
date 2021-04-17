@@ -103,7 +103,7 @@ public class Player {
 		switch (cmd) {
 			case PASS: /* No op */ break;
 			case MOVE:
-				int dir = (Integer)allParams[1];
+				int dir = Integer.parseInt((String)allParams[1]);
 				settler.move(dir); break;
 				
 			case DRILL: settler.drill(); break;

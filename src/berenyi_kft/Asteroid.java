@@ -330,8 +330,8 @@ public class Asteroid {
 	 }
 	 
 	 /**
-	  * Egy az aszteroidan tartozkodo telepes eltavolitja a magban talalhato nyersanyagot. 
-	  * Az aszteroida a resource attributumat null-ra allitja.
+	  * A magban talalhato nyersanyag eltavolitodik az aszteroidabol (peldaul
+	  * banyaszas hatasara). Az aszteroida a resource attributumat null-ra allitja.
 	  * Ha kezdetben resource erteke null volt, a fuggvenynek nincs mellekhatasa.
 	  * @return
 	  */
@@ -417,23 +417,22 @@ public class Asteroid {
 	  */
 	 public void explodedBy(RadioactiveResource rr) {
 		// System.out.println("Asteroid's explodedBy(rr: RadioactiveResource) has been called");
+		// Az aszteroida torolje a robbanoanyagot,
+		 // mert igy latszodik minden fuggvenyhivas.
+		 resource.removeFromGame();
 		 
-		 proto.println(proto.getId(this)+".explodedBy(RadioactiveResource rr)");
-		 proto.incrTabs();
 		 for (int i = characters.size()-1; i >= 0; i--) {
 			 characters.get(i).reactToExplosion();
 		 }
-		 
 		 for(int i = gates.size()-1; i>=0; i--) {
 			 gates.get(i).die();
 		 }
-		 
 		 for (int i = neighbors.size() - 1; i >= 0; i--) {
 			 neighbors.get(i).remove(this);
 		 }
 		 
 		 game.removeAsteroid(this);
-		 proto.decrTabs();
+		 Proto.getAllObjects().removeAsteroid(this);
 	 }
 	 
 	 /**
@@ -442,9 +441,7 @@ public class Asteroid {
 	  * a fuggveny meghivja az aszteroidan tartozkodo karakterek die() fuggvenyet.
 	  */
 	 public void destroySurface() {
-		 //System.out.println("Asteroid's destroySurface() has been called");
-		 proto.println(proto.getId(this)+".destroySurface()");
-		 proto.incrTabs();
+		 System.out.println("Asteroid's destroySurface() has been called");
 		 if (!this.isMined()) {
 			 for (int i = characters.size()-1;i>=0;i--) {
 				 characters.get(i).die();
@@ -454,8 +451,6 @@ public class Asteroid {
 				 tg.goMad();
 			 }
 		 }
-		 
-		 proto.decrTabs();
 	 }
 	 
 	 /**
@@ -464,9 +459,7 @@ public class Asteroid {
 	  * Ha igen, akkor meghivja a Game endGame() metodusat.
 	  */
 	 public void checkSpaceBase() {
-		 proto.println(proto.getId(this)+".checkSpaceBase()");
-		 proto.incrTabs();
-		 //System.out.println("Asteroid's checkSpaceBase() has been called");
+		 System.out.println("Asteroid's checkSpaceBase() has been called");
 		 ArrayList<Resource> temp = new ArrayList<Resource>();
 		 for (Character c: characters) {
 			 temp.addAll(c.getCollectedResources());
@@ -485,9 +478,11 @@ public class Asteroid {
 		 
 		 if (recipe.isEmpty()) {
 			 game.endGame();
-		 } 
-		 recipe.reset();
-		 proto.decrTabs();
+		 }
+		 // TODO: A recept egyelore nehezen all vissza,
+		 // es nem biztos, hogy az out-ban jol varjuk az eredmenyt.
+		 // Megnezzuk meg a test 2-3-at.
+		 recipe.reset(); 
 	 }
 	 
 	 /**
@@ -522,10 +517,16 @@ public class Asteroid {
 		 return sun;
 	 }
 	 
+	 /**
+	  * Az aszteroidat UFO probalja banyaszni. Ha az aszteroida
+	  * meg van furva (es van benne nyersanyag), akkor a benne levo
+	  * nyersanyagegyseg eltunik a jatekbol.
+	  */
 	 public void minedByUFO() {
-		 proto.println(proto.getId(this)+".minedByUFO()");
-		 proto.incrTabs();
-		 this.removeResource();
-		 proto.decrTabs();
+		 if (this.isMined()) {
+			 Resource r = resource;
+			 this.removeResource();
+			 r.removeFromGame();
+		 }
 	 }
 }

@@ -1,15 +1,37 @@
 Player p1
-Asteroid a1
+Game game
+Asteroid a1 a2
 Settler s1
+TeleportingGate tg1 tg2
 
-Player p1
-	name Marci
+Player p1 
+	name Balint
 	settler s1
 	isAlive true
 
+Game game
+	asteroids a1 a2
+	settlersAlive s1
+
 Asteroid a1
-	rockLayerThickness 1
+	rockLayerThickness 3
+	game game
 	characters s1
+	gates tg1
+
+Asteroid a2
+	rockLayerThickness 1
+	game game
+	gates tg2
 
 Settler s1
+	game game
 	place a1
+
+TeleportingGate tg1
+	pair tg2
+	asteroid a1
+
+TeleportingGate tg2
+	pair tg1
+	asteroid a2

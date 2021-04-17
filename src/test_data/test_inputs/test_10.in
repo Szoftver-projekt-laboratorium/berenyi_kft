@@ -1,15 +1,78 @@
+Controller controller
 Player p1
-Asteroid a1
+Game game
+Timer timer
+Sun sun
+Asteroid a1 a2
+Iron ir1
+Uranium ur1
 Settler s1
+AIRobot air1
+UFO ufo1
+TeleportingGate tg1 tg2
 
-Player p1
-	name Marci
+Controller controller
+	game game
+	allPlayers p1
+	actPlayer p1
+	state paused
+
+Player p1 
+	name Balint
 	settler s1
 	isAlive true
 
+Game game
+	timer timer
+	sun sun
+	asteroids a1 a2
+	settlersAlive s1
+
+Timer timer
+	steppables sun air1 ufo1
+
+Sun sun
+	neighboringAsteroids a1
+
 Asteroid a1
 	rockLayerThickness 1
-	characters s1
+	game game
+	sun sun
+	neighbors a2
+	resource ur1
+	characters s1 air1 ufo1
+	gates tg1
+
+Asteroid a2
+	rockLayerThickness 3
+	game game
+	sun sun
+	neighbors a1
+	characters null
+
+Uranium ur1
+	life 1
 
 Settler s1
+	game game
+	timer timer
 	place a1
+	resources ir1
+	gatesCreated tg2
+
+AIRobot air1
+	timer timer
+	place a1
+
+UFO ufo1
+	timer timer
+	place a1
+
+TeleportingGate tg1
+	pair tg2
+	asteroid a1
+
+TeleportingGate tg2
+	pair tg1
+	settler s1
+

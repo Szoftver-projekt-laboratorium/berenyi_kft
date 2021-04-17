@@ -64,7 +64,7 @@ public class Recipe {
 	 * @param r A receptet bovito nyersanyagegyseg.
 	 */
 	public void addResource(Resource r) {
-		System.out.println("Settler's addResource(r: Resource) has been called");
+		// System.out.println("Settler's addResource(r: Resource) has been called");
 		this.resources.add(r);
 		Resource r_clone = r.clone();
 		this.resources_backup.add(r_clone);
@@ -79,11 +79,13 @@ public class Recipe {
 	 * @param r A receptbol eltavolitando tipusu nyersanyagegyseg
 	 */
 	public boolean isNeeded(Resource r) {
-		System.out.println("Recipe's isNeeded(r: Resource) has been called");
+		// System.out.println("Recipe's isNeeded(r: Resource) has been called");
 		for (int i = resources.size()-1; i >= 0; i--) {
 			Resource rBill = resources.get(i);
+			
 			if (r.isCompatibleWith(rBill)) {
 				resources.remove(i);
+				rBill.removeFromGame();
 				return true;
 			}
 		}
@@ -96,7 +98,8 @@ public class Recipe {
 	public void reset() {
 		resources.clear();
 		for (Resource r : resources_backup) {
-			resources.add(r.clone());
+			Resource rClone = r.clone();
+			resources.add(rClone);
 		}
 	}
 	
@@ -106,7 +109,7 @@ public class Recipe {
 	 * @return Pontosan akkor true, ha a recept ures (kiuresedett)
 	 */
 	public boolean isEmpty() {
-		System.out.println("Recipe's isEmpty() has been called");
+		// System.out.println("Recipe's isEmpty() has been called");
 		return this.resources.isEmpty();
 	}
 	
