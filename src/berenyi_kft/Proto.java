@@ -63,13 +63,10 @@ public class Proto {
 		// Szerintem jo igy, mert generikusan mukodik, (nincs Object-re kasztolas pl.)
 		private <T> void addObject(T object, List<T> objects, String typePrefix) {
 			try {
-				int seqNumber=1;
-				if(!objects.isEmpty()) {
-					Object lastObject = objects.get(objects.size() - 1);
-					String lastObjectName = ids.get(lastObject);
-					String seqString = lastObjectName.substring(typePrefix.length());
-					seqNumber = Integer.parseInt(seqString);
-				}
+				Object lastObject = objects.get(objects.size() - 1);
+				String lastObjectName = ids.get(lastObject);
+				String seqString = lastObjectName.substring(typePrefix.length());
+				Integer seqNumber = Integer.parseInt(seqString);
 				String newObjectName = typePrefix + Integer.toString(seqNumber + 1);
 				
 				// Elvileg a szamozas nem dob kivetelt, ha kikotjuk, hogy novekvoen
@@ -144,10 +141,6 @@ public class Proto {
 		
 		public void removeSettler(Settler s) {
 			removeObject(s, settlers);
-		}
-		
-		public void removePlayer(Player p) {
-			removeObject(p, players);
 		}
 		
 		public void removeAIRobot(AIRobot air) {
@@ -350,7 +343,7 @@ public class Proto {
 				break;
 			
 			case "TeleportingGate":
-				TeleportingGate tg = new TeleportingGate(null);
+				TeleportingGate tg = new TeleportingGate();
 				allObjects.ids.put(tg, id);
 				allObjects.gates.add(tg);
 				break;
@@ -448,7 +441,6 @@ public class Proto {
 		if (allObjects.controller != null) {
 			ps.println("Controller " + getId(allObjects.controller));
 		}
-		
 		
 		if (!allObjects.players.isEmpty()) {
 			ps.print("Player");

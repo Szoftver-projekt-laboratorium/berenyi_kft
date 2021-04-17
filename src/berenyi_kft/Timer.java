@@ -20,8 +20,6 @@ public class Timer extends java.util.Timer {
 	 */
 	private long delay, period;
 	
-	private Proto proto;
-	
 	/**
 	 * A jatek leptetheto objektumainak listaja
 	 */

@@ -12,8 +12,6 @@ public abstract class Resource implements Cloneable {
 	 */
 	// protected Asteroid asteroid;
 	
-	protected Proto proto;
-	
 	//--------------------------------------------------------------
 	
 	/**

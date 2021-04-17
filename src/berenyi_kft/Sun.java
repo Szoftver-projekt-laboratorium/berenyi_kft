@@ -26,8 +26,6 @@ public class Sun implements ISteppable {
 	// TODO: Elvileg nem szukseges.
 	private Game game;
 	
-	private Proto proto;
-	
 	//-------------------------------------------------------------
 	
 	/**
@@ -67,7 +65,7 @@ public class Sun implements ISteppable {
 		String id=Proto.getId(this);
 		str+="Sun "+id+"\n";
 		
-		String timeId=Long.toString(timeToSunStorm);
+		String timeId=Proto.getId(timeToSunStorm);
 		str+="\ttimeToSunStorm "+timeId+"\n";
 		
 		if(!neighboringAsteroids.isEmpty()) {   
@@ -115,10 +113,7 @@ public class Sun implements ISteppable {
 	 * meghivja mindegyik aszteroida destroySurface() fuggvenyet.
 	 */
 	public void sunStorm() {
-		//System.out.println("Sun's sunStorm() has been called");
-		
-		proto.println(proto.getId(this)+".sunStorm()");
-		proto.incrTabs();
+		System.out.println("Sun's sunStorm() has been called");
 		
 		ArrayList<Asteroid> list=new ArrayList<Asteroid>();
 		for(Asteroid a1 : neighboringAsteroids) {
@@ -133,8 +128,6 @@ public class Sun implements ISteppable {
 		for(Asteroid a : list) {
 			a.destroySurface();
 		}
-		
-		proto.decrTabs();
 	}
 	
 	/**

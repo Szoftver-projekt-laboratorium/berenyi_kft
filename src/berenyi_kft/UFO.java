@@ -68,8 +68,6 @@ public class UFO extends Character implements ISteppable {
 	 */
 	@Override
 	public void die() {
-		proto.println(proto.getId(this)+".die()");
-		proto.incrTabs();
 		super.die();
 		timer.removeSteppable(this);
 		Proto.getAllObjects().removeUFO(this);

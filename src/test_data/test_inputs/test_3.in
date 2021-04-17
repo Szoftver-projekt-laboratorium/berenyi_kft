@@ -42,7 +42,7 @@ Recipe spaceBaserecipe
 Asteroid a1
 	rockLayerThickness 0
 	game game
-	resource ir3
+	resource ir6
 	characters s1 s2
 
 Uranium ur1
@@ -54,12 +54,19 @@ Uranium ur2
 Uranium ur3
 	life 3
 
+Uranium ur4
+	life 3
+
+Uranium ur5
+	life 3
+
+Uranium ur6
+	life 3
+
 Settler s1
 	game game
 	place a1
-	resources ur1 ur2 ur3
 
 Settler s2
 	game game
 	place a1
-	resources co1 co2 co3 ir1 ir2 ic1 ic2 ic3
