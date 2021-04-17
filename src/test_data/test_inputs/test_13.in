@@ -8,8 +8,9 @@ Player p1
 	isAlive true
 
 Asteroid a1
-	rockLayerThickness 1
+	rockLayerThickness 0
 	characters s1
 
 Settler s1
 	place a1
+
