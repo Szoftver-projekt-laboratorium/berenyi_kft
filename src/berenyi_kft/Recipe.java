@@ -129,9 +129,8 @@ public class Recipe {
 				case "resources":
 					for (int i = 1; i < tokens.length; i++) {
 						Resource r = (Resource)Proto.getObject(tokens[i]);
-						if (r != null) {
+						if (r != null)
 							addResource(r);
-						}
 					}
 					break;
 					

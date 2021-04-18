@@ -715,8 +715,10 @@ public class Skeleton {
 						a_6a.accept(s_6a);
 
 						s_6a.createAIRobot();
-						if (a_6a.getCharacters().size() == 2 & s_6a.getCollectedResources().size() == 0
-								& timer_6a.getSteppables().contains(a_6a.getCharacters().get(1)))
+						if (a_6a.getCharacters().size() == 2
+								& s_6a.getCollectedResources().size() == 0
+								& timer_6a.getSteppables().contains(
+										(ISteppable)a_6a.getCharacters().get(1)))
 							System.out.println("\nBuild AI Robot: successful");
 						break;
 					case "b":

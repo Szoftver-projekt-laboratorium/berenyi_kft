@@ -23,8 +23,8 @@ public class Sun implements ISteppable {
 	/**
 	 * A jatekot reprezentalo osztaly
 	 */
-	// TODO: Elvileg nem szukseges.
-	private Game game;
+	// TODO: Elvileg nem szukseges, mindenhonnan ki kellene vennunk.
+	private Game game = null;
 	
 	//-------------------------------------------------------------
 	

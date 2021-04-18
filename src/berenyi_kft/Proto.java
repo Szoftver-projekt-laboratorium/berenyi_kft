@@ -13,7 +13,7 @@ import java.util.Scanner;
 import berenyi_kft_test.Tester;
 
 // Teszteleshez masolhato parancs (pelda tesztfajl betoltese):
-// load src/test_data/test_inputs/test_0.in
+// load src/test_data/test_inputs/test_10.in
 
 // (Az IO metodusokat jobb lenne kiszervezni vagy beszervezni egy masik osztalyba.
 // Lehetne akar Proto.IO is. Nem tudom, jobb-e ugy, csak kompaktabb lenne.)
@@ -31,7 +31,7 @@ public class Proto {
 		private Controller controller = null;
 		private List<Player> players = new ArrayList<Player>();
 		private Game game = null;
-		private List<Recipe> recipes = new ArrayList<Recipe>();
+		private List<Recipe> recipes = new ArrayList<Recipe>(3);
 		private Timer timer = null;
 		private Sun sun = null;
 		private List<Asteroid> asteroids = new ArrayList<Asteroid>();
@@ -60,7 +60,6 @@ public class Proto {
 		 * @param objects Az ugyanilyen tipusu nyilvantartott objektumok listaja
 		 * @param typePrefix A <T> tipusu objektumok kozos elotagja
 		 */
-		// Szerintem jo igy, mert generikusan mukodik, (nincs Object-re kasztolas pl.)
 		private <T> void addObject(T object, List<T> objects, String typePrefix) {
 			try {
 				Object lastObject = objects.get(objects.size() - 1);
@@ -83,6 +82,45 @@ public class Proto {
 			}
 		}
 		
+		public void setController(Controller controller1) {
+			controller = controller1;
+		}
+		
+		public void addPlayer(Player p) {
+			addObject(p, players, "p");
+		}
+		
+		public void setGame(Game game1) {
+			game = game1;
+		}
+		
+		public void setRobotRecipe(Recipe robotRecipe) {
+			recipes.set(0, robotRecipe);
+			ids.put(robotRecipe, "robotRecipe");
+		}
+		
+		public void setGatePairRecipe(Recipe gatePairRecipe) {
+			recipes.set(1, gatePairRecipe);
+			ids.put(gatePairRecipe, "gatePairRecipe");
+		}
+		
+		public void setSpaceBaseRecipe(Recipe spaceBaseRecipe) {
+			recipes.set(2, spaceBaseRecipe);
+			ids.put(spaceBaseRecipe, "spaceBaseRecipe");
+		}
+		
+		public void setTimer(Timer timer1) {
+			timer = timer1;
+		}
+		
+		public void setSun(Sun sun1) {
+			sun = sun1;
+		}
+		
+		public void addAsteroid(Asteroid a) {
+			addObject(a, asteroids, "a");
+		}
+		
 		public void addCoal(Coal co) {
 			addObject(co, coals, "co");
 		}
@@ -99,8 +137,16 @@ public class Proto {
 			addObject(ur, uraniums, "ur");
 		}
 		
+		public void addSettler(Settler s) {
+			addObject(s, settlers, "s");
+		}
+		
 		public void addAIRobot(AIRobot air) {
 			addObject(air, robots, "air");
+		}
+		
+		public void addUFO(UFO ufo) {
+			addObject(ufo, ufos, "ufo");
 		}
 		
 		public void addTeleportingGate(TeleportingGate tg) {
@@ -117,6 +163,10 @@ public class Proto {
 		private <T> void removeObject(T object, List<T> objects) {
 			ids.remove(object);
 			objects.remove(object);
+		}
+		
+		public void removePlayer(Player p) {
+			removeObject(p, players);
 		}
 		
 		public void removeAsteroid(Asteroid a) {
@@ -137,10 +187,6 @@ public class Proto {
 		
 		public void removeUranium(Uranium ur) {
 			removeObject(ur, uraniums);
-		}
-		
-		public void removePlayer(Player p) {
-			removeObject(p, players);
 		}
 		
 		public void removeSettler(Settler s) {
@@ -184,6 +230,7 @@ public class Proto {
 	 * @param isRandom A randomizalt mukodest engedelyezo/letilto logikai valtozo
 	 */
 	public static void setRandom(boolean isRandom) {
+		System.out.println(isRandom ? "random enabled" : "random disabled");
 		random = isRandom;
 	}
 	
@@ -197,6 +244,7 @@ public class Proto {
 	 * @param isLogging A konzolos metodusnaplozast engedelyezo/letilto logikai valtozo
 	 */
 	public static void enableLogging(boolean isLogging) {
+		System.out.println(log ? "logging enabled" : "logging disabled");
 		log = isLogging;
 	}
 	
@@ -226,6 +274,11 @@ public class Proto {
 		return null;
 	}
 	
+	/**
+	 * Naplozza a <code>line</code> sort a kimeneten
+	 * az aktualis <code>Proto.tabs</code> ertekkel tabulalva.
+	 * @param line A naplozando sor
+	 */
 	public static void println(String line) {
 		for (int i = 0; i < tabs; i++) {
 			System.out.print('\t');
@@ -233,24 +286,23 @@ public class Proto {
 		System.out.println(line);
 	}
 	
+	/**
+	 * Eggyel noveli a Proto.tabs statikus valtozo erteket,
+	 * vagyis a logolas aktualis behuzasanak merteket.
+	 */
 	public static void incrTabs() {
 		tabs++;
 	}
 	
+	/**
+	 * Eggyel csokkenti a Proto.tabs statikus valtozo erteket,
+	 * vagyis a logolas aktualis behuzasanak merteket,
+	 * felteve, hogy pozitiv volt.
+	 */
 	public static void decrTabs() {
-		tabs--;
+		if (tabs > 0)
+			tabs--;
 	}
-	
-	// Ez a nextLine()-ok alternativaja lehet. Annyival tud tobbet,
-	// hogy magunknak kezelhetjuk a kiveteleket, ha nem sikerul a beolvasas.
-	/*public static String getLine(Scanner sc) throws Exception {
-		if (sc.hasNextLine()) {
-			return sc.nextLine();
-		}
-		else {
-			throw new Exception("Proto.getLine() - Unsuccessful line parsing.");
-		}
-	}*/
 	
 	/**
 	 * Segedfuggveny a beolvasott objektumok peldanyositasahoz.
@@ -287,7 +339,7 @@ public class Proto {
 				break;
 			
 			case "Timer":
-				Timer timer = new Timer(0, 0);
+				Timer timer = new Timer(3000, 1000);
 				allObjects.ids.put(timer, id);
 				allObjects.timer = timer;
 				break;
@@ -626,7 +678,7 @@ public class Proto {
 		ps.close();
 	}
 	
-	// Ezzel a fuggvennyel kezdjunk valamit?
+	// TODO:
 	/* public static void showOne(String id) {
 	 *	System.out.println(allObjects.getObject(id).getDescription());
 	}*/
@@ -657,27 +709,35 @@ public class Proto {
 				Tester.testerMain(args);
 			}
 			else {
-				System.out.println("Now you can play the game.");
+				System.out.println("Now you can play the game.\n"
+						+ "Type commands \"random <is_random>\" and \"logging <is_logging>\" "
+						+ "for global settings, and \"init\" to start a new game.");
 				// TODO Rövid help/leiras, vagy azonnal init es induljon?
 				
 				boolean exit = false;
-				// TODO: Minden nextLine() ele kell hasNextLine() a kodban?
-				// Esetleg egy getLine(), ami osszerakna a kettot?
 				while (!exit & sc.hasNextLine()) {
 					String line = sc.nextLine();
-					
 					String[] tokens = line.split("\\s+");
 					String cmd = tokens[0];
+					
 					PlayerCommand playerCmd = PlayerCommand.fromString(cmd);
 					if (playerCmd != PlayerCommand.INVALID) {
 						Player pAct = allObjects.controller.getActPlayer();
 						pAct.actOnSettler(playerCmd, tokens);
+						Proto.getAllObjects().getController().nextPlayer();
 					}
 					else {
 						Controller controller = allObjects.controller; // segedvaltozo
+						Timer timer = allObjects.timer; // segedvaltozo
+						
+						//TODO: hibauzenetek, ahol kellenek
 						switch (cmd) {
 							case "exit":
 								exit = true;
+								if (timer != null)
+									timer.cancel();
+								if (controller != null)
+									controller.setState(State.EXITED);
 								System.out.println("The prototype program has terminated.");
 								//System.exit(0);
 								break;
@@ -685,9 +745,9 @@ public class Proto {
 							case "random":
 								if (tokens.length >= 2) {
 									if (tokens[1].equals("true"))
-										random = true;
+										setRandom(true);
 									else if (tokens[1].equals("false"))
-										random = false;
+										setRandom(false);
 									else
 										throw new IllegalArgumentException(
 											"Invalid argument for <is_random>: "
@@ -700,9 +760,9 @@ public class Proto {
 							case "log":
 								if (tokens.length >= 2) {
 									if (tokens[1].equals("true"))
-										log = true;
+										enableLogging(true);
 									else if (tokens[1].equals("false"))
-										log = false;
+										enableLogging(false);
 									else
 										throw new IllegalArgumentException(
 											"Invalid argument for <is_logging>: "
@@ -713,22 +773,31 @@ public class Proto {
 								break;
 							
 							case "init":
-								allObjects.controller.startGame();
+								controller = new Controller();
+								Proto.getAllObjects().setController(controller);
+								controller.setState(State.INIT);
+								controller.startGame();
 								break;
 
 							case "load":
 								if (tokens.length >= 2) {
+									if (timer != null) {
+										timer.cancel();
+									}
 									load(tokens[1]);
 								}
 								break;
 							
-							//TODO: hibauzenetek, ahol kellenek
 							case "start":
+								if (timer != null)
+									timer.start();
 								if (controller != null)
 									controller.setState(State.RUNNING);
 								break;
 							
 							case "stop":
+								if (timer != null)
+									timer.stop();
 								if (controller != null)
 									controller.setState(State.PAUSED);
 								break;
@@ -742,7 +811,7 @@ public class Proto {
 							case "show":
 								if (tokens.length == 1) {
 									showAll();
-								} /*else if (tokens.length >= 2) {
+								} /*TODO: else if (tokens.length >= 2) {
 									showOne(tokens[1]);
 								}*/
 								break;
