@@ -1,23 +1,26 @@
 Player p1
 Game game
-Asteroid a1 a2
+Asteroid a1
 Settler s1
 
-Player p1 
-	name Barni
+Player p1
+	name Balazs
 	settler s1
 	isAlive true
 
 Game game
+	timer null
 	recipes null
+	sun null
 	asteroids a1
 	settlersAlive s1
 
 Asteroid a1
-	rockLayerThickness 2
+	rockLayerThickness 1
 	game game
 	sun null
 	neighbors null
+	resource null
 	characters s1
 	gates null
 

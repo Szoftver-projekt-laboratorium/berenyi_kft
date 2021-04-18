@@ -39,8 +39,16 @@ public class Ice extends Resource{
 	@Override
 	public Ice clone() {
 		Ice icClone = (Ice)super.clone();
-		Proto.getAllObjects().addIce(icClone);
 		return icClone;
+	}
+	
+	/**
+	 * A vizjeg nyersanyagegyseg egy uj azonositoval eltarolodik
+	 * a Proto osztaly allObjects nyilvantartasaban.
+	 */
+	@Override
+	public void addToGame() {
+		Proto.getAllObjects().addIce(this);
 	}
 	
 	/**

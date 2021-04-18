@@ -28,9 +28,22 @@ public class TeleportingGate implements ISteppable {
 	 */
 	private Settler settler;
 	
+	/**
+	 * A jatek idozitoje
+	 */
 	private Timer timer;
 	
 	//--------------------------------------------------------------
+	
+	
+	/**
+	 * Uj teleportkapu jon letre, amely parameterkent atveszi az ot lepteto idozitot is.
+	 * @param timer A jatek idozitoje
+	 */
+	public TeleportingGate(Timer timer) {
+		System.out.println("TeleportingGate's TeleportingGate(Timer timer) has been called");
+		this.timer = timer;
+	}
 	
 	public String getDescription() { 
 		
@@ -71,8 +84,9 @@ public class TeleportingGate implements ISteppable {
 	public void setPair(TeleportingGate tg) {
 		System.out.println("TeleportingGate's setPair(tg: TeleportingGate) has been called");
 		if (this.pair != tg ) {
-			this.pair = tg;	
-			tg.setPair(this);
+			this.pair = tg;
+			if(tg!=null)
+				tg.setPair(this);
 		}
 	}
 	
@@ -107,7 +121,11 @@ public class TeleportingGate implements ISteppable {
 	 * Ilyenkor csak magat tavolitja el a megfelelo helyrol.
 	 */
 	public void die() {
-		System.out.println("TeleportingGate's die() has been called");
+		
+		//System.out.println("TeleportingGate's die() has been called");
+		Proto.println(Proto.getId(this)+".die()");
+		Proto.incrTabs();
+		
 		if (pair != null) {
 			pair.setPair(null);
 			pair.die();

@@ -27,8 +27,16 @@ public class Coal extends Resource {
 	@Override
 	public Coal clone() {
 		Coal coClone = (Coal)super.clone();
-		Proto.getAllObjects().addCoal(coClone);
 		return coClone;
+	}
+	
+	/**
+	 * A szen nyersanyagegyseg egy uj azonositoval eltarolodik
+	 * a Proto osztaly allObjects nyilvantartasaban.
+	 */
+	@Override
+	public void addToGame() {
+		Proto.getAllObjects().addCoal(this);
 	}
 	
 	/**

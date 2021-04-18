@@ -1,17 +1,30 @@
 Player p1
 Game game
+Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
 Asteroid a1 a2
+Iron ir1 ir2 ir3 ir4
 Settler s1
 
-Player p1 
+Player p1
 	name Ricsi
 	settler s1
 	isAlive true
 
 Game game
-	recipes null
+	timer null
+	recipes nullRecipe1 nullRecipe2 spaceBaseRecipe
+	sun null
 	asteroids a1 a2
 	settlersAlive s1
+
+Recipe nullRecipe1
+	resources null
+
+Recipe nullRecipe2
+	resources null
+
+Recipe spaceBaseRecipe
+	resources ir3 ir4
 
 Asteroid a1
 	rockLayerThickness 0
@@ -37,4 +50,3 @@ Settler s1
 	place a2
 	resources null
 	gatesCreated null
-

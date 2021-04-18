@@ -1,11 +1,7 @@
 package berenyi_kft_test;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Scanner;
 
 import berenyi_kft.Controller;
@@ -20,26 +16,22 @@ import berenyi_kft.State;
  * @author berenyi_kft
  */
 public class Tester {
-	// A 0. az csak teszt tesztfajl sorszam, 1-tol 38-ig mennek majd
-	// az igazi tesztek.
+	// 1-tol 38-ig terjednek a tesztesetek sorszamai
 	private static final int testCount = 38;
 	
-	// Eleresi ut
+	// A tesztkonyvtar eleresi utja
 	private static String path = "src\\test_data\\";
-
 	
-	// Atirtam String paramterure, de majd meglatjuk, a File jobb-e.
+	
+	// TODO: Kellene az is, hogy hol ternek el, a compareTextFiles
+	// terjen vissza a hellyel/sorokkal valahogy.
 	public static boolean compare(String fpath1, String fpath2)
 														throws IOException {
-	
 		
+		Scanner input1 = new Scanner(new File(fpath1));
+		Scanner input2 = new Scanner(new File(fpath2));
 		
-		
-		Scanner input1 = new Scanner(new File(fpath1));//read first file
-		Scanner input2 = new Scanner(new File(fpath2));//read second file
-
 		String line1, line2;
-		
 		while(input1.hasNextLine() && input2.hasNextLine()){
 			line1 = input1.nextLine();   
 			line2 = input2.nextLine(); 
@@ -48,26 +40,9 @@ public class Tester {
 		        System.out.println("Differences found: "+"\n"+line1+'\n'+line2);
 		        return false;
 		    }
-		   
 		}
 		System.out.println("Files contents are equal");
 		return true;
-		/*
-		String file1Content = Files.readString(Path.of(fpath1));
-		String file2Content = Files.readString(Path.of(fpath2));
-		
-		if (file1Content.equals(file2Content)){
-			System.out.println("Files' contents are the same.");
-			return true;
-		}
-		else {
-			// TODO: Kellene az is, hogy hol ternek el, a compareTextFiles
-			// terjen vissza a hellyel/sorokkal valahogy.
-			System.out.println("Files are different.");
-			return false;
-		} 
-		*/
-		
 	}
 	
 	/**
@@ -75,8 +50,7 @@ public class Tester {
 	 * @param controller A jatekot iranyito vezerlo
 	 */
 	private static void executeTestSpecificCommand(Controller controller, int testNum) {
-		// TODO: Ez a par sor egyelore csak foltozgatas.
-		// Minden jatekos inditotta tesztesethez kellene Controller is, hogy teljes legyen.
+		// Minden jatekos inditotta muveletet eles jatekban a Controller kezdemenyez.
 		Player actPlayer = null;
 		if (controller != null)
 			actPlayer = controller.getActPlayer();
@@ -84,23 +58,34 @@ public class Tester {
 			actPlayer = (Player) Proto.getObject("p1");
 		}
 		
-		// TODO: Sorszam szerinti if-else agak es metodushivasok az actPlayeren.
-		// (Az idozitett inditas megtortenik a startban, azoknal itt nem kell semmi.)
 		if (testNum == 1) {
-			Object[] params = { "pass" };
-			actPlayer.actOnSettler(PlayerCommand.PASS, params);
-		} else if (testNum == 2 | (testNum >= 4 & testNum <= 5)) {
-			Object[] params = { "move", "0" };	// Vigyazz, szovegesen kell atadni a szamokat is!
-			actPlayer.actOnSettler(PlayerCommand.MOVE, params);
-		} else if (testNum == 3) {
-			Object[] params = { "mine" };
-			actPlayer.actOnSettler(PlayerCommand.MINE, params);
+			if(actPlayer!=null) {
+				Object[] params = { "pass" };
+				actPlayer.actOnSettler(PlayerCommand.PASS, params);
+			}
+		} else if (testNum == 2 | (testNum >= 4 & testNum<=7)) {
+			if(actPlayer!=null) {
+				Object[] params = { "move", "0" };
+				actPlayer.actOnSettler(PlayerCommand.MOVE, params);
+			}
+		} else if (testNum==3||testNum==17) {
+			if(actPlayer!=null) {
+				Object[] params = { "mine" };
+				actPlayer.actOnSettler(PlayerCommand.MINE, params);
+			}
+		} else if(testNum >= 8 && testNum <= 11) {
+			if(actPlayer!=null) {
+				Object[] params = { "drill" };
+				actPlayer.actOnSettler(PlayerCommand.DRILL, params);
+			}
 		} else if (testNum == 13) {
-			Object[] params = { "restore", (Resource) Proto.getObject("ur1") };
-			actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
+			if(actPlayer!=null) {
+				Object[] params = { "restore", (Resource) Proto.getObject("ur1") };
+				actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
+			}
 		} else if (testNum >= 29 & testNum <= 35) {
-			/* (A start parancs inditja a tesztet, egy ISteppable lep magatol) */
-		}
+			/* A start parancs inditja a tesztet, egy ISteppable lep magatol. */
+		} 
 	}
 	
 	/**
@@ -113,15 +98,15 @@ public class Tester {
 	 */
 	public static void testOne(int testNum) {
 		if (testNum < 1 | testNum > testCount) {
-			System.out.println("Please give a test number between 1 and "
-															+ testCount + ".");
+			System.out.println("Please give a test number between 1 and " 
+								+ testCount + ".");
 			return;
 		}
 		
 		String testName ="test_" + Integer.toString(testNum);
 		String inputName = Tester.path + "test_inputs\\" + testName + ".in";
 		String resultName = Tester.path + "test_results\\" + testName + ".result";
-		String outputName = Tester.path + "test_outs\\" + testName + ".out";
+		String outputName = Tester.path + "test_outputs\\" + testName + ".out";
 		
 		try {
 			Proto.setRandom(true);
@@ -152,7 +137,7 @@ public class Tester {
 	 * a Tester.testCount valtozoval jelolt utolsoig.
 	 */
 	public static void testAll() {
-		for (int i = 0; i <= Tester.testCount; i++) {
+		for (int i = 1; i <= Tester.testCount; i++) {
 			testOne(i);
 		}
 	}
@@ -165,7 +150,6 @@ public class Tester {
 	 * @throws IOException 
 	 */
 	public static void testerMain(String[] args) throws IOException {
-		compare("src/berenyi_kft_test/txt_tarto/test1.txt","src/berenyi_kft_test/txt_tarto/test1.txt");
 		Scanner sc = new Scanner(System.in);
 		boolean exit = false;
 		while (!exit & sc.hasNextLine()) {

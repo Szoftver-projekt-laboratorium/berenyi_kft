@@ -18,7 +18,7 @@ Controller controller
 	game game
 	allPlayers p1 p2
 	actPlayer p1
-	state running
+	state paused
 
 Player p1
 	name Bela
@@ -32,7 +32,7 @@ Player p2
 
 Game game
 	timer timer
-	recipes robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe
+	recipes robotRecipe gatePairRecipe spaceBaseRecipe allResourcesRecipe
 	sun sun
 	asteroids a1 a2 a3 a4
 	settlersAlive s1 s2

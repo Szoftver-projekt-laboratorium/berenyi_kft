@@ -1,29 +1,24 @@
 Player p1
 Game game
-Timer timer
-Sun sun
 Asteroid a1
 Settler s1
 
-Player p1 
-	name Marci
+Player p1
+	name Barni
 	settler s1
 	isAlive true
 
 Game game
 	timer null
 	recipes null
-	sun sun
+	sun null
 	asteroids a1
 	settlersAlive s1
 
-Sun sun
-	neighboringAsteroids a1
-
 Asteroid a1
-	rockLayerThickness 0
+	rockLayerThickness 2
 	game game
-	sun sun
+	sun null
 	neighbors null
 	resource null
 	characters s1
@@ -31,7 +26,7 @@ Asteroid a1
 
 Settler s1
 	game game
-	timer timer
+	timer null
 	place a1
 	resources null
 	gatesCreated null

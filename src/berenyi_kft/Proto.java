@@ -139,6 +139,10 @@ public class Proto {
 			removeObject(ur, uraniums);
 		}
 		
+		public void removePlayer(Player p) {
+			removeObject(p, players);
+		}
+		
 		public void removeSettler(Settler s) {
 			removeObject(s, settlers);
 		}
@@ -343,7 +347,7 @@ public class Proto {
 				break;
 			
 			case "TeleportingGate":
-				TeleportingGate tg = new TeleportingGate();
+				TeleportingGate tg = new TeleportingGate(null);
 				allObjects.ids.put(tg, id);
 				allObjects.gates.add(tg);
 				break;

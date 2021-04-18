@@ -97,8 +97,16 @@ public class Uranium extends RadioactiveResource {
 	@Override
 	public Uranium clone() {
 		Uranium urClone = (Uranium)super.clone();
-		Proto.getAllObjects().addUranium(urClone);
 		return urClone;
+	}
+	
+	/**
+	 * Az uran nyersanyagegyseg egy uj azonositoval eltarolodik
+	 * a Proto osztaly allObjects nyilvantartasaban.
+	 */
+	@Override
+	public void addToGame() {
+		Proto.getAllObjects().addUranium(this);
 	}
 	
 	/**

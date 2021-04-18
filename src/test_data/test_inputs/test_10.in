@@ -1,10 +1,11 @@
 Controller controller
 Player p1
 Game game
+Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
 Timer timer
 Sun sun
 Asteroid a1 a2
-Iron ir1
+Iron ir1 ir2 ir3
 Uranium ur1
 Settler s1
 AIRobot air1
@@ -24,9 +25,19 @@ Player p1
 
 Game game
 	timer timer
+	recipes nullRecipe1 nullRecipe2 spaceBaseRecipe
 	sun sun
 	asteroids a1 a2
 	settlersAlive s1
+
+Recipe nullRecipe1
+	resources null
+
+Recipe nullRecipe2
+	resources null
+
+Recipe spaceBaseRecipe
+	resources ir2 ir3
 
 Timer timer
 	steppables sun air1 ufo1
@@ -69,10 +80,11 @@ UFO ufo1
 	place a1
 
 TeleportingGate tg1
+	timer timer
 	pair tg2
 	asteroid a1
 
 TeleportingGate tg2
+	timer timer
 	pair tg1
 	settler s1
-
