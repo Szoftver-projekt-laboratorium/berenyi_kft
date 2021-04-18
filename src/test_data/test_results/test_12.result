@@ -1,5 +1,7 @@
 Player p1
+Sun sun
 Asteroid a1
+Coal co1
 Settler s1
 
 Player p1
@@ -7,12 +9,16 @@ Player p1
 	settler s1
 	isAlive true
 
+Sun sun
+	timeToSunStorm 0
+	neighboringAsteroids null
+
 Asteroid a1
-	rockLayerThickness 1
+	rockLayerThickness 0
 	game null
-	sun null
+	sun sun
 	neighbors null
-	resource null
+	resource co1
 	characters s1
 	gates null
 

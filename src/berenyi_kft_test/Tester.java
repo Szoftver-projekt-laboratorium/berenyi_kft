@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import berenyi_kft.AIRobot;
 import berenyi_kft.Controller;
 import berenyi_kft.Player;
 import berenyi_kft.PlayerCommand;
 import berenyi_kft.Proto;
 import berenyi_kft.Resource;
 import berenyi_kft.State;
+import berenyi_kft.TeleportingGate;
+import berenyi_kft.Timer;
 
 /**
  * Tesztelest vegzo segedosztaly a prototipus programhoz
@@ -44,7 +47,7 @@ public class Tester {
 		while(input1.hasNextLine() && input2.hasNextLine()) {
 			lineNum++;
 			line1 = input1.nextLine();   
-			line2 = input2.nextLine(); 
+			line2 = input2.nextLine();  
 
 		    if (!line1.equals(line2)) {
 		        System.out.println("Differences found in line "
@@ -52,7 +55,7 @@ public class Tester {
 		        return false;
 		    }
 		}
-		System.out.println("The compared files' contents are the same.");
+		System.out.println("The compared files' contents are the same.\n\t\t***The test is successful.***");
 		return true;
 	}
 	
@@ -79,24 +82,65 @@ public class Tester {
 				Object[] params = { "move", "0" };
 				actPlayer.actOnSettler(PlayerCommand.MOVE, params);
 			}
-		} else if (testNum==3||testNum==17) {
+		} else if (testNum==3||testNum>=17 && testNum<=20) {
 			if(actPlayer!=null) {
 				Object[] params = { "mine" };
 				actPlayer.actOnSettler(PlayerCommand.MINE, params);
 			}
-		} else if(testNum >= 8 && testNum <= 11) {
+		} else if(testNum >= 8 && testNum <= 11 || testNum==36) {
 			if(actPlayer!=null) {
 				Object[] params = { "drill" };
 				actPlayer.actOnSettler(PlayerCommand.DRILL, params);
 			}
-		} else if (testNum == 13) {
+		} else if (testNum == 13 || testNum==15) {
 			if(actPlayer!=null) {
 				Object[] params = { "restore", (Resource) Proto.getObject("ur1") };
 				actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
 			}
-		} else if (testNum >= 29 & testNum <= 35) {
+		} else if (testNum == 12 || testNum==14) {
+			if(actPlayer!=null) {
+				Object[] params = { "restore", (Resource) Proto.getObject("co1") };
+				actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
+			}
+		} else if (testNum == 16) {
+			if(actPlayer!=null) {
+				Object[] params = { "restore", (Resource) Proto.getObject("ic1") };
+				actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
+			}
+		} else if (testNum == 21 || testNum == 22) {
+			if(actPlayer!=null) {
+				Object[] params = { "create_robot" };
+				actPlayer.actOnSettler(PlayerCommand.CREATE_ROBOT, params);
+			}
+		} else if (testNum >=23 && testNum <= 25) {
+			if(actPlayer!=null) {
+				Object[] params = { "create_gate_pair" };
+				actPlayer.actOnSettler(PlayerCommand.CREATE_GATE_PAIR, params);
+			}
+		} else if (testNum == 26) {
+			if(actPlayer!=null) {
+				Object[] params = { "release_gate", (TeleportingGate) Proto.getObject("tg1") };
+				actPlayer.actOnSettler(PlayerCommand.RELEASE_GATE, params);
+			}
+		} else if (testNum == 27) {
+			if(actPlayer!=null) {
+				Object[] params = { "release_gate", (TeleportingGate) Proto.getObject("tg2") };
+				actPlayer.actOnSettler(PlayerCommand.RELEASE_GATE, params);
+			}
+		} else if (testNum >= 28 & testNum <= 35 || testNum==37 || testNum==38) {
 			/* A start parancs inditja a tesztet, egy ISteppable lep magatol. */
-		} 
+			if(controller!=null) {
+				Timer timer=controller.getGame().getTimer();
+				timer.tick();
+			}
+			else {
+				Timer timer=(Timer)Proto.getObject("timer");
+				timer.tick();
+			}
+		}
+		
+		if(controller!=null)
+			controller.nextPlayer();
 	}
 	
 	/**
@@ -107,11 +151,11 @@ public class Tester {
 	 * amelyet a compare() metodusban hasonlit ossze az elvart kimenettel.
 	 * @param testNum
 	 */
-	public static void testOne(int testNum) {
+	public static boolean testOne(int testNum) {
 		if (testNum < 1 | testNum > testCount) {
 			System.out.println("Please give a test number between 1 and " 
 								+ testCount + ".");
-			return;
+			return false;
 		}
 		
 		String testName ="test_" + Integer.toString(testNum);
@@ -119,10 +163,12 @@ public class Tester {
 		String resultName = Tester.path + "test_results\\" + testName + ".result";
 		String outputName = Tester.path + "test_outputs\\" + testName + ".out";
 		
+		boolean isSuccessful=false;
+		
 		try {
 			System.out.println("// -----  berenyi_kft's test "
 								+ testNum + " started. ----- //");
-			Proto.setRandom(true);
+			Proto.setRandom(false);
 			Proto.enableLogging(true);
 			Proto.load(inputName);
 			System.out.println("Configuration loaded from " + inputName + ".");
@@ -145,7 +191,7 @@ public class Tester {
 			System.out.println();
 			System.out.println("Comparing result (" + resultName
 					+ ")\nto expected output (" + outputName +"):");
-			Tester.compareFiles(resultName, outputName);
+			isSuccessful=Tester.compareFiles(resultName, outputName);
 			System.out.println("// ----- berenyi_kft's test number "
 									+ testNum + " ended.  ----- //");
 			System.out.println();
@@ -153,6 +199,8 @@ public class Tester {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return isSuccessful;
 	}
 
 	/**
@@ -160,9 +208,15 @@ public class Tester {
 	 * a Tester.testCount valtozoval jelolt utolsoig.
 	 */
 	public static void testAll() {
+		int counter=0;
 		for (int i = 1; i <= Tester.testCount; i++) {
-			testOne(i);
+			if(testOne(i))
+				counter++;
+			else
+				System.out.println("Test number "+i+" failed");
 		}
+		System.out.println("Number of successful tests: "+counter);
+		System.out.println("Number of failed tests: "+(testCount-counter));
 	}
 	
 	/**

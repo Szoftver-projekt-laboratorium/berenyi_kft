@@ -2,7 +2,7 @@ Player p1
 Game game
 Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
 Asteroid a1 a2
-Iron ir1 ir2 ir3 ir4
+Iron ir1 ir2
 Settler s1
 
 Player p1
@@ -24,7 +24,7 @@ Recipe nullRecipe2
 	resources null
 
 Recipe spaceBaseRecipe
-	resources ir3 ir4
+	resources ir1 ir2
 
 Asteroid a1
 	rockLayerThickness 0
