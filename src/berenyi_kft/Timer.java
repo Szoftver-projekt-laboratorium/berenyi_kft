@@ -25,6 +25,8 @@ public class Timer extends java.util.Timer {
 	 */
 	private ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
 	
+	//--------------------------------------------------------------------
+	
 	public String getDescription() { 
 		
 		String str="";

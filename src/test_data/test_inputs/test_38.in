@@ -1,10 +1,13 @@
 Controller controller
 Player p1 p2
 Game game
-Recipe robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe
+Recipe robotRecipe gatePairRecipe spaceBaseRecipe allResourcesRecipe
 Timer timer
 Sun sun
 Asteroid a1 a2 a3 a4
+Coal co1 co2 co3 co4 co5 co6 co7 co8
+Iron ir1 ir2 ir3 ir4 ir5 ir6 ir7 ir8 ir9 ir10
+Ice ic1 ic2 ic3 ic4 ic5 ic6 ic7
 Uranium ur1 ur2 ur3 ur4 ur5 ur6 ur7 ur8 ur9
 Settler s1 s2
 AIRobot air1
@@ -13,7 +16,7 @@ TeleportingGate tg1 tg2 tg3 tg4
 
 Controller controller
 	game game
-	playersAlive p1 p2
+	allPlayers p1 p2
 	actPlayer p1
 	state paused
 
@@ -29,7 +32,7 @@ Player p2
 
 Game game
 	timer timer
-	recipes robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe
+	recipes robotRecipe gatePairRecipe spaceBaseRecipe allResourcesRecipe
 	sun sun
 	asteroids a1 a2 a3 a4
 	settlersAlive s1 s2
@@ -40,7 +43,7 @@ Recipe robotRecipe
 Recipe gatePairRecipe
 	resources ir2 ir3 ic1 ur2
 
-Recipe spaceBaserecipe
+Recipe spaceBaseRecipe
 	resources co2 co3 co4 ic2 ic3 ic4 ir4 ir5 ir6 ur3 ur4 ur5
 
 Recipe allResourcesRecipe
@@ -53,7 +56,7 @@ Timer timer
 	steppables sun air1 ufo1 tg1
 
 Sun sun
-	timeToSunStorm null
+	timeToSunStorm 3000
 	neighboringAsteroids a1 a2
 
 Asteroid a1
@@ -93,31 +96,31 @@ Asteroid a4
 	gates tg2
 
 Uranium ur1
-	lives 3
+	life 3
 
 Uranium ur2
-	lives 3
+	life 3
 
 Uranium ur3
-	lives 3
+	life 3
 
 Uranium ur4
-	lives 3
+	life 3
 
 Uranium ur5
-	lives 3
+	life 3
 
 Uranium ur6
-	lives 3
+	life 3
 
 Uranium ur7
-	lives 1
+	life 1
 
 Uranium ur8
-	lives 3
+	life 3
 
 Uranium ur9
-	lives 3
+	life 3
 
 Settler s1
 	game game
@@ -139,6 +142,7 @@ AIRobot air1
 
 UFO ufo1
 	timer timer
+	place a2
 
 TeleportingGate tg1
 	timer timer
@@ -163,4 +167,3 @@ TeleportingGate tg4
 	pair tg3
 	settler s2
 	asteroid null
-

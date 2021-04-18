@@ -3,12 +3,16 @@ Player p1 p2
 Game game
 Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
 Asteroid a1
+Coal co4 co5 co6 co7 co8 co9
+Iron ir4 ir5 ir6 ir7 ir8 ir9
+Ice ic4 ic5 ic6 ic7 ic8 ic9
+Uranium ur4 ur5 ur6 ur7 ur8 ur9
 Settler s1 s2
 
 Controller controller
 	game game
 	allPlayers p1 p2
-	actPlayer p1
+	actPlayer p2
 	state won
 
 Player p1
@@ -35,7 +39,7 @@ Recipe nullRecipe2
 	resources null
 
 Recipe spaceBaseRecipe
-	resources null
+	resources co7 co8 co9 ir7 ir8 ir9 ic7 ic8 ic9 ur7 ur8 ur9
 
 Asteroid a1
 	rockLayerThickness 0
@@ -46,17 +50,35 @@ Asteroid a1
 	characters s1 s2
 	gates null
 
+Uranium ur4
+	life 3
+
+Uranium ur5
+	life 3
+
+Uranium ur6
+	life 3
+
+Uranium ur7
+	life 3
+
+Uranium ur8
+	life 3
+
+Uranium ur9
+	life 3
+
 Settler s1
 	game game
 	timer null
 	place a1
-	resources null
+	resources ur4 ur5 ur6 ir6
 	gatesCreated null
 
 Settler s2
 	game game
 	timer null
 	place a1
-	resources null
+	resources co4 co5 co6 ir4 ir5 ic4 ic5 ic6
 	gatesCreated null
 

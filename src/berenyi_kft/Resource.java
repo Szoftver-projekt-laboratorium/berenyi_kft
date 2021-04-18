@@ -12,6 +12,8 @@ public abstract class Resource implements Cloneable {
 	 */
 	// protected Asteroid asteroid;
 	
+	protected Proto proto;
+	
 	//--------------------------------------------------------------
 	
 	/**
@@ -54,6 +56,12 @@ public abstract class Resource implements Cloneable {
 			 return null;
 		}	
 	}
+	
+	/**
+	 * A nyersanyagegyseg egy uj azonositoval eltarolodik
+	 * a Proto osztaly allObjects nyilvantartasaban.
+	 */
+	public abstract void addToGame();
 	
 	/**
 	 * A nyersanyagegyseg megsemmisul, eltunik a jatekbol.

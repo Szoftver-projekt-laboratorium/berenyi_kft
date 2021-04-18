@@ -3,10 +3,10 @@ Player p1 p2
 Game game
 Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
 Asteroid a1
-Coal co1 co2 co3
-Iron ir1 ir2 ir3
-Ice ic1 ic2 ic3
-Uranium ur1 ur2 ur3
+Coal co1 co2 co3 co4 co5 co6
+Iron ir1 ir2 ir3 ir4 ir5 ir6
+Ice ic1 ic2 ic3 ic4 ic5 ic6
+Uranium ur1 ur2 ur3 ur4 ur5 ur6
 Settler s1 s2
 
 Controller controller
@@ -66,7 +66,9 @@ Uranium ur6
 Settler s1
 	game game
 	place a1
+	resources ur4 ur5 ur6
 
 Settler s2
 	game game
 	place a1
+	resources co4 co5 co6 ir4 ir5 ic4 ic5 ic6

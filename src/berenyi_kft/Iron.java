@@ -27,8 +27,16 @@ public class Iron extends Resource{
 	@Override
 	public Iron clone() {
 		Iron irClone = (Iron)super.clone();
-		Proto.getAllObjects().addIron(irClone);
 		return irClone;
+	}
+	
+	/**
+	 * A vas nyersanyagegyseg egy uj azonositoval eltarolodik
+	 * a Proto osztaly allObjects nyilvantartasaban.
+	 */
+	@Override
+	public void addToGame() {
+		Proto.getAllObjects().addIron(this);
 	}
 	
 	/**

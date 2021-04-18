@@ -40,6 +40,8 @@ public class Game {
 	 */
 	private Timer timer;
 	
+	//private Controller controller;
+	
 	// TODO: (Sajnos) ugy tunik, kell referenciat tarolni a controllerre,
 	//  kulonben korulmenyes az endGame tovabbitasa a vezerlo fele.)
 	// private Controller controller;
@@ -67,7 +69,7 @@ public class Game {
 			str+="\n";
 		}
 		else
-			str+="\tasteroids null\n";
+			str+="\trecipes null\n";
 		
 		String sunId=Proto.getId(sun);
 		str+="\tsun "+sunId+"\n";
@@ -136,6 +138,8 @@ public class Game {
 	public void removeSettler(Settler s) {
 		System.out.println("Game's removeSettler(s: Settler) has been called");
 		settlersAlive.remove(s);
+		Proto.getAllObjects().getController().removePlayer(s);
+		Proto.getAllObjects().removeSettler(s);
 		if (settlersAlive.isEmpty()) {
 			endGame();
 		}
@@ -194,7 +198,7 @@ public class Game {
 	 * @return Az urbazis megepitesehez szukseges nyersanyagok receptje
 	 */
 	public Recipe getSpaceBaseRecipe() {
-		System.out.println("Game's getSpaceBaseRecipe() has been called");
+		System.out.println("Game's getSpceBaseRecipe() has been called");
 		return recipes.get(2);
 	}
 	

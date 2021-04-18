@@ -1,6 +1,0 @@
-Settler 
-	game game
-	timer timer
-	place a1
-	resources ir2 ir3 ic1 ur2
-	gatesCreated tg1 tg2

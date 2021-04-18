@@ -91,7 +91,9 @@ public class AIRobot extends Character implements ISteppable {
 	 */
 	@Override
 	public void die() {
-		System.out.println("AIRobot's die() has been called");
+		Proto.println(Proto.getId(this)+".die()");
+		Proto.incrTabs();
+		//System.out.println("AIRobot's die() has been called");
 		super.die();
 		timer.removeSteppable(this);
 		Proto.getAllObjects().removeAIRobot(this);
