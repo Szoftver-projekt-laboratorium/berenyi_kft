@@ -12,8 +12,11 @@ import java.util.Scanner;
 
 import berenyi_kft_test.Tester;
 
-// Az IO metodusokat jobb lenne kiszervezni vagy beszervezni egy masik osztalyba.
-// Lehetne akar Proto.IO is. Nem tudom, jobb-e ugy, csak kompaktabb lenne.
+// Teszteleshez masolhato parancs (pelda tesztfajl betoltese):
+// load src/test_data/test_inputs/test_10.in
+
+// (Az IO metodusokat jobb lenne kiszervezni vagy beszervezni egy masik osztalyba.
+// Lehetne akar Proto.IO is. Nem tudom, jobb-e ugy, csak kompaktabb lenne.)
 
 /**
  * Proto osztaly a prototipus program vezerlesehez, tesztelesehez
@@ -21,14 +24,14 @@ import berenyi_kft_test.Tester;
  */
 public class Proto {
 	
-	// Publikus, hogy a Tester is lekerdezhesse
+	// Publikus, hogy a Tester is lekerdezhesse.
 	public static class Objects {
 		private Map<Object, String> ids = new HashMap<Object, String>();
 		
 		private Controller controller = null;
 		private List<Player> players = new ArrayList<Player>();
 		private Game game = null;
-		private List<Recipe> recipes = new ArrayList<Recipe>();
+		private List<Recipe> recipes = new ArrayList<Recipe>(3);
 		private Timer timer = null;
 		private Sun sun = null;
 		private List<Asteroid> asteroids = new ArrayList<Asteroid>();
@@ -43,6 +46,163 @@ public class Proto {
 		
 		public Controller getController() {
 			return controller;
+		}
+		
+		// TODO: Lehet meg szep generikus metodusokkal egyszerusiteni a kodot?
+		/**
+		 * Generikus segedfuggveny uj azonosithato objektum bejegyzesehez.
+		 * A <T> tipusu object jatekbeli objektum hozzaadodik a megfelelo objects 
+		 * lista vegere, illetve bekerul az ids Map-be is. A metodus azonositot 
+		 * general az ujonnan hozzaadott objektumnak, ehhez a <T> tipusra jellemzo 
+		 * typePrefix elotagot hasznalja.
+		 * @param <T> Generikus parameter, a hozzaadando objektum peldanyositott tipusa
+		 * @param object Az azonosithato jatekobjektum, amelyet a prototipus eltarol
+		 * @param objects Az ugyanilyen tipusu nyilvantartott objektumok listaja
+		 * @param typePrefix A <T> tipusu objektumok kozos elotagja
+		 */
+		private <T> void addObject(T object, List<T> objects, String typePrefix) {
+			try {
+				Object lastObject = objects.get(objects.size() - 1);
+				String lastObjectName = ids.get(lastObject);
+				String seqString = lastObjectName.substring(typePrefix.length());
+				Integer seqNumber = Integer.parseInt(seqString);
+				String newObjectName = typePrefix + Integer.toString(seqNumber + 1);
+				
+				// Elvileg a szamozas nem dob kivetelt, ha kikotjuk, hogy novekvoen
+				// szerepeljenek az objektumok az inputban (pl. "ur1 ur2 ur4 ...").
+				if (objects.contains(object)) {
+					throw new IllegalArgumentException("Proto.Objects.addObject(): "
+							+ "Unavailable ID for the new object.");
+				}
+				objects.add(object);
+				ids.put(object, newObjectName);
+			}
+			catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public void setController(Controller controller1) {
+			controller = controller1;
+		}
+		
+		public void addPlayer(Player p) {
+			addObject(p, players, "p");
+		}
+		
+		public void setGame(Game game1) {
+			game = game1;
+		}
+		
+		public void setRobotRecipe(Recipe robotRecipe) {
+			recipes.set(0, robotRecipe);
+			ids.put(robotRecipe, "robotRecipe");
+		}
+		
+		public void setGatePairRecipe(Recipe gatePairRecipe) {
+			recipes.set(1, gatePairRecipe);
+			ids.put(gatePairRecipe, "gatePairRecipe");
+		}
+		
+		public void setSpaceBaseRecipe(Recipe spaceBaseRecipe) {
+			recipes.set(2, spaceBaseRecipe);
+			ids.put(spaceBaseRecipe, "spaceBaseRecipe");
+		}
+		
+		public void setTimer(Timer timer1) {
+			timer = timer1;
+		}
+		
+		public void setSun(Sun sun1) {
+			sun = sun1;
+		}
+		
+		public void addAsteroid(Asteroid a) {
+			addObject(a, asteroids, "a");
+		}
+		
+		public void addCoal(Coal co) {
+			addObject(co, coals, "co");
+		}
+		
+		public void addIron(Iron ir) {
+			addObject(ir, irons, "ir");
+		}
+		
+		public void addIce(Ice ic) {
+			addObject(ic, ices, "ic");
+		}
+		
+		public void addUranium(Uranium ur) {
+			addObject(ur, uraniums, "ur");
+		}
+		
+		public void addSettler(Settler s) {
+			addObject(s, settlers, "s");
+		}
+		
+		public void addAIRobot(AIRobot air) {
+			addObject(air, robots, "air");
+		}
+		
+		public void addUFO(UFO ufo) {
+			addObject(ufo, ufos, "ufo");
+		}
+		
+		public void addTeleportingGate(TeleportingGate tg) {
+			addObject(tg, gates, "tg");
+		}
+		
+		/**
+		 * Eltavolitja a <T> tipusu object objektumot a program nyilvantartasabol.
+		 * A sajat tipusanak megfelelo objektumok listajabol (objects) is torli.
+		 * @param <T> Generikus parameter, az eltavolitando objektum peldanyositott tipusa
+		 * @param object A prototipus programbol torlendo azonositott objektum
+		 * @param objects A <T> tipusu nyilvantartott objektumok listaja
+		 */
+		private <T> void removeObject(T object, List<T> objects) {
+			ids.remove(object);
+			objects.remove(object);
+		}
+		
+		public void removePlayer(Player p) {
+			removeObject(p, players);
+		}
+		
+		public void removeAsteroid(Asteroid a) {
+			removeObject(a, asteroids);
+		}
+		
+		public void removeCoal(Coal co) {
+			removeObject(co, coals);
+		}
+		
+		public void removeIron(Iron ir) {
+			removeObject(ir, irons);
+		}
+		
+		public void removeIce(Ice ic) {
+			removeObject(ic, ices);
+		}
+		
+		public void removeUranium(Uranium ur) {
+			removeObject(ur, uraniums);
+		}
+		
+		public void removeSettler(Settler s) {
+			removeObject(s, settlers);
+		}
+		
+		public void removeAIRobot(AIRobot air) {
+			removeObject(air, robots);
+		}
+		
+		public void removeUFO(UFO ufo) {
+			removeObject(ufo, ufos);
+		}
+		
+		public void removeTeleportingGate(TeleportingGate tg) {
+			removeObject(tg, gates);
 		}
 	}
 	
@@ -70,6 +230,7 @@ public class Proto {
 	 * @param isRandom A randomizalt mukodest engedelyezo/letilto logikai valtozo
 	 */
 	public static void setRandom(boolean isRandom) {
+		System.out.println(isRandom ? "random enabled" : "random disabled");
 		random = isRandom;
 	}
 	
@@ -83,6 +244,7 @@ public class Proto {
 	 * @param isLogging A konzolos metodusnaplozast engedelyezo/letilto logikai valtozo
 	 */
 	public static void enableLogging(boolean isLogging) {
+		System.out.println(log ? "logging enabled" : "logging disabled");
 		log = isLogging;
 	}
 	
@@ -112,6 +274,11 @@ public class Proto {
 		return null;
 	}
 	
+	/**
+	 * Naplozza a <code>line</code> sort a kimeneten
+	 * az aktualis <code>Proto.tabs</code> ertekkel tabulalva.
+	 * @param line A naplozando sor
+	 */
 	public static void println(String line) {
 		for (int i = 0; i < tabs; i++) {
 			System.out.print('\t');
@@ -119,24 +286,23 @@ public class Proto {
 		System.out.println(line);
 	}
 	
+	/**
+	 * Eggyel noveli a Proto.tabs statikus valtozo erteket,
+	 * vagyis a logolas aktualis behuzasanak merteket.
+	 */
 	public static void incrTabs() {
 		tabs++;
 	}
 	
+	/**
+	 * Eggyel csokkenti a Proto.tabs statikus valtozo erteket,
+	 * vagyis a logolas aktualis behuzasanak merteket,
+	 * felteve, hogy pozitiv volt.
+	 */
 	public static void decrTabs() {
-		tabs--;
+		if (tabs > 0)
+			tabs--;
 	}
-	
-	// Ez a nextLine()-ok alternativaja lehet. Annyival tud tobbet,
-	// hogy magunknak kezelhetjuk a kiveteleket, ha nem sikerul a beolvasas.
-	/*public static String getLine(Scanner sc) throws Exception {
-		if (sc.hasNextLine()) {
-			return sc.nextLine();
-		}
-		else {
-			throw new Exception("Proto.getLine() - Unsuccessful line parsing.");
-		}
-	}*/
 	
 	/**
 	 * Segedfuggveny a beolvasott objektumok peldanyositasahoz.
@@ -173,7 +339,7 @@ public class Proto {
 				break;
 			
 			case "Timer":
-				Timer timer = new Timer(0, 0);
+				Timer timer = new Timer(3000, 1000);
 				allObjects.ids.put(timer, id);
 				allObjects.timer = timer;
 				break;
@@ -233,7 +399,7 @@ public class Proto {
 				break;
 			
 			case "TeleportingGate":
-				TeleportingGate tg = new TeleportingGate();
+				TeleportingGate tg = new TeleportingGate(null);
 				allObjects.ids.put(tg, id);
 				allObjects.gates.add(tg);
 				break;
@@ -331,7 +497,6 @@ public class Proto {
 		if (allObjects.controller != null) {
 			ps.println("Controller " + getId(allObjects.controller));
 		}
-		String controllerId=getId(Objects.controller);
 		
 		if (!allObjects.players.isEmpty()) {
 			ps.print("Player");
@@ -513,7 +678,7 @@ public class Proto {
 		ps.close();
 	}
 	
-	// Ezzel a fuggvennyel kezdjunk valamit?
+	// TODO:
 	/* public static void showOne(String id) {
 	 *	System.out.println(allObjects.getObject(id).getDescription());
 	}*/
@@ -544,27 +709,35 @@ public class Proto {
 				Tester.testerMain(args);
 			}
 			else {
-				System.out.println("Now you can play the game.");
+				System.out.println("Now you can play the game.\n"
+						+ "Type commands \"random <is_random>\" and \"logging <is_logging>\" "
+						+ "for global settings, and \"init\" to start a new game.");
 				// TODO Rövid help/leiras, vagy azonnal init es induljon?
 				
 				boolean exit = false;
-				// TODO: Minden nextLine() ele kell hasNextLine() a kodban?
-				// Esetleg egy getLine(), ami osszerakna a kettot?
 				while (!exit & sc.hasNextLine()) {
 					String line = sc.nextLine();
-					
 					String[] tokens = line.split("\\s+");
 					String cmd = tokens[0];
+					
 					PlayerCommand playerCmd = PlayerCommand.fromString(cmd);
 					if (playerCmd != PlayerCommand.INVALID) {
 						Player pAct = allObjects.controller.getActPlayer();
 						pAct.actOnSettler(playerCmd, tokens);
+						Proto.getAllObjects().getController().nextPlayer();
 					}
 					else {
 						Controller controller = allObjects.controller; // segedvaltozo
+						Timer timer = allObjects.timer; // segedvaltozo
+						
+						//TODO: hibauzenetek, ahol kellenek
 						switch (cmd) {
 							case "exit":
 								exit = true;
+								if (timer != null)
+									timer.cancel();
+								if (controller != null)
+									controller.setState(State.EXITED);
 								System.out.println("The prototype program has terminated.");
 								//System.exit(0);
 								break;
@@ -572,9 +745,9 @@ public class Proto {
 							case "random":
 								if (tokens.length >= 2) {
 									if (tokens[1].equals("true"))
-										random = true;
+										setRandom(true);
 									else if (tokens[1].equals("false"))
-										random = false;
+										setRandom(false);
 									else
 										throw new IllegalArgumentException(
 											"Invalid argument for <is_random>: "
@@ -587,9 +760,9 @@ public class Proto {
 							case "log":
 								if (tokens.length >= 2) {
 									if (tokens[1].equals("true"))
-										log = true;
+										enableLogging(true);
 									else if (tokens[1].equals("false"))
-										log = false;
+										enableLogging(false);
 									else
 										throw new IllegalArgumentException(
 											"Invalid argument for <is_logging>: "
@@ -600,25 +773,31 @@ public class Proto {
 								break;
 							
 							case "init":
-								allObjects.controller.startGame();
+								controller = new Controller();
+								Proto.getAllObjects().setController(controller);
+								controller.setState(State.INIT);
+								controller.startGame();
 								break;
-							
-							// TODO: A 0. az csak teszt tesztfajl,
-							// 1-tol 38-ig mennek majd az igazi tesztek.
-							// Pelda: load src/test_data/test_inputs/test_0.in
+
 							case "load":
 								if (tokens.length >= 2) {
+									if (timer != null) {
+										timer.cancel();
+									}
 									load(tokens[1]);
 								}
 								break;
 							
-							//TODO: hibauzenetek, ahol kellenek
 							case "start":
+								if (timer != null)
+									timer.start();
 								if (controller != null)
 									controller.setState(State.RUNNING);
 								break;
 							
 							case "stop":
+								if (timer != null)
+									timer.stop();
 								if (controller != null)
 									controller.setState(State.PAUSED);
 								break;
@@ -632,7 +811,7 @@ public class Proto {
 							case "show":
 								if (tokens.length == 1) {
 									showAll();
-								} /*else if (tokens.length >= 2) {
+								} /*TODO: else if (tokens.length >= 2) {
 									showOne(tokens[1]);
 								}*/
 								break;

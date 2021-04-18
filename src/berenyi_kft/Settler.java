@@ -32,7 +32,6 @@ public class Settler extends Character {
 	 */
 	private Game game;
 
-	
 	//---------------------------------
 	
 	public String getDescription() { 
@@ -55,6 +54,10 @@ public class Settler extends Character {
 			str+="\tresources";
 			for(Resource r : collectedResources) {
 				String resourceId=Proto.getId(r);
+				if(resourceId.equals("null")) {
+					str+=" "+resourceId;
+					break;
+				}
 				str+=" "+resourceId;
 			}
 			str+="\n";
@@ -108,9 +111,6 @@ public class Settler extends Character {
 				case "resources":
 					for (int i = 1; i < tokens.length; i++) {
 						Resource r = (Resource)Proto.getObject(tokens[i]);
-						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
-						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
-						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
 						if (r != null)
 							collectedResources.add(r);
 					}
@@ -119,9 +119,6 @@ public class Settler extends Character {
 				case "gatesCreated":
 					for (int i = 1; i < tokens.length; i++) {
 						TeleportingGate tg = (TeleportingGate)Proto.getObject(tokens[i]);
-						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
-						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
-						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
 						if (tg != null)
 							gatesCreated.add(tg);
 					}
@@ -133,11 +130,9 @@ public class Settler extends Character {
 		}
 	}
 	
-	
-	
 	/**
 	 * Visszater a karakter altal tarolt nyersanyagok 
-	 * listajaval, alapertelmezetten egy ures listaval
+	 * listajaval, alapertelmezetten egy ures listaval.
 	 */
 	@Override
 	public ArrayList<Resource> getCollectedResources(){
@@ -147,7 +142,7 @@ public class Settler extends Character {
 	
 	/**
 	 * A telepes eltarolja a kibanyaszott r nyersanyagot a resources kollekciojaban.
-	 * @param r Az elraktarozando nyersanyagegyseg
+	 * @param r Az elraktarozando nyersanyagegyseg.
 	 */
 	public void accept(Resource r) {
 		System.out.println("Settler's accept(r: Resource) has been called");
@@ -156,7 +151,7 @@ public class Settler extends Character {
 	
 	/**
 	 * A telepes eltarolja a teleportkaput a gatesCreated kollekciojaban.
-	 * @param tg A frissen elkészült teleportkapu
+	 * @param tg A frissen elkészült teleportkapu.
 	 */
 	public void accept(TeleportingGate tg) {
 		System.out.println("Settler's accept(tg: TeleportingGate) has been called");
@@ -165,16 +160,25 @@ public class Settler extends Character {
 	
 	/**
 	 * A telepes eltavolitja az r nyersanyagot a resources kollekciojabol.
-	 * @param r Az eltavolitando nyersanyagegyseg
+	 * @param r Az eltavolitando nyersanyagegyseg.
 	 */
 	public void remove(Resource r) {
 		System.out.println("Settler's remove(r: Resource) has been called");
 		for (Resource rCollected : collectedResources) {
 			if (r.isCompatibleWith(rCollected)) {
 				collectedResources.remove(rCollected);
+				rCollected.removeFromGame();
 				return;
 			}
 		}
+	}
+	
+	/**
+	 * A telepes furja az aszteroidat, ehhez meghivja az
+	 * aszteroidaja drilled() metodusat.
+	 */
+	public void drill() {
+		place.drilled();
 	}
 	
 	/**
@@ -185,12 +189,12 @@ public class Settler extends Character {
 	 */
 	public void mine() {
 		//System.out.println("Settler's mine() has been called");
-		proto.println(proto.getId(this)+".mine()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".mine()");
+		Proto.incrTabs();
 		if (collectedResources.size() < Settler.capacity) {
 			place.minedBy(this);
 		}
-		proto.decrTabs();
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -202,10 +206,10 @@ public class Settler extends Character {
 	 */
 	public void restore(Resource r) {
 		//System.out.println("Settler's restore(r: Resource) has been called");
-		proto.println(proto.getId(this)+".restore(Resource r)");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".restore(Resource r)");
+		Proto.incrTabs();
 		place.accept(this, r);
-		proto.decrTabs();
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -224,8 +228,8 @@ public class Settler extends Character {
 	 */
 	public void createAIRobot() {
 		System.out.println("Settler's createAIRobot() has been called.");
-		proto.println(proto.getId(this)+".createAIRobot()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".createAIRobot()");
+		Proto.incrTabs();
 		Recipe aiRobotRecipe = game.getAIRobotRecipe();
 		for (int i = collectedResources.size()-1; i >= 0; i--) {
 			Resource r = collectedResources.get(i);
@@ -243,9 +247,10 @@ public class Settler extends Character {
 			
 			AIRobot air = new AIRobot(game.getTimer());
 			place.accept(air);
+			Proto.getAllObjects().addAIRobot(air);
 		}
 		aiRobotRecipe.reset();
-		proto.decrTabs();
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -265,8 +270,8 @@ public class Settler extends Character {
 	 */
 	public void createGatePair() {
 		//System.out.println("Settler's createGatePair() has been called");
-		proto.println(proto.getId(this)+".createGatePair()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".createGatePair()");
+		Proto.incrTabs();
 		if (gatesCreated.size()>1) {
 			return;
 		}
@@ -286,14 +291,16 @@ public class Settler extends Character {
 				this.remove(r);
 			}
 			
-			TeleportingGate tg1 = new TeleportingGate();
-			TeleportingGate tg2 = new TeleportingGate();
+			TeleportingGate tg1 = new TeleportingGate(timer);
+			TeleportingGate tg2 = new TeleportingGate(timer);
 			tg1.setPair(tg2);
 			gatesCreated.add(tg1);
 			gatesCreated.add(tg2);
+			Proto.getAllObjects().addTeleportingGate(tg1);
+			Proto.getAllObjects().addTeleportingGate(tg2);
 		}
 		gatePairRecipe.reset();
-		proto.decrTabs();
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -307,15 +314,15 @@ public class Settler extends Character {
 	 */
 	public void releaseGate() {
 		//System.out.println("Settler's releaseGate() has been called");
-		proto.println(proto.getId(this)+".releaseGate()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".releaseGate()");
+		Proto.incrTabs();
 		if (gatesCreated.size() >= 1) {
 			place.accept(gatesCreated.get(0));
 			gatesCreated.remove(0);
 		} else {
 			System.out.println("No TeleportingGate available. Cannot release a gate.");	
 		}
-		proto.decrTabs();
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -335,14 +342,21 @@ public class Settler extends Character {
 	@Override
 	public void die() {
 		//System.out.println("Settler's die() has been called");
-		proto.println(proto.getId(this)+".die()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".die()");
+		Proto.incrTabs();
 		super.die();
-		//gatesCreated.forEach((tg) -> {tg.die();});
-		for(int i=gatesCreated.size()-1;i>=0;i--)
+		for (Resource r : collectedResources) {
+			r.removeFromGame();
+		}
+		
+		// gatesCreated.forEach((tg) -> {tg.die();});
+		for (int i = gatesCreated.size() - 1 ; i >= 0 ; i--) {
 			gatesCreated.get(i).die();
+		}
+		
+		// A Game ertesiti a Controllert es a Playert is errol.
 		game.removeSettler(this);
-		proto.decrTabs();
+		Proto.getAllObjects().removeSettler(this);
 	}
 	
 	/**
@@ -363,10 +377,4 @@ public class Settler extends Character {
 		return gatesCreated;
 	}
 	
-	public void drill() {
-		proto.println(proto.getId(this)+".drill()");
-		proto.incrTabs();
-		place.drilled();
-		proto.decrTabs();
-	}
 }

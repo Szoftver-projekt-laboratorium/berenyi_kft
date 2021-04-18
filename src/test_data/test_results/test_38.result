@@ -1,7 +1,7 @@
 Controller controller
 Player p1 p2
 Game game
-Recipe robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe
+Recipe robotRecipe gatePairRecipe spaceBaseRecipe allResourcesRecipe
 Timer timer
 Sun sun
 Asteroid a1 a2 a3 a4
@@ -18,7 +18,7 @@ Controller controller
 	game game
 	allPlayers p1 p2
 	actPlayer p1
-	state running
+	state paused
 
 Player p1
 	name Bela
@@ -32,7 +32,7 @@ Player p2
 
 Game game
 	timer timer
-	recipes robotRecipe gatePairRecipe spaceBaserecipe allResourcesRecipe
+	recipes robotRecipe gatePairRecipe spaceBaseRecipe allResourcesRecipe
 	sun sun
 	asteroids a1 a2 a3 a4
 	settlersAlive s1 s2
@@ -43,7 +43,7 @@ Recipe robotRecipe
 Recipe gatePairRecipe
 	resources ir2 ir3 ic1 ur2
 
-Recipe spaceBaserecipe
+Recipe spaceBaseRecipe
 	resources co2 co3 co4 ic2 ic3 ic4 ir4 ir5 ir6 ur3 ur4 ur5
 
 Recipe allResourcesRecipe

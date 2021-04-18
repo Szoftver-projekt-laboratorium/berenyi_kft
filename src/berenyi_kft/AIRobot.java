@@ -89,13 +89,14 @@ public class AIRobot extends Character implements ISteppable {
 	 * A robot megsemmisul: 
 	 * meghivja a Timer removeSteppable(ISteppable s) metodusat.
 	 */
+	@Override
 	public void die() {
-		proto.println(proto.getId(this)+".die()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".die()");
+		Proto.incrTabs();
 		//System.out.println("AIRobot's die() has been called");
 		super.die();
 		timer.removeSteppable(this);
-		proto.decrTabs();
+		Proto.getAllObjects().removeAIRobot(this);
 	}
 	
 	/**
@@ -105,19 +106,13 @@ public class AIRobot extends Character implements ISteppable {
 	
 	@Override
 	public void reactToExplosion() {
-		//System.out.println("AIRobot's reactToExplosion() has been called");
-		proto.println(proto.getId(this)+".reactToExplosion()");
-		proto.incrTabs();
+		System.out.println("AIRobot's reactToExplosion() has been called");
 		Random random = new Random();
 		move(random.nextInt());
-		proto.decrTabs();
 	}
 	
 	public void drill() {
-		proto.println(proto.getId(this)+".drill()");
-		proto.incrTabs();
 		place.drilled();
-		proto.decrTabs();
 	}
 
 }

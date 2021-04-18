@@ -3,11 +3,17 @@ package berenyi_kft;
 import java.util.Scanner;
 
 /**
- * Az uran nyersanyagot reprezentalja
+ * Az uran nyersanyagot reprezentalja: 
+ * radioaktiv, es van stabilitasa/elettartama is
  * @author berenyi_kft
  */
 public class Uranium extends RadioactiveResource {
 	
+	/**
+	 * Az uran stabilitasa a robbanasig hatralevo expoziciok szama;
+	 * expozicion a napkozeli aszteroidan torteno kifurast vagy a
+	 * nyersanyag visszatolteset ertve.
+	 */
 	private int life = 3;
 	
 	
@@ -43,7 +49,7 @@ public class Uranium extends RadioactiveResource {
 		// TODO: A primitiv attributumokhoz nem kell a Proto.getId(),
 		// azokat egy az egyben kell sztringkent kiirni.
 		String lifeStr=Integer.toString(life);
-		str+="\tlives "+lifeStr+"\n";
+		str+="\tlife "+lifeStr+"\n";
 		
 		return str;	
 	}
@@ -56,22 +62,58 @@ public class Uranium extends RadioactiveResource {
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
-		//System.out.println("Uranium's isCompatibleWith(r: Resource) has been called");
+		// System.out.println("Uranium's isCompatibleWith(r: Resource) has been called");
 		if(this.getClass().equals(r.getClass()))
 			return true;
 		return false;
 	}
 	
+	/**
+	 * Az uran egyseg elettartamat
+	 */
 	public void decLife() {
 		life--;
 	}
 	
+	/**
+	 * Az uran egyseg napkozeli megfurt aszteroidan exponalodik, ezzel az
+	 * elettartama eggyel csokken. Ha minden elete elfogyott, berobban, felrobbantva
+	 * ezzel az aszteroidajat is (explodedBy(RadioactiveResource rr)).
+	 */
 	@Override
 	public void drilledOut(Asteroid a) {
-		proto.println(proto.getId(this)+".drilledOut(Asteroid a)");
-		proto.incrTabs();
+		System.out.println("Uranium's drilledOut(a: Asteroid) has been called");
 		decLife();
-		if(life==0)
+		if (life == 0) {
+			System.out.println("Uranium is exploding!"); // Majd atirjuk.
 			a.explodedBy(this);
+		}
+	}
+	
+	/**
+	 * Visszater az uran nyersanyagegyseg egy klonjaval.
+	 * @return A nyersanyag klonozott masolata
+	 */
+	@Override
+	public Uranium clone() {
+		Uranium urClone = (Uranium)super.clone();
+		return urClone;
+	}
+	
+	/**
+	 * Az uran nyersanyagegyseg egy uj azonositoval eltarolodik
+	 * a Proto osztaly allObjects nyilvantartasaban.
+	 */
+	@Override
+	public void addToGame() {
+		Proto.getAllObjects().addUranium(this);
+	}
+	
+	/**
+	 * Az uran nyersanyagegyseg megsemmisul, eltunik a jatekbol.
+	 */
+	@Override
+	public void removeFromGame() {
+		Proto.getAllObjects().removeUranium(this);
 	}
 }

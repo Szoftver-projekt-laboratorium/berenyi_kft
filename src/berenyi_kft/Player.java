@@ -13,9 +13,10 @@ public class Player {
 	private Settler settler;
 	
 	private boolean isAlive=true;
-	 
-	private Proto proto;
 	
+	//private Controller controller;  
+	
+	//------------------------------------------
 	
 	public String getDescription() { 
 		
@@ -103,13 +104,12 @@ public class Player {
 		switch (cmd) {
 			case PASS: /* No op */ break;
 			case MOVE:
-				int dir = (Integer)allParams[1];
+				int dir = Integer.parseInt((String)allParams[1]);
 				settler.move(dir); break;
 				
 			case DRILL: settler.drill(); break;
 			case MINE: settler.mine(); break;
 			case RESTORE:
-				// Mukodokepes a cast-olas?
 				Resource r = (Resource)allParams[1];
 				settler.restore(r); break;
 			

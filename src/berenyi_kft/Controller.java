@@ -23,49 +23,100 @@ public class Controller {
 	public State getState() {
 		return state;
 	}
-
+	
+	/**
+	 * Beallitja a state allapotot aktualis jatekallapotkent,
+	 * felteve, hogy az allapot nem WON, LOST vagy EXITED.
+	 * @param state Az uj jatekallapot
+	 */
 	public void setState(State state) {
 		if (Proto.isLogging()) {
-			System.out.println(State.toString(state));
+			System.out.println("State: " + State.toString(state));
 		}
-		this.state = state;
+		if (this.state != State.WON & this.state != State.LOST
+				& this.state != State.EXITED)
+			this.state = state;
 	}
 
-	public String getDescription() { 
-			
-			String str="";
-			
-			String id=Proto.getId(this);
-			str+="Controller "+id+"\n";
-			
-			String gameId=Proto.getId(game);
-			str+="\tgame "+gameId+"\n";
-			
-			if(!playersAlive.isEmpty()) {   // A doksiban allPlayers az attributum neve
-				str+="\tplayersAlive";
-				for(Player p : playersAlive) {
-					String playerId=Proto.getId(p);
-					str+=" "+playerId;
-				}
-				str+="\n";
+	public String getDescription() {
+		String str = "";
+
+		String id = Proto.getId(this);
+		str += "Controller " + id + "\n";
+
+		String gameId = Proto.getId(game);
+		str += "\tgame " + gameId + "\n";
+
+		if (!playersAlive.isEmpty()) { // A doksiban allPlayers az attributum neve
+			str += "\tallPlayers";
+			for (Player p : playersAlive) {
+				String playerId = Proto.getId(p);
+				str += " " + playerId;
 			}
-			else
-				str+="\tplayersAlive null\n";
-			
-			String actPlayerId=Proto.getId(actPlayer);
-			str+="\tactPlayer "+actPlayerId+"\n";
+			str += "\n";
+		} else
+			str += "\tallPlayers null\n";
 
-			str+="\tstate "+State.toString(state)+"\n";
-			
-			return str;	
-		}
-	
-	public void startGame() {
-		// TODO
+		String actPlayerId = Proto.getId(actPlayer);
+		str += "\tactPlayer " + actPlayerId + "\n";
+
+		str += "\tstate " + State.toString(state) + "\n";
+
+		return str;
 	}
 	
+	/**
+	 * Bekeri egy felhasznalotol a jatekosok szamat, majd sorban beolvassa
+	 * a jatekosok nevet, es beallitja a legfontosabb attributumaikat.
+	 * Letrehozza es inicializalja az aszteroidaovet (Game.startGame()),
+	 * elozetesen atadva a telepesek listajat.
+	 */
+	public void startGame() throws IllegalArgumentException {
+		// Jatekosok szamanak beolvasasa
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Give the number of players: ");
+		int numPlayers = Integer.parseInt(sc.nextLine());
+		if (numPlayers < 1 || numPlayers > 6) {
+			sc.close();
+			throw new IllegalArgumentException(
+					"The number of players must be between 1 and 6.");
+		}
+		
+		Game game = new Game(); // TODO: megkapja konstruktorban a Controllert?
+		
+		// Sorban beallitja a jatekosokat, es telepest rendel hozzajuk.
+		for (int i = 0; i < numPlayers; i++) {
+			System.out.print("Player " + (i+1) + "' name: ");
+			String name = sc.nextLine();
+			
+			Player p = new Player();
+			playersAlive.add(p);
+			Proto.getAllObjects().addPlayer(p);
+			
+			Settler s = new Settler(); // TODO: megkapja a Playert konstruktorban?
+			game.addSettler(s);
+			Proto.getAllObjects().addSettler(s);
+			
+			p.setName(name);
+			p.setSettler(s);
+			p.setAlive(true);
+		}
+		sc.close();
+		
+		// Palyakep inicializalasa
+		game.startGame();
+		
+		// Idozites inditasa
+		game.getTimer().start();
+		setState(State.RUNNING);
+	}	
 	
+	/**
+	 * Kiirja a jatek vegeredmenyet a kepernyore, ha valoban veget ert.
+	 * @param state A jatek allapota
+	 */
 	public void endGame(State state) {
+		this.state = state;
 		if(state==State.WON)
 			System.out.println("Settlers won");
 		else if(state==State.LOST)
@@ -74,6 +125,10 @@ public class Controller {
 			System.out.println("The game has not ended");
 	}
 	
+	/**
+	 * Visszater az aktualis lepo jatekossal.
+	 * @return A soron kovetkezo jatekos
+	 */
 	public Player getActPlayer() {
 		return actPlayer;
 	}
@@ -83,20 +138,34 @@ public class Controller {
 	// adtak meg nekik a Proton keresztul.
 	
 	public void nextPlayer() {
-		int idx=playersAlive.indexOf(actPlayer);
-		if(idx==playersAlive.size()-1) {
-			actPlayer=playersAlive.get(0);
-			
-			//Jelenleg itt van a léptetése a steppable-eknek
-			game.getTimer().tick();  
-		}
+		if (playersAlive.size() == 0)
+			actPlayer = null;
 		else {
-			actPlayer=playersAlive.get(idx+1);
+			int idx = playersAlive.indexOf(actPlayer);
+			if (idx == playersAlive.size() - 1) {
+				actPlayer = playersAlive.get(0);
+
+				
+				// TODO Kivenni:
+				// Jelenleg itt van a léptetése a steppable-eknek
+				// game.getTimer().tick();
+			} else {
+				actPlayer = playersAlive.get(idx + 1);
+			}
 		}
 	}
 	
-	public void removePlayer(Player p) {
-		playersAlive.remove(p);
+	/*Torli a parameterkent kapott Settlerhez tartozo jatekost*/
+	public void removePlayer(Settler s) {
+		if(!this.playersAlive.isEmpty()) {
+			for(int i=playersAlive.size()-1; i>=0; i--) {
+				if(playersAlive.get(i).getSettler()==s) {
+					Player p=playersAlive.get(i);
+					playersAlive.remove(p);
+					Proto.getAllObjects().removePlayer(p);
+				}
+			}
+		}
 	}
 	
 	/**
@@ -119,9 +188,6 @@ public class Controller {
 				case "allPlayers":
 					for (int i = 1; i < tokens.length; i++) {
 						Player p = (Player)Proto.getObject(tokens[i]);
-						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
-						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
-						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
 						if (p != null)
 							playersAlive.add(p);
 					}

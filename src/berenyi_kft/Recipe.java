@@ -64,7 +64,7 @@ public class Recipe {
 	 * @param r A receptet bovito nyersanyagegyseg.
 	 */
 	public void addResource(Resource r) {
-		System.out.println("Settler's addResource(r: Resource) has been called");
+		// System.out.println("Settler's addResource(r: Resource) has been called");
 		this.resources.add(r);
 		Resource r_clone = r.clone();
 		this.resources_backup.add(r_clone);
@@ -79,11 +79,13 @@ public class Recipe {
 	 * @param r A receptbol eltavolitando tipusu nyersanyagegyseg
 	 */
 	public boolean isNeeded(Resource r) {
-		System.out.println("Recipe's isNeeded(r: Resource) has been called");
+		// System.out.println("Recipe's isNeeded(r: Resource) has been called");
 		for (int i = resources.size()-1; i >= 0; i--) {
 			Resource rBill = resources.get(i);
+			
 			if (r.isCompatibleWith(rBill)) {
 				resources.remove(i);
+				rBill.removeFromGame();
 				return true;
 			}
 		}
@@ -91,12 +93,18 @@ public class Recipe {
 	}
 	
 	/**
-	 * Visszaallitja az eredeti receptet, azaz a resources gyujtemeny tartalmat.
+	 * Visszaallitja az eredeti receptet, azaz a resources
+	 * gyujtemeny tartalmat. A receptben szereplo nyersanyagok a
+	 * Proto osztaly nyilvantartasaba is bekerulnek.
 	 */
 	public void reset() {
 		resources.clear();
 		for (Resource r : resources_backup) {
-			resources.add(r.clone());
+			Resource rClone = r.clone();
+			// Csak receptvisszaallitaskor kell eltarolni az uj
+			// nyersanyag azonositojat.
+			rClone.addToGame();
+			resources.add(rClone);
 		}
 	}
 	
@@ -106,7 +114,7 @@ public class Recipe {
 	 * @return Pontosan akkor true, ha a recept ures (kiuresedett)
 	 */
 	public boolean isEmpty() {
-		System.out.println("Recipe's isEmpty() has been called");
+		// System.out.println("Recipe's isEmpty() has been called");
 		return this.resources.isEmpty();
 	}
 	
@@ -120,21 +128,9 @@ public class Recipe {
 			switch (tokens[0]) {					
 				case "resources":
 					for (int i = 1; i < tokens.length; i++) {
-						
-						// TODO: Mukodik ez a sor? Nem cast-olodnak
-						// vissza a specialis Resource-ok?
-						// Ha nem mukodne, akkor szukseg lesz a Protoban
-						// getResource() es getCharacter() fuggvenyekre,
-						// es ket ids-hoz hasonlo extra Map-re a
-						// Resource-okkal es a Characterekkel.
-						// Sot, meg a Steppable-okhoz is kellhet ilyen.
-						//
-						// Heterogen kollekcio attributumok:
-						// resources, characters, steppables 
-						// 
 						Resource r = (Resource)Proto.getObject(tokens[i]);
 						if (r != null)
-							resources.add(r);
+							addResource(r);
 					}
 					break;
 					

@@ -49,8 +49,6 @@ public class Asteroid {
 	  * Az aszteroida korul kozvetlenul keringo teleportkapuk kollekcioja
 	  */
 	 private ArrayList<TeleportingGate> gates = new ArrayList<TeleportingGate>();
-	 
-	 private Proto proto;
 	
 //------------------------------------------------------------------------
 	 
@@ -200,17 +198,21 @@ public class Asteroid {
 	  */
 	 public Asteroid getNeighbor(int d) {
 		 //System.out.println("Asteroid's getNeighbor(d: int) has been called");
-		 proto.println(proto.getId(this)+".getNeighbor(int d)");
-		 proto.incrTabs();
 		 ArrayList<Asteroid> list=new ArrayList<Asteroid>();
 		 list.addAll(neighbors);
 		 for(TeleportingGate tg : gates) {
-			 list.add(tg.getPair().getAsteroid());
+			 Asteroid other=tg.getPair().getAsteroid();
+			 if(other!=null) {
+				 list.add(other);
+			 }
 		 }
-		 System.out.println(list.size());
-		 d = d % list.size();
-		 proto.decrTabs();
-		 return list.get(d);
+		 
+		 if(list.size()!=0) {
+			 d = d % list.size();
+			 Proto.println(Proto.getId(this)+".getNeighbor(int "+d+")");
+			 return list.get(d);
+		 } else
+			 return null;
 	 }
 	 
 	 /**
@@ -317,8 +319,8 @@ public class Asteroid {
 	  */
 	 public void accept(Settler s, Resource r) {
 		// System.out.println("Asteroid's accept(s: Settler, r: Resource) has been called");
-		 proto.println(proto.getId(this)+".accept(Settler s, Resource r)");
-		 proto.incrTabs();
+		 Proto.println(Proto.getId(this)+".accept(Settler s, Resource r)");
+		 Proto.incrTabs();
 		 if (this.isMined()) {
 			 resource = r;
 			 s.remove(r);
@@ -326,12 +328,12 @@ public class Asteroid {
 				 resource.drilledOut(this);
 			 }
 		 }
-		 proto.decrTabs();
+		 Proto.decrTabs();
 	 }
 	 
 	 /**
-	  * Egy az aszteroidan tartozkodo telepes eltavolitja a magban talalhato nyersanyagot. 
-	  * Az aszteroida a resource attributumat null-ra allitja.
+	  * A magban talalhato nyersanyag eltavolitodik az aszteroidabol (peldaul
+	  * banyaszas hatasara). Az aszteroida a resource attributumat null-ra allitja.
 	  * Ha kezdetben resource erteke null volt, a fuggvenynek nincs mellekhatasa.
 	  * @return
 	  */
@@ -359,8 +361,8 @@ public class Asteroid {
 	  * jelezve, hogy napkozeli aszteroidan felszinre kerult.
 	  */
 	 public void drilled() {
-		 proto.println(proto.getId(this)+".drilled()");
-		 proto.incrTabs();
+		 Proto.println(Proto.getId(this)+".drilled()");
+		 Proto.incrTabs();
 		// System.out.println("Asteroid's drilled() has been called");
 		 if (rockLayerThickness >= 1) {
 			 rockLayerThickness--;
@@ -368,7 +370,7 @@ public class Asteroid {
 		 if (rockLayerThickness==0 && resource!=null&&sun.isCloseToSun(this)) {
 			 resource.drilledOut(this);
 		 	}
-		 proto.decrTabs();
+		 Proto.decrTabs();
 	 }
 	 
 	 /**
@@ -381,8 +383,8 @@ public class Asteroid {
 	  * @param s
 	  */
 	 public void minedBy(Settler s) {
-		 proto.println(proto.getId(this)+".minedBy(Settler s)");
-		 proto.incrTabs();
+		 Proto.println(Proto.getId(this)+".minedBy(Settler s)");
+		 Proto.incrTabs();
 		 //System.out.println("Asteroid's minedBy() has been called");
 		 if (rockLayerThickness == 0 && resource != null) {
 			 s.accept(resource);
@@ -391,7 +393,7 @@ public class Asteroid {
 		 }else {
 			 System.out.println("Asteroid is not drilled!");
 		 }
-		 proto.decrTabs();
+		 Proto.decrTabs();
 	 }
 	 
 	 /**
@@ -417,23 +419,22 @@ public class Asteroid {
 	  */
 	 public void explodedBy(RadioactiveResource rr) {
 		// System.out.println("Asteroid's explodedBy(rr: RadioactiveResource) has been called");
+		// Az aszteroida torolje a robbanoanyagot,
+		 // mert igy latszodik minden fuggvenyhivas.
+		 resource.removeFromGame();
 		 
-		 proto.println(proto.getId(this)+".explodedBy(RadioactiveResource rr)");
-		 proto.incrTabs();
 		 for (int i = characters.size()-1; i >= 0; i--) {
 			 characters.get(i).reactToExplosion();
 		 }
-		 
 		 for(int i = gates.size()-1; i>=0; i--) {
 			 gates.get(i).die();
 		 }
-		 
 		 for (int i = neighbors.size() - 1; i >= 0; i--) {
 			 neighbors.get(i).remove(this);
 		 }
 		 
 		 game.removeAsteroid(this);
-		 proto.decrTabs();
+		 Proto.getAllObjects().removeAsteroid(this);
 	 }
 	 
 	 /**
@@ -442,9 +443,7 @@ public class Asteroid {
 	  * a fuggveny meghivja az aszteroidan tartozkodo karakterek die() fuggvenyet.
 	  */
 	 public void destroySurface() {
-		 //System.out.println("Asteroid's destroySurface() has been called");
-		 proto.println(proto.getId(this)+".destroySurface()");
-		 proto.incrTabs();
+		 System.out.println("Asteroid's destroySurface() has been called");
 		 if (!this.isMined()) {
 			 for (int i = characters.size()-1;i>=0;i--) {
 				 characters.get(i).die();
@@ -454,8 +453,6 @@ public class Asteroid {
 				 tg.goMad();
 			 }
 		 }
-		 
-		 proto.decrTabs();
 	 }
 	 
 	 /**
@@ -464,14 +461,15 @@ public class Asteroid {
 	  * Ha igen, akkor meghivja a Game endGame() metodusat.
 	  */
 	 public void checkSpaceBase() {
-		 proto.println(proto.getId(this)+".checkSpaceBase()");
-		 proto.incrTabs();
-		 //System.out.println("Asteroid's checkSpaceBase() has been called");
+		 System.out.println("Asteroid's checkSpaceBase() has been called");
 		 ArrayList<Resource> temp = new ArrayList<Resource>();
 		 for (Character c: characters) {
 			 temp.addAll(c.getCollectedResources());
 		 }
-		 /*if (rockLayerThickness == 0) {
+		 
+		 // Nem hasznalt lehetseges alternativa:
+		 // a megfurt magban levo nyersanyag is szamit.
+		 /* if (rockLayerThickness == 0) {
 			 temp.add(resource);
 		 }*/
 		 
@@ -485,9 +483,8 @@ public class Asteroid {
 		 
 		 if (recipe.isEmpty()) {
 			 game.endGame();
-		 } 
-		 recipe.reset();
-		 proto.decrTabs();
+		 }
+		 recipe.reset(); 
 	 }
 	 
 	 /**
@@ -522,10 +519,16 @@ public class Asteroid {
 		 return sun;
 	 }
 	 
+	 /**
+	  * Az aszteroidat UFO probalja banyaszni. Ha az aszteroida
+	  * meg van furva (es van benne nyersanyag), akkor a benne levo
+	  * nyersanyagegyseg eltunik a jatekbol.
+	  */
 	 public void minedByUFO() {
-		 proto.println(proto.getId(this)+".minedByUFO()");
-		 proto.incrTabs();
-		 this.removeResource();
-		 proto.decrTabs();
+		 if (this.isMined()) {
+			 Resource r = resource;
+			 this.removeResource();
+			 r.removeFromGame();
+		 }
 	 }
 }

@@ -28,11 +28,22 @@ public class TeleportingGate implements ISteppable {
 	 */
 	private Settler settler;
 	
+	/**
+	 * A jatek idozitoje
+	 */
 	private Timer timer;
 	
-	private Proto proto;
-	
 	//--------------------------------------------------------------
+	
+	
+	/**
+	 * Uj teleportkapu jon letre, amely parameterkent atveszi az ot lepteto idozitot is.
+	 * @param timer A jatek idozitoje
+	 */
+	public TeleportingGate(Timer timer) {
+		System.out.println("TeleportingGate's TeleportingGate(Timer timer) has been called");
+		this.timer = timer;
+	}
 	
 	public String getDescription() { 
 		
@@ -73,8 +84,9 @@ public class TeleportingGate implements ISteppable {
 	public void setPair(TeleportingGate tg) {
 		System.out.println("TeleportingGate's setPair(tg: TeleportingGate) has been called");
 		if (this.pair != tg ) {
-			this.pair = tg;	
-			tg.setPair(this);
+			this.pair = tg;
+			if(tg!=null)
+				tg.setPair(this);
 		}
 	}
 	
@@ -111,8 +123,8 @@ public class TeleportingGate implements ISteppable {
 	public void die() {
 		
 		//System.out.println("TeleportingGate's die() has been called");
-		proto.println(proto.getId(this)+".die()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".die()");
+		Proto.incrTabs();
 		
 		if (pair != null) {
 			pair.setPair(null);
@@ -125,10 +137,10 @@ public class TeleportingGate implements ISteppable {
 			asteroid.remove(this);
 		}
 		
-		if(timer.getSteppables().contains(this))
+		if (timer.getSteppables().contains(this)) { // (a feltetel nem szukseges)
 			timer.removeSteppable(this);
-		
-		proto.decrTabs();
+		}
+		Proto.getAllObjects().removeTeleportingGate(this);
 	}
 	
 	public void step() {
@@ -137,24 +149,13 @@ public class TeleportingGate implements ISteppable {
 	}
 	
 	public void move(int d) {
-		proto.println(proto.getId(this)+".move(int d)");
-		 proto.incrTabs();
-		
 		Asteroid a=asteroid.getNeighbor(d);
 		asteroid.remove(this);
 		a.accept(this);
-		
-		proto.decrTabs();
 	}
 	
 	public void goMad() {
-		
-		proto.println(proto.getId(this)+".goMad()");
-		proto.incrTabs();
-		 
 		timer.addSteppable(this);
-		
-		proto.decrTabs();
 	}
 	
 	/**

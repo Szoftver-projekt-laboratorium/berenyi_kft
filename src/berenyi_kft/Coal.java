@@ -14,9 +14,36 @@ public class Coal extends Resource {
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
-		System.out.println("Coal's isCompatibleWith(r: Resource) has been called");
+		// System.out.println("Coal's isCompatibleWith(r: Resource) has been called");
 		if (this.getClass().equals(r.getClass()))
 			return true;
 		return false;
+	}
+	
+	/**
+	 * Visszater a szen nyersanyagegyseg egy klonjaval.
+	 * @return A nyersanyag klonozott masolata
+	 */
+	@Override
+	public Coal clone() {
+		Coal coClone = (Coal)super.clone();
+		return coClone;
+	}
+	
+	/**
+	 * A szen nyersanyagegyseg egy uj azonositoval eltarolodik
+	 * a Proto osztaly allObjects nyilvantartasaban.
+	 */
+	@Override
+	public void addToGame() {
+		Proto.getAllObjects().addCoal(this);
+	}
+	
+	/**
+	 * A szen nyersanyagegyseg megsemmisul, eltunik a jatekbol.
+	 */
+	@Override
+	public void removeFromGame() {
+		Proto.getAllObjects().removeCoal(this);
 	}
 }

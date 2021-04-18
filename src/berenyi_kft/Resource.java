@@ -51,9 +51,21 @@ public abstract class Resource implements Cloneable {
 	 */
 	public Resource clone() {
 		try {
-			return (Resource)super.clone();	
+			return (Resource)super.clone();
 		} catch (CloneNotSupportedException e) {
 			 return null;
 		}	
 	}
+	
+	/**
+	 * A nyersanyagegyseg egy uj azonositoval eltarolodik
+	 * a Proto osztaly allObjects nyilvantartasaban.
+	 */
+	public abstract void addToGame();
+	
+	/**
+	 * A nyersanyagegyseg megsemmisul, eltunik a jatekbol.
+	 */
+	public abstract void removeFromGame();
+	
 }

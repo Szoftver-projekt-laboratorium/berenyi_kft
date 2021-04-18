@@ -9,8 +9,8 @@ import java.util.Scanner;
  * @author berenyi_kft
  */
 public class Game {
-	/* Segedvaltozo a jatek vegenek ellenorzesehez,
-	 * csak a teszteleshez.
+	/* Segedvaltozo csak a szekeletonhoz,
+	 * a jatek vegenek ellenorzesehez.
 	 */ 
 	private boolean endGameFlag = false;
 
@@ -35,9 +35,16 @@ public class Game {
 	 */
 	private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 	
-	private Timer timer;
+	/**
+	 * A jatekbeli idozito
+	 */
+	private Timer timer = null;
 	
-	private Proto proto;
+	//private Controller controller;
+	
+	// TODO: (Ugy tunik, kell referenciat tarolni a controllerre,
+	//  kulonben korulmenyes az endGame tovabbitasa a vezerlo fele.)
+	// private Controller controller;
 	
 	//--------------------------------------------
 	
@@ -62,7 +69,7 @@ public class Game {
 			str+="\n";
 		}
 		else
-			str+="\tasteroids null\n";
+			str+="\trecipes null\n";
 		
 		String sunId=Proto.getId(sun);
 		str+="\tsun "+sunId+"\n";
@@ -99,8 +106,74 @@ public class Game {
 	 * Beallitja az aszteroidak szomszedsagi viszonyait is.
 	 */
 	public void startGame() {
+		// TODO Palya inicializalasa
+		
+		/* A Controller es a Playerek mar be vannak allitva,
+		 * a Playerek telepeshez vannak rendelve, es a telepesek
+		 * is ott vannak a playersAlive-ban.
+		 */
+		
+		/* Objektumok letrehozasa */
+		// robotRecipe
+		Recipe robotRecipe = new Recipe();
+		robotRecipe.addResource(new Coal());
+		robotRecipe.addResource(new Iron());
+		robotRecipe.addResource(new Uranium());
+		Proto.getAllObjects().setRobotRecipe(robotRecipe);
+		
+		// gatePairRecipe
+		Recipe gatePairRecipe = new Recipe();
+		gatePairRecipe.addResource(new Iron());
+		gatePairRecipe.addResource(new Iron());
+		gatePairRecipe.addResource(new Ice());
+		gatePairRecipe.addResource(new Uranium());
+		Proto.getAllObjects().setGatePairRecipe(gatePairRecipe);
+		
+		// spaceBaseRecipe
+		Recipe spaceBaseRecipe = new Recipe();
+		for (int i = 0; i < 3; i++) {
+			spaceBaseRecipe.addResource(new Coal());
+			spaceBaseRecipe.addResource(new Iron());
+			spaceBaseRecipe.addResource(new Ice());
+			spaceBaseRecipe.addResource(new Uranium());
+		}
+		Proto.getAllObjects().setSpaceBaseRecipe(spaceBaseRecipe);
+		
+		// allResourcesRecipe - csak inicializalasra
+		Recipe allResourcesRecipe = new Recipe();
+		for (int i = 0; i < 4; i++)
+			allResourcesRecipe.addResource(new Coal());
+		for (int i = 0; i < 5; i++)
+			allResourcesRecipe.addResource(new Iron());
+		for (int i = 0; i < 4; i++)
+			allResourcesRecipe.addResource(new Ice());
+		for (int i = 0; i < 4; i++)
+			allResourcesRecipe.addResource(new Uranium());
+		
+		// timer	
+		Timer timer = new Timer(3000, 1000);
+		Proto.getAllObjects().setTimer(timer);
+
+		// sun
+		Sun sun = new Sun();
+		Proto.getAllObjects().setSun(sun);
+		
+		// asteroids
+		for (int i = 0; i < 18; i++) {
+			Asteroid a = new Asteroid();
+			asteroids.add(a);
+			Proto.getAllObjects().addAsteroid(a);
+		}
+		
+		// ufos
+		for (int i = 0; i < 2; i++) {
+			UFO ufo = new UFO(timer);
+			Proto.getAllObjects().addUFO(ufo);
+		}
+		
+		
+		/* Objektumok attributumainak beallitasa */
 		// TODO
-		// A teszteles soran egyelore mashogyan inicializalunk.
 	}
 	
 	/**
@@ -110,23 +183,26 @@ public class Game {
 	 */
 	public void endGame() {
 		System.out.println("Game's endGame() has been called");
+		Controller controller = Proto.getAllObjects().getController();
 		if (settlersAlive.size() > 0) {
 			System.out.println("A telepesek nyertek, felepult az urbazis!");
+			controller.endGame(State.WON);
 		} else {
 			System.out.println("A telepesek vesztettek, mindegyikuk meghalt.");
-		}
-		endGameFlag = true;
+			controller.endGame(State.LOST);
+		}	
 	}
 	
 	/**
-	 * Torli a meghalo telepest a jatekbol. 
-	 * Ha nincs tobb eletben levo telepes,
-	 * akkor meghivja az endGame() fuggvenyt.
+	 * Torli a meghalo telepest a jatekbol. Ha nincs tobb eletben levo
+	 * telepes, akkor meghivja az endGame() fuggvenyt.
 	 * @param s A meghalo telepes
 	 */
 	public void removeSettler(Settler s) {
 		System.out.println("Game's removeSettler(s: Settler) has been called");
 		settlersAlive.remove(s);
+		Proto.getAllObjects().getController().removePlayer(s);
+		Proto.getAllObjects().removeSettler(s);
 		if (settlersAlive.isEmpty()) {
 			endGame();
 		}
@@ -185,7 +261,7 @@ public class Game {
 	 * @return Az urbazis megepitesehez szukseges nyersanyagok receptje
 	 */
 	public Recipe getSpaceBaseRecipe() {
-		System.out.println("Game's getSpaceBaseRecipe() has been called");
+		System.out.println("Game's getSpceBaseRecipe() has been called");
 		return recipes.get(2);
 	}
 	
@@ -208,7 +284,7 @@ public class Game {
 	}
 	
 	/**
-	 * Uj telepest ad a jatek elo telepeseinek listajahoz
+	 * Uj telepest ad a jatek elo telepeseinek listajahoz.
 	 * @param s Az uj telepes
 	 */
 	public void addSettler(Settler s) {
@@ -252,6 +328,7 @@ public class Game {
 		return settlersAlive;
 	}
 	
+	// Csak a szkeleton tesztelesehez hasznalt fuggveny.
 	public boolean isEndGameFlag() {
 		return endGameFlag;
 	}

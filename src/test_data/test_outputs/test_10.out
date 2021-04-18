@@ -31,8 +31,8 @@ Recipe spaceBaseRecipe
 
 Timer timer
 	ticks 0
-	delay 3000
-	period 1000
+	delay 0
+	period 0
 	steppables sun air1
 
 Sun sun
@@ -51,4 +51,3 @@ Asteroid a2
 AIRobot air1
 	timer timer
 	place a2
-

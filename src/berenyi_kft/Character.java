@@ -15,7 +15,7 @@ public abstract class Character {
 	
 	protected Timer timer;
 	
-	protected Proto proto;
+	protected Proto proto; //Szükség van rá?
 	
 	//----------------------------------------------------------------
 	
@@ -40,10 +40,12 @@ public abstract class Character {
 	 */
 	public void move(int d) {
 		System.out.println("Character's move(d: int) has been called");
+		if(place.getNeighbor(d)!=null) {
 		Asteroid neighbor = place.getNeighbor(d);
 		place.remove(this);
 		neighbor.accept(this);
 		this.place = neighbor;
+		}
 	}
 	
 	/**

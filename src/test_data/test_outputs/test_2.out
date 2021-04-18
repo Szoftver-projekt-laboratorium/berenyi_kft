@@ -12,7 +12,7 @@ Settler s1 s2
 Controller controller
 	game game
 	allPlayers p1 p2
-	actPlayer p1
+	actPlayer p2
 	state won
 
 Player p1
@@ -90,4 +90,3 @@ Settler s2
 	place a2
 	resources ur5 co6 ur6 ic6
 	gatesCreated null
-

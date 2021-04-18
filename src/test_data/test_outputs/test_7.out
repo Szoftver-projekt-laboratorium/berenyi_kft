@@ -4,35 +4,51 @@ Asteroid a1 a2
 Settler s1
 TeleportingGate tg1 tg2
 
-Player p1 
+Player p1
 	name Balint
 	settler s1
 	isAlive true
 
 Game game
+	timer null
+	recipes null
+	sun null
 	asteroids a1 a2
 	settlersAlive s1
 
 Asteroid a1
 	rockLayerThickness 0
 	game game
+	sun null
+	neighbors null
+	resource null
 	characters s1
 	gates tg1
 
 Asteroid a2
 	rockLayerThickness 1
 	game game
+	sun null
+	neighbors null
+	resource null
+	characters null
 	gates null
 
 Settler s1
 	game game
+	timer null
 	place a1
+	resources null
 	gatesCreated tg2
 
 TeleportingGate tg1
+	timer null
 	pair tg2
+	settler null
 	asteroid a1
 
 TeleportingGate tg2
+	timer null
 	pair tg1
 	settler s1
+	asteroid null
