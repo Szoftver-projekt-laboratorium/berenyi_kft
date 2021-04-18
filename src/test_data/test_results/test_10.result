@@ -4,7 +4,7 @@ Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
 Timer timer
 Sun sun
 Asteroid a2
-Iron ir2 ir3 ir4 ir5
+Iron ir2 ir3
 AIRobot air1
 
 Controller controller
@@ -27,7 +27,7 @@ Recipe nullRecipe2
 	resources null
 
 Recipe spaceBaseRecipe
-	resources ir4 ir5
+	resources ir2 ir3
 
 Timer timer
 	ticks 0

@@ -103,8 +103,12 @@ public class Sun implements ISteppable {
 			timeToSunStorm--;
 		else {
 			sunStorm();
-			Random r=new Random();
-			timeToSunStorm=r.nextInt(300);
+			if(Proto.isRandom()) {
+				Random r=new Random();
+				timeToSunStorm=r.nextInt(300);
+			}
+			else
+				timeToSunStorm=15;
 		}
 	}
 	
@@ -120,7 +124,7 @@ public class Sun implements ISteppable {
 		
 		ArrayList<Asteroid> list=new ArrayList<Asteroid>();
 		for(Asteroid a1 : neighboringAsteroids) {
-			for(Asteroid a2 : a1.getNeighbors()) {
+			for(Asteroid a2 : a1.getNeighboringAsteroids()) {
 				if(!list.contains(a2))
 					list.add(a2);
 			}

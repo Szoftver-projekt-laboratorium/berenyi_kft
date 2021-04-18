@@ -24,6 +24,12 @@ public class Controller {
 		return state;
 	}
 	
+	
+	/*Visszater a game attributummal.*/
+	public Game getGame() {
+		return game;
+	}
+	
 	/**
 	 * Beallitja a state allapotot aktualis jatekallapotkent,
 	 * felteve, hogy az allapot nem WON, LOST vagy EXITED.
@@ -116,7 +122,7 @@ public class Controller {
 	 * @param state A jatek allapota
 	 */
 	public void endGame(State state) {
-		this.state = state;
+		setState(state);
 		if(state==State.WON)
 			System.out.println("Settlers won");
 		else if(state==State.LOST)
@@ -138,17 +144,20 @@ public class Controller {
 	// adtak meg nekik a Proton keresztul.
 	
 	public void nextPlayer() {
+			
 		if (playersAlive.size() == 0)
 			actPlayer = null;
 		else {
+			
+			if(actPlayer==null) {
+				actPlayer = playersAlive.get(0);
+				return;
+			}
+			
 			int idx = playersAlive.indexOf(actPlayer);
 			if (idx == playersAlive.size() - 1) {
 				actPlayer = playersAlive.get(0);
-
-				
-				// TODO Kivenni:
-				// Jelenleg itt van a léptetése a steppable-eknek
-				// game.getTimer().tick();
+			
 			} else {
 				actPlayer = playersAlive.get(idx + 1);
 			}

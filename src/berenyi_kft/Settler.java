@@ -156,21 +156,23 @@ public class Settler extends Character {
 	public void accept(TeleportingGate tg) {
 		System.out.println("Settler's accept(tg: TeleportingGate) has been called");
 		gatesCreated.add(tg);
+		tg.setSettler(this);
 	}
 	
 	/**
 	 * A telepes eltavolitja az r nyersanyagot a resources kollekciojabol.
 	 * @param r Az eltavolitando nyersanyagegyseg.
 	 */
-	public void remove(Resource r) {
+	public Resource remove(Resource r) {
 		System.out.println("Settler's remove(r: Resource) has been called");
 		for (Resource rCollected : collectedResources) {
 			if (r.isCompatibleWith(rCollected)) {
 				collectedResources.remove(rCollected);
-				rCollected.removeFromGame();
-				return;
+				//rCollected.removeFromGame();
+				return rCollected;
 			}
 		}
+		return null;
 	}
 	
 	/**
@@ -242,11 +244,13 @@ public class Settler extends Character {
 		if (aiRobotRecipe.isEmpty()) {
 			aiRobotRecipe.reset();
 			for (Resource r : aiRobotRecipe.getResources()) {
-				this.remove(r);
+				Resource resource=this.remove(r);
+				resource.removeFromGame();
 			}
 			
 			AIRobot air = new AIRobot(game.getTimer());
 			place.accept(air);
+			air.setPlace(place);
 			Proto.getAllObjects().addAIRobot(air);
 		}
 		aiRobotRecipe.reset();
@@ -288,14 +292,15 @@ public class Settler extends Character {
 		if (gatePairRecipe.isEmpty()) {
 			gatePairRecipe.reset();
 			for (Resource r : gatePairRecipe.getResources()) {
-				this.remove(r);
+				Resource resource=this.remove(r);
+				resource.removeFromGame();
 			}
 			
 			TeleportingGate tg1 = new TeleportingGate(timer);
 			TeleportingGate tg2 = new TeleportingGate(timer);
 			tg1.setPair(tg2);
-			gatesCreated.add(tg1);
-			gatesCreated.add(tg2);
+			accept(tg1);
+			accept(tg2);
 			Proto.getAllObjects().addTeleportingGate(tg1);
 			Proto.getAllObjects().addTeleportingGate(tg2);
 		}
@@ -317,7 +322,9 @@ public class Settler extends Character {
 		Proto.println(Proto.getId(this)+".releaseGate()");
 		Proto.incrTabs();
 		if (gatesCreated.size() >= 1) {
-			place.accept(gatesCreated.get(0));
+			TeleportingGate tg=gatesCreated.get(0);
+			place.accept(tg);
+			tg.setSettler(null);
 			gatesCreated.remove(0);
 		} else {
 			System.out.println("No TeleportingGate available. Cannot release a gate.");
@@ -356,7 +363,7 @@ public class Settler extends Character {
 		
 		// A Game ertesiti a Controllert es a Playert is errol.
 		game.removeSettler(this);
-		Proto.getAllObjects().removeSettler(this);
+		//Proto.getAllObjects().removeSettler(this);
 	}
 	
 	/**
@@ -375,6 +382,13 @@ public class Settler extends Character {
 	public ArrayList<TeleportingGate> getGatesCreated() {
 		System.out.println("Settler's getGatesCreated() has been called");
 		return gatesCreated;
+	}
+	
+	
+	/*Settlerkent lep az aszteroidara.*/
+	@Override
+	public void acceptedBy(Asteroid a) {
+		a.accept(this);
 	}
 	
 }

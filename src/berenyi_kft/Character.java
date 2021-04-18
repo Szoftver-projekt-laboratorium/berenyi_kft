@@ -19,6 +19,14 @@ public abstract class Character {
 	
 	//----------------------------------------------------------------
 	
+	
+	/*Settlerben kerul implementalasra, hogy settlerkent erkezhessen
+	 * az aszteroidara. Settler akkor hajtja vegre, amikor egy uj
+	 * aszteroidara erkezik.*/
+	public void acceptedBy(Asteroid a) {
+		a.acceptRegularCharacter(this);
+	}
+	
 	/**
 	 * Visszater a karakter altal tarolt nyersanyagok 
 	 * listajaval, alapertelmezetten egy ures listaval

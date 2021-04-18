@@ -62,10 +62,15 @@ public class Proto {
 		 */
 		private <T> void addObject(T object, List<T> objects, String typePrefix) {
 			try {
-				Object lastObject = objects.get(objects.size() - 1);
-				String lastObjectName = ids.get(lastObject);
-				String seqString = lastObjectName.substring(typePrefix.length());
-				Integer seqNumber = Integer.parseInt(seqString);
+				
+				Integer seqNumber = 0;
+				if(objects.size()>0) {
+					Object lastObject = objects.get(objects.size() - 1);
+					String lastObjectName = ids.get(lastObject);
+					String seqString = lastObjectName.substring(typePrefix.length());
+					seqNumber = Integer.parseInt(seqString);
+				}
+				
 				String newObjectName = typePrefix + Integer.toString(seqNumber + 1);
 				
 				// Elvileg a szamozas nem dob kivetelt, ha kikotjuk, hogy novekvoen

@@ -48,8 +48,11 @@ public class Timer extends java.util.Timer {
 	private TimerTask timertask = new TimerTask() {
 		@Override
 		public void run() {
-			ticks++;
-			tick();
+			if(enabled) {
+				System.out.println(ticks);
+				ticks++;
+				tick();
+			}
 		}
 	};
 	
@@ -103,9 +106,8 @@ public class Timer extends java.util.Timer {
 		if (!started) {
 			this.schedule(timertask, delay, period);
 			started = true;
-		} else {
-			enabled = true;
 		}
+		enabled = true;
 	}
 	
 	/**
@@ -114,6 +116,11 @@ public class Timer extends java.util.Timer {
 	 */
 	public void stop() {
 		enabled = false;
+	}
+	
+	/*Visszater a jatekban eltelt mp-ek szamaval.*/
+	public int getTicks() {
+		return ticks;
 	}
 	
 	/**
@@ -142,7 +149,14 @@ public class Timer extends java.util.Timer {
 	 */
 	public void tick() {
 		System.out.println("Timer's tick() has been called");
-		this.steppables.forEach((si) -> {si.step();});
+		
+		int i=0;
+		while(i<=steppables.size()-1) {
+			ISteppable is=steppables.get(i);
+			if(is!=null)
+				is.step();
+			i=steppables.indexOf(is)+1;
+		}
 	}
 	
 	/**

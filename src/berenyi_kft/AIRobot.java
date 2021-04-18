@@ -80,8 +80,12 @@ public class AIRobot extends Character implements ISteppable {
 		if (place.getRockLayerThickness() >= 1) {
 			drill();
 		} else {
-			Random random = new Random();
-			move(random.nextInt());
+			if(Proto.isRandom()) {
+				Random random = new Random();
+				move(random.nextInt());
+			}
+			else
+				move(0);
 		}
 	}
 	
@@ -107,8 +111,12 @@ public class AIRobot extends Character implements ISteppable {
 	@Override
 	public void reactToExplosion() {
 		System.out.println("AIRobot's reactToExplosion() has been called");
-		Random random = new Random();
-		move(random.nextInt());
+		if(Proto.isRandom()) {
+			Random random = new Random();
+			move(random.nextInt());
+		}
+		else
+			move(0);
 	}
 	
 	public void drill() {
