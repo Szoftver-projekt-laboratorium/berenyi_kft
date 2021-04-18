@@ -76,6 +76,13 @@ public class TeleportingGate implements ISteppable {
 		return this.pair;
 	}
 	
+	/*Beallitja a settler attributumot a parameterkent kapottra.*/
+	
+	public void setSettler(Settler s) {
+		System.out.println("TeleportingGate's setSettler(Settler s) has been called");
+		settler=s;
+	}
+	
 	/**
 	 * Beallitja a teleportkaput a tg kapu parjakent oda-vissza,
 	 * amihez tg-n is meghivja ezt a fuggvenyt.
@@ -122,7 +129,7 @@ public class TeleportingGate implements ISteppable {
 	 */
 	public void die() {
 		
-		//System.out.println("TeleportingGate's die() has been called");
+		System.out.println("TeleportingGate's die() has been called");
 		Proto.println(Proto.getId(this)+".die()");
 		Proto.incrTabs();
 		
@@ -144,17 +151,24 @@ public class TeleportingGate implements ISteppable {
 	}
 	
 	public void step() {
-		Random random = new Random();
-		move(random.nextInt());
+		System.out.println("TeleportingGate's step() has been called");
+		if(Proto.isRandom()) {
+			Random random = new Random();
+			move(random.nextInt());
+		}
+		else
+			move(0);
 	}
 	
 	public void move(int d) {
+		System.out.println("TeleportingGate's move(int d) has been called");
 		Asteroid a=asteroid.getNeighbor(d);
 		asteroid.remove(this);
 		a.accept(this);
 	}
 	
 	public void goMad() {
+		System.out.println("TeleportingGate's goMad() has been called");
 		timer.addSteppable(this);
 	}
 	

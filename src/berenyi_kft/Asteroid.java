@@ -209,7 +209,7 @@ public class Asteroid {
 		 
 		 if(list.size()!=0) {
 			 d = d % list.size();
-			 Proto.println(Proto.getId(this)+".getNeighbor(int "+d+")");
+			 Proto.println(Proto.getId(this)+".getNeighbor("+d+")");
 			 return list.get(d);
 		 } else
 			 return null;
@@ -246,13 +246,27 @@ public class Asteroid {
 	 /**
 	  * A c karakter megerkezik az aszteroidara, es az
 	  * aszteroida hozzaadja a characters kollekciojahoz.
-	  * Az aszteroida ezutan ellenorzi az urbazishoz szukseges
-	  * nyersanyagok megletet, (mivel az erkezessel ez lehetseges).
 	  * @param c Az aszteroidara erkezo karakter
 	  */
 	 public void accept(Character c) {
-		 System.out.println("Asteroid's accept(c: Character) has been called");
+		 c.acceptedBy(this);
+	 }
+	 
+	 public void acceptRegularCharacter(Character c) {
+		 System.out.println("Asteroid's acceptRegularCharacter(c: Character) has been called");
 		 characters.add(c);
+	 }
+	 
+	 /**
+	  * Az s telepes megerkezik az aszteroidara, es az
+	  * aszteroida hozzaadja a characters kollekciojahoz.
+	  * Az aszteroida ezutan ellenorzi az urbazishoz szukseges
+	  * nyersanyagok megletet, (mivel az erkezessel ez lehetseges).
+	  * @param s Az aszteroidara erkezo telepes
+	  */
+	 public void accept(Settler s) {
+		 System.out.println("Asteroid's accept(s: Settler) has been called");
+		 characters.add(s);
 		 this.checkSpaceBase();
 	 }
 	 
@@ -285,6 +299,7 @@ public class Asteroid {
 	 public void accept(TeleportingGate tg) {
 		 System.out.println("Asteroid's accept(tg: TeleportingGate) has been called");
 		 gates.add(tg);
+		 tg.setAsteroid(this);
 	 }
 	 
 	 /**
@@ -447,11 +462,11 @@ public class Asteroid {
 		 if (!this.isMined()) {
 			 for (int i = characters.size()-1;i>=0;i--) {
 				 characters.get(i).die();
-			 }
-			 
-			 for(TeleportingGate tg: gates) {
-				 tg.goMad();
-			 }
+			 } 
+		 }
+		 
+		 for(TeleportingGate tg: gates) {
+			 tg.goMad();
 		 }
 	 }
 	 
@@ -525,10 +540,15 @@ public class Asteroid {
 	  * nyersanyagegyseg eltunik a jatekbol.
 	  */
 	 public void minedByUFO() {
-		 if (this.isMined()) {
+		 System.out.println("Asteroid's minedByUFO() has been called");
+		 if (rockLayerThickness==0 && resource!=null) {
 			 Resource r = resource;
 			 this.removeResource();
 			 r.removeFromGame();
 		 }
+	 }
+	 
+	 public ArrayList<Asteroid> getNeighboringAsteroids(){
+		 return neighbors;
 	 }
 }

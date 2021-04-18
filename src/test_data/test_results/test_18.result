@@ -8,7 +8,7 @@ Player p1
 	isAlive true
 
 Asteroid a1
-	rockLayerThickness 1
+	rockLayerThickness 0
 	game null
 	sun null
 	neighbors null

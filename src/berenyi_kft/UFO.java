@@ -71,6 +71,7 @@ public class UFO extends Character implements ISteppable {
 	 */
 	@Override
 	public void die() {
+		System.out.println("UFO's die() has been called");
 		Proto.println(Proto.getId(this)+".die()");
 		Proto.incrTabs();
 		super.die();
@@ -83,12 +84,17 @@ public class UFO extends Character implements ISteppable {
 	 * akkor kibanyassza; kulonben egy veletlenszeru szomszedos aszteroidara repul.
 	 */
 	public void step() {
+		System.out.println("UFO's step() has been called");
 		if(place.getRockLayerThickness()==0 && place.getResource()!=null) {
 			this.mine();
 		}
 		else {
-			Random r=new Random();
-			this.move(r.nextInt());
+			if(Proto.isRandom()) {
+				Random r=new Random();
+				this.move(r.nextInt());
+			}
+			else
+				move(0);
 		}
 	}
 	
@@ -97,6 +103,7 @@ public class UFO extends Character implements ISteppable {
 	 * Ha sikerult kibanyasznia a magban levo nyersanyagot, az eltunik.
 	 */
 	public void mine() {
+		System.out.println("UFO's mine() has been called");
 		place.minedByUFO();
 	}
 }

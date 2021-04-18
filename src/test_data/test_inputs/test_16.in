@@ -1,5 +1,7 @@
 Player p1
+Sun sun
 Asteroid a1
+Ice ic1
 Settler s1
 
 Player p1
@@ -7,9 +9,15 @@ Player p1
 	settler s1
 	isAlive true
 
+Sun sun
+	timeToSunStorm 3000 
+	neighboringAsteroids a1
+	
 Asteroid a1
-	rockLayerThickness 1
+	rockLayerThickness 0
+	sun sun
 	characters s1
 
 Settler s1
 	place a1
+	resources ic1

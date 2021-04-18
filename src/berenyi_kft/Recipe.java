@@ -98,7 +98,10 @@ public class Recipe {
 	 * Proto osztaly nyilvantartasaba is bekerulnek.
 	 */
 	public void reset() {
-		resources.clear();
+		for(int i=resources.size()-1; i>=0; i--) {
+			Resource r=resources.remove(i);
+			r.removeFromGame();
+		}
 		for (Resource r : resources_backup) {
 			Resource rClone = r.clone();
 			// Csak receptvisszaallitaskor kell eltarolni az uj
