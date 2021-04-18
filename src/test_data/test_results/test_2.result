@@ -12,7 +12,7 @@ Settler s1 s2
 Controller controller
 	game game
 	allPlayers p1 p2
-	actPlayer p2
+	actPlayer p1
 	state won
 
 Player p1

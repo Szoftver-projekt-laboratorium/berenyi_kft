@@ -5,20 +5,33 @@ import java.util.Scanner;
 import java.util.TimerTask;
 
 /**
- * Egy orajel jellegu idozitot reprezental, 
- * amely periodikusan leptet minden leptetheto objektumot a jatekban.
+ * Egy orajel jellegu idozitot reprezental, amely periodikusan
+ * leptet minden leptetheto objektumot a jatekban
  * @author berenyi_kft
  */
 public class Timer extends java.util.Timer {
 	/**
 	 * Az eltelt orajelek aktualis szama
 	 */
-	private int tick = 0;
+	private int ticks = 0;
 	
 	/**
-	 * Az idozito kesleltetesi parameterei
+	 * Azt jeloli, hogy az idozitot akarmikor elinditottek-e mar.
 	 */
-	private long delay, period;
+	private boolean started = false;
+	
+	/**
+	 * Azt jeloli, hogy az idozito leptetheti-e a leptetheto objektumokat,
+	 * illetve novelheti az eltelt idot jelolo ticks valtozot
+	 */
+	private boolean enabled = false;
+	
+	/**
+	 * Az idozito kezdeti kesleltetesi ideje,
+	 * illetve periodusideje ezredmasodpercben
+	 */
+	private long delay = 30000;
+	private long period = 1000;
 	
 	/**
 	 * A jatek leptetheto objektumainak listaja
@@ -27,6 +40,21 @@ public class Timer extends java.util.Timer {
 	
 	//--------------------------------------------------------------------
 	
+	/**
+	 * Referencia arra az idozitett taszkra, amelyben a leptetesek megvalosulnak.
+	 * Ha a jatek futo allapotban van, akkor minden lepesben lepteti a jatek
+	 * osszes leptetheto objektumat (steppables), egyuttal szamlalja a tick-eket.
+	 */
+	private TimerTask timertask = new TimerTask() {
+		@Override
+		public void run() {
+			ticks++;
+			tick();
+		}
+	};
+	
+	//----------------------------------------------
+	
 	public String getDescription() { 
 		
 		String str="";
@@ -34,8 +62,8 @@ public class Timer extends java.util.Timer {
 		String id=Proto.getId(this);
 		str+="Timer "+id+"\n";
 		
-		String tickStr=Integer.toString(tick);
-		str+="\tticks "+tickStr+"\n";
+		String ticksStr=Integer.toString(ticks);
+		str+="\tticks "+ticksStr+"\n";
 		
 		String delayStr=Long.toString(delay);
 		str+="\tdelay "+delayStr+"\n";
@@ -58,21 +86,6 @@ public class Timer extends java.util.Timer {
 	}
 	
 	/**
-	 * Idozitett taszk, amelyben a leptetesek megvalosulnak.
-	 * Minden lepesben lepteti a jatek osszes leptetheto objektumat
-	 * (steppables), es egyuttal szamlalja a jatekban eltelt idot.
-	 */
-	private TimerTask timertask = new TimerTask() {
-		@Override
-		public void run() {
-			tick++;
-			tick();
-		}
-	};
-	
-	//----------------------------------------------
-	
-	/**
 	 * Konstruktor, amelyben beallithato az idozito kesleltetese.
 	 * @param delay Az idozito kezdeti kesleltetese
 	 * @param period Az idozito periodikus kesleltetese
@@ -80,6 +93,27 @@ public class Timer extends java.util.Timer {
 	public Timer(long delay, long period) {
 		this.delay = delay;
 		this.period = period;
+	}
+	
+	/**
+	 * Elinditja/tovabbinditja az idozitot.
+	 * A ticks valtozo az aktualis erteketol szamlal tovabb.
+	 */
+	public void start() {
+		if (!started) {
+			this.schedule(timertask, delay, period);
+			started = true;
+		} else {
+			enabled = true;
+		}
+	}
+	
+	/**
+	 * Szunetelteti az idozito futasat.
+	 * Nem modosit a ticks valtozo erteken.
+	 */
+	public void stop() {
+		enabled = false;
 	}
 	
 	/**
@@ -133,7 +167,7 @@ public class Timer extends java.util.Timer {
 			
 			switch (tokens[0]) {
 				case "ticks":
-					tick = Integer.parseInt(tokens[1]);
+					ticks = Integer.parseInt(tokens[1]);
 					break;
 					
 				case "delay":
@@ -147,9 +181,6 @@ public class Timer extends java.util.Timer {
 				case "steppables":
 					for (int i = 1; i < tokens.length; i++) {
 						ISteppable p = (ISteppable)Proto.getObject(tokens[i]);
-						// TODO: Kollekciok eseten nem szabad null-t belepakolni!
-						// Olyan kollekcio nincs, amelyben szerepelne null elem is.
-						// Ha tehat null-t olvasunk be, azt ki kell hagyni.
 						if (p != null)
 							steppables.add(p);
 					}

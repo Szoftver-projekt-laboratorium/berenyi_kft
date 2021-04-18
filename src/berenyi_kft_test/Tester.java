@@ -22,26 +22,37 @@ public class Tester {
 	// A tesztkonyvtar eleresi utja
 	private static String path = "src\\test_data\\";
 	
-	
-	// TODO: Kellene az is, hogy hol ternek el, a compareTextFiles
-	// terjen vissza a hellyel/sorokkal valahogy.
-	public static boolean compare(String fpath1, String fpath2)
+	/**
+	 * Soronkent osszehasonlitja a ket szovegfajl tartalmat.
+	 * Ha a ket fajl karakterre megegyezik, akkor ezt kiirja a kepernyore
+	 * es igazzal ter vissza. Egyebkent az elso eltero sorpart kiirja
+	 * egymas ala a kepernyore, es hamissal ter vissza.
+	 * @param fpath1 Az elso fajl eleresi utja szovegesen
+	 * @param fpath2 A masodik fajl eleresi utja szovegesen
+	 * @return <code>true</code>, ha a ket fajl tartalma azonos,
+	 * 		   kulonben <code>false</code>
+	 * @throws IOException Akkor dobodik, ha barmelyik fajl
+	 * 		   megnyitasa sikertelen volt.
+	 */
+	public static boolean compareFiles(String fpath1, String fpath2)
 														throws IOException {
-		
+		int lineNum = 0;
 		Scanner input1 = new Scanner(new File(fpath1));
 		Scanner input2 = new Scanner(new File(fpath2));
 		
 		String line1, line2;
-		while(input1.hasNextLine() && input2.hasNextLine()){
+		while(input1.hasNextLine() && input2.hasNextLine()) {
+			lineNum++;
 			line1 = input1.nextLine();   
 			line2 = input2.nextLine(); 
 
-		    if(!line1.equals(line2)){
-		        System.out.println("Differences found: "+"\n"+line1+'\n'+line2);
+		    if (!line1.equals(line2)) {
+		        System.out.println("Differences found in line "
+		        			+ lineNum + " :\n" + line1 + '\n' + line2);
 		        return false;
 		    }
 		}
-		System.out.println("Files contents are equal");
+		System.out.println("The compared files' contents are the same.");
 		return true;
 	}
 	
@@ -109,23 +120,35 @@ public class Tester {
 		String outputName = Tester.path + "test_outputs\\" + testName + ".out";
 		
 		try {
+			System.out.println("// -----  berenyi_kft's test "
+								+ testNum + " started. ----- //");
 			Proto.setRandom(true);
 			Proto.enableLogging(true);
 			Proto.load(inputName);
+			System.out.println("Configuration loaded from " + inputName + ".");
 			
-			Proto.Objects allObjects = Proto.getAllObjects();
-			Controller controller = allObjects.getController();
-			if (controller != null) {
+			Controller controller = Proto.getAllObjects().getController();
+			if (controller != null)
 				controller.setState(State.RUNNING);
-			}
 			
+			if (Proto.isLogging())
+				System.out.println("// ----- Called methods log started: ----- //");
 			executeTestSpecificCommand(controller, testNum);
+			if (Proto.isLogging())
+				System.out.println("// ----- Method log ends here. ----- //");
 			
-			if (controller != null) {
+			if (controller != null)
 				controller.setState(State.PAUSED);
-			}
+			
 			Proto.save(resultName);
-			Tester.compare(resultName, outputName);
+			System.out.println("Configuration saved to " + resultName + ".");
+			System.out.println();
+			System.out.println("Comparing result (" + resultName
+					+ ")\nto expected output (" + outputName +"):");
+			Tester.compareFiles(resultName, outputName);
+			System.out.println("// ----- berenyi_kft's test number "
+									+ testNum + " ended.  ----- //");
+			System.out.println();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
