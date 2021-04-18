@@ -13,11 +13,10 @@ public class Player {
 	private Settler settler;
 	
 	private boolean isAlive=true;
-	 
-	private Proto proto;
 	
 	//private Controller controller;  
 	
+	//------------------------------------------
 	
 	public String getDescription() { 
 		
@@ -111,7 +110,6 @@ public class Player {
 			case DRILL: settler.drill(); break;
 			case MINE: settler.mine(); break;
 			case RESTORE:
-				// Mukodokepes a cast-olas?
 				Resource r = (Resource)allParams[1];
 				settler.restore(r); break;
 			
@@ -122,11 +120,6 @@ public class Player {
 			default: throw new IllegalArgumentException(
 					"Invalid PlayerCommand: " + allParams[0]);
 		}
-		
-		//TODO Controller és a Game beolvasasat meg kell valositani
-		Controller controller=Proto.getAllObjects().getController();
-		if(controller!=null)  //eles jatekban lesz majd kontroller
-			controller.nextPlayer();
 	}
 	
 }

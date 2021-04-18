@@ -28,9 +28,10 @@ public class TeleportingGate implements ISteppable {
 	 */
 	private Settler settler;
 	
+	/**
+	 * A jatek idozitoje
+	 */
 	private Timer timer;
-	
-	private Proto proto;
 	
 	//--------------------------------------------------------------
 	
@@ -122,8 +123,8 @@ public class TeleportingGate implements ISteppable {
 	public void die() {
 		
 		//System.out.println("TeleportingGate's die() has been called");
-		proto.println(proto.getId(this)+".die()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".die()");
+		Proto.incrTabs();
 		
 		if (pair != null) {
 			pair.setPair(null);

@@ -16,6 +16,9 @@ public class UFO extends Character implements ISteppable {
 		String timerId=Proto.getId(timer);
 		str+="\ttimer "+timerId+"\n";
 		
+		String placeId=Proto.getId(place);
+		str+="\tplace "+placeId+"\n";
+		
 		return str;	
 	}
 	
@@ -68,8 +71,8 @@ public class UFO extends Character implements ISteppable {
 	 */
 	@Override
 	public void die() {
-		proto.println(proto.getId(this)+".die()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".die()");
+		Proto.incrTabs();
 		super.die();
 		timer.removeSteppable(this);
 		Proto.getAllObjects().removeUFO(this);

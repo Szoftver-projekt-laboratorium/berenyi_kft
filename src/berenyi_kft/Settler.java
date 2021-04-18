@@ -32,7 +32,6 @@ public class Settler extends Character {
 	 */
 	private Game game;
 
-	
 	//---------------------------------
 	
 	public String getDescription() { 
@@ -190,12 +189,12 @@ public class Settler extends Character {
 	 */
 	public void mine() {
 		//System.out.println("Settler's mine() has been called");
-		proto.println(proto.getId(this)+".mine()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".mine()");
+		Proto.incrTabs();
 		if (collectedResources.size() < Settler.capacity) {
 			place.minedBy(this);
 		}
-		proto.decrTabs();
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -207,10 +206,10 @@ public class Settler extends Character {
 	 */
 	public void restore(Resource r) {
 		//System.out.println("Settler's restore(r: Resource) has been called");
-		proto.println(proto.getId(this)+".restore(Resource r)");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".restore(Resource r)");
+		Proto.incrTabs();
 		place.accept(this, r);
-		proto.decrTabs();
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -229,8 +228,8 @@ public class Settler extends Character {
 	 */
 	public void createAIRobot() {
 		System.out.println("Settler's createAIRobot() has been called.");
-		proto.println(proto.getId(this)+".createAIRobot()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".createAIRobot()");
+		Proto.incrTabs();
 		Recipe aiRobotRecipe = game.getAIRobotRecipe();
 		for (int i = collectedResources.size()-1; i >= 0; i--) {
 			Resource r = collectedResources.get(i);
@@ -251,7 +250,7 @@ public class Settler extends Character {
 			Proto.getAllObjects().addAIRobot(air);
 		}
 		aiRobotRecipe.reset();
-		proto.decrTabs();
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -271,8 +270,8 @@ public class Settler extends Character {
 	 */
 	public void createGatePair() {
 		//System.out.println("Settler's createGatePair() has been called");
-		proto.println(proto.getId(this)+".createGatePair()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".createGatePair()");
+		Proto.incrTabs();
 		if (gatesCreated.size()>1) {
 			return;
 		}
@@ -301,7 +300,7 @@ public class Settler extends Character {
 			Proto.getAllObjects().addTeleportingGate(tg2);
 		}
 		gatePairRecipe.reset();
-		proto.decrTabs();
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -315,15 +314,15 @@ public class Settler extends Character {
 	 */
 	public void releaseGate() {
 		//System.out.println("Settler's releaseGate() has been called");
-		proto.println(proto.getId(this)+".releaseGate()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".releaseGate()");
+		Proto.incrTabs();
 		if (gatesCreated.size() >= 1) {
 			place.accept(gatesCreated.get(0));
 			gatesCreated.remove(0);
 		} else {
 			System.out.println("No TeleportingGate available. Cannot release a gate.");
 		}
-		proto.decrTabs();
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -343,8 +342,8 @@ public class Settler extends Character {
 	@Override
 	public void die() {
 		//System.out.println("Settler's die() has been called");
-		proto.println(proto.getId(this)+".die()");
-		proto.incrTabs();
+		Proto.println(Proto.getId(this)+".die()");
+		Proto.incrTabs();
 		super.die();
 		for (Resource r : collectedResources) {
 			r.removeFromGame();

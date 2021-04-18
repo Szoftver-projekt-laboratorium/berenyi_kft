@@ -93,12 +93,17 @@ public class Recipe {
 	}
 	
 	/**
-	 * Visszaallitja az eredeti receptet, azaz a resources gyujtemeny tartalmat.
+	 * Visszaallitja az eredeti receptet, azaz a resources
+	 * gyujtemeny tartalmat. A receptben szereplo nyersanyagok a
+	 * Proto osztaly nyilvantartasaba is bekerulnek.
 	 */
 	public void reset() {
 		resources.clear();
 		for (Resource r : resources_backup) {
 			Resource rClone = r.clone();
+			// Csak receptvisszaallitaskor kell eltarolni az uj
+			// nyersanyag azonositojat.
+			rClone.addToGame();
 			resources.add(rClone);
 		}
 	}
@@ -123,21 +128,9 @@ public class Recipe {
 			switch (tokens[0]) {					
 				case "resources":
 					for (int i = 1; i < tokens.length; i++) {
-						
-						// TODO: Mukodik ez a sor? Nem cast-olodnak
-						// vissza a specialis Resource-ok?
-						// Ha nem mukodne, akkor szukseg lesz a Protoban
-						// getResource() es getCharacter() fuggvenyekre,
-						// es ket ids-hoz hasonlo extra Map-re a
-						// Resource-okkal es a Characterekkel.
-						// Sot, meg a Steppable-okhoz is kellhet ilyen.
-						//
-						// Heterogen kollekcio attributumok:
-						// resources, characters, steppables 
-						// 
 						Resource r = (Resource)Proto.getObject(tokens[i]);
 						if (r != null)
-							resources.add(r);
+							addResource(r);
 					}
 					break;
 					

@@ -4,7 +4,7 @@ Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
 Timer timer
 Sun sun
 Asteroid a2
-Iron ir2 ir3
+Iron ir2 ir3 ir4 ir5
 AIRobot air1
 
 Controller controller
@@ -27,12 +27,12 @@ Recipe nullRecipe2
 	resources null
 
 Recipe spaceBaseRecipe
-	resources null
+	resources ir4 ir5
 
 Timer timer
 	ticks 0
-	delay 0
-	period 0
+	delay 3000
+	period 1000
 	steppables sun air1
 
 Sun sun

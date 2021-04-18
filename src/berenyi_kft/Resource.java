@@ -58,6 +58,12 @@ public abstract class Resource implements Cloneable {
 	}
 	
 	/**
+	 * A nyersanyagegyseg egy uj azonositoval eltarolodik
+	 * a Proto osztaly allObjects nyilvantartasaban.
+	 */
+	public abstract void addToGame();
+	
+	/**
 	 * A nyersanyagegyseg megsemmisul, eltunik a jatekbol.
 	 */
 	public abstract void removeFromGame();

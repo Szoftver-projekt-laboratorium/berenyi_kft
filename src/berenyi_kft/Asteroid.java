@@ -49,8 +49,6 @@ public class Asteroid {
 	  * Az aszteroida korul kozvetlenul keringo teleportkapuk kollekcioja
 	  */
 	 private ArrayList<TeleportingGate> gates = new ArrayList<TeleportingGate>();
-	 
-	 private Proto proto;
 	
 //------------------------------------------------------------------------
 	 
@@ -200,8 +198,6 @@ public class Asteroid {
 	  */
 	 public Asteroid getNeighbor(int d) {
 		 //System.out.println("Asteroid's getNeighbor(d: int) has been called");
-		 proto.println(proto.getId(this)+".getNeighbor(int d)");
-		 proto.incrTabs();
 		 ArrayList<Asteroid> list=new ArrayList<Asteroid>();
 		 list.addAll(neighbors);
 		 for(TeleportingGate tg : gates) {
@@ -210,15 +206,13 @@ public class Asteroid {
 				 list.add(other);
 			 }
 		 }
-		 System.out.println(list.size());
-		 proto.decrTabs();
+		 
 		 if(list.size()!=0) {
 			 d = d % list.size();
+			 Proto.println(Proto.getId(this)+".getNeighbor(int "+d+")");
 			 return list.get(d);
-		 }
-		 
-		
-		 return null;
+		 } else
+			 return null;
 	 }
 	 
 	 /**
@@ -325,8 +319,8 @@ public class Asteroid {
 	  */
 	 public void accept(Settler s, Resource r) {
 		// System.out.println("Asteroid's accept(s: Settler, r: Resource) has been called");
-		 proto.println(proto.getId(this)+".accept(Settler s, Resource r)");
-		 proto.incrTabs();
+		 Proto.println(Proto.getId(this)+".accept(Settler s, Resource r)");
+		 Proto.incrTabs();
 		 if (this.isMined()) {
 			 resource = r;
 			 s.remove(r);
@@ -334,7 +328,7 @@ public class Asteroid {
 				 resource.drilledOut(this);
 			 }
 		 }
-		 proto.decrTabs();
+		 Proto.decrTabs();
 	 }
 	 
 	 /**
@@ -367,8 +361,8 @@ public class Asteroid {
 	  * jelezve, hogy napkozeli aszteroidan felszinre kerult.
 	  */
 	 public void drilled() {
-		 proto.println(proto.getId(this)+".drilled()");
-		 proto.incrTabs();
+		 Proto.println(Proto.getId(this)+".drilled()");
+		 Proto.incrTabs();
 		// System.out.println("Asteroid's drilled() has been called");
 		 if (rockLayerThickness >= 1) {
 			 rockLayerThickness--;
@@ -376,7 +370,7 @@ public class Asteroid {
 		 if (rockLayerThickness==0 && resource!=null&&sun.isCloseToSun(this)) {
 			 resource.drilledOut(this);
 		 	}
-		 proto.decrTabs();
+		 Proto.decrTabs();
 	 }
 	 
 	 /**
@@ -389,8 +383,8 @@ public class Asteroid {
 	  * @param s
 	  */
 	 public void minedBy(Settler s) {
-		 proto.println(proto.getId(this)+".minedBy(Settler s)");
-		 proto.incrTabs();
+		 Proto.println(Proto.getId(this)+".minedBy(Settler s)");
+		 Proto.incrTabs();
 		 //System.out.println("Asteroid's minedBy() has been called");
 		 if (rockLayerThickness == 0 && resource != null) {
 			 s.accept(resource);
@@ -399,7 +393,7 @@ public class Asteroid {
 		 }else {
 			 System.out.println("Asteroid is not drilled!");
 		 }
-		 proto.decrTabs();
+		 Proto.decrTabs();
 	 }
 	 
 	 /**
@@ -472,7 +466,10 @@ public class Asteroid {
 		 for (Character c: characters) {
 			 temp.addAll(c.getCollectedResources());
 		 }
-		 /*if (rockLayerThickness == 0) {
+		 
+		 // Nem hasznalt lehetseges alternativa:
+		 // a megfurt magban levo nyersanyag is szamit.
+		 /* if (rockLayerThickness == 0) {
 			 temp.add(resource);
 		 }*/
 		 
@@ -487,9 +484,6 @@ public class Asteroid {
 		 if (recipe.isEmpty()) {
 			 game.endGame();
 		 }
-		 // TODO: A recept egyelore nehezen all vissza,
-		 // es nem biztos, hogy az out-ban jol varjuk az eredmenyt.
-		 // Megnezzuk meg a test 2-3-at.
 		 recipe.reset(); 
 	 }
 	 
