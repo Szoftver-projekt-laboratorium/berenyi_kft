@@ -11,18 +11,30 @@ public abstract class Character {
 	/**
 	 * Az aszterioda, amelyen az adott karakter aktualisan tartozkodik
 	 */
-	protected Asteroid place;
+	protected Asteroid place = null;
 	
-	protected Timer timer;
-	
-	protected Proto proto; //Szükség van rá?
+	/**
+	 * A jatek idozitoje
+	 */
+	protected Timer timer = null;
 	
 	//----------------------------------------------------------------
 	
+	/**
+	 * Beallitja a timer idozitot a karakterben.
+	 * @param timer Az idozito a jatekban
+	 */
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	};
 	
-	/*Settlerben kerul implementalasra, hogy settlerkent erkezhessen
-	 * az aszteroidara. Settler akkor hajtja vegre, amikor egy uj
-	 * aszteroidara erkezik.*/
+	/**
+	 * Az a fuggveny, amit a karakter akkor hajt vegre, amikor
+	 * egy aszteroidara lep, es az aszteroida fogadja. Alapertelmezetten
+	 * az aszteroida acceptRegularCharacter(Character c) metodusat hivja.
+	 * A karakter leszarmazottak feluldefinialhatjak, a Settler ilyen.
+	 * @param a Az aszteroida, amelyre a karakter lep
+	 */
 	public void acceptedBy(Asteroid a) {
 		a.acceptRegularCharacter(this);
 	}

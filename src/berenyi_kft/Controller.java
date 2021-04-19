@@ -8,24 +8,28 @@ import java.util.*;
  */
 public class Controller {
 	
-	private Game game;
+	private Game game  = null;
 	
 	private ArrayList<Player> playersAlive = new ArrayList<Player>();
 	
-	private Player actPlayer;
+	private Player actPlayer = null;
 	
 	private State state = State.INIT;
 	
-	// Kell ref. a Protora?
-	// private Proto proto;
+	//---------------------------------------------------------------
 	
-
+	/**
+	 * Megmondja a jatek jelenlegi allapotat.
+	 * @return Az aktualis jatekallapot
+	 */
 	public State getState() {
 		return state;
 	}
 	
-	
-	/*Visszater a game attributummal.*/
+	/**
+	 * Visszater a game attributummal.
+	 * @return Az aszteroidaovet osszefogo jatek objektum
+	 */
 	public Game getGame() {
 		return game;
 	}
@@ -76,19 +80,19 @@ public class Controller {
 	 * a jatekosok nevet, es beallitja a legfontosabb attributumaikat.
 	 * Letrehozza es inicializalja az aszteroidaovet (Game.startGame()),
 	 * elozetesen atadva a telepesek listajat.
+	 * @param sc Scanner, amellyel a jatekosok adatait beolvassa
 	 */
-	public void startGame() throws IllegalArgumentException {
+	public void startGame(Scanner sc) throws IllegalArgumentException {
 		// Jatekosok szamanak beolvasasa
-		Scanner sc = new Scanner(System.in);
 		System.out.print("Give the number of players: ");
 		int numPlayers = Integer.parseInt(sc.nextLine());
 		if (numPlayers < 1 || numPlayers > 6) {
-			sc.close();
 			throw new IllegalArgumentException(
 					"The number of players must be between 1 and 6.");
 		}
 		
-		Game game = new Game(); // TODO: megkapja konstruktorban a Controllert?
+		game = new Game(); // TODO: megkapja konstruktorban a Controllert?
+		Proto.getAllObjects().setGame(game);
 		
 		// Sorban beallitja a jatekosokat, es telepest rendel hozzajuk.
 		for (int i = 0; i < numPlayers; i++) {
@@ -107,14 +111,16 @@ public class Controller {
 			p.setSettler(s);
 			p.setAlive(true);
 		}
-		sc.close();
 		
 		// Palyakep inicializalasa
 		game.startGame();
 		
+		// Az elso jatekos beallitasa actPlayer-nek
+		this.nextPlayer(); 
+		
 		// Idozites inditasa
-		game.getTimer().start();
 		setState(State.RUNNING);
+		game.getTimer().start();
 	}	
 	
 	/**
@@ -123,9 +129,9 @@ public class Controller {
 	 */
 	public void endGame(State state) {
 		setState(state);
-		if(state==State.WON)
+		if (state == State.WON)
 			System.out.println("Settlers won");
-		else if(state==State.LOST)
+		else if (state == State.LOST)
 			System.out.println("Settlers lost");
 		else
 			System.out.println("The game has not ended");
@@ -133,43 +139,40 @@ public class Controller {
 	
 	/**
 	 * Visszater az aktualis lepo jatekossal.
-	 * @return A soron kovetkezo jatekos
+	 * @return Az aktualis lepo jatekos
 	 */
 	public Player getActPlayer() {
 		return actPlayer;
 	}
 	
-	// TODO: A jatekosokat nem kellene kozvetlenul hivnunk majd,
-	// hanem a Controlleren keresztul tudnak meg, hogy milyen parancsot
-	// adtak meg nekik a Proton keresztul.
-	
+	/**
+	 * Beallitja a soron kovetkezo jatekost az actPlayer helyere.
+	 */
 	public void nextPlayer() {
-			
+		// TODO: Steppable leptetes
+		// game.getTimer().tick();
+		
 		if (playersAlive.size() == 0)
 			actPlayer = null;
 		else {
-			
-			if(actPlayer==null) {
+			if (actPlayer == null)
 				actPlayer = playersAlive.get(0);
-				return;
-			}
-			
-			int idx = playersAlive.indexOf(actPlayer);
-			if (idx == playersAlive.size() - 1) {
-				actPlayer = playersAlive.get(0);
-			
-			} else {
-				actPlayer = playersAlive.get(idx + 1);
+			else {
+				int idx = playersAlive.indexOf(actPlayer);
+				if (idx == playersAlive.size() - 1)
+					actPlayer = playersAlive.get(0);
+				else
+					actPlayer = playersAlive.get(idx + 1);
 			}
 		}
 	}
 	
 	/*Torli a parameterkent kapott Settlerhez tartozo jatekost*/
 	public void removePlayer(Settler s) {
-		if(!this.playersAlive.isEmpty()) {
-			for(int i=playersAlive.size()-1; i>=0; i--) {
-				if(playersAlive.get(i).getSettler()==s) {
-					Player p=playersAlive.get(i);
+		if (!this.playersAlive.isEmpty()) {
+			for (int i = playersAlive.size() - 1; i >= 0; i--) {
+				if (playersAlive.get(i).getSettler() == s) {
+					Player p = playersAlive.get(i);
 					playersAlive.remove(p);
 					Proto.getAllObjects().removePlayer(p);
 				}

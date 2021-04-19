@@ -19,7 +19,7 @@ public class Asteroid {
 	 /**
 	  * Referencia a jatekot reprezentalo osztalyra
 	  */
-	 private Game game;
+	 private Game game = null;
 	
 	 /**
 	  * Az aszteroida magjaban talalhato egysegnyi nyersanyag.
@@ -30,7 +30,7 @@ public class Asteroid {
 	 /**
 	  * Az aszteroidaovben levo Nap
 	  */
-	 private Sun sun;
+	 private Sun sun = null;
 	 
 	 /**
 	  * Az aszteroidaval szomszedos aszteroidak listaja.
@@ -208,7 +208,7 @@ public class Asteroid {
 		 }
 		 
 		 if(list.size()!=0) {
-			 d = d % list.size();
+			 d = (d * Integer.signum(d)) % list.size();
 			 Proto.println(Proto.getId(this)+".getNeighbor("+d+")");
 			 return list.get(d);
 		 } else
@@ -244,14 +244,30 @@ public class Asteroid {
 	 }
 	 
 	 /**
-	  * A c karakter megerkezik az aszteroidara, es az
-	  * aszteroida hozzaadja a characters kollekciojahoz.
+	  * Hozzaadja a c karaktert az aszteroidahoz;
+	  * az inicializalashoz hasznalando.
+	  * @param c Az uj, hozzaadando karakter
+	  */
+	 public void addCharacter(Character c) {
+		 characters.add(c);
+	 }
+	 
+	 /**
+	  * A c karakter megerkezik az aszteroidara. Az aszteroida
+	  * reagal erre, es jelzi ezt a karakternek az acceptedBy(Asteroid a)
+	  * fuggveny hivasaval. A karakter ezutan specializalt mukodest
+	  * valosithat meg az aszteroidara erkezeskor.
 	  * @param c Az aszteroidara erkezo karakter
 	  */
 	 public void accept(Character c) {
 		 c.acceptedBy(this);
 	 }
 	 
+	 /**
+	  * A karakter megerkezik az aszteroidara, az aszteroida hozzaadja
+	  * a characters listaja vegere.
+	  * @param c Az ujonnan megerkezett karakter
+	  */
 	 public void acceptRegularCharacter(Character c) {
 		 System.out.println("Asteroid's acceptRegularCharacter(c: Character) has been called");
 		 characters.add(c);
@@ -381,10 +397,10 @@ public class Asteroid {
 		// System.out.println("Asteroid's drilled() has been called");
 		 if (rockLayerThickness >= 1) {
 			 rockLayerThickness--;
+			 if (rockLayerThickness==0 && resource!=null && sun.isCloseToSun(this)) {
+				 resource.drilledOut(this);
+			 }
 		 }
-		 if (rockLayerThickness==0 && resource!=null&&sun.isCloseToSun(this)) {
-			 resource.drilledOut(this);
-		 	}
 		 Proto.decrTabs();
 	 }
 	 

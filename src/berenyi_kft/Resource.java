@@ -7,16 +7,6 @@ package berenyi_kft;
 public abstract class Resource implements Cloneable {
 	
 	/**
-	 * Az aszteroida, amelynek magjaban az adott nyersanyagegyseg elhelyezkedik.
-	 * Ha a nyersanyag nem egy aszteroida magjaban talalhato, akkor erteke null.
-	 */
-	// protected Asteroid asteroid;
-	
-	protected Proto proto;
-	
-	//--------------------------------------------------------------
-	
-	/**
 	 * Azt a helyzetet kezeli, amikor a nyersanyag e�ppen egy napkozelben levo, 
 	 * megfurt aszteroida magjaban talalhato. A metodus altalanos esetben nem csinal semmit, 
 	 * de a specialis mukodesu leszarmazott osztalyokban feluldefinialhato.

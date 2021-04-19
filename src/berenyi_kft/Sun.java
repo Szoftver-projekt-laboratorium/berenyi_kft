@@ -99,13 +99,15 @@ public class Sun implements ISteppable {
 	public void step() {
 		System.out.println("Sun's step() has been called");
 		// A teszt kedveert legyen minden egyes step soran napvihar.
-		if(timeToSunStorm>0)
+		if(timeToSunStorm>0) {
 			timeToSunStorm--;
+			// timeToSunStrom -= game.getTimer.getPeriod();
+		}
 		else {
 			sunStorm();
 			if(Proto.isRandom()) {
 				Random r=new Random();
-				timeToSunStorm=r.nextInt(300);
+				timeToSunStorm = 15 + r.nextInt(10);
 			}
 			else
 				timeToSunStorm=15;

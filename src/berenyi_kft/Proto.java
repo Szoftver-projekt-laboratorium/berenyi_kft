@@ -44,8 +44,21 @@ public class Proto {
 		private List<UFO> ufos = new ArrayList<UFO>();
 		private List<TeleportingGate> gates = new ArrayList<TeleportingGate>();
 		
+		public Objects() {
+			for (int i = 0; i < 3; i++)
+			recipes.add(null);
+		}
+		
+		public void clearRecipes() {
+			recipes.clear();
+		}
+		
 		public Controller getController() {
 			return controller;
+		}
+		
+		public Timer getTimer() {
+			return timer;
 		}
 		
 		// TODO: Lehet meg szep generikus metodusokkal egyszerusiteni a kodot?
@@ -89,6 +102,7 @@ public class Proto {
 		
 		public void setController(Controller controller1) {
 			controller = controller1;
+			ids.put(controller, "controller");
 		}
 		
 		public void addPlayer(Player p) {
@@ -97,6 +111,11 @@ public class Proto {
 		
 		public void setGame(Game game1) {
 			game = game1;
+			ids.put(game, "game");
+		}
+		
+		public void addRecipe(Recipe recipe, String id) {
+			addObject(recipe, recipes, id);
 		}
 		
 		public void setRobotRecipe(Recipe robotRecipe) {
@@ -116,10 +135,12 @@ public class Proto {
 		
 		public void setTimer(Timer timer1) {
 			timer = timer1;
+			ids.put(timer, "timer");
 		}
 		
 		public void setSun(Sun sun1) {
 			sun = sun1;
+			ids.put(sun, "sun");
 		}
 		
 		public void addAsteroid(Asteroid a) {
@@ -213,7 +234,7 @@ public class Proto {
 	
 	public static Proto.Objects allObjects = new Proto.Objects();
 
-	private static int tabs;
+	private static int tabs = 0;
 	
 	private static boolean random = true;
 	
@@ -249,7 +270,7 @@ public class Proto {
 	 * @param isLogging A konzolos metodusnaplozast engedelyezo/letilto logikai valtozo
 	 */
 	public static void enableLogging(boolean isLogging) {
-		System.out.println(log ? "logging enabled" : "logging disabled");
+		System.out.println(isLogging ? "logging enabled" : "logging disabled");
 		log = isLogging;
 	}
 	
@@ -285,10 +306,12 @@ public class Proto {
 	 * @param line A naplozando sor
 	 */
 	public static void println(String line) {
-		for (int i = 0; i < tabs; i++) {
-			System.out.print('\t');
+		if (Proto.isLogging()) {
+			for (int i = 0; i < tabs; i++) {
+				System.out.print(" -> ");
+			}
+			System.out.println(line);
 		}
-		System.out.println(line);
 	}
 	
 	/**
@@ -477,6 +500,7 @@ public class Proto {
 	 */
 	public static void load(String filename) throws IOException {
 		allObjects = new Proto.Objects();
+		allObjects.clearRecipes();
 		Scanner sc = new Scanner(new File(filename));
 		
 		String line = sc.nextLine();
@@ -683,7 +707,6 @@ public class Proto {
 		ps.close();
 	}
 	
-	// TODO:
 	/* public static void showOne(String id) {
 	 *	System.out.println(allObjects.getObject(id).getDescription());
 	}*/
@@ -708,34 +731,67 @@ public class Proto {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Welcome in berenyi_kft's Proto program!");
 			System.out.print("Please select whether you wish to test (Y) "
-					+ " or play (n) the prototype game. [Y/n]: ");
+					+ "or play (n) the prototype game. [Y/n]: ");
 			String choice = sc.nextLine();
 			if (choice.substring(0, 1).toLowerCase().equals("y")) {
 				Tester.testerMain(args);
 			}
 			else {
-				System.out.println("Now you can play the game.\n"
-						+ "Type commands \"random <is_random>\" and \"logging <is_logging>\" "
-						+ "for global settings, and \"init\" to start a new game.");
-				// TODO Rövid help/leiras, vagy azonnal init es induljon?
+				System.out.println("Now you can play the game on the console as a game.\n"
+					+ "-------------------------------------------------------------------------------"
+						+"---------------------------------\n"
+					+ "List of the applicable system control commands:\n"
+					+ "\trandom <is_random>\tSets randomized/deterministic behaviour.\n"
+					+ "\tlog <is_logging>\tEnables/disables method logging on the console.\n" 
+					+ "\tinit\t\t\tAsks for players, initializes a whole new game, and starts it.\n"
+					+ "\tstart\t\t\tStarts or resumes the game, waits for players' commands again.\n"
+					+ "\tstop\t\t\tPauses the game so that no object can act (until a new start).\n"
+					+ "\tshow\t\t\tPrints the current game configuration on the screen.\n"
+					+ "\tsave <file>\t\tSaves the current configuration into the specified file.\n"
+					+ "\tload <file>\t\tLoads a configuration from the specified file without start.\n"
+					+ "\texit\t\t\tExits the prototype program, no further commands are processed.\n"
+					+ "----------------------------------------------------++--------------------------"
+						+ "--------------------------------\n"
+					+ "List of the applicable player control commands:\n"
+					+ "\tpass\t\t\tYour player does not act intentionally.\n"
+					+ "\tmove <direction>:\tPlayer moves to its asteroids's direction-th neighbor.\n"
+						+ "\t\t\t\tYou may also use the teleporting gates to move.\n" 
+					+ "\tdrill\t\t\tPlayer drills a rock layer down on his/her asteroid.\n"
+					+ "\tmine\t\t\tPlayers mines the resource on his/her current place.\n"
+					+ "\trestore <resource>\tPlayer restores a resource type of <resource> in the asteroid.\n"
+					+ "\tcreate_robot\t\tYou create and release a new AI robot for "
+						+ "a coal, an iron and a uranium.\n"
+					+ "\tcreate_gate_pair\tYou create a new teleporting gate pair and store them for two\n"
+						+ "\t\t\t\tirons, an ice and a uranium, providing that you have space for them at yours.\n"
+					+ "\trelease_gate <teleport_gate>\tPlayer releases the chosen teleporting gate\n"
+					+ "\t\t\t\t\tof id <teleport_gate> on the orbit of his/her current place.\n"
+					+ "--------------------------------------------------------------------------------"
+						+ "--------------------------------\n"
+					+ "\n");
 				
-				boolean exit = false;
-				while (!exit & sc.hasNextLine()) {
-					String line = sc.nextLine();
+				
+				boolean exit = false; // jatekallapot-valtozok
+				boolean running = false;
+				String line = sc.nextLine();
+				while (!exit & line != null) {
 					String[] tokens = line.split("\\s+");
 					String cmd = tokens[0];
 					
+					Controller controller = allObjects.getController();  
+					if (controller != null)
+						running = (controller.getState() == State.RUNNING);
+					
+					// Jatekutasitasok vizsgalata
 					PlayerCommand playerCmd = PlayerCommand.fromString(cmd);
-					if (playerCmd != PlayerCommand.INVALID) {
-						Player pAct = allObjects.controller.getActPlayer();
+					if (/*running &*/ (playerCmd != PlayerCommand.INVALID)) {
+						Player pAct = controller.getActPlayer();
 						pAct.actOnSettler(playerCmd, tokens);
-						Proto.getAllObjects().getController().nextPlayer();
+						controller.nextPlayer();
 					}
 					else {
-						Controller controller = allObjects.controller; // segedvaltozo
-						Timer timer = allObjects.timer; // segedvaltozo
+						Timer timer = allObjects.getTimer(); // segedvaltozo
 						
-						//TODO: hibauzenetek, ahol kellenek
+						// Rendszerutasitasok vizsgalata allapotgep-szeruen
 						switch (cmd) {
 							case "exit":
 								exit = true;
@@ -748,77 +804,97 @@ public class Proto {
 								break;
 						
 							case "random":
-								if (tokens.length >= 2) {
-									if (tokens[1].equals("true"))
-										setRandom(true);
-									else if (tokens[1].equals("false"))
-										setRandom(false);
-									else
+								if (!running) {
+									if (tokens.length >= 2) {
+										if (tokens[1].equals("true"))
+											setRandom(true);
+										else if (tokens[1].equals("false"))
+											setRandom(false);
+										else
+											throw new IllegalArgumentException(
+												"Invalid argument for <is_random>: "
+														+ tokens[1] + ".");
+									} else
 										throw new IllegalArgumentException(
-											"Invalid argument for <is_random>: "
-													+ tokens[1] + ".");
-								} else
-									throw new IllegalArgumentException(
-										"Argument for command 'random' is missing.");
+											"Argument for command 'random' is missing.");
+								}
 								break;
 								
 							case "log":
-								if (tokens.length >= 2) {
-									if (tokens[1].equals("true"))
-										enableLogging(true);
-									else if (tokens[1].equals("false"))
-										enableLogging(false);
-									else
+								if (!running) {
+									if (tokens.length >= 2) {
+										if (tokens[1].equals("true"))
+											enableLogging(true);
+										else if (tokens[1].equals("false"))
+											enableLogging(false);
+										else
+											throw new IllegalArgumentException(
+												"Invalid argument for <is_logging>: "
+														+ tokens[1] + ".");
+									} else
 										throw new IllegalArgumentException(
-											"Invalid argument for <is_logging>: "
-													+ tokens[1] + ".");
-								} else
-									throw new IllegalArgumentException(
-										"Argument for command 'log' is missing.");
+											"Argument for command 'log' is missing.");
+								}
 								break;
 							
 							case "init":
-								controller = new Controller();
-								Proto.getAllObjects().setController(controller);
-								controller.setState(State.INIT);
-								controller.startGame();
+								if (!running) {
+									allObjects = new Proto.Objects();
+									controller = new Controller();
+									Proto.getAllObjects().setController(controller);
+									controller.setState(State.INIT);
+									controller.startGame(sc);
+								}
 								break;
 
 							case "load":
-								if (tokens.length >= 2) {
-									if (timer != null) {
-										timer.cancel();
+								if (!running) {
+									if (tokens.length >= 2) {
+										if (timer != null) {
+											timer.cancel();
+										}
+										load(tokens[1]);
 									}
-									load(tokens[1]);
 								}
 								break;
 							
 							case "start":
-								if (timer != null)
-									timer.start();
-								if (controller != null)
-									controller.setState(State.RUNNING);
+								if (!running) {
+									if (timer != null) {
+										timer.start();
+									}
+									if (controller != null) {
+										controller.setState(State.RUNNING);
+									}
+									running = true;
+								}
 								break;
 							
-							case "stop":
-								if (timer != null)
+							case "stop": // Szunetelteti a futo jatekot.
+								if (timer != null) {
 									timer.stop();
-								if (controller != null)
+								}
+								if (controller != null) {
 									controller.setState(State.PAUSED);
+								}
 								break;
 							
 							case "save":
-								if (tokens.length >= 2) {
-									save(tokens[1]);
+								if (!running) {
+									if (tokens.length >= 2) {
+										save(tokens[1]);
+									}
 								}
 								break;	
 							
 							case "show":
-								if (tokens.length == 1) {
-									showAll();
-								} /*TODO: else if (tokens.length >= 2) {
-									showOne(tokens[1]);
-								}*/
+								if (!running) {
+									if (tokens.length == 1) {
+										showAll();
+									} /*else if (tokens.length >= 2) {
+										showOne(tokens[1]);
+									}*/
+								}
 								break;
 	
 							default:
@@ -827,13 +903,28 @@ public class Proto {
 								break;
 						}
 					}
+					
+					if (controller != null) {
+						if (controller.getState() == State.WON
+								| controller.getState() == State.LOST) {
+							running = false;
+							exit = true;
+							break;
+						}
+					}
+					line = sc.nextLine();
 				}
 				sc.close();
 			}
 		}
-		catch (Exception e) {
+		catch (FileNotFoundException e) {
+			System.out.println("The file you specified was not found by the prototype program.");
 			e.printStackTrace();
-			System.out.println("The prototype program has been ended by an exception.");
+			// System.exit(1);
+		}
+		catch (Exception e) {
+			System.out.println("The prototype program has been ended by this exception:");
+			e.printStackTrace();
 			// System.exit(1);
 		}
 	}

@@ -8,13 +8,13 @@ import java.util.Scanner;
  */
 public class Player {
 	
-	private String name;
+	private String name = null;
 	
-	private Settler settler;
+	private Settler settler = null;
 	
-	private boolean isAlive=true;
+	private boolean isAlive = true;
 	
-	//private Controller controller;  
+	// private Controller controller;
 	
 	//------------------------------------------
 	

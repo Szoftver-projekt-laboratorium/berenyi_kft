@@ -30,7 +30,7 @@ public class Settler extends Character {
 	/**
 	 * A jatekot reprezentalo osztaly
 	 */
-	private Game game;
+	private Game game = null;
 
 	//---------------------------------
 	
@@ -384,8 +384,10 @@ public class Settler extends Character {
 		return gatesCreated;
 	}
 	
-	
-	/*Settlerkent lep az aszteroidara.*/
+	/**
+	 * Settlerkent lep az <code>a</code> aszteroidara, (ezzel az
+	 * urbazis megepithetosege ellenorzesre fog kerulni az aszteroidan).
+	 */
 	@Override
 	public void acceptedBy(Asteroid a) {
 		a.accept(this);

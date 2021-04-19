@@ -1,6 +1,8 @@
 package berenyi_kft;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -9,9 +11,7 @@ import java.util.Scanner;
  * @author berenyi_kft
  */
 public class Game {
-	/* Segedvaltozo csak a szekeletonhoz,
-	 * a jatek vegenek ellenorzesehez.
-	 */ 
+	/* Segedvaltozo csak a szekeletonhoz, a jatek vegenek ellenorzesehez. */
 	private boolean endGameFlag = false;
 
 	/**
@@ -40,10 +40,6 @@ public class Game {
 	 */
 	private Timer timer = null;
 	
-	//private Controller controller;
-	
-	// TODO: (Ugy tunik, kell referenciat tarolni a controllerre,
-	//  kulonben korulmenyes az endGame tovabbitasa a vezerlo fele.)
 	// private Controller controller;
 	
 	//--------------------------------------------
@@ -106,20 +102,24 @@ public class Game {
 	 * Beallitja az aszteroidak szomszedsagi viszonyait is.
 	 */
 	public void startGame() {
-		// TODO Palya inicializalasa
+		Random random = new Random();
 		
 		/* A Controller es a Playerek mar be vannak allitva,
 		 * a Playerek telepeshez vannak rendelve, es a telepesek
 		 * is ott vannak a playersAlive-ban.
 		 */
 		
-		/* Objektumok letrehozasa */
+		/* Jatekobjektumok letrehozasa, nyilvantartasa,
+		 * attributumaik beallitasa */
 		// robotRecipe
 		Recipe robotRecipe = new Recipe();
 		robotRecipe.addResource(new Coal());
 		robotRecipe.addResource(new Iron());
 		robotRecipe.addResource(new Uranium());
+		recipes.add(robotRecipe);
 		Proto.getAllObjects().setRobotRecipe(robotRecipe);
+		for (Resource r : robotRecipe.getResources())
+			r.addToGame();
 		
 		// gatePairRecipe
 		Recipe gatePairRecipe = new Recipe();
@@ -127,7 +127,10 @@ public class Game {
 		gatePairRecipe.addResource(new Iron());
 		gatePairRecipe.addResource(new Ice());
 		gatePairRecipe.addResource(new Uranium());
+		recipes.add(gatePairRecipe);
 		Proto.getAllObjects().setGatePairRecipe(gatePairRecipe);
+		for (Resource r : gatePairRecipe.getResources())
+			r.addToGame();
 		
 		// spaceBaseRecipe
 		Recipe spaceBaseRecipe = new Recipe();
@@ -137,43 +140,104 @@ public class Game {
 			spaceBaseRecipe.addResource(new Ice());
 			spaceBaseRecipe.addResource(new Uranium());
 		}
+		recipes.add(spaceBaseRecipe);
 		Proto.getAllObjects().setSpaceBaseRecipe(spaceBaseRecipe);
+		for (Resource r : spaceBaseRecipe.getResources())
+			r.addToGame();
 		
-		// allResourcesRecipe - csak inicializalasra
+		// nyersanyagszamok
+		int nCoals = 3 + random.nextInt(1);
+		int nIrons = 3 + random.nextInt(3);
+		int nIces = 3 + random.nextInt(1);
+		int nUraniums = 3 + random.nextInt(2);
+		// aszteroidaszamok
+		int nEmpty = random.nextInt(2);
+		int nAsteroids = nCoals + nIrons + nIces + nUraniums + nEmpty;
+		
+		// allResourcesRecipe - aszteroidak inicializalasahoz
 		Recipe allResourcesRecipe = new Recipe();
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < nCoals; i++)
 			allResourcesRecipe.addResource(new Coal());
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < nIrons; i++)
 			allResourcesRecipe.addResource(new Iron());
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < nIces; i++)
 			allResourcesRecipe.addResource(new Ice());
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < nUraniums; i++)
 			allResourcesRecipe.addResource(new Uranium());
 		
 		// timer	
-		Timer timer = new Timer(3000, 1000);
+		timer = new Timer(5000, 3000);
 		Proto.getAllObjects().setTimer(timer);
 
 		// sun
-		Sun sun = new Sun();
+		sun = new Sun();
+		timer.addSteppable(sun);
 		Proto.getAllObjects().setSun(sun);
 		
 		// asteroids
-		for (int i = 0; i < 18; i++) {
+		for (int i = 0; i < nAsteroids; i++) {
 			Asteroid a = new Asteroid();
+			a.setRockLayerThickness(random.nextInt(5));
+			a.setGame(this);
+			a.setSun(sun);
+			if (i < nAsteroids - nEmpty) {
+				Resource r = allResourcesRecipe.getResources().get(i);
+				r.addToGame();
+				a.addResource(r);
+			}
 			asteroids.add(a);
 			Proto.getAllObjects().addAsteroid(a);
+		}
+		
+		// nyersanyagok elkeverese
+		Collections.shuffle(asteroids);
+		
+		// napkozeli aszteroidak veletlenszeruen
+		int nCloseToSun = 1 + random.nextInt(1);
+		for (int i = 0; i < nCloseToSun; i++)
+			sun.addNeighbor(asteroids.get(i));
+		
+		// aszteroida szomszedsagok beallitasa
+		// elso kor: osszefuggo fagraf epitese (topologikus sorrendben)
+		for (int i = 1; i < nAsteroids; i++) {
+			Asteroid a2 = asteroids.get(i);
+			int precedentIdx = (i == 1 ? 0 : random.nextInt(i - 1));
+			Asteroid a1 = asteroids.get(precedentIdx);
+			a1.accept(a2);
+			a2.accept(a1);
+		}
+		// masodik kor: tovabbi veletlen elek az aszteroidak grafjaban
+		if (nAsteroids > 1) {
+			int nAdditionalNeighbors = (nAsteroids * nAsteroids / 10);
+			for (int i = 0; i < nAdditionalNeighbors; i++) {
+				Asteroid a1 = asteroids.get(random.nextInt(nAsteroids - 1));
+				Asteroid a2 = asteroids.get(random.nextInt(nAsteroids - 1));
+				while (a1 == a2 || a1.getNeighbors().contains(a2)) {
+					a1 = asteroids.get(random.nextInt(nAsteroids - 1));
+					a2 = asteroids.get(random.nextInt(nAsteroids - 1));
+				}
+				a1.accept(a2);
+				a2.accept(a1);
+			}
+		}
+		
+		// settlers
+		Asteroid mainAsteroid = asteroids.get(random.nextInt(nAsteroids));
+		for (Settler s : settlersAlive) {
+			s.setGame(this);
+			s.setTimer(timer);
+			mainAsteroid.addCharacter(s);
+			s.setPlace(mainAsteroid);
 		}
 		
 		// ufos
 		for (int i = 0; i < 2; i++) {
 			UFO ufo = new UFO(timer);
+			Asteroid a = asteroids.get(random.nextInt(nAsteroids));
+			a.accept(ufo);
+			ufo.setPlace(a);
 			Proto.getAllObjects().addUFO(ufo);
 		}
-		
-		
-		/* Objektumok attributumainak beallitasa */
-		// TODO
 	}
 	
 	/**

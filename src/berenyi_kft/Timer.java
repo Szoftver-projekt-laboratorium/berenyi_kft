@@ -30,7 +30,7 @@ public class Timer extends java.util.Timer {
 	 * Az idozito kezdeti kesleltetesi ideje,
 	 * illetve periodusideje ezredmasodpercben
 	 */
-	private long delay = 30000;
+	private long delay = 3000;
 	private long period = 1000;
 	
 	/**
@@ -118,7 +118,10 @@ public class Timer extends java.util.Timer {
 		enabled = false;
 	}
 	
-	/*Visszater a jatekban eltelt mp-ek szamaval.*/
+	/**
+	 * Visszater a jatekban eltelt masodpercek szamaval.
+	 * @return Az idozito altal szamlalt tick-ek szama
+	 */
 	public int getTicks() {
 		return ticks;
 	}

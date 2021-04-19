@@ -14,24 +14,24 @@ public class TeleportingGate implements ISteppable {
 	/**
 	 * Az adott teleportkapu parja, amellyel osszekottetesben all 
 	 */
-	private TeleportingGate pair;
+	private TeleportingGate pair = null;
 	
 	/**
 	 * Az aszteroida, amely korul az adott teleportkapu kering.
 	 * Ha a kaput meg nem allitottak palyara, akkor értéke null
 	 */
-	private Asteroid asteroid=null;
+	private Asteroid asteroid = null;
 	
 	/**
 	 * A telepes, aki tarolja a letrehozott teleportkaput.
 	 * Ha mar palyara van allitva, akkor settler erteke null
 	 */
-	private Settler settler;
+	private Settler settler = null;
 	
 	/**
 	 * A jatek idozitoje
 	 */
-	private Timer timer;
+	private Timer timer = null;
 	
 	//--------------------------------------------------------------
 	
