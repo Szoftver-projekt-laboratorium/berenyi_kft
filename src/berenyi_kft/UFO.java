@@ -58,7 +58,7 @@ public class UFO extends Character implements ISteppable {
 	 * @param timer A jatek idozitoje
 	 */
 	public UFO(Timer timer) {
-		Proto.println(Proto.getId(this) + ".UFO(" + Proto.getId(timer) + ")");
+		Proto.println("UFO()");
 		Proto.incrTabs();
 		this.timer = timer;
 		if (timer != null)

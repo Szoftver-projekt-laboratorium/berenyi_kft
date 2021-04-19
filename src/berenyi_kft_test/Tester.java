@@ -23,7 +23,7 @@ public class Tester {
 	private static final int testCount = 38;
 
 	// A tesztkonyvtar eleresi utja
-	private static String path = "src\\test_data\\";
+	private static String path = "C:\\Users\\cloud\\berenyi_kft\\src\\test_data\\";
 
 	/**
 	 * Soronkent osszehasonlitja a ket szovegfajl tartalmat. Ha a ket fajl
@@ -50,7 +50,8 @@ public class Tester {
 			line2 = input2.nextLine();
 
 			if (!line1.equals(line2)) {
-				System.out.println("Differences found in line " + lineNum + " :\n" + line1 + '\n' + line2);
+				System.out.println("Differences found in line "
+						+ lineNum + " :\n" + line1 + '\n' + line2);
 				return false;
 			}
 		}

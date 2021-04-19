@@ -59,7 +59,7 @@ public class AIRobot extends Character implements ISteppable {
 	 * @param timer A jatek idozitoje
 	 */
 	public AIRobot(Timer timer) {
-		Proto.println(Proto.getId(this) + ".AIRobot(" + Proto.getId(timer) + ")");
+		Proto.println("AIRobot()");
 		Proto.incrTabs();
 		this.timer = timer;
 		if (timer != null)

@@ -34,7 +34,8 @@ public abstract class Resource implements Cloneable {
 	public Resource clone() {
 		try {
 			Resource rClone = (Resource) super.clone();
-			Proto.println(Proto.getId(rClone) + " <- " + Proto.getId(this) + ".clone()");
+			/* Proto.println(Proto.getId(rClone) + " <- "
+				+ Proto.getId(this) + ".clone()"); */
 			return rClone;
 		} catch (CloneNotSupportedException e) {
 			return null;
