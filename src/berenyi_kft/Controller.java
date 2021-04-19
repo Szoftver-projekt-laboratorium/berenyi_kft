@@ -8,24 +8,28 @@ import java.util.*;
  */
 public class Controller {
 	
-	private Game game;
+	private Game game  = null;
 	
 	private ArrayList<Player> playersAlive = new ArrayList<Player>();
 	
-	private Player actPlayer;
+	private Player actPlayer = null;
 	
 	private State state = State.INIT;
 	
-	// Kell ref. a Protora?
-	// private Proto proto;
+	//---------------------------------------------------------------
 	
-
+	/**
+	 * Megmondja a jatek jelenlegi allapotat.
+	 * @return Az aktualis jatekallapot
+	 */
 	public State getState() {
 		return state;
 	}
 	
-	
-	/*Visszater a game attributummal.*/
+	/**
+	 * Visszater a game attributummal.
+	 * @return Az aszteroidaovet osszefogo jatek objektum
+	 */
 	public Game getGame() {
 		return game;
 	}
@@ -36,6 +40,8 @@ public class Controller {
 	 * @param state Az uj jatekallapot
 	 */
 	public void setState(State state) {
+		Proto.println(Proto.getId(this) + ".setState("
+				+ state.toString() + ")");
 		if (Proto.isLogging()) {
 			System.out.println("State: " + State.toString(state));
 		}
@@ -76,19 +82,21 @@ public class Controller {
 	 * a jatekosok nevet, es beallitja a legfontosabb attributumaikat.
 	 * Letrehozza es inicializalja az aszteroidaovet (Game.startGame()),
 	 * elozetesen atadva a telepesek listajat.
+	 * @param sc Scanner, amellyel a jatekosok adatait beolvassa
 	 */
-	public void startGame() throws IllegalArgumentException {
+	public void startGame(Scanner sc) throws IllegalArgumentException {
+		Proto.println(Proto.getId(this) + ".startGame()");
+		Proto.incrTabs();
 		// Jatekosok szamanak beolvasasa
-		Scanner sc = new Scanner(System.in);
 		System.out.print("Give the number of players: ");
 		int numPlayers = Integer.parseInt(sc.nextLine());
 		if (numPlayers < 1 || numPlayers > 6) {
-			sc.close();
 			throw new IllegalArgumentException(
 					"The number of players must be between 1 and 6.");
 		}
 		
-		Game game = new Game(); // TODO: megkapja konstruktorban a Controllert?
+		game = new Game(); // TODO: megkapja konstruktorban a Controllert?
+		Proto.getAllObjects().setGame(game);
 		
 		// Sorban beallitja a jatekosokat, es telepest rendel hozzajuk.
 		for (int i = 0; i < numPlayers; i++) {
@@ -107,14 +115,18 @@ public class Controller {
 			p.setSettler(s);
 			p.setAlive(true);
 		}
-		sc.close();
 		
 		// Palyakep inicializalasa
 		game.startGame();
 		
+		// Az elso jatekos beallitasa actPlayer-nek
+		this.nextPlayer(); 
+		
 		// Idozites inditasa
-		game.getTimer().start();
 		setState(State.RUNNING);
+		game.getTimer().start();
+		
+		Proto.decrTabs();
 	}	
 	
 	/**
@@ -122,10 +134,12 @@ public class Controller {
 	 * @param state A jatek allapota
 	 */
 	public void endGame(State state) {
+		Proto.println(Proto.getId(this) + ".endGame("
+				+ state.toString() + ")");
 		setState(state);
-		if(state==State.WON)
+		if (state == State.WON)
 			System.out.println("Settlers won");
-		else if(state==State.LOST)
+		else if (state == State.LOST)
 			System.out.println("Settlers lost");
 		else
 			System.out.println("The game has not ended");
@@ -133,55 +147,59 @@ public class Controller {
 	
 	/**
 	 * Visszater az aktualis lepo jatekossal.
-	 * @return A soron kovetkezo jatekos
+	 * @return Az aktualis lepo jatekos
 	 */
 	public Player getActPlayer() {
 		return actPlayer;
 	}
 	
-	// TODO: A jatekosokat nem kellene kozvetlenul hivnunk majd,
-	// hanem a Controlleren keresztul tudnak meg, hogy milyen parancsot
-	// adtak meg nekik a Proton keresztul.
-	
+	/**
+	 * Beallitja a soron kovetkezo jatekost az actPlayer helyere.
+	 */
 	public void nextPlayer() {
-			
+		Proto.println(Proto.getId(this) + ".nextPlayer()");
+		// TODO: Steppable leptetes
+		// game.getTimer().tick();
+		
 		if (playersAlive.size() == 0)
 			actPlayer = null;
 		else {
-			
-			if(actPlayer==null) {
+			if (actPlayer == null)
 				actPlayer = playersAlive.get(0);
-				return;
-			}
-			
-			int idx = playersAlive.indexOf(actPlayer);
-			if (idx == playersAlive.size() - 1) {
-				actPlayer = playersAlive.get(0);
-			
-			} else {
-				actPlayer = playersAlive.get(idx + 1);
+			else {
+				int idx = playersAlive.indexOf(actPlayer);
+				if (idx == playersAlive.size() - 1)
+					actPlayer = playersAlive.get(0);
+				else
+					actPlayer = playersAlive.get(idx + 1);
 			}
 		}
 	}
 	
-	/*Torli a parameterkent kapott Settlerhez tartozo jatekost*/
+	/**
+	 * Torli a parameterkent kapott Settlerhez tartozo jatekost.
+	 * @param s A telepes, akinek a jatekosa szamara a jatek veget er
+	 */
 	public void removePlayer(Settler s) {
-		if(!this.playersAlive.isEmpty()) {
-			for(int i=playersAlive.size()-1; i>=0; i--) {
-				if(playersAlive.get(i).getSettler()==s) {
-					Player p=playersAlive.get(i);
+		Proto.println(Proto.getId(this) + ".removePlayer("
+				+ Proto.getId(s) + ")");
+		Proto.incrTabs();
+		if (!this.playersAlive.isEmpty()) {
+			for (int i = playersAlive.size() - 1; i >= 0; i--) {
+				if (playersAlive.get(i).getSettler() == s) {
+					Player p = playersAlive.get(i);
 					playersAlive.remove(p);
 					Proto.getAllObjects().removePlayer(p);
 				}
 			}
 		}
+		Proto.decrTabs();
 	}
 	
 	/**
 	 * Beolvassa a jatek attributumait az sc Scanner aktualis poziciojatol.
 	 * @param sc A beolvasast vegzo Scanner
 	 */
-	// pelda fajl teszteleshez: load src/test_data/test_inputs/test_0.in
 	public void load(Scanner sc) {
 		String line = sc.nextLine();
 		while (!line.equals("") & sc.hasNextLine()) {

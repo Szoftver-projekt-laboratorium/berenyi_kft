@@ -2,48 +2,56 @@ package berenyi_kft;
 
 /**
  * A vas nyersanyagot reprezentalja
+ * 
  * @author berenyi_kft
  */
-public class Iron extends Resource{
+public class Iron extends Resource {
 
 	/**
 	 * Osszehasonlitja magat a parameterkent kapott nyersanyaggal a tipusa szerint,
 	 * es visszater az egyezes logikai ertekevel.
+	 * 
 	 * @param r A masik nyersanyag, amelyikkel ezt a nyersanyagot osszehasonlitjuk
 	 * @return Pontosan akkor true, ha r is Iron tipusu nyersanyag
 	 */
 	@Override
 	public boolean isCompatibleWith(Resource r) {
-		// System.out.println("Iron's isCompatibleWith(r: Resource) has been called");
+		/*
+		 * Proto.println(Proto.getId(this) + ".isCompatibleWith("
+		 * + Proto.getId(r) + ")");
+		 */
 		if (this.getClass().equals(r.getClass()))
 			return true;
 		return false;
 	}
-	
+
 	/**
 	 * Visszater a vas nyersanyagegyseg egy klonjaval.
+	 * 
 	 * @return A nyersanyag klonozott masolata
 	 */
 	@Override
 	public Iron clone() {
-		Iron irClone = (Iron)super.clone();
+		Iron irClone = (Iron) super.clone();
 		return irClone;
 	}
-	
+
 	/**
-	 * A vas nyersanyagegyseg egy uj azonositoval eltarolodik
-	 * a Proto osztaly allObjects nyilvantartasaban.
+	 * A vas nyersanyagegyseg egy uj azonositoval eltarolodik a Proto osztaly
+	 * allObjects nyilvantartasaban.
 	 */
 	@Override
 	public void addToGame() {
+		// Proto.println(Proto.getId(this) + ".addToGame()");
 		Proto.getAllObjects().addIron(this);
 	}
-	
+
 	/**
 	 * A vas nyersanyagegyseg megsemmisul, eltunik a jatekbol.
 	 */
 	@Override
 	public void removeFromGame() {
+		// Proto.println(Proto.getId(this) + ".removeFromGame()");
 		Proto.getAllObjects().removeIron(this);
 	}
 }
