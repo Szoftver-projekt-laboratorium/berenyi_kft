@@ -269,6 +269,7 @@ public class Asteroid {
 	 * @param c Az aszteroidara erkezo karakter
 	 */
 	public void accept(Character c) {
+		Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(c) + ")");
 		c.acceptedBy(this);
 	}
 
@@ -279,7 +280,8 @@ public class Asteroid {
 	 * @param c Az ujonnan megerkezett karakter
 	 */
 	public void acceptRegularCharacter(Character c) {
-		Proto.println(Proto.getId(this) + ".acceptRegularCharacter(" + Proto.getId(c) + ")");
+		/* Proto.println(Proto.getId(this)
+			+ ".acceptRegularCharacter(" + Proto.getId(c) + ")"); */
 		characters.add(c);
 	}
 
@@ -291,7 +293,7 @@ public class Asteroid {
 	 * @param s Az aszteroidara erkezo telepes
 	 */
 	public void accept(Settler s) {
-		Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(s) + ")");
+		/* Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(s) + ")"); */
 		characters.add(s);
 		this.checkSpaceBase();
 	}
@@ -387,7 +389,7 @@ public class Asteroid {
 	 * @return
 	 */
 	public void removeResource() {
-		Proto.println(Proto.getId(this) + ".accept()");
+		Proto.println(Proto.getId(this) + ".removeResource()");
 		resource = null;
 	}
 
@@ -439,7 +441,7 @@ public class Asteroid {
 			this.removeResource();
 			this.checkSpaceBase();
 		} else {
-			System.out.println("Asteroid is not drilled!");
+			System.out.println("Asteroid is not drilled or empty.");
 		}
 		Proto.decrTabs();
 	}
