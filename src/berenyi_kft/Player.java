@@ -111,7 +111,8 @@ public class Player {
 					paramsStr += (", " + allParams[i].toString());
 			}
 		}
-		Proto.println(Proto.getId(this) + cmd.toString() + "(" + paramsStr + ")");
+		Proto.println(Proto.getId(this) + "(" + cmd.toString()
+				+ ", [" + paramsStr + "])");
 		Proto.incrTabs();
 		
 		switch (cmd) {
