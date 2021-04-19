@@ -4,56 +4,55 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Aszteroida osztaly: nyersanyagot tartalmazhat,
- * illetve karakterek tartozkodhatnak rajta
+ * Aszteroida osztaly: nyersanyagot tartalmazhat, illetve karakterek
+ * tartozkodhatnak rajta
+ * 
  * @author berenyi_kft
  */
 public class Asteroid {
-	 
-	 /**
-	  * Az aszteroida kopenyvastagsaga,
-	  * vagyis a magot borito sziklaretegek szama
-	  */
-	 private int rockLayerThickness;
-	 
-	 /**
-	  * Referencia a jatekot reprezentalo osztalyra
-	  */
-	 private Game game = null;
-	
-	 /**
-	  * Az aszteroida magjaban talalhato egysegnyi nyersanyag.
-	  * Ha a mag ureges, akkor erteke null
-	  */
-	 private Resource resource = null;
-	 
-	 /**
-	  * Az aszteroidaovben levo Nap
-	  */
-	 private Sun sun = null;
-	 
-	 /**
-	  * Az aszteroidaval szomszedos aszteroidak listaja.
-	  * A teleportkapuk altal szomszedossa valt
-	  * aszteroidakat is magaba foglalja
-	  */
-	 private ArrayList<Asteroid> neighbors = new ArrayList<Asteroid>();
-	 
-	 /**
-	  * Az aszteroidan tartozkodo karakterek
-	  * (telepesek, robotok, stb.) kollekcioja
-	  */
-	 private ArrayList<Character> characters = new ArrayList<Character>();
-	 
-	 /**
-	  * Az aszteroida korul kozvetlenul keringo teleportkapuk kollekcioja
-	  */
-	 private ArrayList<TeleportingGate> gates = new ArrayList<TeleportingGate>();
-	
+
+	/**
+	 * Az aszteroida kopenyvastagsaga, vagyis a magot borito sziklaretegek szama
+	 */
+	private int rockLayerThickness;
+
+	/**
+	 * Referencia a jatekot reprezentalo osztalyra
+	 */
+	private Game game = null;
+
+	/**
+	 * Az aszteroida magjaban talalhato egysegnyi nyersanyag. Ha a mag ureges, akkor
+	 * erteke null
+	 */
+	private Resource resource = null;
+
+	/**
+	 * Az aszteroidaovben levo Nap
+	 */
+	private Sun sun = null;
+
+	/**
+	 * Az aszteroidaval szomszedos aszteroidak listaja. A teleportkapuk altal
+	 * szomszedossa valt aszteroidakat is magaba foglalja
+	 */
+	private ArrayList<Asteroid> neighbors = new ArrayList<Asteroid>();
+
+	/**
+	 * Az aszteroidan tartozkodo karakterek (telepesek, robotok, stb.) kollekcioja
+	 */
+	private ArrayList<Character> characters = new ArrayList<Character>();
+
+	/**
+	 * Az aszteroida korul kozvetlenul keringo teleportkapuk kollekcioja
+	 */
+	private ArrayList<TeleportingGate> gates = new ArrayList<TeleportingGate>();
+
 //------------------------------------------------------------------------
-	 
+
 	/**
 	 * Beallitja az aszteroida attributumait az sc Scanner aktualis poziciojatol.
+	 * 
 	 * @param sc A beolvasast vegzo Scanner
 	 */
 	public void load(Scanner sc) {
@@ -62,509 +61,533 @@ public class Asteroid {
 			line = sc.nextLine();
 			line = line.stripLeading();
 			String[] tokens = line.split("\\s+");
-			
+
 			switch (tokens[0]) {
-				case "rockLayerThickness":
-					rockLayerThickness = Integer.parseInt(tokens[1]);
-					break;
-				
-				case "game":
-					game = (Game)Proto.getObject(tokens[1]);
-					break;
-				
-				case "sun":
-					sun = (Sun)Proto.getObject(tokens[1]);
-					break;
-	
-				case "neighbors":
-					for (int i = 1; i < tokens.length; i++) {
-						Asteroid a = (Asteroid)Proto.getObject(tokens[i]);
-						if (a != null)
-							neighbors.add(a);
-					}
-					break;
-				
-				case "resource":
-					resource = (Resource)Proto.getObject(tokens[1]);
-					break;
-	
-				case "characters":
-					for (int i = 1; i < tokens.length; i++) {
-						Character c = (Character)Proto.getObject(tokens[i]);
-						if (c != null)
-							characters.add(c);
-					}
-					break;
-				
-				case "gates":
-					for (int i = 1; i < tokens.length; i++) {
-						TeleportingGate tg = (TeleportingGate)Proto.getObject(tokens[i]);
-						if (tg != null)
-							gates.add(tg);
-					}
-					break;
-	
-				default:
-					break;
+			case "rockLayerThickness":
+				rockLayerThickness = Integer.parseInt(tokens[1]);
+				break;
+
+			case "game":
+				game = (Game) Proto.getObject(tokens[1]);
+				break;
+
+			case "sun":
+				sun = (Sun) Proto.getObject(tokens[1]);
+				break;
+
+			case "neighbors":
+				for (int i = 1; i < tokens.length; i++) {
+					Asteroid a = (Asteroid) Proto.getObject(tokens[i]);
+					if (a != null)
+						neighbors.add(a);
+				}
+				break;
+
+			case "resource":
+				resource = (Resource) Proto.getObject(tokens[1]);
+				break;
+
+			case "characters":
+				for (int i = 1; i < tokens.length; i++) {
+					Character c = (Character) Proto.getObject(tokens[i]);
+					if (c != null)
+						characters.add(c);
+				}
+				break;
+
+			case "gates":
+				for (int i = 1; i < tokens.length; i++) {
+					TeleportingGate tg = (TeleportingGate) Proto.getObject(tokens[i]);
+					if (tg != null)
+						gates.add(tg);
+				}
+				break;
+
+			default:
+				break;
 			}
 		}
-	}	 	 
-	 
-	 public String getDescription() { 
-			
-			String str="";
-			
-			String id=Proto.getId(this);
-			str+="Asteroid "+id+"\n";
-			
-			String thicknessStr=Integer.toString(rockLayerThickness);
-			str+="\trockLayerThickness "+thicknessStr+"\n";
-			
-			String gameId=Proto.getId(game);
-			str+="\tgame "+gameId+"\n";
-			
-			String sunId=Proto.getId(sun);
-			str+="\tsun "+sunId+"\n";
-			
-			if(!neighbors.isEmpty()) {
-				str+="\tneighbors";
-				for(Asteroid a : neighbors) {
-					String neighborId=Proto.getId(a);
-					str+=" "+neighborId;
-				}
-				str+="\n";
+	}
+
+	public String getDescription() {
+
+		String str = "";
+
+		String id = Proto.getId(this);
+		str += "Asteroid " + id + "\n";
+
+		String thicknessStr = Integer.toString(rockLayerThickness);
+		str += "\trockLayerThickness " + thicknessStr + "\n";
+
+		String gameId = Proto.getId(game);
+		str += "\tgame " + gameId + "\n";
+
+		String sunId = Proto.getId(sun);
+		str += "\tsun " + sunId + "\n";
+
+		if (!neighbors.isEmpty()) {
+			str += "\tneighbors";
+			for (Asteroid a : neighbors) {
+				String neighborId = Proto.getId(a);
+				str += " " + neighborId;
 			}
-			else
-				str+="\tneighbors null\n";
-			
-			String resourceId=Proto.getId(resource);
-			str+="\tresource "+resourceId+"\n";
-			
-			if(!characters.isEmpty()) {
-				str+="\tcharacters";
-				for(Character c : characters) {
-					String characterId=Proto.getId(c);
-					str+=" "+characterId;
-				}
-				str+="\n";
+			str += "\n";
+		} else
+			str += "\tneighbors null\n";
+
+		String resourceId = Proto.getId(resource);
+		str += "\tresource " + resourceId + "\n";
+
+		if (!characters.isEmpty()) {
+			str += "\tcharacters";
+			for (Character c : characters) {
+				String characterId = Proto.getId(c);
+				str += " " + characterId;
 			}
-			else
-				str+="\tcharacters null\n";
-			
-			if(!gates.isEmpty()) {
-				str+="\tgates";
-				for(TeleportingGate tg : gates) {
-					String teleportingGateId=Proto.getId(tg);
-					str+=" "+teleportingGateId;
-				}
-				str+="\n";
+			str += "\n";
+		} else
+			str += "\tcharacters null\n";
+
+		if (!gates.isEmpty()) {
+			str += "\tgates";
+			for (TeleportingGate tg : gates) {
+				String teleportingGateId = Proto.getId(tg);
+				str += " " + teleportingGateId;
 			}
-			else
-				str+="\tgates null\n";
-			
-			return str;	
+			str += "\n";
+		} else
+			str += "\tgates null\n";
+
+		return str;
+	}
+
+	/**
+	 * Hozzaadja a neighbor aszteroidat az aszteroida neighbors kollekciojahoz.
+	 * 
+	 * @param a Az uj szomszedos aszteroida
+	 */
+	public void accept(Asteroid a) {
+		Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(a) + ")");
+		Proto.incrTabs();
+		if (!neighbors.contains(a)) {
+			neighbors.add(a);
 		}
-	 
-	 /**
-	  * Hozzaadja a neighbor aszteroidat az aszteroida neighbors kollekciojahoz.
-	  * @param a Az uj szomszedos aszteroida
-	  */
-	 public void accept(Asteroid a) {
-		 System.out.println("Asteroid's accept(a: Asteroid) has been called");
-		 if (!neighbors.contains(a)) {
-			 neighbors.add(a);
-		 }
-	 }
-	 
-	 /**
-	  * Eltavolitja a neighbor aszteroidat a neighbors kollekciobol.
-	  * @param a Az eltavolitando szomszed aszteroida
-	  */
-	 public void remove(Asteroid a) {
-		 System.out.println("Asteroid's remove(a: Asteroid) has been called");
-		 if (neighbors.contains(a)) {
-			 neighbors.remove(a);
-			 a.remove(this);
-		 }
-	 }
-	 
-	 /**
-	  * Megadja az aszteroida d-edik szomszedjat (az aszteroidahoz tartozo
-	  * teleportkapuk altali szomszedai figyelembevetelevel).
-	  * A d parametert modulo a szomszedok szamaban ertelmezi.
-	  * @param d Az aszteroida adott szomszedjanak sorszama
-	  * 		 (modulo a szomszedok szama)
-	  * @return A d-edik szomszedos aszteroida
-	  */
-	 public Asteroid getNeighbor(int d) {
-		 //System.out.println("Asteroid's getNeighbor(d: int) has been called");
-		 ArrayList<Asteroid> list=new ArrayList<Asteroid>();
-		 list.addAll(neighbors);
-		 for(TeleportingGate tg : gates) {
-			 Asteroid other=tg.getPair().getAsteroid();
-			 if(other!=null) {
-				 list.add(other);
-			 }
-		 }
-		 
-		 if(list.size()!=0) {
-			 d = (d * Integer.signum(d)) % list.size();
-			 Proto.println(Proto.getId(this)+".getNeighbor("+d+")");
-			 return list.get(d);
-		 } else
-			 return null;
-	 }
-	 
-	 /**
-	  * Megadja az aszteroida kopenyvastagsagat.
-	  * @return A kopenyt alkoto sziklaretegek szama
-	  */
-	 public int getRockLayerThickness() {
-		 System.out.println("Asteroid's getRockLayerThickness() has been called");
-		 return rockLayerThickness;
-	 }
-	 
-	 /**
-	  * Beallitja az aszteroida kopenyvastagsagat a parameterertekre.
-	  * @param value A beallitando sziklareteg-vastagsag
-	  */
-	 public void setRockLayerThickness(int value) {
-		 System.out.println("Asteroid's setRockLayerThickness(value: int) has been called");
-		 rockLayerThickness=value;
-	 }
-	 
-	 /**
-	  * Visszaadja az adott aszteroidaval szomszedos aszteroidak kollekciojat, 
-	  * beleertve ebbe az aszteroida teleportkapuk altali szomszedait is.
-	  * @return A szomszedos aszteroidak kollekcioja
-	  */
-	 public ArrayList<Asteroid> getNeighbors(){
-		 System.out.println("Asteroid's getNeighbors() has been called");
-		 return neighbors;
-	 }
-	 
-	 /**
-	  * Hozzaadja a c karaktert az aszteroidahoz;
-	  * az inicializalashoz hasznalando.
-	  * @param c Az uj, hozzaadando karakter
-	  */
-	 public void addCharacter(Character c) {
-		 characters.add(c);
-	 }
-	 
-	 /**
-	  * A c karakter megerkezik az aszteroidara. Az aszteroida
-	  * reagal erre, es jelzi ezt a karakternek az acceptedBy(Asteroid a)
-	  * fuggveny hivasaval. A karakter ezutan specializalt mukodest
-	  * valosithat meg az aszteroidara erkezeskor.
-	  * @param c Az aszteroidara erkezo karakter
-	  */
-	 public void accept(Character c) {
-		 c.acceptedBy(this);
-	 }
-	 
-	 /**
-	  * A karakter megerkezik az aszteroidara, az aszteroida hozzaadja
-	  * a characters listaja vegere.
-	  * @param c Az ujonnan megerkezett karakter
-	  */
-	 public void acceptRegularCharacter(Character c) {
-		 System.out.println("Asteroid's acceptRegularCharacter(c: Character) has been called");
-		 characters.add(c);
-	 }
-	 
-	 /**
-	  * Az s telepes megerkezik az aszteroidara, es az
-	  * aszteroida hozzaadja a characters kollekciojahoz.
-	  * Az aszteroida ezutan ellenorzi az urbazishoz szukseges
-	  * nyersanyagok megletet, (mivel az erkezessel ez lehetseges).
-	  * @param s Az aszteroidara erkezo telepes
-	  */
-	 public void accept(Settler s) {
-		 System.out.println("Asteroid's accept(s: Settler) has been called");
-		 characters.add(s);
-		 this.checkSpaceBase();
-	 }
-	 
-	 /**
-	  * A c karakter elhagyja az aszteroidat, az aszteroida 
-	  * eltavolitja a characters kollekciojabol.
-	  * @param c Az aszteroidarol tovamozgo karakter
-	  */
-	 public void remove(Character c) {
-		 System.out.println("Asteroid's remove(c: Character) has been called");
-		 characters.remove(c);
-	 }
-	 
-	 /**
-	  * Visszaadja az adott aszteroidan tartozkodo karakterek kollekciojat
-	  * (akar a felszinen, akar a megfurt ureges magban tartozkodnak).
-	  * @return Az aszteroidan levo karakterek kollekcioja
-	  */
-	 public ArrayList<Character> getCharacters() {
-		 System.out.println("Asteroid's getCharacters() has been called");
-		 return characters;
-	 }
-	 
-	 /**
-	  * A tg teleportkapu palyara all az aszteroida korul, 
-	  * az aszteroida hozzaadja a gates kollekciojahoz.
-	  * Ezzel uj szomszedsag is letrejohet ket aszteroida kozott.
-	  * @param tg A palyara allitott teleportkapu
-	  */
-	 public void accept(TeleportingGate tg) {
-		 System.out.println("Asteroid's accept(tg: TeleportingGate) has been called");
-		 gates.add(tg);
-		 tg.setAsteroid(this);
-	 }
-	 
-	 /**
-	  * A tg teleportkaput eltavolitja az aszteroida koruli palyarol, 
-	  * az aszteroida torli a gates kollekciojabol. 
-	  * @param tg A torolt teleportkapu
-	  */
-	 public void remove(TeleportingGate tg) {
-		 System.out.println("Asteroid's remove(tg: TeleportingGate) has been called");
-		 gates.remove(tg);
-	 }
-	 
-	 /**
-	  * Visszaadja az adott aszteroida korul keringo teleportkapukat.
-	  * @return Az aszteroidahoz tartozo teleportkapuk listaja
-	  */
-	 public ArrayList<TeleportingGate> getGates(){
-		 System.out.println("Asteroid's getGates() has been called");
-		 return gates;
-	 }
-	 
-	 /**
-	  * Egy az aszteroidan tartozkodo telepes behelyezi az r nyersanyagot 
-	  * az aszteroida megfurt ureges magjaba, az aszteroida azt beallitja
-	  * resource attributumanak. Ha az aszteroida meg napkozelben is van,
-	  * akkor a resource nyersanyagon meghivja a drilledOut(Asteroid a) fuggvenyt.
-	  * 
-	  * Ha a parameterul kapott r erteke null, akkor a fuggvenynek nincs hatasa, 
-	  * a resource attributumot nem irja felul.
-	  * @param s A nyersanyagot visszatolto telepes
-	  * @param r A visszatoltott nyersanyagegyseg
-	  */
-	 public void accept(Settler s, Resource r) {
-		// System.out.println("Asteroid's accept(s: Settler, r: Resource) has been called");
-		 Proto.println(Proto.getId(this)+".accept(Settler s, Resource r)");
-		 Proto.incrTabs();
-		 if (this.isMined()) {
-			 resource = r;
-			 s.remove(r);
-			 if (sun.isCloseToSun(this)) {
-				 resource.drilledOut(this);
-			 }
-		 }
-		 Proto.decrTabs();
-	 }
-	 
-	 /**
-	  * A magban talalhato nyersanyag eltavolitodik az aszteroidabol (peldaul
-	  * banyaszas hatasara). Az aszteroida a resource attributumat null-ra allitja.
-	  * Ha kezdetben resource erteke null volt, a fuggvenynek nincs mellekhatasa.
-	  * @return
-	  */
-	 public void removeResource() {
-		 System.out.println("Asteroid's removeResource() has been called");
-		 resource = null;
-	 }
-	 
-	 /**
-	  * Visszaadja az adott aszteroida magjaban talalhato nyersanyagot.
-	  * @return A magban talalhato nyersanyagegyseg
-	  */
-	 public Resource getResource() {
-		 System.out.println("Asteroid's getResource() has been called");
-		 return resource;
-	 }
-	 
-	 /**
-	  * Az aszteroida rockLayerThickness attributumat eggyel csokkenti, 
-	  * amennyiben az pozitiv volt.
-	  * Ha ezutan a kopenyvastagsag 0, es a resource attributuma nem null,
-	  * akkor a sun objektum isCloseTo(Asteroid a) fuggvenyevel lekerdezi,
-	  * hogy napkozelben talalhato-e. 
-	  * Ha igen, akkor meghivja a resource nyersanyag drilledOut() fuggvenyet,
-	  * jelezve, hogy napkozeli aszteroidan felszinre kerult.
-	  */
-	 public void drilled() {
-		 Proto.println(Proto.getId(this)+".drilled()");
-		 Proto.incrTabs();
-		// System.out.println("Asteroid's drilled() has been called");
-		 if (rockLayerThickness >= 1) {
-			 rockLayerThickness--;
-			 if (rockLayerThickness==0 && resource!=null && sun.isCloseToSun(this)) {
-				 resource.drilledOut(this);
-			 }
-		 }
-		 Proto.decrTabs();
-	 }
-	 
-	 /**
-	  * Az s telepes banyaszik az aszteroidan. Ha az aszteroida kopenyvastagsaga nem 0,
-	  * akkor a fuggvenynek nincs hatasa. Ha a kopenyvastagsag 0, es az aszteroida
-	  * resource attributuma nem null, akkor eltavolitja azt a magjabol (removeResource()),
-	  * es eltaroltatja azt az s telepessel (s.accept(resource)).
-	  * Ezenkivul meghivja a checkSpaceBase() metodust, (mivel a banyaszat hatasara
-	  * osszegyulhetett az urbazishoz szukseges nyersanyagmennyiseg az aszteroidan).
-	  * @param s
-	  */
-	 public void minedBy(Settler s) {
-		 Proto.println(Proto.getId(this)+".minedBy(Settler s)");
-		 Proto.incrTabs();
-		 //System.out.println("Asteroid's minedBy() has been called");
-		 if (rockLayerThickness == 0 && resource != null) {
-			 s.accept(resource);
-			 this.removeResource();
-			 this.checkSpaceBase();
-		 }else {
-			 System.out.println("Asteroid is not drilled!");
-		 }
-		 Proto.decrTabs();
-	 }
-	 
-	 /**
-	  * Visszater annak logikai ertekevel, hogy az aszteroida megfurt es ureges.
-	  * @return Pontosan akkor igaz, ha az aszteroida kopenyvastagsaga 0,
-	  * 		es a resource attributuma null.
-	  */
-	 public boolean isMined() {
-		 System.out.println("Asteroid's isMined() has been called");
-		 return (this.rockLayerThickness == 0 && this.resource == null) ? true : false;
-	 }
-	 
-	 /**
-	  * A megfurt, napkozelben levo, radioaktiv nyersanyagot tartalmazo 
-	  * aszteroida felrobban. Minden rajta tartozkodo karakternek meghivja
-	  * a reactToExplosion() fuggvenyet.
-	  * Ezutan a szomszedain a remove(Asteroid neighbor) fuggvenyt hivja,
-	  * amivel torli magat a szomszedai szomszedsagi listaibol, majd megsemmisiti
-	  * a korulotte keringo teleportkapukat a parjaikkal egyutt.
-	  * Vegul eltavolitja magat a jatekbol a Game osztaly
-	  * removeAsteroid(Asteroid a) fuggvenyet hivva.
-	  * @param rr
-	  */
-	 public void explodedBy(RadioactiveResource rr) {
-		// System.out.println("Asteroid's explodedBy(rr: RadioactiveResource) has been called");
-		// Az aszteroida torolje a robbanoanyagot,
-		 // mert igy latszodik minden fuggvenyhivas.
-		 resource.removeFromGame();
-		 
-		 for (int i = characters.size()-1; i >= 0; i--) {
-			 characters.get(i).reactToExplosion();
-		 }
-		 for(int i = gates.size()-1; i>=0; i--) {
-			 gates.get(i).die();
-		 }
-		 for (int i = neighbors.size() - 1; i >= 0; i--) {
-			 neighbors.get(i).remove(this);
-		 }
-		 
-		 game.removeAsteroid(this);
-		 Proto.getAllObjects().removeAsteroid(this);
-	 }
-	 
-	 /**
-	  * Az aszteroidan vegigsopor a napvihar. Ha az aszteroida 
-	  * nincs megfurva vagy a mag nem ureges (isMined()==false), akkor
-	  * a fuggveny meghivja az aszteroidan tartozkodo karakterek die() fuggvenyet.
-	  */
-	 public void destroySurface() {
-		 System.out.println("Asteroid's destroySurface() has been called");
-		 if (!this.isMined()) {
-			 for (int i = characters.size()-1;i>=0;i--) {
-				 characters.get(i).die();
-			 } 
-		 }
-		 
-		 for(TeleportingGate tg: gates) {
-			 tg.goMad();
-		 }
-	 }
-	 
-	 /**
-	  * Ellenorzi, hogy az adott aszteroidan levo telepeseknel 
-	  * rendelkezesre all-e az urbazis felepitesehez szukseges nyersanyagmennyiseg.
-	  * Ha igen, akkor meghivja a Game endGame() metodusat.
-	  */
-	 public void checkSpaceBase() {
-		 System.out.println("Asteroid's checkSpaceBase() has been called");
-		 ArrayList<Resource> temp = new ArrayList<Resource>();
-		 for (Character c: characters) {
-			 temp.addAll(c.getCollectedResources());
-		 }
-		 
-		 // Nem hasznalt lehetseges alternativa:
-		 // a megfurt magban levo nyersanyag is szamit.
-		 /* if (rockLayerThickness == 0) {
-			 temp.add(resource);
-		 }*/
-		 
-		 Recipe recipe = game.getSpaceBaseRecipe();
-		 for (Resource r : temp) {
-			 if (recipe.isEmpty()) {
-				 break;
-			 }
-			 recipe.isNeeded(r);
-		 }
-		 
-		 if (recipe.isEmpty()) {
-			 game.endGame();
-		 }
-		 recipe.reset(); 
-	 }
-	 
-	 /**
-	  * Beallitja a magban talalhato nyersanyagot (az inicializalashoz hasznalando).
-	  * @param r A magba beallitando nyersanyag.
-	  * 		 Ha null, akkor az aszteroida ureges lesz.
-	  */
-	 public void addResource(Resource r) {
-		 System.out.println("Asteroid's addResource(r: Resource) has been called");
-		 resource = r;
-	 }
-	 
-	 /**
-	  * Beallitja a jatek osztalyt.
-	  * @param g A jatekot reprezentalo osztaly
-	  */
-	 public void setGame(Game g) {
-		 System.out.println("Asteroid's setGame(g: Game) has been called");
-		 game = g;
-	 }
-	 
-	 /**
-	  * Beallitja a jatekban levo Napot.
-	  * @param s A beallitando Nap
-	  */
-	 public void setSun(Sun s) {
-		 System.out.println("Asteroid's setSun(s: Sun) has been called");
-		 sun = s;
-	 }
-	 
-	 public Sun getSun() {
-		 return sun;
-	 }
-	 
-	 /**
-	  * Az aszteroidat UFO probalja banyaszni. Ha az aszteroida
-	  * meg van furva (es van benne nyersanyag), akkor a benne levo
-	  * nyersanyagegyseg eltunik a jatekbol.
-	  */
-	 public void minedByUFO() {
-		 System.out.println("Asteroid's minedByUFO() has been called");
-		 if (rockLayerThickness==0 && resource!=null) {
-			 Resource r = resource;
-			 this.removeResource();
-			 r.removeFromGame();
-		 }
-	 }
-	 
-	 public ArrayList<Asteroid> getNeighboringAsteroids(){
-		 return neighbors;
-	 }
+		Proto.decrTabs();
+	}
+
+	/**
+	 * Eltavolitja a neighbor aszteroidat a neighbors kollekciobol.
+	 * 
+	 * @param a Az eltavolitando szomszed aszteroida
+	 */
+	public void remove(Asteroid a) {
+		Proto.println(Proto.getId(this) + ".remove(" + Proto.getId(a) + ")");
+		Proto.incrTabs();
+		if (neighbors.contains(a)) {
+			neighbors.remove(a);
+			a.remove(this);
+		}
+		Proto.decrTabs();
+	}
+
+	/**
+	 * Megadja az aszteroida d-edik szomszedjat (az aszteroidahoz tartozo
+	 * teleportkapuk altali szomszedai figyelembevetelevel). A d parametert modulo a
+	 * szomszedok szamaban ertelmezi.
+	 * 
+	 * @param d Az aszteroida adott szomszedjanak sorszama (modulo a szomszedok
+	 *          szama)
+	 * @return A d-edik szomszedos aszteroida
+	 */
+	public Asteroid getNeighbor(int d) {
+		ArrayList<Asteroid> list = new ArrayList<Asteroid>();
+		list.addAll(neighbors);
+		for (TeleportingGate tg : gates) {
+			Asteroid other = tg.getPair().getAsteroid();
+			if (other != null) {
+				list.add(other);
+			}
+		}
+
+		if (list.size() != 0) {
+			d = (d * Integer.signum(d)) % list.size();
+			Proto.println(Proto.getId(this) + ".getNeighbor(" + d + ")");
+			return list.get(d);
+		} else
+			return null;
+	}
+
+	/**
+	 * Megadja az aszteroida kopenyvastagsagat.
+	 * 
+	 * @return A kopenyt alkoto sziklaretegek szama
+	 */
+	public int getRockLayerThickness() {
+		Proto.println(rockLayerThickness + " <-" + Proto.getId(this) + ".getRockLayerThickness()");
+		return rockLayerThickness;
+	}
+
+	/**
+	 * Beallitja az aszteroida kopenyvastagsagat a parameterertekre.
+	 * 
+	 * @param value A beallitando sziklareteg-vastagsag
+	 */
+	public void setRockLayerThickness(int thickness) {
+		Proto.println(Proto.getId(this) + ".setRockLayerThickness(" + thickness + ")");
+		if (thickness > 5)
+			thickness = 5;
+		else if (thickness < 0)
+			thickness = 0;
+		rockLayerThickness = thickness;
+	}
+
+	/**
+	 * Visszaadja az adott aszteroidaval szomszedos aszteroidak kollekciojat,
+	 * beleertve ebbe az aszteroida teleportkapuk altali szomszedait is.
+	 * 
+	 * @return A szomszedos aszteroidak kollekcioja
+	 */
+	public ArrayList<Asteroid> getNeighbors() {
+		// Proto.println(Proto.getId(this)+".getNeighbors()");
+		return neighbors;
+	}
+
+	/**
+	 * Hozzaadja a c karaktert az aszteroidahoz; az inicializalashoz hasznalando.
+	 * 
+	 * @param c Az uj, hozzaadando karakter
+	 */
+	public void addCharacter(Character c) {
+		characters.add(c);
+	}
+
+	/**
+	 * A c karakter megerkezik az aszteroidara. Az aszteroida reagal erre, es jelzi
+	 * ezt a karakternek az acceptedBy(Asteroid a) fuggveny hivasaval. A karakter
+	 * ezutan specializalt mukodest valosithat meg az aszteroidara erkezeskor.
+	 * 
+	 * @param c Az aszteroidara erkezo karakter
+	 */
+	public void accept(Character c) {
+		c.acceptedBy(this);
+	}
+
+	/**
+	 * A karakter megerkezik az aszteroidara, az aszteroida hozzaadja a characters
+	 * listaja vegere.
+	 * 
+	 * @param c Az ujonnan megerkezett karakter
+	 */
+	public void acceptRegularCharacter(Character c) {
+		Proto.println(Proto.getId(this) + ".acceptRegularCharacter(" + Proto.getId(c) + ")");
+		characters.add(c);
+	}
+
+	/**
+	 * Az s telepes megerkezik az aszteroidara, es az aszteroida hozzaadja a
+	 * characters kollekciojahoz. Az aszteroida ezutan ellenorzi az urbazishoz
+	 * szukseges nyersanyagok megletet, (mivel az erkezessel ez lehetseges).
+	 * 
+	 * @param s Az aszteroidara erkezo telepes
+	 */
+	public void accept(Settler s) {
+		Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(s) + ")");
+		characters.add(s);
+		this.checkSpaceBase();
+	}
+
+	/**
+	 * A c karakter elhagyja az aszteroidat, az aszteroida eltavolitja a characters
+	 * kollekciojabol.
+	 * 
+	 * @param c Az aszteroidarol tovamozgo karakter
+	 */
+	public void remove(Character c) {
+		Proto.println(Proto.getId(this) + ".remove(" + Proto.getId(c) + ")");
+		characters.remove(c);
+	}
+
+	/**
+	 * Visszaadja az adott aszteroidan tartozkodo karakterek kollekciojat (akar a
+	 * felszinen, akar a megfurt ureges magban tartozkodnak).
+	 * 
+	 * @return Az aszteroidan levo karakterek kollekcioja
+	 */
+	public ArrayList<Character> getCharacters() {
+		Proto.println(Proto.getId(this) + ".getCharacters()");
+		return characters;
+	}
+
+	/**
+	 * A tg teleportkapu palyara all az aszteroida korul, az aszteroida hozzaadja a
+	 * gates kollekciojahoz. Ezzel uj szomszedsag is letrejohet ket aszteroida
+	 * kozott.
+	 * 
+	 * @param tg A palyara allitott teleportkapu
+	 */
+	public void accept(TeleportingGate tg) {
+		Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(tg) + ")");
+		Proto.incrTabs();
+		gates.add(tg);
+		tg.setAsteroid(this);
+		Proto.decrTabs();
+	}
+
+	/**
+	 * A tg teleportkaput eltavolitja az aszteroida koruli palyarol, az aszteroida
+	 * torli a gates kollekciojabol.
+	 * 
+	 * @param tg A torolt teleportkapu
+	 */
+	public void remove(TeleportingGate tg) {
+		Proto.println(Proto.getId(this) + ".remove(" + Proto.getId(tg) + ")");
+		gates.remove(tg);
+	}
+
+	/**
+	 * Visszaadja az adott aszteroida korul keringo teleportkapukat.
+	 * 
+	 * @return Az aszteroidahoz tartozo teleportkapuk listaja
+	 */
+	public ArrayList<TeleportingGate> getGates() {
+		System.out.println("Asteroid's getGates() has been called");
+		return gates;
+	}
+
+	/**
+	 * Egy az aszteroidan tartozkodo telepes behelyezi az r nyersanyagot az
+	 * aszteroida megfurt ureges magjaba, az aszteroida azt beallitja resource
+	 * attributumanak. Ha az aszteroida meg napkozelben is van, akkor a resource
+	 * nyersanyagon meghivja a drilledOut(Asteroid a) fuggvenyt.
+	 * 
+	 * Ha a parameterul kapott r erteke null, akkor a fuggvenynek nincs hatasa, a
+	 * resource attributumot nem irja felul.
+	 * 
+	 * @param s A nyersanyagot visszatolto telepes
+	 * @param r A visszatoltott nyersanyagegyseg
+	 */
+	public void accept(Settler s, Resource r) {
+		Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(s) + ", " + Proto.getId(r) + ")");
+		Proto.incrTabs();
+		if (this.isMined()) {
+			resource = r;
+			s.remove(r);
+			if (sun.isCloseToSun(this)) {
+				resource.drilledOut(this);
+			}
+		}
+		Proto.decrTabs();
+	}
+
+	/**
+	 * A magban talalhato nyersanyag eltavolitodik az aszteroidabol (peldaul
+	 * banyaszas hatasara). Az aszteroida a resource attributumat null-ra allitja.
+	 * Ha kezdetben resource erteke null volt, a fuggvenynek nincs mellekhatasa.
+	 * 
+	 * @return
+	 */
+	public void removeResource() {
+		Proto.println(Proto.getId(this) + ".accept()");
+		resource = null;
+	}
+
+	/**
+	 * Visszaadja az adott aszteroida magjaban talalhato nyersanyagot.
+	 * 
+	 * @return A magban talalhato nyersanyagegyseg
+	 */
+	public Resource getResource() {
+		Proto.println(Proto.getId(this) + ".getResource()");
+		return resource;
+	}
+
+	/**
+	 * Az aszteroida rockLayerThickness attributumat eggyel csokkenti, amennyiben az
+	 * pozitiv volt. Ha ezutan a kopenyvastagsag 0, es a resource attributuma nem
+	 * null, akkor a sun objektum isCloseTo(Asteroid a) fuggvenyevel lekerdezi, hogy
+	 * napkozelben talalhato-e. Ha igen, akkor meghivja a resource nyersanyag
+	 * drilledOut() fuggvenyet, jelezve, hogy napkozeli aszteroidan felszinre
+	 * kerult.
+	 */
+	public void drilled() {
+		Proto.println(Proto.getId(this) + ".drilled()");
+		Proto.incrTabs();
+		if (rockLayerThickness >= 1) {
+			rockLayerThickness--;
+			if (rockLayerThickness == 0 && resource != null && sun.isCloseToSun(this)) {
+				resource.drilledOut(this);
+			}
+		}
+		Proto.decrTabs();
+	}
+
+	/**
+	 * Az s telepes banyaszik az aszteroidan. Ha az aszteroida kopenyvastagsaga nem
+	 * 0, akkor a fuggvenynek nincs hatasa. Ha a kopenyvastagsag 0, es az aszteroida
+	 * resource attributuma nem null, akkor eltavolitja azt a magjabol
+	 * (removeResource()), es eltaroltatja azt az s telepessel (s.accept(resource)).
+	 * Ezenkivul meghivja a checkSpaceBase() metodust, (mivel a banyaszat hatasara
+	 * osszegyulhetett az urbazishoz szukseges nyersanyagmennyiseg az aszteroidan).
+	 * 
+	 * @param s
+	 */
+	public void minedBy(Settler s) {
+		Proto.println(Proto.getId(this) + ".minedBy(" + Proto.getId(s) + ")");
+		Proto.incrTabs();
+		if (rockLayerThickness == 0 && resource != null) {
+			s.accept(resource);
+			this.removeResource();
+			this.checkSpaceBase();
+		} else {
+			System.out.println("Asteroid is not drilled!");
+		}
+		Proto.decrTabs();
+	}
+
+	/**
+	 * Visszater annak logikai ertekevel, hogy az aszteroida megfurt es ureges.
+	 * 
+	 * @return Pontosan akkor igaz, ha az aszteroida kopenyvastagsaga 0, es a
+	 *         resource attributuma null.
+	 */
+	public boolean isMined() {
+		String ismined = (this.rockLayerThickness == 0 && this.resource == null) ? "true" : "false";
+		Proto.println(ismined + " <- " + Proto.getId(this) + ".isMined()");
+		return (this.rockLayerThickness == 0 && this.resource == null) ? true : false;
+	}
+
+	/**
+	 * A megfurt, napkozelben levo, radioaktiv nyersanyagot tartalmazo aszteroida
+	 * felrobban. Minden rajta tartozkodo karakternek meghivja a reactToExplosion()
+	 * fuggvenyet. Ezutan a szomszedain a remove(Asteroid neighbor) fuggvenyt hivja,
+	 * amivel torli magat a szomszedai szomszedsagi listaibol, majd megsemmisiti a
+	 * korulotte keringo teleportkapukat a parjaikkal egyutt. Vegul eltavolitja
+	 * magat a jatekbol a Game osztaly removeAsteroid(Asteroid a) fuggvenyet hivva.
+	 * 
+	 * @param rr
+	 */
+	public void explodedBy(RadioactiveResource rr) {
+		Proto.println(Proto.getId(this) + ".explodedBy(" + Proto.getId(rr) + ")");
+		Proto.incrTabs();
+		resource.removeFromGame();
+
+		for (int i = characters.size() - 1; i >= 0; i--) {
+			characters.get(i).reactToExplosion();
+		}
+		for (int i = gates.size() - 1; i >= 0; i--) {
+			gates.get(i).die();
+		}
+		for (int i = neighbors.size() - 1; i >= 0; i--) {
+			neighbors.get(i).remove(this);
+		}
+
+		game.removeAsteroid(this);
+		Proto.getAllObjects().removeAsteroid(this);
+		Proto.decrTabs();
+	}
+
+	/**
+	 * Az aszteroidan vegigsopor a napvihar. Ha az aszteroida nincs megfurva vagy a
+	 * mag nem ureges (isMined()==false), akkor a fuggveny meghivja az aszteroidan
+	 * tartozkodo karakterek die() fuggvenyet.
+	 */
+	public void destroySurface() {
+		Proto.println(Proto.getId(this) + ".destroySurface()");
+		if (!this.isMined()) {
+			for (int i = characters.size() - 1; i >= 0; i--) {
+				characters.get(i).die();
+			}
+		}
+
+		for (TeleportingGate tg : gates) {
+			tg.goMad();
+		}
+	}
+
+	/**
+	 * Ellenorzi, hogy az adott aszteroidan levo telepeseknel rendelkezesre all-e az
+	 * urbazis felepitesehez szukseges nyersanyagmennyiseg. Ha igen, akkor meghivja
+	 * a Game endGame() metodusat.
+	 */
+	public void checkSpaceBase() {
+		Proto.println(Proto.getId(this) + ".checkSpaceBase()");
+		Proto.incrTabs();
+		ArrayList<Resource> temp = new ArrayList<Resource>();
+		for (Character c : characters) {
+			temp.addAll(c.getCollectedResources());
+		}
+
+		// Nem hasznalt lehetseges alternativa:
+		// a megfurt magban levo nyersanyag is szamit.
+		/*
+		 * if (rockLayerThickness == 0) { temp.add(resource); }
+		 */
+
+		Recipe recipe = game.getSpaceBaseRecipe();
+		for (Resource r : temp) {
+			if (recipe.isEmpty()) {
+				break;
+			}
+			recipe.isNeeded(r);
+		}
+
+		if (recipe.isEmpty()) {
+			game.endGame();
+		}
+		recipe.reset();
+		Proto.decrTabs();
+	}
+
+	/**
+	 * Beallitja a magban talalhato nyersanyagot (az inicializalashoz hasznalando).
+	 * 
+	 * @param r A magba beallitando nyersanyag. Ha null, akkor az aszteroida ureges
+	 *          lesz.
+	 */
+	public void addResource(Resource r) {
+		// System.out.println("Asteroid's addResource(r: Resource) has been called");
+		resource = r;
+	}
+
+	/**
+	 * Beallitja a jatek osztalyt.
+	 * 
+	 * @param g A jatekot reprezentalo osztaly
+	 */
+	public void setGame(Game g) {
+		game = g;
+	}
+
+	/**
+	 * Beallitja a jatekban levo Napot.
+	 * 
+	 * @param s A beallitando Nap
+	 */
+	public void setSun(Sun s) {
+		sun = s;
+	}
+
+	public Sun getSun() {
+		return sun;
+	}
+
+	/**
+	 * Az aszteroidat UFO probalja banyaszni. Ha az aszteroida meg van furva (es van
+	 * benne nyersanyag), akkor a benne levo nyersanyagegyseg eltunik a jatekbol.
+	 */
+	public void minedByUFO() {
+		Proto.println(Proto.getId(this) + ".minedByUFO()");
+		Proto.incrTabs();
+		if (rockLayerThickness == 0 && resource != null) {
+			Resource r = resource;
+			this.removeResource();
+			r.removeFromGame();
+		}
+		Proto.decrTabs();
+	}
+
+	public ArrayList<Asteroid> getNeighboringAsteroids() {
+		Proto.println(Proto.getId(this) + ".getNeighboringAsteroids()");
+		return neighbors;
+	}
 }

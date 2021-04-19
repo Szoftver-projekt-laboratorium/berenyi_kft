@@ -102,6 +102,9 @@ public class Game {
 	 * Beallitja az aszteroidak szomszedsagi viszonyait is.
 	 */
 	public void startGame() {
+		Proto.println(Proto.getId(this) + ".startGame()");
+		Proto.incrTabs();
+		
 		Random random = new Random();
 		
 		/* A Controller es a Playerek mar be vannak allitva,
@@ -238,6 +241,7 @@ public class Game {
 			ufo.setPlace(a);
 			Proto.getAllObjects().addUFO(ufo);
 		}
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -246,7 +250,8 @@ public class Game {
 	 * esetben a telepesek veresegerol szolo uzenetet jelenit meg.
 	 */
 	public void endGame() {
-		System.out.println("Game's endGame() has been called");
+		Proto.println(Proto.getId(this) + ".endGame()");
+		Proto.incrTabs();
 		Controller controller = Proto.getAllObjects().getController();
 		if (settlersAlive.size() > 0) {
 			System.out.println("A telepesek nyertek, felepult az urbazis!");
@@ -254,7 +259,8 @@ public class Game {
 		} else {
 			System.out.println("A telepesek vesztettek, mindegyikuk meghalt.");
 			controller.endGame(State.LOST);
-		}	
+		}
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -263,13 +269,16 @@ public class Game {
 	 * @param s A meghalo telepes
 	 */
 	public void removeSettler(Settler s) {
-		System.out.println("Game's removeSettler(s: Settler) has been called");
+		Proto.println(Proto.getId(this) + ".removeSettler("
+				+ Proto.getId(s) + ")");
+		Proto.incrTabs();
 		settlersAlive.remove(s);
 		Proto.getAllObjects().getController().removePlayer(s);
 		Proto.getAllObjects().removeSettler(s);
 		if (settlersAlive.isEmpty()) {
 			endGame();
 		}
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -277,7 +286,8 @@ public class Game {
 	 * @param a A megsemmisulo aszteroida
 	 */
 	public void removeAsteroid(Asteroid a) {
-		System.out.println("Game's removeAsteroid(a: Asteroid) has been called");
+		Proto.println(Proto.getId(this) + ".removeAsteroid("
+				+ Proto.getId(a) + ")");
 		asteroids.remove(a);
 	}
 	
@@ -295,7 +305,8 @@ public class Game {
 	 * @param recipe Az uj recept
 	 */
 	public void addRecipe(Recipe recipe) {
-		System.out.println("Game's addRecipe(r: Recipe) has been called");
+		Proto.println(Proto.getId(this) + ".addRecipe("
+				+ Proto.getId(recipe) + ")");
 		recipes.add(recipe);		
 	}
 	
@@ -305,7 +316,7 @@ public class Game {
 	 * @return Az AIRobot epitesehez szukseges nyersanyagok receptje
 	 */
 	public Recipe getAIRobotRecipe() {
-		System.out.println("Game's getAIRobotRecipe() has been called");
+		Proto.println(Proto.getId(this) + ".getAIRobotRecipe()");
 		return recipes.get(0);
 	}
 	
@@ -315,7 +326,7 @@ public class Game {
 	 * @return A teleportkapu-par epitesehez szukseges nyersanyagok receptje
 	 */
 	public Recipe getGatePairRecipe() {
-		System.out.println("Game's getGatePairRecipe() has been called");
+		Proto.println(Proto.getId(this) + ".getGatePairRecipe()");
 		return recipes.get(1);
 	}
 	
@@ -325,7 +336,7 @@ public class Game {
 	 * @return Az urbazis megepitesehez szukseges nyersanyagok receptje
 	 */
 	public Recipe getSpaceBaseRecipe() {
-		System.out.println("Game's getSpceBaseRecipe() has been called");
+		Proto.println(Proto.getId(this) + ".getSpaceBaseRecipe()");
 		return recipes.get(2);
 	}
 	
@@ -334,7 +345,6 @@ public class Game {
 	 * @return A jatek idozitoje
 	 */
 	public Timer getTimer() {
-		System.out.println("Game's getTimer() has been called");
 		return timer;
 	}
 	
@@ -343,7 +353,6 @@ public class Game {
 	 * @param timer A beallitando idozito
 	 */
 	public void setTimer(Timer timer) {
-		System.out.println("Game's setTimer(Timer timer) has been called");
 		this.timer = timer;
 	}
 	
@@ -352,7 +361,8 @@ public class Game {
 	 * @param s Az uj telepes
 	 */
 	public void addSettler(Settler s) {
-		System.out.println("Game's addSettler(s: Settler) has been called");
+		Proto.println(Proto.getId(this) + ".addSettler("
+				+ Proto.getId(s) + ")");
 		settlersAlive.add(s);
 	}
 	
@@ -361,7 +371,8 @@ public class Game {
 	 * @param a Az uj aszteroida
 	 */
 	public void addAsteroid(Asteroid a) {
-		System.out.println("Game's addAsteroid(a: Asteroid) has been called");
+		Proto.println(Proto.getId(this) + ".addAsteroid("
+				+ Proto.getId(a) + ")");
 		asteroids.add(a);
 	}
 	
@@ -378,6 +389,7 @@ public class Game {
 	 * Megadja a jatekban levo telepesek szamat.
 	 * @return Az elo telepesek szama
 	 */
+	// Csak a szkeletonhoz volt szukseges.
 	public int getSizeOfSettlersAlive() {
 		System.out.println("Game's getSizeOfSettlersAlive() has been called");
 		return this.settlersAlive.size();

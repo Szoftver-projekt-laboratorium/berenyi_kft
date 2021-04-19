@@ -40,6 +40,8 @@ public class Controller {
 	 * @param state Az uj jatekallapot
 	 */
 	public void setState(State state) {
+		Proto.println(Proto.getId(this) + ".setState("
+				+ state.toString() + ")");
 		if (Proto.isLogging()) {
 			System.out.println("State: " + State.toString(state));
 		}
@@ -83,6 +85,8 @@ public class Controller {
 	 * @param sc Scanner, amellyel a jatekosok adatait beolvassa
 	 */
 	public void startGame(Scanner sc) throws IllegalArgumentException {
+		Proto.println(Proto.getId(this) + ".startGame()");
+		Proto.incrTabs();
 		// Jatekosok szamanak beolvasasa
 		System.out.print("Give the number of players: ");
 		int numPlayers = Integer.parseInt(sc.nextLine());
@@ -121,6 +125,8 @@ public class Controller {
 		// Idozites inditasa
 		setState(State.RUNNING);
 		game.getTimer().start();
+		
+		Proto.decrTabs();
 	}	
 	
 	/**
@@ -128,6 +134,8 @@ public class Controller {
 	 * @param state A jatek allapota
 	 */
 	public void endGame(State state) {
+		Proto.println(Proto.getId(this) + ".endGame("
+				+ state.toString() + ")");
 		setState(state);
 		if (state == State.WON)
 			System.out.println("Settlers won");
@@ -149,6 +157,7 @@ public class Controller {
 	 * Beallitja a soron kovetkezo jatekost az actPlayer helyere.
 	 */
 	public void nextPlayer() {
+		Proto.println(Proto.getId(this) + ".nextPlayer()");
 		// TODO: Steppable leptetes
 		// game.getTimer().tick();
 		
@@ -167,8 +176,14 @@ public class Controller {
 		}
 	}
 	
-	/*Torli a parameterkent kapott Settlerhez tartozo jatekost*/
+	/**
+	 * Torli a parameterkent kapott Settlerhez tartozo jatekost.
+	 * @param s A telepes, akinek a jatekosa szamara a jatek veget er
+	 */
 	public void removePlayer(Settler s) {
+		Proto.println(Proto.getId(this) + ".removePlayer("
+				+ Proto.getId(s) + ")");
+		Proto.incrTabs();
 		if (!this.playersAlive.isEmpty()) {
 			for (int i = playersAlive.size() - 1; i >= 0; i--) {
 				if (playersAlive.get(i).getSettler() == s) {
@@ -178,13 +193,13 @@ public class Controller {
 				}
 			}
 		}
+		Proto.decrTabs();
 	}
 	
 	/**
 	 * Beolvassa a jatek attributumait az sc Scanner aktualis poziciojatol.
 	 * @param sc A beolvasast vegzo Scanner
 	 */
-	// pelda fajl teszteleshez: load src/test_data/test_inputs/test_0.in
 	public void load(Scanner sc) {
 		String line = sc.nextLine();
 		while (!line.equals("") & sc.hasNextLine()) {
