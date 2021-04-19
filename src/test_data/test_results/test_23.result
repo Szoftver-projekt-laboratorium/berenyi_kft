@@ -1,25 +1,78 @@
+Controller controller
 Player p1
+Game game
+Recipe nullRecipe1 gatePairRecipe
+Timer timer
+Sun sun
 Asteroid a1
+Iron ir1 ir2
+Ice ic1
+Uranium ur1
 Settler s1
+TeleportingGate tg1 tg2
+
+Controller controller
+	game game
+	allPlayers p1
+	actPlayer p1
+	state paused
 
 Player p1
-	name Marci
+	name Bela
 	settler s1
 	isAlive true
 
+Game game
+	timer timer
+	recipes nullRecipe1 gatePairRecipe
+	sun sun
+	asteroids a1
+	settlersAlive s1
+
+Recipe nullRecipe1
+	resources null
+
+Recipe gatePairRecipe
+	resources ir1 ir2 ic1 ur1
+
+Timer timer
+	ticks 0
+	delay 5000
+	period 500
+	steppables null
+
+Sun sun
+	timeToSunStorm 3000
+	neighboringAsteroids a1
+
 Asteroid a1
-	rockLayerThickness 1
-	game null
-	sun null
+	rockLayerThickness 0
+	game game
+	sun sun
 	neighbors null
 	resource null
 	characters s1
 	gates null
 
+Uranium ur1
+	life 3
+
 Settler s1
-	game null
-	timer null
+	game game
+	timer timer
 	place a1
 	resources null
-	gatesCreated null
+	gatesCreated tg1 tg2
+
+TeleportingGate tg1
+	timer timer
+	pair tg2
+	settler s1
+	asteroid null
+
+TeleportingGate tg2
+	timer timer
+	pair tg1
+	settler s1
+	asteroid null
 

@@ -8,13 +8,13 @@ import java.util.Scanner;
  */
 public class Player {
 	
-	private String name;
+	private String name = null;
 	
-	private Settler settler;
+	private Settler settler = null;
 	
-	private boolean isAlive=true;
+	private boolean isAlive = true;
 	
-	//private Controller controller;  
+	// private Controller controller;
 	
 	//------------------------------------------
 	
@@ -101,6 +101,20 @@ public class Player {
 	 * @param allParams A parancs argumentumai; allParams[0] maganak a parancsnak a neve
 	 */
 	public void actOnSettler(PlayerCommand cmd, Object[] allParams) {
+		String paramsStr = "";
+		if (allParams.length > 0) {
+			paramsStr += allParams[0].toString();
+			for (int i = 1; i < allParams.length; i++) {
+				if (allParams[i] == null)
+					paramsStr += ", null";
+				else
+					paramsStr += (", " + allParams[i].toString());
+			}
+		}
+		Proto.println(Proto.getId(this) + "(" + cmd.toString()
+				+ ", [" + paramsStr + "])");
+		Proto.incrTabs();
+		
 		switch (cmd) {
 			case PASS: /* No op */ break;
 			case MOVE:
@@ -120,6 +134,7 @@ public class Player {
 			default: throw new IllegalArgumentException(
 					"Invalid PlayerCommand: " + allParams[0]);
 		}
+		Proto.decrTabs();
 	}
 	
 }

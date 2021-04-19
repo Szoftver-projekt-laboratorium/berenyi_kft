@@ -1,15 +1,30 @@
-Player p1
+Game game
+Timer timer
 Asteroid a1
-Settler s1
+AIRobot air1
 
-Player p1
-	name Marci
-	settler s1
-	isAlive true
+Game game
+	timer timer
+	recipes null
+	sun null
+	asteroids a1
+	settlersAlive null
+
+Timer timer
+	ticks 0
+	delay 0
+	period 1000
+	steppables air1
 
 Asteroid a1
-	rockLayerThickness 1
-	characters s1
+	rockLayerThickness 2
+	game null
+	sun null
+	neighbors null
+	resource null
+	characters air1
+	gates null
 
-Settler s1
+AIRobot air1
+	timer timer
 	place a1

@@ -2,8 +2,9 @@ package berenyi_kft;
 
 import java.util.Scanner;
 
+/* A prototipus programban mar nincs szuksegunk erre az osztalyra. */
 /**
- * Szkeleton osztaly a jatek modelljenek tesztelesehez
+ * Szkeleton osztaly a jatek analizis modelljenek tesztelesehez
  * @author berenyi_kft
  */
 public class Skeleton {

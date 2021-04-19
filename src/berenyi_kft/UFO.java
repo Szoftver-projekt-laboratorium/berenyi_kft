@@ -28,7 +28,6 @@ public class UFO extends Character implements ISteppable {
 	 * 	timer timer
 	 *  place a1
 	 */
-	
 	public void load(Scanner sc) {
 		String line = sc.nextLine();
 		while (!line.equals("") & sc.hasNextLine()) {
@@ -59,10 +58,12 @@ public class UFO extends Character implements ISteppable {
 	 * @param timer A jatek idozitoje
 	 */
 	public UFO(Timer timer) {
-		System.out.println("UFO's UFO(Timer timer) has been called");
+		Proto.println(Proto.getId(this) + ".UFO(" + Proto.getId(timer) + ")");
+		Proto.incrTabs();
 		this.timer = timer;
 		if (timer != null)
 			timer.addSteppable(this);
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -76,6 +77,7 @@ public class UFO extends Character implements ISteppable {
 		super.die();
 		timer.removeSteppable(this);
 		Proto.getAllObjects().removeUFO(this);
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -83,13 +85,20 @@ public class UFO extends Character implements ISteppable {
 	 * akkor kibanyassza; kulonben egy veletlenszeru szomszedos aszteroidara repul.
 	 */
 	public void step() {
+		Proto.println(Proto.getId(this) + ".step()");
+		Proto.incrTabs();
 		if(place.getRockLayerThickness()==0 && place.getResource()!=null) {
 			this.mine();
 		}
 		else {
-			Random r=new Random();
-			this.move(r.nextInt());
+			if(Proto.isRandom()) {
+				Random r=new Random();
+				this.move(r.nextInt());
+			}
+			else
+				move(0);
 		}
+		Proto.decrTabs();
 	}
 	
 	/**
@@ -97,6 +106,9 @@ public class UFO extends Character implements ISteppable {
 	 * Ha sikerult kibanyasznia a magban levo nyersanyagot, az eltunik.
 	 */
 	public void mine() {
+		Proto.println(Proto.getId(this) + ".mine()");
+		Proto.incrTabs();
 		place.minedByUFO();
+		Proto.decrTabs();
 	}
 }

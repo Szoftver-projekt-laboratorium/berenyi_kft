@@ -1,5 +1,9 @@
 Player p1
+Game game
+Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
 Asteroid a1
+Coal co1
+Iron ir1 ir2
 Settler s1
 
 Player p1
@@ -7,9 +11,25 @@ Player p1
 	settler s1
 	isAlive true
 
+Game game
+	timer null
+	recipes nullRecipe1 nullRecipe2 spaceBaseRecipe
+	sun null
+	asteroids a1
+	settlersAlive s1
+
+Recipe nullRecipe1
+	resources null
+
+Recipe nullRecipe2
+	resources null
+
+Recipe spaceBaseRecipe
+	resources ir1 ir2
+
 Asteroid a1
-	rockLayerThickness 1
-	game null
+	rockLayerThickness 0
+	game game
 	sun null
 	neighbors null
 	resource null
@@ -17,9 +37,9 @@ Asteroid a1
 	gates null
 
 Settler s1
-	game null
+	game game
 	timer null
 	place a1
-	resources null
+	resources co1
 	gatesCreated null
 

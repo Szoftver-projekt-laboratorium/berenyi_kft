@@ -1,15 +1,21 @@
-Player p1
-Asteroid a1
-Settler s1
+Controller controller
+Game game
+Sun sun
 
-Player p1
-	name Marci
-	settler s1
-	isAlive true
+Controller controller
+	game null
+	allPlayers null
+	actPlayer null
+	state lost
 
-Asteroid a1
-	rockLayerThickness 1
-	characters s1
+Game game
+	timer null
+	recipes null
+	sun sun
+	asteroids null
+	settlersAlive null
 
-Settler s1
-	place a1
+Sun sun
+	timeToSunStorm 3000
+	neighboringAsteroids null
+
