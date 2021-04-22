@@ -57,14 +57,14 @@ public class UFO extends Character implements ISteppable {
 	 * A konstruktor egybol hozzaadja az ufot az idozitojehez.
 	 * @param timer A jatek idozitoje
 	 */
-	public UFO(Timer timer) {
-		Proto.println("UFO()");
+	/* public UFO(Timer timer) {
+		Proto.println("UFO(" + Proto.getId(timer) + ")");
 		Proto.incrTabs();
 		this.timer = timer;
 		if (timer != null)
 			timer.addSteppable(this);
 		Proto.decrTabs();
-	}
+	} */
 	
 	/**
 	 * Az UFO megsemmisul:

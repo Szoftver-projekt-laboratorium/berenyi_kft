@@ -33,4 +33,23 @@ public enum PlayerCommand {
 			default: return INVALID;
 		}
 	}
+	
+	/**
+	 * Megadja a cmd parancsot szoveges formaban, uzenetet a felhasznalonak.
+	 * @param cmd A jatekosnak kiadott PalyerCommand tipusu parancs
+	 * @return A parancs szovegesen
+	 */
+	public static String toString(PlayerCommand cmd) {
+		switch (cmd) {
+			case PASS: return "pass";
+			case MOVE: return "move";
+			case DRILL: return "drill";
+			case MINE: return "mine";
+			case RESTORE: return "restore";
+			case CREATE_ROBOT: return "create_robot";
+			case CREATE_GATE_PAIR: return "create_gate_pair";
+			case RELEASE_GATE: return "release_gate";
+			default: return "invalid";
+		}
+	}
 }
