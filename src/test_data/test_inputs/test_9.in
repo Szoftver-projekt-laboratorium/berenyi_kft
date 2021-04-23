@@ -1,0 +1,22 @@
+Player p1
+Game game
+Asteroid a1
+Settler s1
+
+Player p1 
+	name Balazs
+	settler s1
+	isAlive true
+
+Game game
+	asteroids a1
+	settlersAlive s1
+
+Asteroid a1
+	rockLayerThickness 0
+	game game
+	characters s1
+
+Settler s1
+	game game
+	place a1

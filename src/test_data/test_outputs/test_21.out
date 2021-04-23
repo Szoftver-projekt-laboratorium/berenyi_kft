@@ -1,0 +1,67 @@
+Controller controller
+Player p1
+Game game
+Recipe robotRecipe
+Timer timer
+Sun sun
+Asteroid a1
+Coal co1
+Iron ir1
+Uranium ur1
+Settler s1
+AIRobot air1
+
+Controller controller
+	game game
+	allPlayers p1
+	actPlayer p1
+	state paused
+
+Player p1
+	name Bela
+	settler s1
+	isAlive true
+
+Game game
+	timer timer
+	recipes robotRecipe
+	sun sun
+	asteroids a1
+	settlersAlive s1
+
+Recipe robotRecipe
+	resources co1 ir1 ur1
+
+Timer timer
+	ticks 0
+	delay 5000
+	period 500
+	steppables air1
+
+Sun sun
+	timeToSunStorm 3000
+	neighboringAsteroids a1
+
+Asteroid a1
+	rockLayerThickness 0
+	game game
+	sun sun
+	neighbors null
+	resource null
+	characters s1 air1
+	gates null
+
+Uranium ur1
+	life 3
+
+Settler s1
+	game game
+	timer timer
+	place a1
+	resources null
+	gatesCreated null
+
+AIRobot air1
+	timer timer
+	place a1
+

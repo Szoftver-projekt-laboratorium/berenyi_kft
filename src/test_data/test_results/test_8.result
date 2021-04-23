@@ -1,0 +1,33 @@
+Player p1
+Game game
+Asteroid a1
+Settler s1
+
+Player p1
+	name Balazs
+	settler s1
+	isAlive true
+
+Game game
+	timer null
+	recipes null
+	sun null
+	asteroids a1
+	settlersAlive s1
+
+Asteroid a1
+	rockLayerThickness 1
+	game game
+	sun null
+	neighbors null
+	resource null
+	characters s1
+	gates null
+
+Settler s1
+	game game
+	timer null
+	place a1
+	resources null
+	gatesCreated null
+

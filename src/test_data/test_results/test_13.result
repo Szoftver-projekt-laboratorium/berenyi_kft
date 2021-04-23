@@ -1,0 +1,30 @@
+Player p1
+Sun sun
+Asteroid a1
+Settler s1
+
+Player p1
+	name Marci
+	settler s1
+	isAlive true
+
+Sun sun
+	timeToSunStorm 0
+	neighboringAsteroids null
+
+Asteroid a1
+	rockLayerThickness 0
+	game null
+	sun sun
+	neighbors null
+	resource null
+	characters s1
+	gates null
+
+Settler s1
+	game null
+	timer null
+	place a1
+	resources null
+	gatesCreated null
+

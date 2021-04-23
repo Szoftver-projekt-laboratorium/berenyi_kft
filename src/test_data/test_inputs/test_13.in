@@ -1,0 +1,21 @@
+Player p1
+Sun sun
+Asteroid a1
+Settler s1
+
+Player p1
+	name Marci
+	settler s1
+	isAlive true
+
+Sun sun
+	neighboringAsteroids null
+
+Asteroid a1
+	rockLayerThickness 0
+	sun sun
+	characters s1
+
+Settler s1
+	place a1
+

@@ -1,0 +1,21 @@
+Controller controller
+Game game
+Sun sun
+
+Controller controller
+	game null
+	allPlayers null
+	actPlayer null
+	state lost
+
+Game game
+	timer null
+	recipes null
+	sun sun
+	asteroids null
+	settlersAlive null
+
+Sun sun
+	timeToSunStorm 3000
+	neighboringAsteroids null
+

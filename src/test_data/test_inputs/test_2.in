@@ -1,0 +1,80 @@
+Controller controller
+Player p1 p2
+Game game
+Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
+Asteroid a1 a2
+Coal co1 co2 co3 co4 co5 co6
+Iron ir1 ir2 ir3 ir4 ir5 ir6
+Ice ic1 ic2 ic3 ic4 ic5 ic6
+Uranium ur1 ur2 ur3 ur4 ur5 ur6
+Settler s1 s2
+
+Controller controller
+	game game
+	allPlayers p1 p2
+	actPlayer p1
+	state paused
+
+Player p1
+	name Marci
+	settler s1
+	isAlive true
+
+Player p2
+	name Balint
+	settler s2
+	isAlive true
+
+Game game
+	recipes nullRecipe1 nullRecipe2 spaceBaseRecipe
+	asteroids a1 a2
+	settlersAlive s1 s2
+
+Recipe nullRecipe1
+	resources null
+	
+Recipe nullRecipe2
+	resources null
+
+Recipe spaceBaserecipe
+	resources co1 co2 co3 ir1 ir2 ir3 ic1 ic2 ic3 ur1 ur2 ur3
+
+Asteroid a1
+	rockLayerThickness 5
+	game game
+	neighbors a2
+	characters s1
+
+Asteroid a2
+	rockLayerThickness 2
+	game game
+	neighbors a1
+	characters s2
+
+Uranium ur1
+	life 3
+
+Uranium ur2
+	life 3
+
+Uranium ur3
+	life 3
+
+Uranium ur4
+	life 3
+
+Uranium ur5
+	life 3
+
+Uranium ur6
+	life 3
+
+Settler s1
+	game game
+	place a1
+	resources co4 ir4 ir5 ic4 ir6 ur4 co5 ic5
+
+Settler s2
+	game game
+	place a2
+	resources ur5 co6 ur6 ic6

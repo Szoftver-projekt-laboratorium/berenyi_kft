@@ -1,0 +1,68 @@
+Controller controller
+Player p2
+Game game
+Recipe nullRecipe0 nullRecipe1 spaceBaseRecipe
+Timer timer
+Sun sun
+Asteroid a2
+Coal co1
+Settler s2
+AIRobot air1
+
+Controller controller
+	game game
+	allPlayers p2
+	actPlayer p2
+	state paused
+
+Player p2
+	name Ricsi
+	settler s2
+	isAlive true
+
+Game game
+	timer timer
+	recipes nullRecipe0 nullRecipe1 spaceBaseRecipe
+	sun sun
+	asteroids a2
+	settlersAlive s2
+
+Recipe nullRecipe0
+	resources null
+
+Recipe nullRecipe1
+	resources null
+
+Recipe spaceBaseRecipe
+	resources co1
+
+Timer timer
+	ticks 0
+	delay 0
+	period 1000
+	steppables air1 sun
+
+Sun sun
+	timeToSunStorm 10
+	neighboringAsteroids null
+
+Asteroid a2
+	rockLayerThickness 3
+	game game
+	sun sun
+	neighbors null
+	resource null
+	characters s2 air1
+	gates null
+
+Settler s2
+	game game
+	timer timer
+	place a2
+	resources null
+	gatesCreated null
+
+AIRobot air1
+	timer timer
+	place a2
+

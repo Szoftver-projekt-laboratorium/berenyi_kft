@@ -1,0 +1,65 @@
+Controller controller
+Player p1
+Game game
+Timer timer
+Sun sun
+Asteroid a1
+Settler s1
+TeleportingGate tg1 tg2
+
+Controller controller
+	game game
+	allPlayers p1
+	actPlayer p1
+	state paused
+
+Player p1
+	name Bela
+	settler s1
+	isAlive true
+
+Game game
+	timer timer
+	recipes null
+	sun sun
+	asteroids a1
+	settlersAlive s1
+
+Timer timer
+	ticks 0
+	delay 5000
+	period 500
+	steppables null
+
+Sun sun
+	timeToSunStorm 3000
+	neighboringAsteroids a1
+
+Asteroid a1
+	rockLayerThickness 0
+	game game
+	sun sun
+	neighbors null
+	resource null
+	characters s1
+	gates tg1
+
+Settler s1
+	game game
+	timer timer
+	place a1
+	resources null
+	gatesCreated tg2
+
+TeleportingGate tg1
+	timer timer
+	pair tg2
+	settler null
+	asteroid a1
+
+TeleportingGate tg2
+	timer timer
+	pair tg1
+	settler s1
+	asteroid null
+

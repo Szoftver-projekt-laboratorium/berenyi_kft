@@ -1,0 +1,17 @@
+Player p1
+Asteroid a1
+Coal co1
+Settler s1
+
+Player p1
+	name Marci
+	settler s1
+	isAlive true
+
+Asteroid a1
+	rockLayerThickness 1
+	resource co1
+	characters s1
+
+Settler s1
+	place a1

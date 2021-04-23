@@ -2,8 +2,9 @@ package berenyi_kft;
 
 import java.util.Scanner;
 
+/* A prototipus programban mar nincs szuksegunk erre az osztalyra. */
 /**
- * Szkeleton osztaly a jatek modelljenek tesztelesehez
+ * Szkeleton osztaly a jatek analizis modelljenek tesztelesehez
  * @author berenyi_kft
  */
 public class Skeleton {
@@ -312,7 +313,7 @@ public class Skeleton {
 
 						// Letrehozunk egy AIRobotot es beallitjuk aktualis aszteroidajanak az
 						// asteroid1_3b-t
-						AIRobot robot_3b = new AIRobot(new Timer(1000, 20));
+						AIRobot robot_3b = new AIRobot();
 						robot_3b.setPlace(asteroid1_3b);
 
 						// Letrehozunk 2 Settler-t
@@ -715,8 +716,10 @@ public class Skeleton {
 						a_6a.accept(s_6a);
 
 						s_6a.createAIRobot();
-						if (a_6a.getCharacters().size() == 2 & s_6a.getCollectedResources().size() == 0
-								& timer_6a.getSteppables().contains(a_6a.getCharacters().get(1)))
+						if (a_6a.getCharacters().size() == 2
+								& s_6a.getCollectedResources().size() == 0
+								& timer_6a.getSteppables().contains(
+										(ISteppable)a_6a.getCharacters().get(1)))
 							System.out.println("\nBuild AI Robot: successful");
 						break;
 					case "b":
@@ -934,7 +937,7 @@ public class Skeleton {
 
 						Asteroid a1_9a = new Asteroid();
 						Settler s1_9a = new Settler();
-						AIRobot r_9a = new AIRobot(new Timer(1000, 20));
+						AIRobot r_9a = new AIRobot();
 						Game g_9a = new Game();
 						Sun sun_9a = new Sun();
 						sun_9a.setGame(g_9a);
@@ -975,7 +978,7 @@ public class Skeleton {
 
 						Asteroid a1_9b = new Asteroid();
 						Settler s1_9b = new Settler();
-						AIRobot r_9b = new AIRobot(new Timer(1000, 20));
+						AIRobot r_9b = new AIRobot();
 						Game g_9b = new Game();
 						Sun sun_9b = new Sun();
 						sun_9b.setGame(g_9b);

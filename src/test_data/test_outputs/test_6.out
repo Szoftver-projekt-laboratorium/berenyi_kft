@@ -1,0 +1,65 @@
+Player p1
+Game game
+Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
+Asteroid a1 a2
+Iron ir1 ir2
+Settler s1
+TeleportingGate tg1 tg2
+
+Player p1
+	name Balint
+	settler s1
+	isAlive true
+
+Game game
+	timer null
+	recipes nullRecipe1 nullRecipe2 spaceBaseRecipe
+	sun null
+	asteroids a1 a2
+	settlersAlive s1
+
+Recipe nullRecipe1
+	resources null
+
+Recipe nullRecipe2
+	resources null
+
+Recipe spaceBaseRecipe
+	resources ir1 ir2
+
+Asteroid a1
+	rockLayerThickness 3
+	game game
+	sun null
+	neighbors null
+	resource null
+	characters null
+	gates tg1
+
+Asteroid a2
+	rockLayerThickness 1
+	game game
+	sun null
+	neighbors null
+	resource null
+	characters s1
+	gates tg2
+
+Settler s1
+	game game
+	timer null
+	place a2
+	resources null
+	gatesCreated null
+
+TeleportingGate tg1
+	timer null
+	pair tg2
+	settler null
+	asteroid a1
+
+TeleportingGate tg2
+	timer null
+	pair tg1
+	settler null
+	asteroid a2
