@@ -759,7 +759,7 @@ public class Proto {
 	 * 
 	 * @param args A program parancssori argumentumai
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Controller controller = null;	// objektum-segedvaltozok
 		Timer timer = null;
 		
@@ -935,9 +935,9 @@ public class Proto {
 							if (!running) {
 								if (tokens.length == 1) {
 									showAll();
-								} /*
-									 * else if (tokens.length >= 2) { showOne(tokens[1]); }
-									 */
+								} 
+									 // else if (tokens.length >= 2) { showOne(tokens[1]); }
+									 
 							}
 							break;
 
@@ -979,6 +979,6 @@ public class Proto {
 				timer = null;
 			}
 		}
-	}
+	}*/
 
 }
