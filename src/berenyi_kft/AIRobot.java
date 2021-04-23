@@ -58,14 +58,14 @@ public class AIRobot extends Character implements ISteppable {
 	 * 
 	 * @param timer A jatek idozitoje
 	 */
-	public AIRobot(Timer timer) {
-		Proto.println("AIRobot()");
+	/* public AIRobot(Timer timer) {
+		Proto.println("AIRobot(" + Proto.getId(timer) + ")");
 		Proto.incrTabs();
 		this.timer = timer;
 		if (timer != null)
 			timer.addSteppable(this);
 		Proto.decrTabs();
-	}
+	} */
 
 	/**
 	 * A robot megkerdezi az aszteroidatol, amelyen all, hogy mekkora a

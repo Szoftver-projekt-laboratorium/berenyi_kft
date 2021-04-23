@@ -93,10 +93,10 @@ public class Skeleton {
 				a11.accept(a12);
 				a12.accept(a11);
 
-				TeleportingGate tg11 = new TeleportingGate(null);
+				TeleportingGate tg11 = new TeleportingGate();
 				tg11.setAsteroid(a11);
 
-				TeleportingGate tg12 = new TeleportingGate(null);
+				TeleportingGate tg12 = new TeleportingGate();
 				tg12.setAsteroid(a13);
 
 				tg11.setPair(tg12);
@@ -172,10 +172,10 @@ public class Skeleton {
 					a21.accept(a22);
 					a22.accept(a21);
 
-					TeleportingGate tg21 = new TeleportingGate(null);
+					TeleportingGate tg21 = new TeleportingGate();
 					tg21.setAsteroid(a21);
 
-					TeleportingGate tg22 = new TeleportingGate(null);
+					TeleportingGate tg22 = new TeleportingGate();
 					tg22.setAsteroid(a23);
 
 					tg21.setPair(tg22);
@@ -313,7 +313,7 @@ public class Skeleton {
 
 						// Letrehozunk egy AIRobotot es beallitjuk aktualis aszteroidajanak az
 						// asteroid1_3b-t
-						AIRobot robot_3b = new AIRobot(new Timer(1000, 20));
+						AIRobot robot_3b = new AIRobot();
 						robot_3b.setPlace(asteroid1_3b);
 
 						// Letrehozunk 2 Settler-t
@@ -829,7 +829,7 @@ public class Skeleton {
 						Settler s_7b = new Settler();
 						game_7b.addSettler(s_7b);
 						s_7b.setGame(game_7b);
-						s_7b.accept(new TeleportingGate(null));
+						s_7b.accept(new TeleportingGate());
 						s_7b.accept(new Iron());
 
 						s_7b.createGatePair();
@@ -869,8 +869,8 @@ public class Skeleton {
 						Settler s1_8a = new Settler();
 						Asteroid a1_8a = new Asteroid();
 						Asteroid a2_8a = new Asteroid();
-						TeleportingGate tg1_8a = new TeleportingGate(null);
-						TeleportingGate tg2_8a = new TeleportingGate(null);
+						TeleportingGate tg1_8a = new TeleportingGate();
+						TeleportingGate tg2_8a = new TeleportingGate();
 
 						tg1_8a.setPair(tg2_8a);
 						tg2_8a.setPair(tg1_8a);
@@ -937,7 +937,7 @@ public class Skeleton {
 
 						Asteroid a1_9a = new Asteroid();
 						Settler s1_9a = new Settler();
-						AIRobot r_9a = new AIRobot(new Timer(1000, 20));
+						AIRobot r_9a = new AIRobot();
 						Game g_9a = new Game();
 						Sun sun_9a = new Sun();
 						sun_9a.setGame(g_9a);
@@ -978,7 +978,7 @@ public class Skeleton {
 
 						Asteroid a1_9b = new Asteroid();
 						Settler s1_9b = new Settler();
-						AIRobot r_9b = new AIRobot(new Timer(1000, 20));
+						AIRobot r_9b = new AIRobot();
 						Game g_9b = new Game();
 						Sun sun_9b = new Sun();
 						sun_9b.setGame(g_9b);
