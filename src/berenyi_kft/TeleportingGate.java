@@ -42,8 +42,7 @@ public class TeleportingGate implements ISteppable {
 	 * @param timer A jatek idozitoje
 	 */
 	public TeleportingGate(Timer timer) {
-		Proto.println(Proto.getId(this)
-				+ ".TeleportingGate(" + Proto.getId(timer) + ")");
+		Proto.println("TeleportingGate()");
 		this.timer = timer;
 	}
 
