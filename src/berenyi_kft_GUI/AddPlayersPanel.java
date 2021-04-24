@@ -11,11 +11,11 @@ public class AddPlayersPanel extends JPanel {
 	private ArrayList<String> playerNames = new ArrayList<String>();
 	
 	private Cards cards;
-	private MenuPanel menuPanel;
 	private JLabel nameLabel;
+	private JTextArea playerNamesField;
 	private JTextField nameField;
-	private JButton addButton;
-	private JButton okButton;
+	private JButton addPlayerButton;
+	private JButton startGameButton;
 	
 	public ArrayList<String> getPlayerNames() {
 		return playerNames;
@@ -25,40 +25,44 @@ public class AddPlayersPanel extends JPanel {
 		this.playerNames = playerNames;
 	}
 	
-	public void setMenuPanel(MenuPanel menuPanel) {
-		this.menuPanel = menuPanel;
-	}
-	
 	private class ButtonListener implements ActionListener {		
 		public void actionPerformed(ActionEvent ae) {
 			JButton pressedButton = (JButton)ae.getSource();
-			if (pressedButton == addButton) {
+			if (pressedButton == addPlayerButton) {
 				if (playerNames.size() >= 6) {
 					System.out.println("A jatekosok szama legfeljebb 6 lehet!");
 				}
 				else if (! nameField.getText().matches("[a-zA-Z0-9]+")) {
-					System.out.println("A neved csak ekezet nelkuli alfanumerikus "
-							+ "karaktereket tartalmazhat.");
+					System.out.println("A neved csak ekezet nelkuli "
+							+ "alfanumerikus karaktereket tartalmazhat.");
 				}
 				else {
 					playerNames.add(nameField.getText());
+					StringBuilder sb = new StringBuilder();
+					for (String name : playerNames) {
+					    sb.append(name);
+					    sb.append(System.getProperty("line.separator"));
+					}
+					playerNamesField.setText(sb.toString());
 				}
 			}
-			else if (pressedButton == okButton) {
-				if (!playerNames.isEmpty() & playerNames.size() <= 6) {
+			else if (pressedButton == startGameButton) {
+				if (playerNames.isEmpty() | playerNames.size() > 6) {
+					System.out.println("A jatekosok szama 1 es 6 kozott "
+													+ "kell, hogy legyen!");
+				}
+				else {
 					for (String str : playerNames) {
 						System.out.println(str);
 					}
-					cards.show(Cards.menuPanelID);
-				}
-				else {
-					System.out.println("A jatekosok szama 1 es 6 kozott kell, hogy legyen!");
+					cards.show(Cards.gamePanelID);
 				}
 			}
 		}
 	}
 	
 	public void initComponents() {
+		this.setLayout(new BorderLayout());
 		Font font = new Font("Comic Sans MS", Font.BOLD, 20);
 		
 		nameLabel = new JLabel("Játékos: ");
@@ -69,30 +73,37 @@ public class AddPlayersPanel extends JPanel {
 		
 		ButtonListener bl = new ButtonListener();
 		
-		addButton = new JButton("Add");
-		addButton.setFont(font);
-		addButton.addActionListener(bl);
+		addPlayerButton = new JButton("Add");
+		addPlayerButton.setFont(font);
+		addPlayerButton.addActionListener(bl);
 		
-		okButton = new JButton("OK");
-		okButton.setFont(font);
-		okButton.addActionListener(bl);
+		startGameButton = new JButton("Start Game!");
+		startGameButton.setFont(font);
+		startGameButton.addActionListener(bl);
 		
 		JPanel addPanel = new JPanel();
 		addPanel.add(nameLabel);
 		addPanel.add(nameField);
-		addPanel.add(addButton);
+		addPanel.add(addPlayerButton);
 		this.add(addPanel, BorderLayout.NORTH);
 		
-		JPanel okPanel = new JPanel();
-		okPanel.add(okButton);
-		this.add(okPanel, BorderLayout.SOUTH);
+		JPanel playersPanel = new JPanel();
+		playerNamesField = new JTextArea(7, 15);
+		playerNamesField.setEditable(false);
+		playerNamesField.setAlignmentX(CENTER_ALIGNMENT);
+		playerNamesField.setFont(font);
+		playerNamesField.setWrapStyleWord(true);
+		playersPanel.add(playerNamesField);
+		this.add(playersPanel, BorderLayout.CENTER);
+		
+		JPanel startPanel = new JPanel();
+		startPanel.add(startGameButton);
+		this.add(startPanel, BorderLayout.SOUTH);
 	}
 	
 	public AddPlayersPanel(Cards cards) {
 		this.cards = cards;
-		
 		this.initComponents();
-		// this.setMinimumSize(new Dimension(800, 600));
 		this.setVisible(true);
 	}
 	
