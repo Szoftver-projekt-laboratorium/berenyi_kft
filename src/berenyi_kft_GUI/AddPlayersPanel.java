@@ -10,6 +10,7 @@ public class AddPlayersPanel extends JPanel {
 	
 	private ArrayList<String> playerNames = new ArrayList<String>();
 	
+	private Cards cards;
 	private MenuPanel menuPanel;
 	private JLabel nameLabel;
 	private JTextField nameField;
@@ -48,8 +49,7 @@ public class AddPlayersPanel extends JPanel {
 					for (String str : playerNames) {
 						System.out.println(str);
 					}
-					setVisible(false);
-					menuPanel.setVisible(true);
+					cards.show(Cards.menuPanelID);
 				}
 				else {
 					System.out.println("A jatekosok szama 1 es 6 kozott kell, hogy legyen!");
@@ -59,7 +59,7 @@ public class AddPlayersPanel extends JPanel {
 	}
 	
 	public void initComponents() {
-Font font = new Font("Comic Sans MS", Font.BOLD, 20);
+		Font font = new Font("Comic Sans MS", Font.BOLD, 20);
 		
 		nameLabel = new JLabel("Játékos: ");
 		nameLabel.setFont(font);
@@ -88,7 +88,9 @@ Font font = new Font("Comic Sans MS", Font.BOLD, 20);
 		this.add(okPanel, BorderLayout.SOUTH);
 	}
 	
-	public AddPlayersPanel() {
+	public AddPlayersPanel(Cards cards) {
+		this.cards = cards;
+		
 		this.initComponents();
 		// this.setMinimumSize(new Dimension(800, 600));
 		this.setVisible(true);

@@ -4,22 +4,12 @@ import java.awt.*;
 import javax.swing.*;
 
 public class MainFrame extends JFrame {
-	MenuPanel menuPanel;
-	GamePanel gamePanel;
-	JPanel endGamePanel; /*pauseGamePanel*/
-	
-	public void initComponents() {
-		menuPanel = new MenuPanel();
-		this.add(menuPanel, BorderLayout.NORTH);
-		
-		gamePanel = new GamePanel();
-		
-		menuPanel.setVisible(true);
-	}
+	private Cards cards;
 	
 	public MainFrame() {
 		super("Asteroid Miners");
-		initComponents();
+		cards = new Cards();
+        cards.initComponents(this.getContentPane());
 		
 		this.setMinimumSize(new Dimension(900, 600));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

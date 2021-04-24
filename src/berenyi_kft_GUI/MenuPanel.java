@@ -9,9 +9,9 @@ import javax.swing.*;
 
 public class MenuPanel extends JPanel {
 	
-	private ArrayList<String> playerNames = new ArrayList<String>();
-
-	private AddPlayersPanel addPlayersPanel;
+	// private ArrayList<String> playerNames = new ArrayList<String>();
+	
+	private Cards cards;
 	private JLabel nameLabel;
 	private JButton addPlayersButton;
 	private JButton startGameButton;
@@ -22,9 +22,11 @@ public class MenuPanel extends JPanel {
 		public void actionPerformed(ActionEvent ae) {
 			JButton pressedButton = (JButton)ae.getSource();
 			if (pressedButton == addPlayersButton) {
-				addPlayersPanel.setPlayerNames(playerNames);
+				cards.show(Cards.addPlayersPanelID);
+				
+				// addPlayersPanel.setPlayerNames(playerNames);
 				// setVisible(false);
-				addPlayersPanel.setVisible(true);
+				// addPlayersPanel.setVisible(true);
 			}
 			else if (pressedButton == startGameButton) {
 				
@@ -40,11 +42,7 @@ public class MenuPanel extends JPanel {
 		}
 	}
 	
-	public void initComponents() {
-		addPlayersPanel = new AddPlayersPanel();
-		addPlayersPanel.setMenuPanel(this);
-		this.add(addPlayersPanel, BorderLayout.SOUTH);
-		
+	public void initComponents() {		
 		Font titleFont = new Font("Comic Sans MS", Font.BOLD, 40);
 		Font font = new Font("Comic Sans MS", Font.BOLD, 20);
 		
@@ -78,7 +76,9 @@ public class MenuPanel extends JPanel {
 		this.add(buttonsPanel, BorderLayout.NORTH);
 	}
 	
-	public MenuPanel() {
+	public MenuPanel(Cards cards) {
+		this.cards = cards;
+		
 		this.initComponents();
 		// this.setMinimumSize(new Dimension(300, 200));
 		this.setVisible(true);
