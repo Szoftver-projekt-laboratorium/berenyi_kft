@@ -9,40 +9,29 @@ import javax.swing.*;
 
 public class MenuPanel extends JPanel {
 	
-	// private ArrayList<String> playerNames = new ArrayList<String>();
-	
 	private Cards cards;
 	private JLabel nameLabel;
-	private JButton addPlayersButton;
-	private JButton startGameButton;
+	private JButton newGameButton;
 	private JButton loadGameButton;
 	private JButton exitButton;
 	
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
 			JButton pressedButton = (JButton)ae.getSource();
-			if (pressedButton == addPlayersButton) {
+			if (pressedButton == newGameButton) {
 				cards.show(Cards.addPlayersPanelID);
-				
-				// addPlayersPanel.setPlayerNames(playerNames);
-				// setVisible(false);
-				// addPlayersPanel.setVisible(true);
-			}
-			else if (pressedButton == startGameButton) {
-				
 			}
 			else if (pressedButton == loadGameButton) {
-				
+				// TODO
 			}
 			else if (pressedButton == exitButton) {
-				// setVisible(false);
-				// MainFrame mainFrame = (MainFrame)getParent();
 				System.exit(0);
 			}
 		}
 	}
 	
-	public void initComponents() {		
+	public void initComponents() {
+		this.setLayout(new BorderLayout());
 		Font titleFont = new Font("Comic Sans MS", Font.BOLD, 40);
 		Font font = new Font("Comic Sans MS", Font.BOLD, 20);
 		
@@ -51,36 +40,33 @@ public class MenuPanel extends JPanel {
 		
 		ButtonListener bl = new ButtonListener();
 		
-		addPlayersButton = new JButton("Add Players");
-		addPlayersButton.setFont(font);
-		addPlayersButton.addActionListener(bl);
-		
-		startGameButton = new JButton("New Game");
-		startGameButton.setFont(font);
-		startGameButton.addActionListener(bl);
+		newGameButton = new JButton("New Game");
+		newGameButton.setFont(font);
+		newGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		newGameButton.addActionListener(bl);
 		
 		loadGameButton = new JButton("Load Game");
 		loadGameButton.setFont(font);
+		loadGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		loadGameButton.addActionListener(bl);
 		
 		exitButton = new JButton("Exit");
 		exitButton.setFont(font);
+		exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		exitButton.addActionListener(bl);
 		
 		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
 		buttonsPanel.add(nameLabel);
-		buttonsPanel.add(addPlayersButton);
-		buttonsPanel.add(startGameButton);
+		buttonsPanel.add(newGameButton);
 		buttonsPanel.add(loadGameButton);
 		buttonsPanel.add(exitButton);
-		this.add(buttonsPanel, BorderLayout.NORTH);
+		this.add(buttonsPanel, BorderLayout.CENTER);
 	}
 	
 	public MenuPanel(Cards cards) {
 		this.cards = cards;
-		
 		this.initComponents();
-		// this.setMinimumSize(new Dimension(300, 200));
 		this.setVisible(true);
 	}
 }
