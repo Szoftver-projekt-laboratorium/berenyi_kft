@@ -1,5 +1,7 @@
 package berenyi_kft_GUI;
 
+import java.awt.Color;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Random;
@@ -19,10 +21,12 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		
 		try {
 			String path = "src\\berenyi_kft_GUI\\Icons\\asteroid.png";
-			BufferedImage img = ImageIO.read(new File(path));
+			Image img = ImageIO.read(new File(path));
+			img = img.getScaledInstance(467/12, 430/12, Image.SCALE_DEFAULT);
 			ImageIcon icon = new ImageIcon(img, "Asteroid");
 			this.setIcon(icon);
-			// this.setSize(65/4, 60/4);
+			this.setBackground(new Color(0, 0, 0, 0));
+			this.setBorderPainted(false);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -36,7 +40,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		// TODO gomb atpozicionalasa
 		
 		Random random = new Random();
-		this.setSize(65/4, 60/4);
+		// this.setSize(467/12, 430/12);
 		this.setLocation(random.nextInt(400), random.nextInt(200));
 	}
 	
