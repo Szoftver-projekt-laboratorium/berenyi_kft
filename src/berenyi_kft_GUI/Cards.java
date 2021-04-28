@@ -22,6 +22,10 @@ public class Cards {
 		return cardsPanel;
 	}
 	
+	public GamePanel getGamePanel() {
+		return gamePanel;
+	}
+	
 	public void initComponents(Container pane) {
         menuPanel = new MenuPanel(this);
         addPlayersPanel = new AddPlayersPanel(this);

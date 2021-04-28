@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import berenyi_kft_GUI.*;
+
 /**
  * A jatekot reprezentalo osztaly, amely
  * osszefogja az aszteroidaov objektumait
@@ -43,8 +45,17 @@ public class Game {
 	
 	private Controller controller = null;
 	
+	/**
+	 * Az aszteroidamezo grafikus megjelenitoje 
+	 */
+	private GamePanel gamePanel = null;
+	
 	//--------------------------------------------
-		
+	
+	public void setGamePanel(GamePanel gamePanel) {
+		this.gamePanel = gamePanel;
+	}
+	
 	public String getDescription() { 
 		
 		String str="";
@@ -124,6 +135,7 @@ public class Game {
 	 * masokban pedig veletlenszeruen valamilyen nyersanyagot hoz letre.
 	 * Beallitja az aszteroidak szomszedsagi viszonyait is.
 	 */
+	// TODO Grafikus objektumok létreozása, gamePanel-hez hozzáadása
 	public void startGame() {
 		Proto.println(Proto.getId(this) + ".startGame()");
 		Proto.incrTabs();
@@ -238,6 +250,10 @@ public class Game {
 		for (int i = 0; i < nAsteroids; i++) {
 			Asteroid a = new Asteroid();
 			Proto.getAllObjects().addAsteroid(a);
+			
+			AsteroidGraphics ag = new AsteroidGraphics(a);
+			gamePanel.addToMapPanel(ag);
+			gamePanel.addDrawable(ag);
 			
 			a.setRockLayerThickness(random.nextInt(5));
 			a.setGame(this);
