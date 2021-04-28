@@ -2,6 +2,8 @@ package berenyi_kft;
 
 import java.util.*;
 
+import berenyi_kft_GUI.GamePanel;
+
 /**
  * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot
  * @author berenyi_kft
@@ -83,31 +85,22 @@ public class Controller {
 	 * elozetesen atadva a telepesek listajat.
 	 * @param sc Scanner, amellyel a jatekosok adatait beolvassa
 	 */
-	public void startGame(Scanner sc) throws IllegalArgumentException {
+	public void startGame(GamePanel gamePanel, List<String> playerNames) {
 		Proto.println(Proto.getId(this) + ".startGame()");
 		Proto.incrTabs();
-		// Jatekosok szamanak beolvasasa
-		System.out.print("Give the number of players: ");
-		int numPlayers = Integer.parseInt(sc.nextLine());
-		if (numPlayers < 1 || numPlayers > 6) {
-			throw new IllegalArgumentException(
-					"The number of players must be between 1 and 6.");
-		}
 		
 		game = new Game();
 		Proto.getAllObjects().setGame(game);
-		game.setController(this);	// Beallitja a game-ben a controllert. 
+		game.setController(this);	// Beallitja a game-ben a controllert.
+		game.setGamePanel(gamePanel);
 		
 		// Sorban beallitja a jatekosokat, es telepest rendel hozzajuk.
-		for (int i = 0; i < numPlayers; i++) {
-			System.out.print("Player " + (i + 1) + "'s name: ");
-			String name = sc.nextLine();
-			
+		for (String name : playerNames) {
 			Player p = new Player();
 			Proto.getAllObjects().addPlayer(p);
 			playersAlive.add(p);
 			
-			Settler s = new Settler(); // TODO: megkapja a Playert konstruktorban?
+			Settler s = new Settler();
 			Proto.getAllObjects().addSettler(s);
 			game.addSettler(s);
 			
@@ -118,6 +111,9 @@ public class Controller {
 		
 		// Palyakep inicializalasa
 		game.startGame();
+		
+		// Palyakep megjelenitese
+		gamePanel.drawAll();
 		
 		// Az elso jatekos beallitasa actPlayer-nek
 		this.nextPlayer();

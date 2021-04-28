@@ -3,11 +3,18 @@ package berenyi_kft_GUI;
 import java.awt.*;
 import java.awt.event.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
 
 public class GamePanel extends JPanel {
 	
+	private List<IDrawable> drawables = new ArrayList<IDrawable>();
+	private List<JButton> drawableButtons = new ArrayList<JButton>();
+	
 	private Cards cards;
+	private JPanel mapPanel;
 	private JLabel gameNameLabel;
 	private JButton moveButton;
 	private JButton mineButton;
@@ -17,12 +24,17 @@ public class GamePanel extends JPanel {
 		public void actionPerformed(ActionEvent ae) {
 			JButton pressedButton = (JButton)ae.getSource();
 			if (pressedButton == moveButton) {
-				// TODO
+				drawAll();
 			}
 			else if (pressedButton == mineButton) {
 				// TODO
 			}
 			else if (pressedButton == endGameButton) {
+				for (JButton drButton : drawableButtons)
+					mapPanel.remove(drButton);
+				drawableButtons.clear();
+				drawables.clear();
+				
 				cards.show(Cards.endGamePanelID);
 			}
 		}
@@ -65,17 +77,40 @@ public class GamePanel extends JPanel {
 		this.add(inventoryPanel, BorderLayout.SOUTH);
 		
 		// Jatekpanel (kozepso)
-		JPanel gamePanel = new JPanel();
+		mapPanel = new JPanel();
 		inventoryPanel.setMinimumSize(new Dimension(400, 200));
-		gamePanel.add(endGameButton);
-		this.setBackground(Color.BLUE);
-		this.add(gamePanel, BorderLayout.CENTER);
+		mapPanel.setBackground(Color.BLUE);
+		this.add(mapPanel, BorderLayout.CENTER);
 	}
 	
 	public GamePanel(Cards cards) {
 		this.cards = cards;
 		this.initComponents();
 		this.setVisible(true);
+	}
+	
+	public void addToMapPanel(JButton drawableButton) {
+		mapPanel.add(drawableButton);
+		drawableButtons.add(drawableButton);
+	}
+	
+	public void addDrawable(IDrawable d) {
+		drawables.add(d);
+	}
+	
+	public void removeDrawable(IDrawable d) {
+		drawables.remove(d);
+	}
+	
+	public void drawAll() {
+		for (IDrawable d : drawables)
+			d.draw();
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		this.drawAll();
 	}
 	
 }

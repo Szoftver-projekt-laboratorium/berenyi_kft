@@ -6,9 +6,13 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import berenyi_kft.Controller;
+import berenyi_kft.Proto;
+
 public class AddPlayersPanel extends JPanel {
 	
 	private ArrayList<String> playerNames = new ArrayList<String>();
+	private Controller controller;
 	
 	private Cards cards;
 	private JLabel nameLabel;
@@ -55,6 +59,11 @@ public class AddPlayersPanel extends JPanel {
 					for (String str : playerNames) {
 						System.out.println(str);
 					}
+					
+					Proto.allObjects = new Proto.Objects();
+					controller = new Controller();
+					controller.startGame(cards.getGamePanel(), playerNames);
+					
 					cards.show(Cards.gamePanelID);
 				}
 			}
