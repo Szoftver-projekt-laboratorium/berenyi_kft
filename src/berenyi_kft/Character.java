@@ -39,6 +39,8 @@ public abstract class Character {
 	 * @param a Az aszteroida, amelyre a karakter lep
 	 */
 	public void acceptedBy(Asteroid a) {
+		Proto.println(Proto.getId(this) + ".acceptedBy("
+					+ Proto.getId(a) + ")");
 		a.acceptRegularCharacter(this);
 	}
 
@@ -61,10 +63,13 @@ public abstract class Character {
 	 * @param d A szomszed aszteroida sorszamat jelolo szam
 	 */
 	public void move(int d) {
-		Proto.println(Proto.getId(this) + ".move(" + d + ")");
+		int neighborsCount = place.getNeighbors().size(); // Szep kiirashoz
+		int dReduced = (neighborsCount == 0 ? 0 : (d % neighborsCount));
+		
+		Proto.println(Proto.getId(this) + ".move(" + dReduced + ")");
 		Proto.incrTabs();
-		if (place.getNeighbor(d) != null) {
-			Asteroid neighbor = place.getNeighbor(d);
+		Asteroid neighbor = place.getNeighbor(d);
+		if (neighbor != null) {
 			place.remove(this);
 			neighbor.accept(this);
 			this.place = neighbor;

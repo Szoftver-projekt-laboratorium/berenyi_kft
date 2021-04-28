@@ -10,7 +10,12 @@ import java.util.Scanner;
  * @author berenyi_kft
  */
 public class Asteroid {
-
+	
+	/**
+	 * Az aszteroidak maximalis kopenyvastagsaga
+	 */
+	private static final int maxThickness = 5;	// Uj statikus mezo
+	
 	/**
 	 * Az aszteroida kopenyvastagsaga, vagyis a magot borito sziklaretegek szama
 	 */
@@ -22,8 +27,8 @@ public class Asteroid {
 	private Game game = null;
 
 	/**
-	 * Az aszteroida magjaban talalhato egysegnyi nyersanyag. Ha a mag ureges, akkor
-	 * erteke null
+	 * Az aszteroida magjaban talalhato egysegnyi nyersanyag.
+	 * Ha a mag ureges, akkor erteke null
 	 */
 	private Resource resource = null;
 
@@ -48,7 +53,7 @@ public class Asteroid {
 	 */
 	private ArrayList<TeleportingGate> gates = new ArrayList<TeleportingGate>();
 
-//------------------------------------------------------------------------
+	//---------------------------------------------------------------------------
 
 	/**
 	 * Beallitja az aszteroida attributumait az sc Scanner aktualis poziciojatol.
@@ -160,6 +165,74 @@ public class Asteroid {
 
 		return str;
 	}
+	
+	/**
+	 * Megadja az aszteroida kopenyvastagsagat.
+	 * 
+	 * @return A kopenyt alkoto sziklaretegek szama
+	 */
+	public int getRockLayerThickness() {
+		Proto.println(Proto.getId(this) + ".getRockLayerThickness()" + " = " + rockLayerThickness);
+		return rockLayerThickness;
+	}
+
+	/**
+	 * Beallitja az aszteroida kopenyvastagsagat a parameterertekre.
+	 * 
+	 * @param value A beallitando sziklareteg-vastagsag
+	 */
+	public void setRockLayerThickness(int thickness) {
+		Proto.println(Proto.getId(this) + ".setRockLayerThickness(" + thickness + ")");
+		if (thickness > Asteroid.maxThickness)
+			thickness = Asteroid.maxThickness;
+		else if (thickness < 0)
+			thickness = 0;
+		rockLayerThickness = thickness;
+	}
+	
+	/**
+	 * Beallitja a magban talalhato nyersanyagot (az inicializalashoz hasznalando).
+	 * 
+	 * @param r A magba beallitando nyersanyag. Ha null, akkor az
+	 * 			aszteroida uregesse valik.
+	 */
+	public void addResource(Resource r) {
+		// System.out.println("Asteroid's addResource(r: Resource) has been called");
+		resource = r;
+	}
+
+	/**
+	 * Beallitja a jatek osztalyt.
+	 * 
+	 * @param g A jatekot reprezentalo osztaly
+	 */
+	public void setGame(Game g) {
+		game = g;
+	}
+
+	/**
+	 * Beallitja a jatekban levo Napot.
+	 * 
+	 * @param s A beallitando Nap
+	 */
+	public void setSun(Sun s) {
+		sun = s;
+	}
+
+	public Sun getSun() {
+		return sun;
+	}
+
+	/**
+	 * Visszater az aszteroidaval kozvetlenul szomszedos aszteroidak listajaval. A
+	 * lista nem tartalmazza a teleportkapu-parok altali szomszedokat.
+	 * 
+	 * @return A kozvetlen szomszed aszteroidakbol allo lista
+	 */
+	public ArrayList<Asteroid> getNeighboringAsteroids() {
+		Proto.println(Proto.getId(this) + ".getNeighboringAsteroids()");
+		return neighbors;
+	}
 
 	/**
 	 * Hozzaadja a neighbor aszteroidat az aszteroida neighbors kollekciojahoz.
@@ -211,34 +284,11 @@ public class Asteroid {
 
 		if (list.size() != 0) {
 			d = (d * Integer.signum(d)) % list.size();
-			Proto.println(Proto.getId(this) + ".getNeighbor(" + d + ")");
-			return list.get(d);
+			Asteroid neighbor = list.get(d);
+			Proto.println(Proto.getId(this) + ".getNeighbor(" + d + ")" + " = " + Proto.getId(neighbor));
+			return neighbor;
 		} else
 			return null;
-	}
-
-	/**
-	 * Megadja az aszteroida kopenyvastagsagat.
-	 * 
-	 * @return A kopenyt alkoto sziklaretegek szama
-	 */
-	public int getRockLayerThickness() {
-		Proto.println(rockLayerThickness + " <-" + Proto.getId(this) + ".getRockLayerThickness()");
-		return rockLayerThickness;
-	}
-
-	/**
-	 * Beallitja az aszteroida kopenyvastagsagat a parameterertekre.
-	 * 
-	 * @param value A beallitando sziklareteg-vastagsag
-	 */
-	public void setRockLayerThickness(int thickness) {
-		Proto.println(Proto.getId(this) + ".setRockLayerThickness(" + thickness + ")");
-		if (thickness > 5)
-			thickness = 5;
-		else if (thickness < 0)
-			thickness = 0;
-		rockLayerThickness = thickness;
 	}
 
 	/**
@@ -269,7 +319,10 @@ public class Asteroid {
 	 * @param c Az aszteroidara erkezo karakter
 	 */
 	public void accept(Character c) {
+		Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(c) + ")");
+		Proto.incrTabs();
 		c.acceptedBy(this);
+		Proto.decrTabs();
 	}
 
 	/**
@@ -387,7 +440,7 @@ public class Asteroid {
 	 * @return
 	 */
 	public void removeResource() {
-		Proto.println(Proto.getId(this) + ".accept()");
+		Proto.println(Proto.getId(this) + ".removeResource()" + " - " + Proto.getId(resource));
 		resource = null;
 	}
 
@@ -397,7 +450,7 @@ public class Asteroid {
 	 * @return A magban talalhato nyersanyagegyseg
 	 */
 	public Resource getResource() {
-		Proto.println(Proto.getId(this) + ".getResource()");
+		Proto.println(Proto.getId(this) + ".getResource()" + " = " + Proto.getId(resource));
 		return resource;
 	}
 
@@ -439,7 +492,22 @@ public class Asteroid {
 			this.removeResource();
 			this.checkSpaceBase();
 		} else {
-			System.out.println("Asteroid is not drilled!");
+			Proto.println("Asteroid is not drilled or it is empty.");
+		}
+		Proto.decrTabs();
+	}
+
+	/**
+	 * Az aszteroidat UFO probalja banyaszni. Ha az aszteroida meg van furva (es van
+	 * benne nyersanyag), akkor a benne levo nyersanyagegyseg eltunik a jatekbol.
+	 */
+	public void minedByUFO() {
+		Proto.println(Proto.getId(this) + ".minedByUFO()");
+		Proto.incrTabs();
+		if (rockLayerThickness == 0 && resource != null) {
+			Resource r = resource;
+			this.removeResource();
+			r.removeFromGame();
 		}
 		Proto.decrTabs();
 	}
@@ -452,7 +520,7 @@ public class Asteroid {
 	 */
 	public boolean isMined() {
 		String ismined = (this.rockLayerThickness == 0 && this.resource == null) ? "true" : "false";
-		Proto.println(ismined + " <- " + Proto.getId(this) + ".isMined()");
+		Proto.println(Proto.getId(this) + ".isMined()" + " = " + ismined);
 		return (this.rockLayerThickness == 0 && this.resource == null) ? true : false;
 	}
 
@@ -493,6 +561,7 @@ public class Asteroid {
 	 */
 	public void destroySurface() {
 		Proto.println(Proto.getId(this) + ".destroySurface()");
+		Proto.incrTabs();
 		if (!this.isMined()) {
 			for (int i = characters.size() - 1; i >= 0; i--) {
 				characters.get(i).die();
@@ -502,6 +571,7 @@ public class Asteroid {
 		for (TeleportingGate tg : gates) {
 			tg.goMad();
 		}
+		Proto.decrTabs();
 	}
 
 	/**
@@ -538,56 +608,4 @@ public class Asteroid {
 		Proto.decrTabs();
 	}
 
-	/**
-	 * Beallitja a magban talalhato nyersanyagot (az inicializalashoz hasznalando).
-	 * 
-	 * @param r A magba beallitando nyersanyag. Ha null, akkor az aszteroida ureges
-	 *          lesz.
-	 */
-	public void addResource(Resource r) {
-		// System.out.println("Asteroid's addResource(r: Resource) has been called");
-		resource = r;
-	}
-
-	/**
-	 * Beallitja a jatek osztalyt.
-	 * 
-	 * @param g A jatekot reprezentalo osztaly
-	 */
-	public void setGame(Game g) {
-		game = g;
-	}
-
-	/**
-	 * Beallitja a jatekban levo Napot.
-	 * 
-	 * @param s A beallitando Nap
-	 */
-	public void setSun(Sun s) {
-		sun = s;
-	}
-
-	public Sun getSun() {
-		return sun;
-	}
-
-	/**
-	 * Az aszteroidat UFO probalja banyaszni. Ha az aszteroida meg van furva (es van
-	 * benne nyersanyag), akkor a benne levo nyersanyagegyseg eltunik a jatekbol.
-	 */
-	public void minedByUFO() {
-		Proto.println(Proto.getId(this) + ".minedByUFO()");
-		Proto.incrTabs();
-		if (rockLayerThickness == 0 && resource != null) {
-			Resource r = resource;
-			this.removeResource();
-			r.removeFromGame();
-		}
-		Proto.decrTabs();
-	}
-
-	public ArrayList<Asteroid> getNeighboringAsteroids() {
-		Proto.println(Proto.getId(this) + ".getNeighboringAsteroids()");
-		return neighbors;
-	}
 }

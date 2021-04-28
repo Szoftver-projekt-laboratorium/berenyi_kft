@@ -83,7 +83,7 @@ public class Recipe {
 	 * @param r A receptbol eltavolitando tipusu nyersanyagegyseg
 	 */
 	public boolean isNeeded(Resource r) {
-		Proto.println(Proto.getId(this) + ".isNeeded(" + Proto.getId(r) + ")");
+		// Proto.println(Proto.getId(this) + ".isNeeded(" + Proto.getId(r) + ")");
 		Proto.incrTabs();
 		for (int i = resources.size() - 1; i >= 0; i--) {
 			Resource rBill = resources.get(i);
@@ -128,7 +128,7 @@ public class Recipe {
 	 * @return Pontosan akkor true, ha a recept ures (kiuresedett)
 	 */
 	public boolean isEmpty() {
-		Proto.println(Proto.getId(this) + ".isEmpty()");
+		// Proto.println(Proto.getId(this) + ".isEmpty()");
 		return this.resources.isEmpty();
 	}
 

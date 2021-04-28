@@ -164,7 +164,6 @@ public class Settler extends Character {
 		for (Resource rCollected : collectedResources) {
 			if (r.isCompatibleWith(rCollected)) {
 				collectedResources.remove(rCollected);
-				// rCollected.removeFromGame();
 				return rCollected;
 			}
 		}
@@ -243,11 +242,17 @@ public class Settler extends Character {
 				Resource resource = this.remove(r);
 				resource.removeFromGame();
 			}
-
-			AIRobot air = new AIRobot(game.getTimer());
+			
+			// Ujitott jatekhoz adas
+			AIRobot air = new AIRobot();
+			Proto.getAllObjects().addAIRobot(air);
+			Timer timer = game.getTimer();
+			air.setTimer(timer);
+			if (timer != null)
+				timer.addSteppable(air);
+			
 			place.accept(air);
 			air.setPlace(place);
-			Proto.getAllObjects().addAIRobot(air);
 		}
 		aiRobotRecipe.reset();
 		Proto.decrTabs();
@@ -272,6 +277,7 @@ public class Settler extends Character {
 		Proto.println(Proto.getId(this) + ".createGatePair()");
 		Proto.incrTabs();
 		if (gatesCreated.size() > 1) {
+			Proto.decrTabs();
 			return;
 		}
 
@@ -290,14 +296,19 @@ public class Settler extends Character {
 				Resource resource = this.remove(r);
 				resource.removeFromGame();
 			}
-
-			TeleportingGate tg1 = new TeleportingGate(timer);
-			TeleportingGate tg2 = new TeleportingGate(timer);
-			tg1.setPair(tg2);
-			accept(tg1);
-			accept(tg2);
+			
+			// Ujitott jatekhoz adas
+			TeleportingGate tg1 = new TeleportingGate();
 			Proto.getAllObjects().addTeleportingGate(tg1);
+			TeleportingGate tg2 = new TeleportingGate();
 			Proto.getAllObjects().addTeleportingGate(tg2);
+			Timer timer = game.getTimer();
+			tg1.setTimer(timer);
+			tg2.setTimer(timer);
+			
+			tg1.setPair(tg2);
+			this.accept(tg1);
+			this.accept(tg2);
 		}
 		gatePairRecipe.reset();
 		Proto.decrTabs();
@@ -311,8 +322,9 @@ public class Settler extends Character {
 	 * telepesnel nincs elkeszult teleportkapu (gatesCreated ures), akkor nem
 	 * tortenik semmi.
 	 */
-	public void releaseGate() {
-		Proto.println(Proto.getId(this) + ".releaseGate()");
+	public void releaseGate(/*TeleportingGate tg*/) {
+		Proto.println(Proto.getId(this) + ".releaseGate("
+				+ /* Proto.getId(tg) +*/ ")");
 		Proto.incrTabs();
 		if (gatesCreated.size() >= 1) {
 			TeleportingGate tg = gatesCreated.get(0);
@@ -320,7 +332,7 @@ public class Settler extends Character {
 			tg.setSettler(null);
 			gatesCreated.remove(0);
 		} else {
-			System.out.println("No TeleportingGate available. Cannot release a gate.");	
+			Proto.println("There is no TeleportingGate available on you at the moment.");
 		}
 		Proto.decrTabs();
 	}
@@ -365,7 +377,7 @@ public class Settler extends Character {
 	 * reprezentalo osztaly
 	 */
 	public void setGame(Game game) {
-		System.out.println("Settler's setGame() has been called");
+		// Proto.println(Proto.getId(this) + "setGame(" + Proto.getId(game) + ")");
 		this.game = game;
 	}
 
@@ -375,7 +387,7 @@ public class Settler extends Character {
 	 * @return A telepesnel tarolt teleportkapuk listaja
 	 */
 	public ArrayList<TeleportingGate> getGatesCreated() {
-		System.out.println("Settler's getGatesCreated() has been called");
+		// Proto.println(Proto.getId(this) + "getGatesCreated()");
 		return gatesCreated;
 	}
 
@@ -387,6 +399,8 @@ public class Settler extends Character {
 	 */
 	@Override
 	public void acceptedBy(Asteroid a) {
+		Proto.println(Proto.getId(this) + ".acceptedBy("
+				+ Proto.getId(a) + ")");
 		a.accept(this);
 	}
 

@@ -35,18 +35,6 @@ public class TeleportingGate implements ISteppable {
 
 	// --------------------------------------------------------------
 
-	/**
-	 * Uj teleportkapu jon letre, amely parameterkent atveszi
-	 * az ot lepteto idozitot is.
-	 * 
-	 * @param timer A jatek idozitoje
-	 */
-	public TeleportingGate(Timer timer) {
-		Proto.println(Proto.getId(this)
-				+ ".TeleportingGate(" + Proto.getId(timer) + ")");
-		this.timer = timer;
-	}
-
 	public String getDescription() {
 
 		String str = "";
@@ -68,6 +56,26 @@ public class TeleportingGate implements ISteppable {
 
 		return str;
 	}
+
+	/**
+	 * Uj teleportkapu jon letre, amely parameterkent atveszi 
+	 * az ot lepteto idozitot is.
+	 * 
+	 * @param timer A jatek idozitoje
+	 */
+	/*
+	 * public TeleportingGate(Timer timer) { Proto.println("TeleportingGate(" +
+	 * Proto.getId(timer) + ")"); this.timer = timer; }
+	 */
+
+	/**
+	 * Beallitja a teleportkapunak a timer idozitot.
+	 * 
+	 * @param timer Az idozito a jatekban
+	 */
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	};
 
 	/**
 	 * Visszaadja a teleportkapu parjat (pair).

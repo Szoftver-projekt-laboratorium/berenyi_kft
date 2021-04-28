@@ -8,7 +8,7 @@ import berenyi_kft.Controller;
 import berenyi_kft.Player;
 import berenyi_kft.PlayerCommand;
 import berenyi_kft.Proto;
-import berenyi_kft.Resource;
+/* import berenyi_kft.Resource; */
 import berenyi_kft.State;
 import berenyi_kft.TeleportingGate;
 import berenyi_kft.Timer;
@@ -50,11 +50,12 @@ public class Tester {
 			line2 = input2.nextLine();
 
 			if (!line1.equals(line2)) {
-				System.out.println("Differences found in line " + lineNum + " :\n" + line1 + '\n' + line2);
+				System.out.println("\tDifferences found in line "
+						+ lineNum + " :\n" + line1 + '\n' + line2);
 				return false;
 			}
 		}
-		System.out.println("The compared files' contents are the same.\n\n"
+		System.out.println("\tThe compared files' contents are the same.\n\n"
 				+ "\t\t***The test is successful.***");
 		return true;
 	}
@@ -95,17 +96,17 @@ public class Tester {
 			}
 		} else if (testNum == 13 || testNum == 15) {
 			if (actPlayer != null) {
-				Object[] params = { "restore", (Resource) Proto.getObject("ur1") };
+				Object[] params = { "restore", /*(Resource)Proto.getObject(*/"ur1"/*)*/ };
 				actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
 			}
 		} else if (testNum == 12 || testNum == 14) {
 			if (actPlayer != null) {
-				Object[] params = { "restore", (Resource) Proto.getObject("co1") };
+				Object[] params = { "restore", /*(Resource)Proto.getObject(*/"co1"/*)*/ };
 				actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
 			}
 		} else if (testNum == 16) {
 			if (actPlayer != null) {
-				Object[] params = { "restore", (Resource) Proto.getObject("ic1") };
+				Object[] params = { "restore", /*(Resource)Proto.getObject(*/"ic1"/*)*/ };
 				actPlayer.actOnSettler(PlayerCommand.RESTORE, params);
 			}
 		} else if (testNum == 21 || testNum == 22) {
@@ -162,32 +163,37 @@ public class Tester {
 		String inputName = Tester.path + "test_inputs\\" + testName + ".in";
 		String resultName = Tester.path + "test_results\\" + testName + ".result";
 		String outputName = Tester.path + "test_outputs\\" + testName + ".out";
-
+		
 		boolean isSuccessful = false;
-
 		try {
 			System.out.println("\t// ----- berenyi_kft's test "
-					+ testNum + " started. ----- //");
-			Proto.setRandom(false);
+					+ testNum + " started. ---- //\n");
 			Proto.enableLogging(true);
+			
+			System.out.println("\n\t// ---- Initialization logging started: ---- //");
 			Proto.load(inputName);
+			System.out.println("\t// ----- Initialization logging ended. ----- //\n");
+			
 			System.out.println("Configuration loaded from " + inputName + ".");
+			Proto.setRandom(false);
 
 			Controller controller = Proto.getAllObjects().getController();
 			if (controller != null)
 				controller.setState(State.RUNNING);
 
 			if (Proto.isLogging())
-				System.out.println("\n\t// ----- Called methods logging started: --- //");
+				System.out.println("\n\t// ---- Called methods logging started: ---- //");
 			executeTestSpecificCommand(controller, testNum);
 			if (Proto.isLogging())
 				System.out.println("\t// ------- Method logging ends here. ------- //\n");
 
 			if (controller != null)
 				controller.setState(State.PAUSED);
-
+			
 			Proto.save(resultName);
 			System.out.println("Configuration saved to " + resultName + ".");
+			Proto.enableLogging(false);
+			
 			System.out.println();
 			System.out.println("Comparing result (" + resultName + ")\n"
 							+ "to expected output (" + outputName + "):\n");
@@ -215,10 +221,11 @@ public class Tester {
 			} else {
 				System.out.println("Test number " + i + " failed");
 			}
-			System.out.println("\n\n");
 		}
-		System.out.println("Number of successful tests: " + counter);
-		System.out.println("Number of failed tests: " + (testCount - counter));
+		System.out.println("\n\n\t// ----- Test results stat: ----- // ");
+		System.out.println("\t  Number of successful tests: " + counter);
+		System.out.println("\t  Number of failed tests: " + (testCount - counter));
+		System.out.println("\t// --------------++-------------- //\n\n");
 	}
 
 	/**
@@ -234,7 +241,7 @@ public class Tester {
 				+ "---------------------------------------------------------------------------" + "--------\n"
 				+ "List of the applicable test control commands:\n"
 				+ "\ttest <test_num>\t\tExecutes test number <test_num> and prints the result.\n"
-				+ "\ttest\t\t\tRuns all the test from number 1 to " + testCount + ".\n"
+				+ "\ttest\t\t\tRuns all the tests from number 1 to " + testCount + ".\n"
 				+ "\texit\t\t\tExits from this test program.\n");
 
 		Scanner sc = new Scanner(System.in);
