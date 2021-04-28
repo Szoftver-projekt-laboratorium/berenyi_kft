@@ -40,14 +40,13 @@ public class Controller {
 	 * @param state Az uj jatekallapot
 	 */
 	public void setState(State state) {
-		Proto.println(Proto.getId(this) + ".setState("
-				+ state.toString() + ")");
-		if (Proto.isLogging()) {
-			System.out.println("State: " + State.toString(state));
-		}
 		if (this.state != State.WON & this.state != State.LOST
-				& this.state != State.EXITED)
+				& this.state != State.EXITED) {
+			Proto.print(Proto.getId(this) + ".setState("
+					+ State.toString(state) + ")");
 			this.state = state;
+			System.out.println(" - " + State.toString(state));
+		}
 	}
 
 	public String getDescription() {
@@ -95,21 +94,22 @@ public class Controller {
 					"The number of players must be between 1 and 6.");
 		}
 		
-		game = new Game(); // TODO: megkapja konstruktorban a Controllert?
+		game = new Game();
 		Proto.getAllObjects().setGame(game);
+		game.setController(this);	// Beallitja a game-ben a controllert. 
 		
 		// Sorban beallitja a jatekosokat, es telepest rendel hozzajuk.
 		for (int i = 0; i < numPlayers; i++) {
-			System.out.print("Player " + (i+1) + "' name: ");
+			System.out.print("Player " + (i + 1) + "'s name: ");
 			String name = sc.nextLine();
 			
 			Player p = new Player();
-			playersAlive.add(p);
 			Proto.getAllObjects().addPlayer(p);
+			playersAlive.add(p);
 			
 			Settler s = new Settler(); // TODO: megkapja a Playert konstruktorban?
-			game.addSettler(s);
 			Proto.getAllObjects().addSettler(s);
+			game.addSettler(s);
 			
 			p.setName(name);
 			p.setSettler(s);
@@ -120,12 +120,7 @@ public class Controller {
 		game.startGame();
 		
 		// Az elso jatekos beallitasa actPlayer-nek
-		this.nextPlayer(); 
-		
-		// Idozites inditasa
-		setState(State.RUNNING);
-		game.getTimer().start();
-		
+		this.nextPlayer();
 		Proto.decrTabs();
 	}	
 	
@@ -135,14 +130,14 @@ public class Controller {
 	 */
 	public void endGame(State state) {
 		Proto.println(Proto.getId(this) + ".endGame("
-				+ state.toString() + ")");
+				+ State.toString(state) + ")");
 		setState(state);
 		if (state == State.WON)
-			System.out.println("Settlers won");
+			Proto.println("Settlers won the game, the spacebase has been built!");
 		else if (state == State.LOST)
-			System.out.println("Settlers lost");
+			Proto.println("Settlers lost the game, everyone has died.");
 		else
-			System.out.println("The game has not ended");
+			Proto.println("(The game has not yet ended.)");
 	}
 	
 	/**
@@ -189,6 +184,7 @@ public class Controller {
 				if (playersAlive.get(i).getSettler() == s) {
 					Player p = playersAlive.get(i);
 					playersAlive.remove(p);
+					Proto.println(p.getName() + ", you died!");
 					Proto.getAllObjects().removePlayer(p);
 				}
 			}

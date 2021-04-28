@@ -2,6 +2,7 @@ package berenyi_kft;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -40,17 +41,21 @@ public class Game {
 	 */
 	private Timer timer = null;
 	
-	// private Controller controller;
+	private Controller controller = null;
 	
 	//--------------------------------------------
-	
-	
+		
 	public String getDescription() { 
 		
 		String str="";
 		
 		String id=Proto.getId(this);
 		str+="Game "+id+"\n";
+		
+		/*
+		String controllerId=Proto.getId(controller);
+		str+="\tcontroller "+controllerId+"\n";
+		*/
 		
 		String timerId=Proto.getId(timer);
 		str+="\ttimer "+timerId+"\n";
@@ -96,6 +101,24 @@ public class Game {
 	}
 	
 	/**
+	 * Visszater a jatek vezerlojevel.
+	 * @return A jatekot vezerlo objektum
+	 */
+	public Controller getController() {
+		return controller;
+	}
+	
+	/**
+	 * Beallitja a jatek vezerlojet.
+	 * @param controller A jatek vezerlo objektuma
+	 */
+	public void setController(Controller controller) {
+		Proto.println(Proto.getId(this) + ".setController("
+					+ Proto.getId(controller) + ")");
+		this.controller = controller;
+	}
+	
+	/**
 	 * Inicializalja az aszteroidakat, a Napot, es elhelyezi a telepeseket 
 	 * valamelyik aszteroidan. Egyes aszteroidak magjat uresen hagyja,
 	 * masokban pedig veletlenszeruen valamilyen nyersanyagot hoz letre.
@@ -114,39 +137,61 @@ public class Game {
 		
 		/* Jatekobjektumok letrehozasa, nyilvantartasa,
 		 * attributumaik beallitasa */
+		// Nyersanyag-segedvaltozok az inicializalashoz
+		Coal co1 = new Coal(), co2 = null;
+		Iron ir1 = new Iron(), ir2 = null;
+		Ice ic1 = new Ice(), ic2 = null;
+		Uranium ur1 = new Uranium(), ur2 = null;
+		
 		// robotRecipe
 		Recipe robotRecipe = new Recipe();
-		robotRecipe.addResource(new Coal());
-		robotRecipe.addResource(new Iron());
-		robotRecipe.addResource(new Uranium());
-		recipes.add(robotRecipe);
 		Proto.getAllObjects().setRobotRecipe(robotRecipe);
-		for (Resource r : robotRecipe.getResources())
-			r.addToGame();
+		recipes.add(robotRecipe);
+		co2 = co1.clone();
+		co2.addToGame();
+		robotRecipe.addResource(co2);
+		ir2 = ir1.clone();
+		ir1.addToGame();
+		robotRecipe.addResource(ir2);
+		ur2 = ur1.clone();
+		ur2.addToGame();
+		robotRecipe.addResource(ur2);
 		
 		// gatePairRecipe
 		Recipe gatePairRecipe = new Recipe();
-		gatePairRecipe.addResource(new Iron());
-		gatePairRecipe.addResource(new Iron());
-		gatePairRecipe.addResource(new Ice());
-		gatePairRecipe.addResource(new Uranium());
-		recipes.add(gatePairRecipe);
 		Proto.getAllObjects().setGatePairRecipe(gatePairRecipe);
-		for (Resource r : gatePairRecipe.getResources())
-			r.addToGame();
+		recipes.add(gatePairRecipe);
+		ir2 = ir1.clone();
+		ir2.addToGame();
+		gatePairRecipe.addResource(ir2);
+		ir2 = ir1.clone();
+		ir2.addToGame();
+		gatePairRecipe.addResource(ir2);
+		ic2 = ic1.clone();
+		ic2.addToGame();
+		gatePairRecipe.addResource(ic2);
+		ur2 = ur1.clone();
+		ur2.addToGame();
+		gatePairRecipe.addResource(ur2);
 		
 		// spaceBaseRecipe
 		Recipe spaceBaseRecipe = new Recipe();
-		for (int i = 0; i < 3; i++) {
-			spaceBaseRecipe.addResource(new Coal());
-			spaceBaseRecipe.addResource(new Iron());
-			spaceBaseRecipe.addResource(new Ice());
-			spaceBaseRecipe.addResource(new Uranium());
-		}
-		recipes.add(spaceBaseRecipe);
 		Proto.getAllObjects().setSpaceBaseRecipe(spaceBaseRecipe);
-		for (Resource r : spaceBaseRecipe.getResources())
-			r.addToGame();
+		recipes.add(spaceBaseRecipe);
+		for (int i = 0; i < 3; i++) {
+			co2 = co1.clone();
+			co2.addToGame();
+			spaceBaseRecipe.addResource(co2);
+			ir2 = ir1.clone();
+			ir2.addToGame();
+			spaceBaseRecipe.addResource(ir2);
+			ic2 = ic1.clone();
+			ic2.addToGame();
+			spaceBaseRecipe.addResource(ic2);
+			ur2 = ur1.clone();
+			ur2.addToGame();
+			spaceBaseRecipe.addResource(ur2);
+		}
 		
 		// nyersanyagszamok
 		int nCoals = 3 + random.nextInt(1);
@@ -157,45 +202,56 @@ public class Game {
 		int nEmpty = random.nextInt(2);
 		int nAsteroids = nCoals + nIrons + nIces + nUraniums + nEmpty;
 		
-		// allResourcesRecipe - aszteroidak inicializalasahoz
-		Recipe allResourcesRecipe = new Recipe();
-		for (int i = 0; i < nCoals; i++)
-			allResourcesRecipe.addResource(new Coal());
-		for (int i = 0; i < nIrons; i++)
-			allResourcesRecipe.addResource(new Iron());
-		for (int i = 0; i < nIces; i++)
-			allResourcesRecipe.addResource(new Ice());
-		for (int i = 0; i < nUraniums; i++)
-			allResourcesRecipe.addResource(new Uranium());
-		
-		// timer	
+		// timer
 		timer = new Timer(5000, 3000);
 		Proto.getAllObjects().setTimer(timer);
-
+		
 		// sun
 		sun = new Sun();
-		timer.addSteppable(sun);
 		Proto.getAllObjects().setSun(sun);
+		timer.addSteppable(sun);
+		
+		// allResourcesList - aszteroidak inicializalasahoz
+		List<Resource> allResourcesList = new ArrayList<Resource>();
+		for (int i = 0; i < nCoals; i++) {
+			co2 = co1.clone();
+			co2.addToGame();
+			allResourcesList.add(co2);
+		}
+		for (int i = 0; i < nIrons; i++) {
+			ir2 = ir1.clone();
+			ir2.addToGame();
+			allResourcesList.add(ir2);
+		}
+		for (int i = 0; i < nIces; i++) {
+			ic2 = ic1.clone();
+			ic2.addToGame();
+			allResourcesList.add(ic2);
+		}
+		for (int i = 0; i < nUraniums; i++) {
+			ur2 = ur1.clone();
+			ur2.addToGame();
+			allResourcesList.add(ur2);
+		}
 		
 		// asteroids
 		for (int i = 0; i < nAsteroids; i++) {
 			Asteroid a = new Asteroid();
+			Proto.getAllObjects().addAsteroid(a);
+			
 			a.setRockLayerThickness(random.nextInt(5));
 			a.setGame(this);
 			a.setSun(sun);
 			if (i < nAsteroids - nEmpty) {
-				Resource r = allResourcesRecipe.getResources().get(i);
-				r.addToGame();
+				Resource r = allResourcesList.get(i);
 				a.addResource(r);
 			}
 			asteroids.add(a);
-			Proto.getAllObjects().addAsteroid(a);
 		}
 		
 		// nyersanyagok elkeverese
 		Collections.shuffle(asteroids);
-		
-		// napkozeli aszteroidak veletlenszeruen
+		// napkozeli aszteroidak (veletlenszeruen)
 		int nCloseToSun = 1 + random.nextInt(1);
 		for (int i = 0; i < nCloseToSun; i++)
 			sun.addNeighbor(asteroids.get(i));
@@ -235,11 +291,14 @@ public class Game {
 		
 		// ufos
 		for (int i = 0; i < 2; i++) {
-			UFO ufo = new UFO(timer);
+			UFO ufo = new UFO();
+			Proto.getAllObjects().addUFO(ufo);
+			ufo.setTimer(timer);
+			timer.addSteppable(ufo);
+			
 			Asteroid a = asteroids.get(random.nextInt(nAsteroids));
 			a.accept(ufo);
 			ufo.setPlace(a);
-			Proto.getAllObjects().addUFO(ufo);
 		}
 		Proto.decrTabs();
 	}
@@ -253,13 +312,10 @@ public class Game {
 		Proto.println(Proto.getId(this) + ".endGame()");
 		Proto.incrTabs();
 		Controller controller = Proto.getAllObjects().getController();
-		if (settlersAlive.size() > 0) {
-			System.out.println("A telepesek nyertek, felepult az urbazis!");
+		if (settlersAlive.size() > 0)
 			controller.endGame(State.WON);
-		} else {
-			System.out.println("A telepesek vesztettek, mindegyikuk meghalt.");
+		else
 			controller.endGame(State.LOST);
-		}
 		Proto.decrTabs();
 	}
 	
@@ -270,7 +326,7 @@ public class Game {
 	 */
 	public void removeSettler(Settler s) {
 		Proto.println(Proto.getId(this) + ".removeSettler("
-				+ Proto.getId(s) + ")");
+					+ Proto.getId(s) + ")");
 		Proto.incrTabs();
 		settlersAlive.remove(s);
 		Proto.getAllObjects().getController().removePlayer(s);
@@ -287,7 +343,7 @@ public class Game {
 	 */
 	public void removeAsteroid(Asteroid a) {
 		Proto.println(Proto.getId(this) + ".removeAsteroid("
-				+ Proto.getId(a) + ")");
+					+ Proto.getId(a) + ")");
 		asteroids.remove(a);
 	}
 	
@@ -296,7 +352,6 @@ public class Game {
 	 * @return Az aszteroidak listaja
 	 */
 	public ArrayList<Asteroid> getAsteroids() {
-		System.out.println("Game's getAsteroids() has been called");
 		return this.asteroids;
 	}
 	
@@ -306,7 +361,7 @@ public class Game {
 	 */
 	public void addRecipe(Recipe recipe) {
 		Proto.println(Proto.getId(this) + ".addRecipe("
-				+ Proto.getId(recipe) + ")");
+					+ Proto.getId(recipe) + ")");
 		recipes.add(recipe);		
 	}
 	
@@ -353,6 +408,8 @@ public class Game {
 	 * @param timer A beallitando idozito
 	 */
 	public void setTimer(Timer timer) {
+		Proto.println(Proto.getId(this) + ".setTimer("
+				+ Proto.getId(timer) + ")");
 		this.timer = timer;
 	}
 	
@@ -381,7 +438,8 @@ public class Game {
 	 * @return s A jatekban beallitando Nap
 	 */
 	public void setSun(Sun s) {
-		System.out.println("Game's setSun(s: Sun) has been called");
+		Proto.println(Proto.getId(this) + ".setSun("
+				+ Proto.getId(s) + ")");
 		sun = s;
 	}
 	
@@ -391,7 +449,6 @@ public class Game {
 	 */
 	// Csak a szkeletonhoz volt szukseges.
 	public int getSizeOfSettlersAlive() {
-		System.out.println("Game's getSizeOfSettlersAlive() has been called");
 		return this.settlersAlive.size();
 	}
 	
@@ -400,7 +457,7 @@ public class Game {
 	 * @return Az elo telepesek listaja
 	 */
 	public ArrayList<Settler> getSettlers() {
-		System.out.println("Game's getSettlers() has been called");
+		Proto.println(Proto.getId(this) + ".getSettlers()");
 		return settlersAlive;
 	}
 	
@@ -421,6 +478,10 @@ public class Game {
 			String[] tokens = line.split("\\s+");
 			
 			switch (tokens[0]) {
+				/* case "controller":
+					controller = (Controller)Proto.getObject(tokens[1]);
+					break; */
+				
 				case "timer":
 					timer = (Timer)Proto.getObject(tokens[1]);
 					break;

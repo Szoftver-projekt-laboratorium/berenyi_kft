@@ -242,7 +242,7 @@ public class Proto {
 
 	private static boolean random = true;
 
-	private static boolean log = true;
+	private static boolean log = false;
 
 	public static Proto.Objects getAllObjects() {
 		return allObjects;
@@ -260,7 +260,7 @@ public class Proto {
 	 * @param isRandom A randomizalt mukodest engedelyezo/letilto logikai valtozo
 	 */
 	public static void setRandom(boolean isRandom) {
-		System.out.println(isRandom ? "random enabled" : "random disabled");
+		Proto.println(isRandom ? "random enabled" : "random disabled");
 		random = isRandom;
 	}
 
@@ -276,7 +276,7 @@ public class Proto {
 	 *                  valtozo
 	 */
 	public static void enableLogging(boolean isLogging) {
-		System.out.println(isLogging ? "logging enabled" : "logging disabled");
+		System.out.println(isLogging ? "- logging enabled" : "- logging disabled");
 		log = isLogging;
 	}
 
@@ -307,18 +307,35 @@ public class Proto {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Naplozza a <code>str</code> szoveget a kimeneten az aktualis
+	 * <code>Proto.tabs</code> ertekkel tabulalva.
+	 * 
+	 * @param line A naplozando sor
+	 */
+	public static void print(String str) {
+		if (Proto.isLogging()) {
+			for (int i = 0; i < tabs; i++) {
+				System.out.print("   |");
+			}
+			System.out.print("- ");
+			System.out.print(str);
+		}
+	}
+	
 	/**
 	 * Naplozza a <code>line</code> sort a kimeneten az aktualis
-	 * <code>Proto.tabs</code> ertekkel tabulalva.
+	 * <code>Proto.tabs</code> ertekkel tabulalva, majd uj sort kezd.
 	 * 
 	 * @param line A naplozando sor
 	 */
 	public static void println(String line) {
 		if (Proto.isLogging()) {
 			for (int i = 0; i < tabs; i++) {
-				System.out.print(" -> ");
+				System.out.print("   |");
 			}
+			System.out.print("- ");
 			System.out.println(line);
 		}
 	}
@@ -424,19 +441,19 @@ public class Proto {
 			break;
 
 		case "AIRobot":
-			AIRobot air = new AIRobot(null);
+			AIRobot air = new AIRobot();
 			allObjects.ids.put(air, id);
 			allObjects.robots.add(air);
 			break;
 
 		case "UFO":
-			UFO ufo = new UFO(null);
+			UFO ufo = new UFO();
 			allObjects.ids.put(ufo, id);
 			allObjects.ufos.add(ufo);
 			break;
 
 		case "TeleportingGate":
-			TeleportingGate tg = new TeleportingGate(null);
+			TeleportingGate tg = new TeleportingGate();
 			allObjects.ids.put(tg, id);
 			allObjects.gates.add(tg);
 			break;
@@ -742,7 +759,10 @@ public class Proto {
 	 * 
 	 * @param args A program parancssori argumentumai
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
+		Controller controller = null;	// objektum-segedvaltozok
+		Timer timer = null;
+		
 		try {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Welcome in berenyi_kft's Proto program!");
@@ -765,11 +785,11 @@ public class Proto {
 						+ "\texit\t\t\tExits the prototype program, no further commands are processed.\n"
 						+ "----------------------------------------------------++--------------------------"
 						+ "--------------------------------\n" + "List of the applicable player control commands:\n"
-						+ "\tpass\t\t\tYour player does not act intentionally.\n"
+						+ "\tpass\t\t\tYour player does not act, intentionally.\n"
 						+ "\tmove <direction>:\tPlayer moves to its asteroids's direction-th neighbor.\n"
 						+ "\t\t\t\tYou may also use the teleporting gates to move.\n"
 						+ "\tdrill\t\t\tPlayer drills a rock layer down on his/her asteroid.\n"
-						+ "\tmine\t\t\tPlayers mines the resource on his/her current place.\n"
+						+ "\tmine\t\t\tPlayer mines the resource on his/her current place.\n"
 						+ "\trestore <resource>\tPlayer restores a resource type of <resource> in the asteroid.\n"
 						+ "\tcreate_robot\t\tYou create and release a new AI robot for "
 						+ "a coal, an iron and a uranium.\n"
@@ -779,42 +799,50 @@ public class Proto {
 						+ "\t\t\t\t\tof id <teleport_gate> on the orbit of his/her current place.\n"
 						+ "--------------------------------------------------------------------------------"
 						+ "--------------------------------\n" + "\n");
-
-				boolean exit = false; // jatekallapot-valtozok
-				boolean running = false;
-				String line = sc.nextLine();
-				while (!exit & line != null) {
+				
+				boolean running = false; // jatekallapot-valtozok
+				boolean end = false;
+				boolean exit = false;				
+				while (!exit & sc.hasNextLine()) {
+					String line = sc.nextLine();
 					String[] tokens = line.split("\\s+");
 					String cmd = tokens[0];
 
-					Controller controller = allObjects.getController();
-					if (controller != null)
+					controller = allObjects.getController();
+					if (controller != null) {
+						timer = controller.getGame().getTimer();
 						running = (controller.getState() == State.RUNNING);
+					}
 
 					// Jatekutasitasok vizsgalata
 					PlayerCommand playerCmd = PlayerCommand.fromString(cmd);
-					if (/* running & */ (playerCmd != PlayerCommand.INVALID)) {
+					if (running & (playerCmd != PlayerCommand.INVALID)) {
 						Player pAct = controller.getActPlayer();
 						pAct.actOnSettler(playerCmd, tokens);
 						controller.nextPlayer();
-					} else {
-						Timer timer = allObjects.getTimer(); // segedvaltozo
-
+					}
+					else {
 						// Rendszerutasitasok vizsgalata allapotgep-szeruen
 						switch (cmd) {
 						case "exit":
-							exit = true;
-							if (timer != null)
-								timer.cancel();
-							if (controller != null)
-								controller.setState(State.EXITED);
-							System.out.println("The prototype program has terminated.");
-							// System.exit(0);
+							if (!running) {
+								end = true;
+								exit = true;
+								if (timer != null)
+									timer.cancel();
+								if (controller != null)
+									controller.setState(State.EXITED);
+								Proto.println("The prototype program has terminated.");
+								// System.exit(0);
+							}
 							break;
 
 						case "random":
 							if (!running) {
-								if (tokens.length >= 2) {
+								if (tokens.length == 1) {
+									Proto.println("is_random = " + (random ? "true" : "false"));
+								}
+								else if (tokens.length >= 2) {
 									if (tokens[1].equals("true"))
 										setRandom(true);
 									else if (tokens[1].equals("false"))
@@ -822,14 +850,16 @@ public class Proto {
 									else
 										throw new IllegalArgumentException(
 												"Invalid argument for <is_random>: " + tokens[1] + ".");
-								} else
-									throw new IllegalArgumentException("Argument for command 'random' is missing.");
+								}
 							}
 							break;
 
 						case "log":
 							if (!running) {
-								if (tokens.length >= 2) {
+								if (tokens.length == 1) {
+									Proto.println("is_logging = " + (log ? "enabled" : "disabled"));
+								}
+								else if (tokens.length >= 2) {
 									if (tokens[1].equals("true"))
 										enableLogging(true);
 									else if (tokens[1].equals("false"))
@@ -837,23 +867,29 @@ public class Proto {
 									else
 										throw new IllegalArgumentException(
 												"Invalid argument for <is_logging>: " + tokens[1] + ".");
-								} else
-									throw new IllegalArgumentException("Argument for command 'log' is missing.");
+								}
 							}
 							break;
 
 						case "init":
 							if (!running) {
+								end = false;
 								allObjects = new Proto.Objects();
 								controller = new Controller();
 								Proto.getAllObjects().setController(controller);
-								controller.setState(State.INIT);
 								controller.startGame(sc);
+								
+								// Idozites inditasa
+								running = true;
+								controller.setState(State.RUNNING);
+								timer = controller.getGame().getTimer();
+								timer.start();
 							}
 							break;
 
 						case "load":
 							if (!running) {
+								end = false;
 								if (tokens.length >= 2) {
 									if (timer != null) {
 										timer.cancel();
@@ -864,7 +900,7 @@ public class Proto {
 							break;
 
 						case "start":
-							if (!running) {
+							if (!running & !end) {
 								if (timer != null) {
 									timer.start();
 								}
@@ -876,11 +912,14 @@ public class Proto {
 							break;
 
 						case "stop": // Szunetelteti a futo jatekot.
-							if (timer != null) {
-								timer.stop();
-							}
-							if (controller != null) {
-								controller.setState(State.PAUSED);
+							if (running) {
+								if (timer != null) {
+									timer.stop();
+								}
+								if (controller != null) {
+									controller.setState(State.PAUSED);
+								}
+								running = false;
 							}
 							break;
 
@@ -896,14 +935,14 @@ public class Proto {
 							if (!running) {
 								if (tokens.length == 1) {
 									showAll();
-								} /*
-									 * else if (tokens.length >= 2) { showOne(tokens[1]); }
-									 */
+								} 
+									 // else if (tokens.length >= 2) { showOne(tokens[1]); }
+									 
 							}
 							break;
 
 						default:
-							System.out.println("Invalid operation, please type in " + "a valid command.");
+							System.out.println("Invalid operation, please type in a valid command.");
 							break;
 						}
 					}
@@ -911,23 +950,35 @@ public class Proto {
 					if (controller != null) {
 						if (controller.getState() == State.WON | controller.getState() == State.LOST) {
 							running = false;
-							exit = true;
-							break;
+							end = true;
+							if (timer != null) {
+								timer.cancel();
+								timer = null;
+							}
+							controller.setState(State.INIT);
+							// break;
 						}
 					}
-					line = sc.nextLine();
 				}
 				sc.close();
 			}
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			System.out.println("The file you specified was not found by the prototype program.");
 			e.printStackTrace();
 			// System.exit(1);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			System.out.println("The prototype program has been ended by this exception:");
 			e.printStackTrace();
 			// System.exit(1);
 		}
-	}
+		finally {
+			if (timer != null) {
+				timer.cancel();
+				timer = null;
+			}
+		}
+	}*/
 
 }

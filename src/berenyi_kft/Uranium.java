@@ -92,7 +92,7 @@ public class Uranium extends RadioactiveResource {
 		Proto.incrTabs();
 		decLife();
 		if (life == 0) {
-			System.out.println("Uranium is exploding!");
+			Proto.println("Uranium is exploding!");
 			a.explodedBy(this);
 		}
 		Proto.decrTabs();
