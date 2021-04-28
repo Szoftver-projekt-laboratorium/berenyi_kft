@@ -5,37 +5,45 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class Cards /*implements ItemListener*/ {
+public class Cards {
+	
 	public final static String menuPanelID = "menuPanel";
-	public final static String gamePanelID = "gamePanel";
 	public final static String addPlayersPanelID = "addPlayersPanel";
+	public final static String gamePanelID = "gamePanel";
+	public final static String endGamePanelID = "endGamePanel";
 	
 	private JPanel cardsPanel;
 	private MenuPanel menuPanel;
 	private AddPlayersPanel addPlayersPanel;
 	private GamePanel gamePanel;
-	private JPanel endGamePanel; /*pauseGamePanel*/
+	private JPanel endGamePanel;
 	
-	public void initComponents(Container pane) {		
+	public JPanel getCardsPanel() {
+		return cardsPanel;
+	}
+	
+	public void initComponents(Container pane) {
         menuPanel = new MenuPanel(this);
         addPlayersPanel = new AddPlayersPanel(this);
-        gamePanel = new GamePanel();
+        gamePanel = new GamePanel(this);
+        endGamePanel = new EndGamePanel(this);
         
         cardsPanel = new JPanel(new CardLayout());
-        cardsPanel.add(menuPanelID, menuPanel);
-        cardsPanel.add(addPlayersPanelID, addPlayersPanel);
-        cardsPanel.add(gamePanelID, gamePanel);
+        cardsPanel.add(menuPanel, menuPanelID);
+        cardsPanel.add(addPlayersPanel, addPlayersPanelID);
+        cardsPanel.add(gamePanel, gamePanelID);
+        cardsPanel.add(endGamePanel, endGamePanelID);
+        cardsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         pane.add(cardsPanel, BorderLayout.CENTER);
     }
-	
-	/*public void itemStateChanged(ItemEvent evt) {
-        CardLayout cl = (CardLayout)(cardsPanel.getLayout());
-        cl.show(cardsPanel, (String)evt.getItem());
-    }*/
 	
 	public void show(String itemID) {
 		CardLayout cl = (CardLayout)(cardsPanel.getLayout());
         cl.show(cardsPanel, itemID);
+	}
+	
+	public Cards(Container pane) {
+		initComponents(pane);
 	}
 	
 }

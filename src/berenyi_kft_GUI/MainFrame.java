@@ -8,10 +8,9 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		super("Asteroid Miners");
-		cards = new Cards();
-        cards.initComponents(this.getContentPane());
+		cards = new Cards(this.getContentPane());
 		
-		this.setMinimumSize(new Dimension(900, 600));
+		this.setMinimumSize(new Dimension(700, 500));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 	}
