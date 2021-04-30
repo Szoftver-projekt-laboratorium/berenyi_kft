@@ -112,6 +112,8 @@ public class Controller {
 		// Palyakep inicializalasa
 		game.startGame();
 		
+		// TODO timer inditasa
+		
 		// Palyakep megjelenitese
 		gamePanel.drawAll();
 		
