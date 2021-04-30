@@ -1,21 +1,15 @@
 Player p1
 Asteroid a1
-Uranium ur1
 Settler s1
 
 Player p1
 	name Marci
 	settler s1
-	isAlive false
+	isAlive true
 
-Game game
-	timer null
-	recipes null
-	sun sun
-	asteroids a1 
-	settlersAlive null
+Asteroid a1
+	rockLayerThickness 1
+	characters s1
 
-Sun sun
-	TimeToSunStorm 2000 
-	neighboringAsteroids null
-
+Settler s1
+	place a1

@@ -10,7 +10,7 @@ Player p1
 	isAlive true
 
 Sun sun
-	TimeToSunStorm 3000 
+	timeToSunStorm 3000 
 	neighboringAsteroids a1
 	
 Asteroid a1

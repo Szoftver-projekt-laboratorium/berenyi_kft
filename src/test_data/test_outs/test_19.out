@@ -1,7 +1,5 @@
 Player p1
 Asteroid a1
-Coal co1
-Iron ir1 ir2 ir3 ir4 ir5 ir6 ir7 ir8 ir9 ir10
 Settler s1
 
 Player p1
@@ -10,17 +8,8 @@ Player p1
 	isAlive true
 
 Asteroid a1
-	rockLayerThickness 0
-	game null
-	sun null
-	neighbors null
-	resource co1
+	rockLayerThickness 1
 	characters s1
-	gates null
 
 Settler s1
-	game null
-	timer null
 	place a1
-	resources ir1 ir2 ir3 ir4 ir5 ir6 ir7 ir8 ir9 ir10
-	gatesCreated null

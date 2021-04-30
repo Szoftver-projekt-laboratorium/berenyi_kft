@@ -1,6 +1,8 @@
 Player p1
 Game game
+Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
 Asteroid a1 a2
+Iron ir1 ir2
 Settler s1
 
 Player p1 
@@ -9,8 +11,18 @@ Player p1
 	isAlive true
 
 Game game
+	recipes nullRecipe1 nullRecipe2 spaceBaseRecipe
 	asteroids a1 a2
 	settlersAlive s1
+
+Recipe nullRecipe1
+	resources null
+
+Recipe nullRecipe2
+	resources null
+
+Recipe spaceBaseRecipe
+	resources ir1 ir2
 
 Asteroid a1
 	rockLayerThickness 0

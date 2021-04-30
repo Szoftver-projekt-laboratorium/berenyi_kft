@@ -1,25 +1,54 @@
-Player p1
-Asteroid a1
-Settler s1
+Controller controller
+Game game
+Recipe nullRecipe1 nullRecipe2 spaceBaseRecipe
+Timer timer
+Sun sun
+Asteroid a2
+Iron ir2 ir3
+AIRobot air1
 
-Player p1
-	name Marci
-	settler s1
-	isAlive true
+Controller controller
+	game game
+	allPlayers null
+	actPlayer null
+	state lost
 
-Asteroid a1
-	rockLayerThickness 1
-	game null
-	sun null
+Game game
+	timer timer
+	recipes nullRecipe1 nullRecipe2 spaceBaseRecipe
+	sun sun
+	asteroids a2
+	settlersAlive null
+
+Recipe nullRecipe1
+	resources null
+
+Recipe nullRecipe2
+	resources null
+
+Recipe spaceBaseRecipe
+	resources ir2 ir3
+
+Timer timer
+	ticks 0
+	delay 3000
+	period 1000
+	steppables sun air1
+
+Sun sun
+	timeToSunStorm 0
+	neighboringAsteroids null
+
+Asteroid a2
+	rockLayerThickness 3
+	game game
+	sun sun
 	neighbors null
 	resource null
-	characters s1
+	characters air1
 	gates null
 
-Settler s1
-	game null
-	timer null
-	place a1
-	resources null
-	gatesCreated null
+AIRobot air1
+	timer timer
+	place a2
 

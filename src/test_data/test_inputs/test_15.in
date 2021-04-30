@@ -1,6 +1,7 @@
 Controller controller
 Player p1
 Game game
+Sun sun
 Asteroid a1
 Uranium ur1
 Settler s1
@@ -8,7 +9,7 @@ Settler s1
 Controller controller
 	allPlayers p1
 	actPlayer p1
-	gameRunning true
+	state paused
 
 Player p1
 	name Marci
@@ -20,8 +21,8 @@ Game game
 	asteroids a1 
 	settlersAlive s1
 
-Sun sun t
-	TimeToSunStorm 3000 
+Sun sun
+	timeToSunStorm 3000 
 	neighboringAsteroids a1
 
 Asteroid a1
@@ -34,5 +35,6 @@ Uranium ur1
 	life 1
 
 Settler s1
+	game game
 	place a1
 	resources ur1
