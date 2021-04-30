@@ -24,31 +24,44 @@ public class GamePanel extends JPanel {
 	private JButton mineButton;
 	private JButton endGameButton;
 	
-	private class ButtonListener implements ActionListener {		
+	private class ButtonListener implements ActionListener {
+		
+		/**
+		 * Kezeli a gamePanel akciógombjainak a gombnyomás-eseményeit.
+		 * Az akcióparancs feldolgozása után frissít minden nézet-objektumot.
+		 * 
+		 * @param ae: A beérkező akcióparancs paraméterei
+		 */
 		public void actionPerformed(ActionEvent ae) {
-			for (AsteroidGraphics ag : AsteroidGraphics.getAllAsteroidGraphics())
-				ag.setForeground(new Color(0, 0, 0, 0));
+			// Megszünteti az eddig kijelölt aszteroidák kiemelését.
+			for (AsteroidGraphics ag : AsteroidGraphics.getAllAsteroidGraphics()) {
+				ag.getAsteroid().setEmphasized(false);
+			}
 			
 			JButton pressedButton = (JButton)ae.getSource();
 			if (pressedButton == moveButton) {
-				drawAll();
+				// TODO
 			}
 			else if (pressedButton == mineButton) {
 				// TODO
 			}
 			else if (pressedButton == endGameButton) {
+				// TODO Inkább Pause gomb legyen helyette.
 				for (JButton drButton : drawableButtons)
 					mapPanel.remove(drButton);
 				drawableButtons.clear();
 				drawables.clear();
-				
 				cards.show(Cards.endGamePanelID);
 			}
-			else if (ae.getActionCommand() == AsteroidGraphics.getCommand()) {
+			else if (ae.getActionCommand().equals(AsteroidGraphics.getCommand())) {
 				AsteroidGraphics ag = (AsteroidGraphics)pressedButton;
-				ag.setForeground(Color.RED);
-				drawAll();
+				// Kiemeli az éppen kattintott aszteroida szomszédait.
+				for (Asteroid neighbor : ag.getAsteroid().getNeighbors())
+					neighbor.setEmphasized(true);
 			}
+			
+			// Frissíti az összes nézet-objektumot, mert megváltozhatott a modell.
+			drawAll();
 		}
 	}
 	
@@ -56,7 +69,7 @@ public class GamePanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		Font font = new Font("Comic Sans MS", Font.BOLD, 20);
 		
-		ButtonListener bl = new ButtonListener();
+		bl = new ButtonListener();
 		
 		// Fejlecpanel (felso)
 		JPanel titlePanel = new JPanel();

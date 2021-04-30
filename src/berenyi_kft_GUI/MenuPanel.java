@@ -22,7 +22,7 @@ public class MenuPanel extends JPanel {
 				cards.show(Cards.addPlayersPanelID);
 			}
 			else if (pressedButton == loadGameButton) {
-				// TODO
+				cards.show(Cards.gamePanelID);
 			}
 			else if (pressedButton == exitButton) {
 				System.exit(0);

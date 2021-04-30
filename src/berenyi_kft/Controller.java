@@ -2,6 +2,7 @@ package berenyi_kft;
 
 import java.util.*;
 
+import berenyi_kft_GUI.AsteroidGraphics;
 import berenyi_kft_GUI.GamePanel;
 
 /**
@@ -112,13 +113,15 @@ public class Controller {
 		// Palyakep inicializalasa
 		game.startGame();
 		
-		// TODO timer inditasa
-		
-		// Palyakep megjelenitese
+		// Aszteroidak elhelyezese a panelen, majd a palyakep megjelenitese
+		AsteroidGraphics.setAsteroidLocations();
 		gamePanel.drawAll();
 		
 		// Az elso jatekos beallitasa actPlayer-nek
 		this.nextPlayer();
+		
+		// TODO timer inditasa
+		
 		Proto.decrTabs();
 	}	
 	

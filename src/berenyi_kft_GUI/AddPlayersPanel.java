@@ -29,7 +29,9 @@ public class AddPlayersPanel extends JPanel {
 		this.playerNames = playerNames;
 	}
 	
-	private class ButtonListener implements ActionListener {		
+	private class ButtonListener implements ActionListener {
+		
+		// TODO Hibaüzenetek JTextArea-ban a nevek fölött/alatt.
 		public void actionPerformed(ActionEvent ae) {
 			JButton pressedButton = (JButton)ae.getSource();
 			if (pressedButton == addPlayerButton) {
@@ -56,9 +58,9 @@ public class AddPlayersPanel extends JPanel {
 													+ "kell, hogy legyen!");
 				}
 				else {
-					for (String str : playerNames) {
+					/*for (String str : playerNames) {
 						System.out.println(str);
-					}
+					}*/
 					
 					Proto.allObjects = new Proto.Objects();
 					controller = new Controller();
