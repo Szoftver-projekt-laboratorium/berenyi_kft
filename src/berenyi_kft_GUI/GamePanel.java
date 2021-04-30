@@ -8,10 +8,14 @@ import java.util.List;
 
 import javax.swing.*;
 
+import berenyi_kft.Asteroid;
+
 public class GamePanel extends JPanel {
 	
 	private List<IDrawable> drawables = new ArrayList<IDrawable>();
 	private List<JButton> drawableButtons = new ArrayList<JButton>();
+	
+	private ButtonListener bl;
 	
 	private Cards cards;
 	private JPanel mapPanel;
@@ -22,6 +26,9 @@ public class GamePanel extends JPanel {
 	
 	private class ButtonListener implements ActionListener {		
 		public void actionPerformed(ActionEvent ae) {
+			for (AsteroidGraphics ag : AsteroidGraphics.getAllAsteroidGraphics())
+				ag.setForeground(new Color(0, 0, 0, 0));
+			
 			JButton pressedButton = (JButton)ae.getSource();
 			if (pressedButton == moveButton) {
 				drawAll();
@@ -36,6 +43,11 @@ public class GamePanel extends JPanel {
 				drawables.clear();
 				
 				cards.show(Cards.endGamePanelID);
+			}
+			else if (ae.getActionCommand() == AsteroidGraphics.getCommand()) {
+				AsteroidGraphics ag = (AsteroidGraphics)pressedButton;
+				ag.setForeground(Color.RED);
+				drawAll();
 			}
 		}
 	}
@@ -78,8 +90,8 @@ public class GamePanel extends JPanel {
 		
 		// Jatekpanel (kozepso)
 		mapPanel = new JPanel();
-		inventoryPanel.setMinimumSize(new Dimension(400, 200));
-		mapPanel.setBackground(Color.BLUE);
+		mapPanel.setMinimumSize(new Dimension(800, 600));
+		mapPanel.setBackground(Color.YELLOW);
 		this.add(mapPanel, BorderLayout.CENTER);
 	}
 	
@@ -92,6 +104,7 @@ public class GamePanel extends JPanel {
 	public void addToMapPanel(JButton drawableButton) {
 		mapPanel.add(drawableButton);
 		drawableButtons.add(drawableButton);
+		drawableButton.addActionListener(bl);
 	}
 	
 	public void addDrawable(IDrawable d) {

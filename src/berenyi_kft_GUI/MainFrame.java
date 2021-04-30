@@ -10,7 +10,7 @@ public class MainFrame extends JFrame {
 		super("Asteroid Miners");
 		cards = new Cards(this.getContentPane());
 		
-		this.setMinimumSize(new Dimension(700, 500));
+		this.setMinimumSize(new Dimension(1300, 700));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 	}

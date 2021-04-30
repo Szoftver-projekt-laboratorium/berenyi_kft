@@ -3,6 +3,8 @@ package berenyi_kft;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import berenyi_kft_GUI.AsteroidGraphics;
+
 /**
  * Aszteroida osztaly: nyersanyagot tartalmazhat, illetve karakterek
  * tartozkodhatnak rajta
@@ -52,6 +54,11 @@ public class Asteroid {
 	 * Az aszteroida korul kozvetlenul keringo teleportkapuk kollekcioja
 	 */
 	private ArrayList<TeleportingGate> gates = new ArrayList<TeleportingGate>();
+	
+	/**
+	 * Az aszteroida grafikus megjelenitoje
+	 */
+	private boolean emphasized = false;
 
 	//---------------------------------------------------------------------------
 
@@ -606,6 +613,22 @@ public class Asteroid {
 		}
 		recipe.reset();
 		Proto.decrTabs();
+	}
+	
+	/**
+	 * Visszater az aszteroida grafikus csomagolojaval.
+	 * @return Az aszteroidat megjelenito objektum
+	 */
+	public boolean isEmphasized() {
+		return emphasized;
+	}
+	
+	/**
+	 * Beallitja az aszteroida grafikus kepet.
+	 * @param ag Az aszteroida uj megjelenito objektuma
+	 */
+	public void setEmphasized(boolean emphasized) {
+		this.emphasized = emphasized;
 	}
 
 }
