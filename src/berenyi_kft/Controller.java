@@ -4,6 +4,7 @@ import java.util.*;
 
 import berenyi_kft_GUI.AsteroidGraphics;
 import berenyi_kft_GUI.GamePanel;
+import berenyi_kft_GUI.SettlerGraphics;
 
 /**
  * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot
@@ -104,6 +105,9 @@ public class Controller {
 			Settler s = new Settler();
 			Proto.getAllObjects().addSettler(s);
 			game.addSettler(s);
+			SettlerGraphics sg = new SettlerGraphics(s);
+			gamePanel.addToMapPanel(sg);
+			gamePanel.addDrawable(sg);
 			
 			p.setName(name);
 			p.setSettler(s);

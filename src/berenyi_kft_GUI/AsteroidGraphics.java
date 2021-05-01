@@ -127,7 +127,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 */
 	public AsteroidGraphics(Asteroid a, Dimension panelSize) {
 		allAsteroidGraphics.add(this);
-		asteroid = a;
+		this.asteroid = a;
 		
 		this.setActionCommand(AsteroidGraphics.actionCommand);
 		this.setIcon(icon);
@@ -178,9 +178,6 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 * Ezzel megjelenik az ikon mögötti emphasizerBgColor kiemelőszínű háttér.
 	 * Ha az aszteroida nincs kiemelve, akkor nem rajzoltatja ki a gomb hátterét
 	 * (a setContentAreFilled(false) utasítással).
-	 * 
-	 * Végül meghívja az invalidate() metódust, hogy a frissített nézet
-	 * tényleges képernyőre rajzolása is megtörténjen.
 	 */
 	@Override
 	public void draw() {
@@ -196,7 +193,6 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		else {
 			this.setContentAreaFilled(false);
 		}
-		this.invalidate();
 	}
 
 }

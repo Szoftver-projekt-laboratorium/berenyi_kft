@@ -120,6 +120,10 @@ public class GamePanel extends JPanel {
 		drawableButton.addActionListener(bl);
 	}
 	
+	public void addToMapPanel(JLabel drawableLabel) {
+		mapPanel.add(drawableLabel);
+	}
+	
 	public void addDrawable(IDrawable d) {
 		drawables.add(d);
 	}
