@@ -16,26 +16,23 @@ import javax.swing.border.LineBorder;
 import berenyi_kft.Asteroid;
 
 public class GamePanel extends JPanel {
-	
+
 	private List<IDrawable> drawables = new ArrayList<IDrawable>();
 	private List<JButton> drawableButtons = new ArrayList<JButton>();
 	private List<JLabel> drawableLabels = new ArrayList<JLabel>();
-	
+
 	private ButtonListener bl;
-	
-	//altalanos gombmeret beallitasa:
+
+	// altalanos gombmeret beallitasa:
 	private Dimension buttonsize = new Dimension(250, 40);
-	
+
 	private Dimension textarea_size = new Dimension(250, 300);
-	
+
 	@Override
-	public Dimension getPreferredSize()
-	{
-	return (new Dimension(img.getWidth(), img.getHeight()));
+	public Dimension getPreferredSize() {
+		return (new Dimension(img.getWidth(), img.getHeight()));
 	}
 
-	
-	
 	private Cards cards;
 	private JPanel mapPanel;
 	private JLabel gameNameLabel;
@@ -48,16 +45,16 @@ public class GamePanel extends JPanel {
 	private JButton placeteleportButton;
 	private JButton passButton;
 	private JButton endGameButton;
-	
+
 	private BufferedImage img;
-	
+
 	private JTextArea messages = new JTextArea("Welcome in the game!");
-	
+
 	private class ButtonListener implements ActionListener {
-		
+
 		/**
-		 * Kezeli a gamePanel akciógombjainak a gombnyomás-eseményeit.
-		 * Az akcióparancs feldolgozása után frissít minden nézet-objektumot.
+		 * Kezeli a gamePanel akciógombjainak a gombnyomás-eseményeit. Az akcióparancs
+		 * feldolgozása után frissít minden nézet-objektumot.
 		 * 
 		 * @param ae: A beérkező akcióparancs paraméterei
 		 */
@@ -66,8 +63,8 @@ public class GamePanel extends JPanel {
 			for (AsteroidGraphics ag : AsteroidGraphics.getAllAsteroidGraphics()) {
 				ag.getAsteroid().setEmphasized(false);
 			}
-			
-			JButton pressedButton = (JButton)ae.getSource();
+
+			JButton pressedButton = (JButton) ae.getSource();
 			if (pressedButton == moveButton) {
 				drawAll();
 				writeToMessageBoard("moveButton has been pushed");
@@ -78,6 +75,7 @@ public class GamePanel extends JPanel {
 				writeToMessageBoard("mineButton has been pushed");
 			}
 			else if (pressedButton == endGameButton) {
+				
 				// TODO Inkább Pause gomb legyen helyette.
 				for (JButton drButton : drawableButtons)
 					mapPanel.remove(drButton);
@@ -86,48 +84,49 @@ public class GamePanel extends JPanel {
 					mapPanel.remove(drLabel);
 				drawableLabels.clear();
 				drawables.clear();
+				
 				cards.show(Cards.endGamePanelID);
 			}
 			else if (ae.getActionCommand().equals(AsteroidGraphics.getCommand())) {
-				AsteroidGraphics ag = (AsteroidGraphics)pressedButton;
+				AsteroidGraphics ag = (AsteroidGraphics) pressedButton;
 				// Kiemeli az éppen kattintott aszteroida szomszédait.
 				for (Asteroid neighbor : ag.getAsteroid().getNeighbors())
 					neighbor.setEmphasized(true);
 			}
-			
+
 			// Frissíti az összes nézet-objektumot, mert megváltozhatott a modell.
 			drawAll();
 		}
 	}
-	
-	//uzenofal szovegnek bovitese
-	public void writeToMessageBoard(String mess){
-	        String tmp = messages.getText();
-	        String[] tmps = tmp.split("\n");
-	        String coms = "";
-	        if (tmps.length > 15) {
-	            for (int i=tmps.length-15;i<tmps.length; i++){
-	                coms += tmps[i] + "\r\n";
-	            }
-	            coms += "\r\n" + mess + "\r\n";
-	        } else {
-	            tmp += "\r\n" + mess + "\r\n";
-	            coms = tmp;
-	        }
 
-	        messages.setText(coms);
-	    }
-	
+	// uzenofal szovegnek bovitese
+	public void writeToMessageBoard(String mess) {
+		String tmp = messages.getText();
+		String[] tmps = tmp.split("\n");
+		String coms = "";
+		if (tmps.length > 15) {
+			for (int i = tmps.length - 15; i < tmps.length; i++) {
+				coms += tmps[i] + "\r\n";
+			}
+			coms += "\r\n" + mess + "\r\n";
+		} else {
+			tmp += "\r\n" + mess + "\r\n";
+			coms = tmp;
+		}
+
+		messages.setText(coms);
+	}
+
 	public void initComponents() {
 		this.setLayout(new BorderLayout());
-		//Font font = new Font("Comic Sans MS", Font.BOLD, 20);
-		
+		// Font font = new Font("Comic Sans MS", Font.BOLD, 20);
+
 		Font font = new Font("teko semibold", Font.BOLD, 20);
 		Border buttonBorder = new LineBorder(Color.YELLOW, 3);
-		
+
 		bl = new ButtonListener();
 		Color color = new Color(9, 28, 87);
-		
+
 		// Fejlecpanel (felso)
 		JPanel titlePanel = new JPanel();
 		gameNameLabel = new JLabel("Asteroid Mining");
@@ -136,10 +135,9 @@ public class GamePanel extends JPanel {
 		titlePanel.setBackground(color);
 		titlePanel.add(gameNameLabel);
 		this.add(titlePanel, BorderLayout.NORTH);
-		
-		
+
 		// Vezerlopanel (keleti)
-				
+
 		moveButton = new JButton("Move");
 		moveButton.setFont(font);
 		moveButton.setPreferredSize(buttonsize);
@@ -149,7 +147,7 @@ public class GamePanel extends JPanel {
 		moveButton.setForeground(Color.YELLOW);
 		moveButton.setBackground(color);
 		moveButton.setBorder(buttonBorder);
-		
+
 		drillButton = new JButton("Drill");
 		drillButton.setFont(font);
 		drillButton.setMinimumSize(buttonsize);
@@ -158,7 +156,7 @@ public class GamePanel extends JPanel {
 		drillButton.setForeground(Color.YELLOW);
 		drillButton.setBackground(color);
 		drillButton.setBorder(buttonBorder);
-		
+
 		mineButton = new JButton("Mine");
 		mineButton.setFont(font);
 		mineButton.setMinimumSize(buttonsize);
@@ -167,7 +165,7 @@ public class GamePanel extends JPanel {
 		mineButton.setForeground(Color.YELLOW);
 		mineButton.setBackground(color);
 		mineButton.setBorder(buttonBorder);
-		
+
 		restoreButton = new JButton("Restore");
 		restoreButton.setFont(font);
 		restoreButton.setMinimumSize(buttonsize);
@@ -176,7 +174,7 @@ public class GamePanel extends JPanel {
 		restoreButton.setForeground(Color.YELLOW);
 		restoreButton.setBackground(color);
 		restoreButton.setBorder(buttonBorder);
-		
+
 		createrobotButton = new JButton("Create Robot");
 		createrobotButton.setFont(font);
 		createrobotButton.setMinimumSize(buttonsize);
@@ -185,7 +183,7 @@ public class GamePanel extends JPanel {
 		createrobotButton.setForeground(Color.YELLOW);
 		createrobotButton.setBackground(color);
 		createrobotButton.setBorder(buttonBorder);
-		
+
 		createteleportButton = new JButton("Create Teleport");
 		createteleportButton.setFont(font);
 		createteleportButton.setMinimumSize(buttonsize);
@@ -194,7 +192,7 @@ public class GamePanel extends JPanel {
 		createteleportButton.setForeground(Color.YELLOW);
 		createteleportButton.setBackground(color);
 		createteleportButton.setBorder(buttonBorder);
-		
+
 		placeteleportButton = new JButton("Place Teleport");
 		placeteleportButton.setFont(font);
 		placeteleportButton.setMinimumSize(buttonsize);
@@ -203,7 +201,7 @@ public class GamePanel extends JPanel {
 		placeteleportButton.setForeground(Color.YELLOW);
 		placeteleportButton.setBackground(color);
 		placeteleportButton.setBorder(buttonBorder);
-		
+
 		passButton = new JButton("Pass");
 		passButton.setFont(font);
 		passButton.setMinimumSize(buttonsize);
@@ -212,7 +210,7 @@ public class GamePanel extends JPanel {
 		passButton.setForeground(Color.YELLOW);
 		passButton.setBackground(color);
 		passButton.setBorder(buttonBorder);
-		
+
 		endGameButton = new JButton("End game");
 		endGameButton.setFont(font);
 		endGameButton.setMinimumSize(buttonsize);
@@ -221,100 +219,99 @@ public class GamePanel extends JPanel {
 		endGameButton.setForeground(Color.YELLOW);
 		endGameButton.setBackground(color);
 		endGameButton.setBorder(buttonBorder);
-		
+
 		//
 		JPanel controlPanel = new JPanel();
-		
+
 		controlPanel.add(moveButton);
 		controlPanel.add(drillButton);
-		controlPanel.add(moveButton);
+		controlPanel.add(mineButton);
 		controlPanel.add(restoreButton);
 		controlPanel.add(createrobotButton);
 		controlPanel.add(createteleportButton);
 		controlPanel.add(placeteleportButton);
 		controlPanel.add(passButton);
 		controlPanel.add(endGameButton);
-		
-		//tolteleknek vettem fel, hogy ne legyen olyan egyben az egesz control panel (buttonok koze ilyet nem lehetett tenni sajnos)
+
+		// tolteleknek vettem fel, hogy ne legyen olyan egyben az egesz control panel
+		// (buttonok koze ilyet nem lehetett tenni sajnos)
 		controlPanel.add(new JLabel(" "));
-		
+
 		messages.setBackground(Color.yellow);
 		messages.setMinimumSize(textarea_size);
 		messages.setMaximumSize(textarea_size);
 		messages.setFont(font);
 		controlPanel.add(messages);
-		
+
 		controlPanel.setBackground(color);
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.PAGE_AXIS));
 		controlPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		controlPanel.setSize(200, 400);
-		
-        this.add(controlPanel, BorderLayout.EAST);
-		
-		
+
+		this.add(controlPanel, BorderLayout.EAST);
+
 		// Raktarpanel (also)
 		JPanel inventoryPanel = new JPanel();
 		inventoryPanel.setMinimumSize(new Dimension(200, 100));
 		inventoryPanel.setBackground(color);
 		this.setBackground(Color.BLACK);
 		this.add(inventoryPanel, BorderLayout.SOUTH);
-		
+
 		// Jatekpanel (kozepso)
 		mapPanel = new JPanel();
-		//mapPanel.setMinimumSize(new Dimension(800, 600));
+		// mapPanel.setMinimumSize(new Dimension(800, 600));
 		mapPanel.setBackground(Color.black);
-		
+
 		String path = "src\\berenyi_kft_GUI\\Icons\\background.png";
 		try {
-			img=ImageIO.read(new File(path));
-		} catch(Exception e) {
+			img = ImageIO.read(new File(path));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		mapPanel.setOpaque(false);
 
 		this.add(mapPanel, BorderLayout.CENTER);
 	}
-	
+
 	public GamePanel(Cards cards) {
 		this.cards = cards;
 		this.initComponents();
 		this.setVisible(true);
 	}
-	
+
 	public void addToMapPanel(JButton drawableButton) {
 		mapPanel.add(drawableButton);
 		drawableButtons.add(drawableButton);
 		drawableButton.addActionListener(bl);
 	}
-	
+
 	public void addToMapPanel(JLabel drawableLabel) {
 		mapPanel.add(drawableLabel);
 		drawableLabels.add(drawableLabel);
 	}
-	
+
 	public void addDrawable(IDrawable d) {
 		drawables.add(d);
 	}
-	
+
 	public void removeDrawable(IDrawable d) {
 		drawables.remove(d);
 	}
-	
+
 	public void drawAll() {
 		for (IDrawable d : drawables)
 			d.draw();
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-		//vigyázat!
-		//this.drawAll();
+
+		// vigyázat!
+		// this.drawAll();
 		g.drawImage(img, 0, 0, mapPanel);
-		
+
 	}
-	
-	
+
 }
