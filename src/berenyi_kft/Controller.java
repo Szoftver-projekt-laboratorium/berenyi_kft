@@ -2,7 +2,9 @@ package berenyi_kft;
 
 import java.util.*;
 
+import berenyi_kft_GUI.AsteroidGraphics;
 import berenyi_kft_GUI.GamePanel;
+import berenyi_kft_GUI.SettlerGraphics;
 
 /**
  * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot
@@ -112,13 +114,15 @@ public class Controller {
 		// Palyakep inicializalasa
 		game.startGame();
 		
-		// TODO timer inditasa
-		
-		// Palyakep megjelenitese
+		// Aszteroidak elrendezese a panelen, majd a teljes palyakep kirajzolasa
+		AsteroidGraphics.setAsteroidLocations();
 		gamePanel.drawAll();
 		
 		// Az elso jatekos beallitasa actPlayer-nek
 		this.nextPlayer();
+		
+		// TODO timer inditasa
+		
 		Proto.decrTabs();
 	}	
 	
