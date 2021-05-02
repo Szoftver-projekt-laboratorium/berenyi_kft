@@ -38,14 +38,16 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	private static final String actionCommand = "Asteroid";
 	
 	/**
-	 * Az aszteroidák közös képfájljának relatív elérési útja a projektben
+	 * Az aszteroidák közös képfájljainak relatív elérési útjai a projektben
 	 */
 	private static final String iconPath = "src\\berenyi_kft_GUI\\Icons\\asteroid.png";
+	private static final String emphasizedIconPath
+		= "src\\berenyi_kft_GUI\\Icons\\asteroid_emphasized.png";
 
 	/**
 	 * Az aszteroida ikonok kívánt konstans szélessége (a képek négyzet alakúak)
 	 */
-	private static final int preferredWidth = 150;
+	private static final int preferredWidth = 120;
 	
 	/**
 	 * Az aszteroidán megjelenő karakter- és teleportkapu ikonokat
@@ -57,22 +59,17 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 * Az aszteroidán megjelenő karakter- és teleportkapu ikonokat
 	 * tartalmazó cellák kívánt konstans szélessége
 	 */
-	private static final int preferredCellWidth = 50;
+	private static final int preferredCellWidth = 40;
 
 	/**
-	 * Az aszteroida-gombokon megjelenő ikon (kép)
+	 * Az aszteroida-gombokon megjelenő alapértelmezett ikon
 	 */
 	private static Icon icon;
 	
 	/**
-	 * Átlátszó szín az aszteroidák háttérszínének
+	 * Az aszteroida-gombon a kiemelésekor megjelenő ikon
 	 */
-	// private static final Color defaultBgColor = new Color(0, 0, 0, 0);
-	
-	/**
-	 * Élénk szín a kiemelt aszteroidák háttérszínének
-	 */
-	private static final Color emphasizerBgColor = Color.CYAN;
+	private static Icon emphasizedIcon;
 	
 	/**
 	 * Visszatér az összes grafikus aszteroidából álló listával.
@@ -100,6 +97,10 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 			Image img = ImageIO.read(new File(iconPath));
 			img = img.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
 			icon = new ImageIcon(img, "Asteroid");
+			
+			Image emphImg = ImageIO.read(new File(emphasizedIconPath));
+			emphImg = emphImg.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
+			emphasizedIcon = new ImageIcon(emphImg, "Asteroid Emphasized");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -197,8 +198,6 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		this.setActionCommand(actionCommand);
 		this.setIcon(icon);
 		this.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-		
-		this.setBackground(emphasizerBgColor);
 		this.setBorderPainted(false);
 		this.setContentAreaFilled(false);
 		
@@ -238,12 +237,9 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 * Frissíti az aszteroida nézetét a modellbeli állapota alapján.
 	 * Ehhez először a helyére mozgatja az aszteroidát.
 	 * 
-	 * Ha az asteroid modell-objektum éppen ki van emelve (isEmphasized()==true),
-	 * akkor átlátszatlanná teszi azzal, hogy kirajzolja a gomb teljes területét (a
-	 * setContentAreFilled(true) paranccsal éri el). Ezzel megjelenik az ikon
-	 * mögötti emphasizerBgColor kiemelőszínű háttér. Ha az aszteroida nincs
-	 * kiemelve, akkor nem rajzoltatja ki a gomb hátterét (a
-	 * setContentAreFilled(false) utasítással).
+	 * Ha az asteroid modell-objektum éppen ki van emelve (<code>isEmphasized()==true</code>),
+	 * akkor az <code>emphasizedIcon</code>-t állítja be az ikonjaként, egyébként az
+	 * alapértelmezett <code>icon</code> ikont.
 	 */
 	@Override
 	public void draw() {
@@ -257,13 +253,13 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		 * (A draw függvényekben mindig beállítjuk a nézet-objektum helyét az elvárt
 		 * pos pozícióra, ez automatikusan invalidate()-et hív, és újra fogja rajzolni.)
 		 */
-		this.setLocation(pos);
 		if (asteroid.isEmphasized()) {
-			this.setContentAreaFilled(true);
+			this.setIcon(icon);
 		}
 		else {
-			this.setContentAreaFilled(false);
+			this.setIcon(emphasizedIcon);
 		}
+		this.setLocation(pos);
 	}
 
 }

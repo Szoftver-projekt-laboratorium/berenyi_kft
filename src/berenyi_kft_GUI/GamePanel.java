@@ -14,13 +14,19 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import berenyi_kft.Asteroid;
+import berenyi_kft.Controller;
+import berenyi_kft.PlayerCommand;
 
 public class GamePanel extends JPanel {
-
+	
+	private Controller controller = null;
+	
 	private List<IDrawable> drawables = new ArrayList<IDrawable>();
 	private List<JButton> drawableButtons = new ArrayList<JButton>();
 	private List<JLabel> drawableLabels = new ArrayList<JLabel>();
-
+	
+	private AsteroidGraphics lastAsteroidClicked = null;
+	
 	private ButtonListener bl;
 
 	// altalanos gombmeret beallitasa:
@@ -49,7 +55,11 @@ public class GamePanel extends JPanel {
 	private BufferedImage img;
 
 	private JTextArea messages = new JTextArea("Welcome in the game!");
-
+	
+	public void setController(Controller controller) {
+		this.controller = controller;
+	}
+	
 	private class ButtonListener implements ActionListener {
 
 		/**
@@ -66,6 +76,14 @@ public class GamePanel extends JPanel {
 
 			JButton pressedButton = (JButton) ae.getSource();
 			if (pressedButton == moveButton) {
+				if (lastAsteroidClicked != null) {
+					Asteroid place = controller.getActPlayer().getSettler().getPlace();
+					int idx = place.getNeighbors().indexOf(lastAsteroidClicked.getAsteroid());
+					Object[] params = {"move", Integer.toString(idx)};
+					controller.getActPlayer().actOnSettler(PlayerCommand.MOVE, params);
+					controller.nextPlayer();
+				}
+				
 				drawAll();
 				writeToMessageBoard("moveButton has been pushed");
 			}
@@ -89,7 +107,7 @@ public class GamePanel extends JPanel {
 			}
 			else if (ae.getActionCommand().equals(AsteroidGraphics.getCommand())) {
 				AsteroidGraphics ag = (AsteroidGraphics) pressedButton;
-				// Kiemeli az éppen kattintott aszteroida szomszédait.
+				lastAsteroidClicked = ag;
 				for (Asteroid neighbor : ag.getAsteroid().getNeighbors())
 					neighbor.setEmphasized(true);
 			}

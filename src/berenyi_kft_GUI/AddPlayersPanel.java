@@ -65,6 +65,7 @@ public class AddPlayersPanel extends JPanel {
 					*/
 					Proto.allObjects = new Proto.Objects();
 					controller = new Controller();
+					cards.getGamePanel().setController(controller);
 					controller.startGame(cards.getGamePanel(), playerNames);
 					
 					cards.show(Cards.gamePanelID);
