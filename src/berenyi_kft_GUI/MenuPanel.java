@@ -57,6 +57,8 @@ public class MenuPanel extends JPanel {
 		newGameButton = new JButton("New Game");
 		newGameButton.setFont(font);
 		newGameButton.addActionListener(bl);
+		newGameButton.setMinimumSize(new Dimension(300, 200));
+		newGameButton.setMaximumSize(new Dimension(300, 200));
 		this.setButton(newGameButton);
 	
 		buttonPanel.add(newGameButton);
