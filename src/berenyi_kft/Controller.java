@@ -105,9 +105,6 @@ public class Controller {
 			Settler s = new Settler();
 			Proto.getAllObjects().addSettler(s);
 			game.addSettler(s);
-			SettlerGraphics sg = new SettlerGraphics(s);
-			gamePanel.addToMapPanel(sg);
-			gamePanel.addDrawable(sg);
 			
 			p.setName(name);
 			p.setSettler(s);
@@ -117,7 +114,7 @@ public class Controller {
 		// Palyakep inicializalasa
 		game.startGame();
 		
-		// Aszteroidak elhelyezese a panelen, majd a palyakep megjelenitese
+		// Aszteroidak elrendezese a panelen, majd a teljes palyakep kirajzolasa
 		AsteroidGraphics.setAsteroidLocations();
 		gamePanel.drawAll();
 		

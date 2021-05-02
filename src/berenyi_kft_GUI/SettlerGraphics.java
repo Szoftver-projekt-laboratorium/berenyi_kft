@@ -13,32 +13,31 @@ import javax.swing.JLabel;
 
 import berenyi_kft.Settler;
 
-// TODO Átírni a javadoc kommenteket Settler-re.
 /**
- * Az aszteroidák képernyőre rajzolásáért felelős grafikus csomagoló osztály. Az
- * aszteroidák kattintható gombokként jelennek meg a gamePanel mapPanel-jén.
+ * A telepesek képernyőre rajzolásáért felelős grafikus csomagoló osztály.
+ * A telepesek képet tartalmazó címkeként jelennek meg a gamePanel mapPanel-jén.
  * 
  * @author berenyi_kft
  */
 public class SettlerGraphics extends JLabel implements IDrawable {
-	
+
 	/**
-	 * Az aszteroidák közös képfájljának relatív elérési útja a projektben
+	 * A telepesek közös képfájljának relatív elérési útja a projektben
 	 */
 	private static final String iconPath = "src\\berenyi_kft_GUI\\Icons\\settler.png";
 
 	/**
-	 * Az aszteroida ikonok kívánt konstans szélessége (a képek négyzet alakúak)
+	 * A telepes-ikonok kívánt konstans szélessége
 	 */
-	private static final int preferredWidth = 30;
+	private static final int preferredWidth = 60;
 
 	/**
-	 * Az aszteroida-gombokon megjelenő ikon (kép)
+	 * A telepesek megjelenő ikonja (képe)
 	 */
 	private static Icon icon;
-	
+
 	/**
-	 * Statikus inicializáló blokk az aszteroidák ikonjának betöltéséhez és
+	 * Statikus inicializáló blokk a telepesek ikonjának betöltéséhez és
 	 * beállításához. Ha a képfájlt nem sikerül betölteni, IOException keletkezik,
 	 * amit azonnal lekezelünk.
 	 */
@@ -51,30 +50,21 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * A modellbeli aszteroida objektum, amit ki kell rajzolni a képernyőre
-	 */
-	private final Settler settler;
-	
-	/**
-	 * Az aszteroida-gomb koordinátái a paneljén
-	 */
-	private Point pos = new Point(0, 0);
 
 	/**
-	 * Új, aszteroidát ábrázoló gomb jön létre. A grafikus osztály
-	 * konstruktorparaméterben átveszi a kirajzolandó aszteroidát és az
-	 * aszteroidamező paneljának méreteit.
+	 * A modellbeli telepes objektum, amit ki kell rajzolni a képernyőre
+	 */
+	private final Settler settler;
+
+	/**
+	 * Új, telepest ábrázoló címke jön létre. A grafikus osztály
+	 * konstruktorparaméterben átveszi a kirajzolandó telepest.
 	 * 
-	 * Az aszteroida-gombnak beállítja az ikont, és a gomb méreteit hozzáigazítja az
-	 * ikon méretéhez. Megadja a gomb háttérszínét is, de ezt alapértelmezetten
-	 * nem rajzolja ki. Nem rajzoltatja ki a gomb keretét sem.
-	 * Az aszteroidának véletlen pozíciót állít be a leendő paneljén
-	 * úgy, hogy a teljes kép a panel belsejében legyen.
+	 * A telepesnek beállítja az ikont, és a nézet-objektum méreteit hozzáigazítja
+	 * az ikon méretéhez. A címke hátterét átlátszóra állítja be. Nem rajzoltatja ki
+	 * a címke keretét sem.
 	 * 
-	 * @param a         Az aszteroida, amelyet a képernyőn meg kell jeleníteni
-	 * @param panelSize Az aszteroidamezőt megjelenítő panel méretei
+	 * @param s	- a telepes, amelyet a képernyőn meg kell jeleníteni
 	 */
 	public SettlerGraphics(Settler s) {
 		this.settler = s;
@@ -83,27 +73,24 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 		this.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		this.setBorder(null);
 		this.setOpaque(false);
-		
-		this.setLocation(pos);
+		this.setLocation(new Point(0, 0));
 	}
-	
+
 	/**
-	 * Visszatér a modellbeli aszteroidaval.
-	 * @return Az aszteroida modell-objektuma
+	 * Visszatér a modellbeli telepessel.
+	 * 
+	 * @return A telepes modell-objektuma
 	 */
 	public Settler getSettler() {
 		return this.settler;
 	}
-	
+
 	/**
-	 * Frissíti a telepes nézetét a modellbeli állapota alapján.
-	 * Meghívja az invalidate() metódust, hogy a frissített nézet
-	 * tényleges képernyőre rajzolása is megtörténjen.
+	 * Frissíti a telepes pozícióját az aszteroidája állapota alapján.
 	 */
 	@Override
 	public void draw() {
-		// TODO AsteroidGraphics kommunikáció az elhelyezésről
-		this.setLocation(pos);
+		this.setLocation(AsteroidGraphics.getCharacterPos(this.settler));
 	}
-	
+
 }

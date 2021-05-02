@@ -58,10 +58,11 @@ public class AddPlayersPanel extends JPanel {
 													+ "kell, hogy legyen!");
 				}
 				else {
-					/*for (String str : playerNames) {
+					/*
+					for (String str : playerNames) {
 						System.out.println(str);
-					}*/
-					
+					}
+					*/
 					Proto.allObjects = new Proto.Objects();
 					controller = new Controller();
 					controller.startGame(cards.getGamePanel(), playerNames);

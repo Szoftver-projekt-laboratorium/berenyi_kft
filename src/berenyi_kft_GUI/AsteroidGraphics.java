@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import berenyi_kft.Asteroid;
+import berenyi_kft.TeleportingGate;
 
 /**
  * Az aszteroidák képernyőre rajzolásáért felelős grafikus csomagoló osztály. Az
@@ -44,7 +45,19 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	/**
 	 * Az aszteroida ikonok kívánt konstans szélessége (a képek négyzet alakúak)
 	 */
-	private static final int preferredWidth = 120;
+	private static final int preferredWidth = 150;
+	
+	/**
+	 * Az aszteroidán megjelenő karakter- és teleportkapu ikonokat
+	 * tartalmazó négyzet alakú táblázat sorainak (vagy oszlopainak) száma
+	 */
+	private static final int thingTableSize = 3;
+	
+	/**
+	 * Az aszteroidán megjelenő karakter- és teleportkapu ikonokat
+	 * tartalmazó cellák kívánt konstans szélessége
+	 */
+	private static final int preferredCellWidth = 50;
 
 	/**
 	 * Az aszteroida-gombokon megjelenő ikon (kép)
@@ -99,6 +112,58 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		for (AsteroidGraphics ag : allAsteroidGraphics)
 			ag.setRandomLocation();
 	}
+	
+	/**
+	 * Kiszámítja a <code>c</code> karakter pozícióját a paneljén, felhasználva
+	 * az aszteroidája pozícióját és az aszteroidán levő karakterek listáját.
+	 * 
+	 * @param c	- a karakter, amelynek a nézetbeli koordinátái meghatározandók
+	 * @return	a karakter nézet-objektumának számított pozíciója
+	 */
+	public static Point getCharacterPos(berenyi_kft.Character c) {
+		// TODO Kellenek null check-ek?
+		Asteroid a = c.getPlace();
+		AsteroidGraphics ag = null;
+		for (AsteroidGraphics ag2 : allAsteroidGraphics) {
+			if (ag2.getAsteroid() == a) {
+				ag = ag2;
+				break;
+			}
+		}
+		
+		int idx = a.getCharacters().indexOf(c);
+		int xPos = ag.getX() + (idx % thingTableSize) * preferredCellWidth;
+		int yPos = ag.getY() + (idx / thingTableSize) * preferredCellWidth;
+		return new Point(xPos, yPos);
+	}
+	
+	/**
+	 * Kiszámítja a <code>tg</code> teleportkapu pozícióját a paneljén, feltéve
+	 * hogy már aszteroida körül kering. Ehhez felhasználja az aszteroidája
+	 * pozícióját, az aszteroidán levő karakterek, valamint kapuk listáját.
+	 * 
+	 * @param tg	- A teleportkapu, amelynek a koordinátái meghatározandók
+	 * @return	a teleportkapu nézet-objektumának számított pozíciója
+	 */
+	public static Point getGatePos(TeleportingGate tg) {
+		// TODO Kellenek null check-ek?
+		Asteroid a = tg.getAsteroid();
+		if (a == null)
+			return new Point(0, 0);
+		
+		AsteroidGraphics ag = null;
+		for (AsteroidGraphics ag2 : allAsteroidGraphics) {
+			if (ag2.getAsteroid() == a) {
+				ag = ag2;
+				break;
+			}
+		}
+		
+		int idx = a.getCharacters().size() + a.getGates().indexOf(tg);
+		int xPos = ag.getX() + (idx % thingTableSize) * preferredCellWidth;
+		int yPos = ag.getY() + (idx / thingTableSize) * preferredCellWidth;
+		return new Point(xPos, yPos);
+	}
 
 	
 	/**
@@ -122,14 +187,14 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 * Az aszteroidának véletlen pozíciót állít be a leendő paneljén
 	 * úgy, hogy a teljes kép a panel belsejében legyen.
 	 * 
-	 * @param a         Az aszteroida, amelyet a képernyőn meg kell jeleníteni
-	 * @param panelSize Az aszteroidamezőt megjelenítő panel méretei
+	 * @param a         - az aszteroida, amelyet a képernyőn meg kell jeleníteni
+	 * @param panelSize - az aszteroidamezőt megjelenítő panel méretei
 	 */
 	public AsteroidGraphics(Asteroid a, Dimension panelSize) {
 		allAsteroidGraphics.add(this);
 		this.asteroid = a;
 		
-		this.setActionCommand(AsteroidGraphics.actionCommand);
+		this.setActionCommand(actionCommand);
 		this.setIcon(icon);
 		this.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		
@@ -144,8 +209,8 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	}
 	
 	/**
-	 * Visszatér a modellbeli aszteroidaval.
-	 * @return Az aszteroida modell-objektuma
+	 * Visszatér a modellbeli aszteroidával.
+	 * @return az aszteroida modell-objektuma
 	 */
 	public Asteroid getAsteroid() {
 		return this.asteroid;
@@ -171,20 +236,26 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	
 	/**
 	 * Frissíti az aszteroida nézetét a modellbeli állapota alapján.
+	 * Ehhez először a helyére mozgatja az aszteroidát.
 	 * 
 	 * Ha az asteroid modell-objektum éppen ki van emelve (isEmphasized()==true),
-	 * akkor átlátszatlanná teszi azzal, hogy kirajzolja a gomb teljes területét
-	 * (a setContentAreFilled(true) paranccsal éri el).
-	 * Ezzel megjelenik az ikon mögötti emphasizerBgColor kiemelőszínű háttér.
-	 * Ha az aszteroida nincs kiemelve, akkor nem rajzoltatja ki a gomb hátterét
-	 * (a setContentAreFilled(false) utasítással).
+	 * akkor átlátszatlanná teszi azzal, hogy kirajzolja a gomb teljes területét (a
+	 * setContentAreFilled(true) paranccsal éri el). Ezzel megjelenik az ikon
+	 * mögötti emphasizerBgColor kiemelőszínű háttér. Ha az aszteroida nincs
+	 * kiemelve, akkor nem rajzoltatja ki a gomb hátterét (a
+	 * setContentAreFilled(false) utasítással).
 	 */
 	@Override
 	public void draw() {
 		/*
 		 * A modellre támaszkodik, hogy az asteroid ki van-e jelölve/emelve, vagy sem.
 		 * Az ikon majd változhat, függően a rétegek számától és a nyersanyagtól is.
-		 * A karakterek saját maguk rajzolják rá magukat, az nem az aszteroida dolga.
+		 * 
+		 * A karakterek saját maguk rajzolják rá magukat, az nem az aszteroida dolga,
+		 * viszont a karakterek és kapuk le tudják kérdezni tőle a pozíciójukat.
+		 * 
+		 * (A draw függvényekben mindig beállítjuk a nézet-objektum helyét az elvárt
+		 * pos pozícióra, ez automatikusan invalidate()-et hív, és újra fogja rajzolni.)
 		 */
 		this.setLocation(pos);
 		if (asteroid.isEmphasized()) {

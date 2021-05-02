@@ -14,6 +14,7 @@ public class GamePanel extends JPanel {
 	
 	private List<IDrawable> drawables = new ArrayList<IDrawable>();
 	private List<JButton> drawableButtons = new ArrayList<JButton>();
+	private List<JLabel> drawableLabels = new ArrayList<JLabel>();
 	
 	private ButtonListener bl;
 	
@@ -50,6 +51,9 @@ public class GamePanel extends JPanel {
 				for (JButton drButton : drawableButtons)
 					mapPanel.remove(drButton);
 				drawableButtons.clear();
+				for (JLabel drLabel : drawableLabels)
+					mapPanel.remove(drLabel);
+				drawableLabels.clear();
 				drawables.clear();
 				cards.show(Cards.endGamePanelID);
 			}
@@ -122,6 +126,7 @@ public class GamePanel extends JPanel {
 	
 	public void addToMapPanel(JLabel drawableLabel) {
 		mapPanel.add(drawableLabel);
+		drawableLabels.add(drawableLabel);
 	}
 	
 	public void addDrawable(IDrawable d) {
