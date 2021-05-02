@@ -251,7 +251,7 @@ public class Game {
 			Asteroid a = new Asteroid();
 			Proto.getAllObjects().addAsteroid(a);
 			
-			AsteroidGraphics ag = new AsteroidGraphics(a);
+			AsteroidGraphics ag = new AsteroidGraphics(a, gamePanel.getSize());
 			gamePanel.addToMapPanel(ag);
 			gamePanel.addDrawable(ag);
 			
@@ -299,6 +299,14 @@ public class Game {
 		// settlers
 		Asteroid mainAsteroid = asteroids.get(random.nextInt(nAsteroids));
 		for (Settler s : settlersAlive) {
+			/* A SettlerGraphics-ok inicializálása a Controllerből
+			 * (egyelőre) átkerült ide. Így a gamePanel megjelenésekor már
+			 * egyből az aszteroidáján rajzolja ki.
+			 */
+			SettlerGraphics sg = new SettlerGraphics(s);
+			gamePanel.addToMapPanel(sg);
+			gamePanel.addDrawable(sg);
+			
 			s.setGame(this);
 			s.setTimer(timer);
 			mainAsteroid.addCharacter(s);
@@ -309,9 +317,13 @@ public class Game {
 		for (int i = 0; i < 2; i++) {
 			UFO ufo = new UFO();
 			Proto.getAllObjects().addUFO(ufo);
+			
+			UFOGraphics ufog = new UFOGraphics(ufo);
+			gamePanel.addToMapPanel(ufog);
+			gamePanel.addDrawable(ufog);
+			
 			ufo.setTimer(timer);
 			timer.addSteppable(ufo);
-			
 			Asteroid a = asteroids.get(random.nextInt(nAsteroids));
 			a.accept(ufo);
 			ufo.setPlace(a);
@@ -534,5 +546,13 @@ public class Game {
 					break;
 			}
 		}
+	}
+	
+	/**
+	 * Visszater az aszteroidamezot megjelenito jatekpanellel.
+	 * @return A jatekot megjelenito panel
+	 */
+	public GamePanel getGamePanel() {
+		return this.gamePanel;
 	}
 }

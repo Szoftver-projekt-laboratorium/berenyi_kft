@@ -3,6 +3,9 @@ package berenyi_kft;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import berenyi_kft_GUI.AIRobotGraphics; // TODO A gamePanelre kell bizni a letrehozasukat!
+import berenyi_kft_GUI.TeleportingGateGraphics;
+
 /**
  * A karakterek egyik fajtaja a telepes, mindegyiket egy-egy jatekos iranyitja
  * 
@@ -246,6 +249,12 @@ public class Settler extends Character {
 			// Ujitott jatekhoz adas
 			AIRobot air = new AIRobot();
 			Proto.getAllObjects().addAIRobot(air);
+			
+			// TODO Meg lehet kerulni, hogy a Settler peldanyositsa a robot kepet?
+			AIRobotGraphics airg = new AIRobotGraphics(air);
+			game.getGamePanel().addToMapPanel(airg);
+			game.getGamePanel().addDrawable(airg);
+			
 			Timer timer = game.getTimer();
 			air.setTimer(timer);
 			if (timer != null)
@@ -300,8 +309,17 @@ public class Settler extends Character {
 			// Ujitott jatekhoz adas
 			TeleportingGate tg1 = new TeleportingGate();
 			Proto.getAllObjects().addTeleportingGate(tg1);
+			// TODO Meg lehet kerulni, hogy a Settler peldanyositsa a kapu kepet?
+			TeleportingGateGraphics tgg1 = new TeleportingGateGraphics(tg1);
+			game.getGamePanel().addToMapPanel(tgg1);
+			game.getGamePanel().addDrawable(tgg1);
+			
 			TeleportingGate tg2 = new TeleportingGate();
 			Proto.getAllObjects().addTeleportingGate(tg2);
+			TeleportingGateGraphics tgg2 = new TeleportingGateGraphics(tg2);
+			game.getGamePanel().addToMapPanel(tgg2);
+			game.getGamePanel().addDrawable(tgg2);
+			
 			Timer timer = game.getTimer();
 			tg1.setTimer(timer);
 			tg2.setTimer(timer);
