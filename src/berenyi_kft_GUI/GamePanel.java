@@ -73,6 +73,7 @@ public class GamePanel extends JPanel {
 			for (AsteroidGraphics ag : AsteroidGraphics.getAllAsteroidGraphics()) {
 				ag.getAsteroid().setEmphasized(false);
 			}
+			drawAll();
 
 			JButton pressedButton = (JButton) ae.getSource();
 			if (pressedButton == moveButton) {
@@ -258,7 +259,7 @@ public class GamePanel extends JPanel {
 		messages.setBackground(Color.yellow);
 		messages.setMinimumSize(textarea_size);
 		messages.setMaximumSize(textarea_size);
-		messages.setFont(font);
+		// messages.setFont(font);
 		controlPanel.add(messages);
 
 		controlPanel.setBackground(color);
@@ -277,7 +278,9 @@ public class GamePanel extends JPanel {
 
 		// Jatekpanel (kozepso)
 		mapPanel = new JPanel();
-		// mapPanel.setMinimumSize(new Dimension(800, 600));
+		mapPanel.setMinimumSize(new Dimension(800, 600));
+		// mapPanel.setMaximumSize(new Dimension(800, 600));
+		mapPanel.setSize(new Dimension(800, 600));
 		mapPanel.setBackground(Color.black);
 
 		String path = "src\\berenyi_kft_GUI\\Icons\\background.png";

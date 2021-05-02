@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.swing.JTextArea;
+
+import berenyi_kft_GUI.GamePanel;
 import berenyi_kft_test.Tester;
 
 // Teszteleshez masolhato parancs (pelda tesztfajl betoltese):
@@ -242,7 +245,7 @@ public class Proto {
 
 	private static boolean random = true;
 
-	private static boolean log = false;
+	private static boolean log = true;
 
 	public static Proto.Objects getAllObjects() {
 		return allObjects;
@@ -309,34 +312,49 @@ public class Proto {
 	}
 	
 	/**
+	 * Jatekpanel referencia a logolt fuggvenyek kiirasahoz
+	 */
+	private static GamePanel gamePanel = null;
+	
+	/**
+	 * Beallitja a jatekpanelt.
+	 * @param gamePanel - a jatek nezeti panelje
+	 */
+	public static void setGamePanel(GamePanel gamePanel) {
+		Proto.gamePanel = gamePanel;
+	}
+	
+	/**
 	 * Naplozza a <code>str</code> szoveget a kimeneten az aktualis
 	 * <code>Proto.tabs</code> ertekkel tabulalva.
+	 * A kimenet a grafikus kepernyo, a gamePanel messages szovegmezoje.
 	 * 
 	 * @param line A naplozando sor
 	 */
 	public static void print(String str) {
 		if (Proto.isLogging()) {
-			for (int i = 0; i < tabs; i++) {
+			/*for (int i = 0; i < tabs; i++) {
 				System.out.print("   |");
 			}
-			System.out.print("- ");
-			System.out.print(str);
+			System.out.print("- ");*/
+			gamePanel.writeToMessageBoard(str);
 		}
 	}
 	
 	/**
 	 * Naplozza a <code>line</code> sort a kimeneten az aktualis
 	 * <code>Proto.tabs</code> ertekkel tabulalva, majd uj sort kezd.
+	 * A kimenet a grafikus kepernyo, a gamePanel messages szovegmezoje.
 	 * 
 	 * @param line A naplozando sor
 	 */
 	public static void println(String line) {
 		if (Proto.isLogging()) {
-			for (int i = 0; i < tabs; i++) {
+			/*for (int i = 0; i < tabs; i++) {
 				System.out.print("   |");
 			}
-			System.out.print("- ");
-			System.out.println(line);
+			System.out.print("- ");*/
+			gamePanel.writeToMessageBoard(line);
 		}
 	}
 

@@ -3,8 +3,6 @@ package berenyi_kft;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import berenyi_kft_GUI.AsteroidGraphics;
-
 /**
  * Aszteroida osztaly: nyersanyagot tartalmazhat, illetve karakterek
  * tartozkodhatnak rajta

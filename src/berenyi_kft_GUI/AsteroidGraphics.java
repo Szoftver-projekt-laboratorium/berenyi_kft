@@ -1,6 +1,5 @@
 package berenyi_kft_GUI;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
@@ -47,7 +46,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	/**
 	 * Az aszteroida ikonok kívánt konstans szélessége (a képek négyzet alakúak)
 	 */
-	private static final int preferredWidth = 120;
+	private static final int preferredWidth = 90;
 	
 	/**
 	 * Az aszteroidán megjelenő karakter- és teleportkapu ikonokat
@@ -59,7 +58,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 * Az aszteroidán megjelenő karakter- és teleportkapu ikonokat
 	 * tartalmazó cellák kívánt konstans szélessége
 	 */
-	private static final int preferredCellWidth = 40;
+	private static final int preferredCellWidth = 30;
 
 	/**
 	 * Az aszteroida-gombokon megjelenő alapértelmezett ikon
@@ -133,8 +132,10 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		}
 		
 		int idx = a.getCharacters().indexOf(c);
-		int xPos = ag.getX() + (idx % thingTableSize) * preferredCellWidth;
-		int yPos = ag.getY() + (idx / thingTableSize) * preferredCellWidth;
+		int xPos = ag.getX() + (idx % thingTableSize) * preferredCellWidth
+					- preferredCellWidth/2;
+		int yPos = ag.getY() + (idx / thingTableSize) * preferredCellWidth
+					- preferredCellWidth/2;
 		return new Point(xPos, yPos);
 	}
 	
@@ -161,8 +162,10 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		}
 		
 		int idx = a.getCharacters().size() + a.getGates().indexOf(tg);
-		int xPos = ag.getX() + (idx % thingTableSize) * preferredCellWidth;
-		int yPos = ag.getY() + (idx / thingTableSize) * preferredCellWidth;
+		int xPos = ag.getX() + (idx % thingTableSize) * preferredCellWidth
+					- preferredCellWidth/2;
+		int yPos = ag.getY() + (idx / thingTableSize) * preferredCellWidth
+					- preferredCellWidth/2;
 		return new Point(xPos, yPos);
 	}
 
@@ -202,8 +205,10 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		this.setContentAreaFilled(false);
 		
 		Random random = new Random();
-		pos.x = random.nextInt(panelSize.width - icon.getIconWidth());
-		pos.y = random.nextInt(panelSize.height - icon.getIconHeight());
+		pos.x = preferredCellWidth + random.nextInt(
+				panelSize.width - preferredWidth - 2 * preferredCellWidth);
+		pos.y = preferredCellWidth + random.nextInt(
+				panelSize.height - preferredWidth - 2 * preferredCellWidth);
 		this.setLocation(pos);
 	}
 	
@@ -221,10 +226,10 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	public void setRandomLocation() {
 		Random random = new Random();
 		if (this.getParent() != null) {
-			pos.x = random.nextInt(
-					this.getParent().getWidth() - icon.getIconWidth());
-			pos.y = random.nextInt(
-					this.getParent().getHeight() - icon.getIconHeight());
+			pos.x = preferredCellWidth + random.nextInt(
+					this.getParent().getWidth() - preferredWidth - 2 * preferredCellWidth);
+			pos.y = preferredCellWidth + random.nextInt(
+					this.getParent().getHeight() - preferredWidth - 2 * preferredCellWidth);
 		}
 		else {
 			pos.x = 0;
@@ -254,10 +259,10 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		 * pos pozícióra, ez automatikusan invalidate()-et hív, és újra fogja rajzolni.)
 		 */
 		if (asteroid.isEmphasized()) {
-			this.setIcon(icon);
+			this.setIcon(emphasizedIcon);
 		}
 		else {
-			this.setIcon(emphasizedIcon);
+			this.setIcon(icon);
 		}
 		this.setLocation(pos);
 	}

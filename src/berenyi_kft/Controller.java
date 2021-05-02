@@ -4,7 +4,6 @@ import java.util.*;
 
 import berenyi_kft_GUI.AsteroidGraphics;
 import berenyi_kft_GUI.GamePanel;
-import berenyi_kft_GUI.SettlerGraphics;
 
 /**
  * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot

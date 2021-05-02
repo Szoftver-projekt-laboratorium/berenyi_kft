@@ -251,7 +251,7 @@ public class Game {
 			Asteroid a = new Asteroid();
 			Proto.getAllObjects().addAsteroid(a);
 			
-			AsteroidGraphics ag = new AsteroidGraphics(a, gamePanel.getSize());
+			AsteroidGraphics ag = new AsteroidGraphics(a, gamePanel.getMinimumSize());
 			gamePanel.addToMapPanel(ag);
 			gamePanel.addDrawable(ag);
 			
