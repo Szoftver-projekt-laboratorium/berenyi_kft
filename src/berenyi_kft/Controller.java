@@ -11,7 +11,7 @@ import berenyi_kft_GUI.GamePanel;
  */
 public class Controller {
 	
-	private Game game  = null;
+	private Game game = null;
 	
 	private ArrayList<Player> playersAlive = new ArrayList<Player>();
 	
@@ -19,8 +19,18 @@ public class Controller {
 	
 	private State state = State.INIT;
 	
+	private GamePanel gamePanel = null;
+	
 	//---------------------------------------------------------------
 	
+	public GamePanel getGamePanel() {
+		return gamePanel;
+	}
+
+	public void setGamePanel(GamePanel gamePanel) {
+		this.gamePanel = gamePanel;
+	}
+
 	/**
 	 * Megmondja a jatek jelenlegi allapotat.
 	 * @return Az aktualis jatekallapot
@@ -122,7 +132,8 @@ public class Controller {
 		// Az elso jatekos beallitasa actPlayer-nek
 		this.nextPlayer();
 		
-		// TODO timer inditasa
+		// A timer inditasa
+		game.getTimer().start();
 		
 		Proto.decrTabs();
 	}	
@@ -135,12 +146,19 @@ public class Controller {
 		Proto.println(Proto.getId(this) + ".endGame("
 				+ State.toString(state) + ")");
 		setState(state);
+		
+		// Idozites leallitasa mindenkeppen
+		if (game.getTimer() != null)
+			game.getTimer().cancel();
+		
 		if (state == State.WON)
 			Proto.println("Settlers won the game, the spacebase has been built!");
 		else if (state == State.LOST)
 			Proto.println("Settlers lost the game, everyone has died.");
 		else
 			Proto.println("(The game has not yet ended.)");
+		
+		// TODO endGamePanel megjelenítése
 	}
 	
 	/**

@@ -218,6 +218,7 @@ public class Game {
 		// timer
 		timer = new Timer(5000, 3000);
 		Proto.getAllObjects().setTimer(timer);
+		timer.setGame(this);
 		
 		// sun
 		sun = new Sun();
