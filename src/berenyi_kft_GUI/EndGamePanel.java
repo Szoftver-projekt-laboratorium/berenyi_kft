@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,9 +13,9 @@ import javax.swing.border.LineBorder;
 public class EndGamePanel extends JPanel {
 	
 	private static final String wonString =
-			"You won!";
+			"Settlers, you have won the game! Congratulations!";
 	private static final String lostString =
-			"You lost!";
+			"Settlers, you have lost the game! Never mind, try again!";
 	
 	private Cards cards;
 	private JTextArea resultField;

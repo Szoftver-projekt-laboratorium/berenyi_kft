@@ -1,5 +1,6 @@
 package berenyi_kft;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -223,6 +224,11 @@ public class Game {
 		Proto.getAllObjects().setSun(sun);
 		timer.addSteppable(sun);
 		
+		SunGraphics sung = new SunGraphics(sun, 
+				new Dimension(800, 600) /*gamePanel.getMinimumSize()*/);
+		gamePanel.addToMapPanel(sung);
+		gamePanel.addDrawable(sung);
+		
 		// allResourcesList - aszteroidak inicializalasahoz
 		List<Resource> allResourcesList = new ArrayList<Resource>();
 		for (int i = 0; i < nCoals; i++) {
@@ -251,7 +257,8 @@ public class Game {
 			Asteroid a = new Asteroid();
 			Proto.getAllObjects().addAsteroid(a);
 			
-			AsteroidGraphics ag = new AsteroidGraphics(a, gamePanel.getSize());
+			AsteroidGraphics ag = new AsteroidGraphics(a,
+					new Dimension(800, 600) /*gamePanel.getMinimumSize()*/);
 			gamePanel.addToMapPanel(ag);
 			gamePanel.addDrawable(ag);
 			
@@ -313,6 +320,22 @@ public class Game {
 			s.setPlace(mainAsteroid);
 		}
 		
+		// robots (just for fun)
+		for (int i = 0; i < 2; i++) {
+			AIRobot air = new AIRobot();
+			Proto.getAllObjects().addAIRobot(air);
+
+			AIRobotGraphics airg = new AIRobotGraphics(air);
+			gamePanel.addToMapPanel(airg);
+			gamePanel.addDrawable(airg);
+
+			air.setTimer(timer);
+			timer.addSteppable(air);
+			Asteroid a = asteroids.get(random.nextInt(nAsteroids));
+			a.accept(air);
+			air.setPlace(a);
+		}
+		
 		// ufos
 		for (int i = 0; i < 2; i++) {
 			UFO ufo = new UFO();
@@ -328,6 +351,35 @@ public class Game {
 			a.accept(ufo);
 			ufo.setPlace(a);
 		}
+		
+		// teleporting gate pairs (just for fun)
+		// ufos
+		for (int i = 0; i < 2; i++) {
+			TeleportingGate tg1 = new TeleportingGate();
+			TeleportingGate tg2 = new TeleportingGate();
+			Proto.getAllObjects().addTeleportingGate(tg1);
+			Proto.getAllObjects().addTeleportingGate(tg2);
+
+			TeleportingGateGraphics tgg1 = new TeleportingGateGraphics(tg1);
+			TeleportingGateGraphics tgg2 = new TeleportingGateGraphics(tg2);
+			gamePanel.addToMapPanel(tgg1);
+			gamePanel.addDrawable(tgg1);
+			gamePanel.addToMapPanel(tgg2);
+			gamePanel.addDrawable(tgg2);
+
+			tg1.setTimer(timer);
+			tg2.setTimer(timer);
+			timer.addSteppable(tg1);
+			tg1.setPair(tg2);
+			tg2.setPair(tg1);
+			Asteroid a1 = asteroids.get(random.nextInt(nAsteroids));
+			Asteroid a2 = asteroids.get(random.nextInt(nAsteroids));
+			a1.accept(tg1);
+			tg1.setAsteroid(a1);
+			a2.accept(tg2);
+			tg2.setAsteroid(a2);
+		}
+		
 		Proto.decrTabs();
 	}
 	

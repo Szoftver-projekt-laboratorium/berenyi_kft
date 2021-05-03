@@ -176,4 +176,13 @@ public class Sun implements ISteppable {
 		// Proto.println(Proto.getId(this) + ".addNeighbor(" + a + ")");
 		this.neighboringAsteroids.add(a);
 	}
+	
+	/**
+	 * Visszater a legkozelebbi napviharig hatralevo idovel.
+	 * 
+	 * @return a tick-ek szama a kovetkezo napviharig
+	 */
+	public long getTimeToSunStorm() {
+		return this.timeToSunStorm;
+	}
 }

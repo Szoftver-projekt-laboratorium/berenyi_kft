@@ -3,8 +3,11 @@ package berenyi_kft_GUI;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -20,7 +23,13 @@ import berenyi_kft.TeleportingGate;
  * @author berenyi_kft
  */
 public class TeleportingGateGraphics extends JLabel implements IDrawable {
-
+	
+	/**
+	 * Az összes grafikus teleportkapu-objektum listája
+	 */
+	private static List<TeleportingGateGraphics> allTeleportingGateGraphics
+			= new ArrayList<TeleportingGateGraphics>();
+	
 	/**
 	 * A kapuk közös képfájljának relatív elérési útja a projektben
 	 */
@@ -51,12 +60,20 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Visszatér a grafikus felület összes teleportkapu-objektumával.
+	 * @return - az összes teleportkapu nézet-objektumot tartalmazó lista
+	 */
+	public static List<TeleportingGateGraphics> getAllTeleportingGateGraphics() {
+		return allTeleportingGateGraphics;
+	}
 
 	/**
 	 * A modellbeli kapu objektum, amit ki kell rajzolni a képernyőre
 	 */
 	private final TeleportingGate gate;
-
+	
 	/**
 	 * Új, teleportkaput ábrázoló címke jön létre. A grafikus osztály
 	 * konstruktorparaméterben átveszi a kirajzolandó kaput.
@@ -68,6 +85,7 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 	 * @param tg	- a teleportkapu, amelyet a képernyőn meg kell jeleníteni
 	 */
 	public TeleportingGateGraphics(TeleportingGate tg) {
+		allTeleportingGateGraphics.add(this);
 		this.gate = tg;
 		
 		this.setIcon(icon);
@@ -87,13 +105,29 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 	}
 
 	/**
-	 * Frissíti a teleportkapu pozícióját az aszteroidája állapota alapján,
+	 * Frissíti a teleportkapu nézetének pozícióját az aszteroidája állapota alapján,
 	 * feltéve, hogy az már le van rakva egy aszteroidához.
 	 */
 	@Override
 	public void draw() {
-		if (this.gate.getAsteroid() != null)
-			this.setLocation(AsteroidGraphics.getGatePos(this.gate));
+		if (this.gate == null) {
+			allTeleportingGateGraphics.remove(this);
+			// mapPanel.removeDrawable(this);
+			// mapPanel.removeDrawableLabel(this);
+			return;
+		}
+		if (this.gate.getAsteroid() != null) {
+			// this.setLocation(AsteroidGraphics.getGatePos(this.gate));
+			Point pos = AsteroidGraphics.getGatePos(this.gate);
+			if (gate.isEmphasized())
+				this.setIcon(icon /*emphasizedIcon*/); // TODO emph ikon hozzáadása
+			else
+				this.setIcon(icon);
+				
+			this.setBounds(new Rectangle(pos.x, pos.y,
+									icon.getIconWidth(), icon.getIconHeight()));
+			this.repaint();
+		}
 	}
 
 }

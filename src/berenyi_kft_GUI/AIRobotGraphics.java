@@ -3,6 +3,7 @@ package berenyi_kft_GUI;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 
@@ -24,7 +25,7 @@ public class AIRobotGraphics extends JLabel implements IDrawable {
 	/**
 	 * A robotok közös képfájljának relatív elérési útja a projektben
 	 */
-	private static final String iconPath = "src\\berenyi_kft_GUI\\Icons\\airRbot.png";
+	private static final String iconPath = "src\\berenyi_kft_GUI\\Icons\\aiRobot.png";
 
 	/**
 	 * A robot-ikonok kívánt konstans szélessége
@@ -86,12 +87,15 @@ public class AIRobotGraphics extends JLabel implements IDrawable {
 	}
 
 	/**
-	 * Frissíti a robot pozícióját az aszteroidája állapota alapján.
+	 * Frissíti a robot nézetének pozícióját az aszteroidája állapota alapján.
 	 */
 	@Override
 	public void draw() {
-		this.setLocation(AsteroidGraphics.getCharacterPos(this.aiRobot));
+		// this.setLocation(AsteroidGraphics.getCharacterPos(this.aiRobot));
+		Point pos = AsteroidGraphics.getCharacterPos(this.aiRobot);
+		this.setBounds(new Rectangle(pos.x, pos.y,
+								icon.getIconWidth(), icon.getIconHeight()));
+		this.repaint();
 	}
 
 }
-
