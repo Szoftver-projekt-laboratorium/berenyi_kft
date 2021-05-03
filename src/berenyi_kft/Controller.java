@@ -2,13 +2,16 @@ package berenyi_kft;
 
 import java.util.*;
 
+import berenyi_kft_GUI.AsteroidGraphics;
+import berenyi_kft_GUI.GamePanel;
+
 /**
  * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot
  * @author berenyi_kft
  */
 public class Controller {
 	
-	private Game game  = null;
+	private Game game = null;
 	
 	private ArrayList<Player> playersAlive = new ArrayList<Player>();
 	
@@ -16,8 +19,18 @@ public class Controller {
 	
 	private State state = State.INIT;
 	
+	private GamePanel gamePanel = null;
+	
 	//---------------------------------------------------------------
 	
+	public GamePanel getGamePanel() {
+		return gamePanel;
+	}
+
+	public void setGamePanel(GamePanel gamePanel) {
+		this.gamePanel = gamePanel;
+	}
+
 	/**
 	 * Megmondja a jatek jelenlegi allapotat.
 	 * @return Az aktualis jatekallapot
@@ -83,31 +96,24 @@ public class Controller {
 	 * elozetesen atadva a telepesek listajat.
 	 * @param sc Scanner, amellyel a jatekosok adatait beolvassa
 	 */
-	public void startGame(Scanner sc) throws IllegalArgumentException {
+	public void startGame(GamePanel gamePanel, List<String> playerNames) {
+		Proto.enableLogging(true);
+		
 		Proto.println(Proto.getId(this) + ".startGame()");
 		Proto.incrTabs();
-		// Jatekosok szamanak beolvasasa
-		System.out.print("Give the number of players: ");
-		int numPlayers = Integer.parseInt(sc.nextLine());
-		if (numPlayers < 1 || numPlayers > 6) {
-			throw new IllegalArgumentException(
-					"The number of players must be between 1 and 6.");
-		}
 		
 		game = new Game();
 		Proto.getAllObjects().setGame(game);
-		game.setController(this);	// Beallitja a game-ben a controllert. 
+		game.setController(this);	// Beallitja a game-ben a controllert.
+		game.setGamePanel(gamePanel);
 		
 		// Sorban beallitja a jatekosokat, es telepest rendel hozzajuk.
-		for (int i = 0; i < numPlayers; i++) {
-			System.out.print("Player " + (i + 1) + "'s name: ");
-			String name = sc.nextLine();
-			
+		for (String name : playerNames) {
 			Player p = new Player();
 			Proto.getAllObjects().addPlayer(p);
 			playersAlive.add(p);
 			
-			Settler s = new Settler(); // TODO: megkapja a Playert konstruktorban?
+			Settler s = new Settler();
 			Proto.getAllObjects().addSettler(s);
 			game.addSettler(s);
 			
@@ -119,8 +125,16 @@ public class Controller {
 		// Palyakep inicializalasa
 		game.startGame();
 		
+		// Aszteroidak elrendezese a panelen, majd a teljes palyakep kirajzolasa
+		// AsteroidGraphics.setAsteroidLocations();
+		gamePanel.drawAll();
+		
 		// Az elso jatekos beallitasa actPlayer-nek
 		this.nextPlayer();
+		
+		// A timer inditasa
+		game.getTimer().start();
+		
 		Proto.decrTabs();
 	}	
 	
@@ -132,12 +146,19 @@ public class Controller {
 		Proto.println(Proto.getId(this) + ".endGame("
 				+ State.toString(state) + ")");
 		setState(state);
+		
+		// Idozites leallitasa mindenkeppen
+		if (game.getTimer() != null)
+			game.getTimer().cancel();
+		
 		if (state == State.WON)
 			Proto.println("Settlers won the game, the spacebase has been built!");
 		else if (state == State.LOST)
 			Proto.println("Settlers lost the game, everyone has died.");
 		else
 			Proto.println("(The game has not yet ended.)");
+		
+		// TODO endGamePanel megjelenítése
 	}
 	
 	/**

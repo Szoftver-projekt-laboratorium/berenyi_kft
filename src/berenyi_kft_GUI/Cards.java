@@ -1,7 +1,6 @@
 package berenyi_kft_GUI;
 
 import java.awt.*;
-import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -20,6 +19,10 @@ public class Cards {
 	
 	public JPanel getCardsPanel() {
 		return cardsPanel;
+	}
+	
+	public GamePanel getGamePanel() {
+		return gamePanel;
 	}
 	
 	public void initComponents(Container pane) {
