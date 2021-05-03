@@ -16,6 +16,7 @@ import javax.swing.border.LineBorder;
 import berenyi_kft.Asteroid;
 import berenyi_kft.Controller;
 import berenyi_kft.PlayerCommand;
+import berenyi_kft.State;
 import berenyi_kft.TeleportingGate;
 
 public class GamePanel extends JPanel {
@@ -157,6 +158,7 @@ public class GamePanel extends JPanel {
 			else if (pressedButton == endGameButton) {
 				writeToMessageBoard("endGameButton has been pushed");
 				writeToMessageBoard("Stop playing, end game...");
+				controller.endGame(State.LOST);
 				
 				// TODO Inkább Pause gomb legyen helyette.
 				for (JButton drButton : drawableButtons)
