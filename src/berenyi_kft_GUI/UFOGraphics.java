@@ -3,6 +3,7 @@ package berenyi_kft_GUI;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 
@@ -90,7 +91,11 @@ public class UFOGraphics extends JLabel implements IDrawable {
 	 */
 	@Override
 	public void draw() {
-		this.setLocation(AsteroidGraphics.getCharacterPos(this.ufo));
+		// this.setLocation(AsteroidGraphics.getCharacterPos(this.ufo));
+		Point pos = AsteroidGraphics.getCharacterPos(this.ufo);
+		this.setBounds(new Rectangle(pos.x, pos.y,
+								icon.getIconWidth(), icon.getIconHeight()));
+		this.repaint();
 	}
 
 }

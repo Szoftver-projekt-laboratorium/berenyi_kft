@@ -3,6 +3,7 @@ package berenyi_kft_GUI;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 * Az összes AsteroidGraphics típusú objektum listája
 	 */
 	private static List<AsteroidGraphics> allAsteroidGraphics
-		= new ArrayList<AsteroidGraphics>();
+			= new ArrayList<AsteroidGraphics>();
 	
 	/**
 	 * Az aszteroida-gombok közös akcióparancsa
@@ -108,10 +109,10 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	/**
 	 * Elrendezi az aszteroida-gombokat a képernyőn.
 	 */
-	public static void setAsteroidLocations() {
+	/*public static void setAsteroidLocations() {
 		for (AsteroidGraphics ag : allAsteroidGraphics)
 			ag.setRandomLocation();
-	}
+	}*/
 	
 	/**
 	 * Kiszámítja a <code>c</code> karakter pozícióját a paneljén, felhasználva
@@ -209,7 +210,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 				panelSize.width - preferredWidth - 2 * preferredCellWidth);
 		pos.y = preferredCellWidth + random.nextInt(
 				panelSize.height - preferredWidth - 2 * preferredCellWidth);
-		this.setLocation(pos);
+		// this.setLocation(pos);
 	}
 	
 	/**
@@ -223,7 +224,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	/**
 	 * Véletlenszerű helyre állítja be az aszteroida-gombot a paneljén.
 	 */
-	public void setRandomLocation() {
+	/*public void setRandomLocation() {
 		Random random = new Random();
 		if (this.getParent() != null) {
 			pos.x = preferredCellWidth + random.nextInt(
@@ -235,11 +236,12 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 			pos.x = 0;
 			pos.y = 0;
 		}
-		this.setLocation(pos);
-	}
+		// this.setLocation(pos);
+	}*/
 	
 	/**
 	 * Frissíti az aszteroida nézetét a modellbeli állapota alapján.
+	 * Ha az aszteroida időközben megsemmisült a modellben, a nézetből is törli.
 	 * Ehhez először a helyére mozgatja az aszteroidát.
 	 * 
 	 * Ha az asteroid modell-objektum éppen ki van emelve (<code>isEmphasized()==true</code>),
@@ -248,6 +250,14 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 */
 	@Override
 	public void draw() {
+		// TODO: Átgondolni a nézetből való eltávolítást, ha a modell-objektum megszűnik.
+		if (this.asteroid == null) {
+			allAsteroidGraphics.remove(this);
+			// mapPanel.removeDrawable(this);
+			// mapPanel.removeDrawableLabel(this);
+			return;
+		}
+		
 		/*
 		 * A modellre támaszkodik, hogy az asteroid ki van-e jelölve/emelve, vagy sem.
 		 * Az ikon majd változhat, függően a rétegek számától és a nyersanyagtól is.
@@ -264,7 +274,10 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		else {
 			this.setIcon(icon);
 		}
-		this.setLocation(pos);
+		//this.setLocation(pos);
+		this.setBounds(new Rectangle(pos.x, pos.y,
+				icon.getIconWidth(), icon.getIconHeight()));
+		this.repaint();
 	}
 
 }

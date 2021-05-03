@@ -32,6 +32,11 @@ public class TeleportingGate implements ISteppable {
 	 * A jatek idozitoje
 	 */
 	private Timer timer = null;
+	
+	/**
+	 * Jeloli, hogy a teleportkapu kiemelt allapotban van-e
+	 */
+	private boolean emphasized = false;
 
 	// --------------------------------------------------------------
 
@@ -208,6 +213,22 @@ public class TeleportingGate implements ISteppable {
 		Proto.incrTabs();
 		timer.addSteppable(this);
 		Proto.decrTabs();
+	}
+	
+	/**
+	 * Megadja, hogy a kapu ki van-e emelve.
+	 * @return - <code>true</code>, ha a teleportkapu kiemelt
+	 */
+	public boolean isEmphasized() {
+		return emphasized;
+	}
+	
+	/**
+	 * Beallitja a teleportkapu kiemeltseget (kiemelt vagy sem).
+	 * @param ag - a kapu uj kiemelt allapota
+	 */
+	public void setEmphasized(boolean emphasized) {
+		this.emphasized = emphasized;
 	}
 
 	/**

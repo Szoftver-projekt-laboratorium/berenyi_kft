@@ -1,8 +1,10 @@
 package berenyi_kft_GUI;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 
@@ -35,6 +37,7 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 	 * A telepesek megjelenő ikonja (képe)
 	 */
 	private static Icon icon;
+	private static Image image;
 
 	/**
 	 * Statikus inicializáló blokk a telepesek ikonjának betöltéséhez és
@@ -43,9 +46,9 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 	 */
 	static {
 		try {
-			Image img = ImageIO.read(new File(iconPath));
-			img = img.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
-			icon = new ImageIcon(img, "Settler");
+			image = ImageIO.read(new File(iconPath));
+			image = image.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
+			icon = new ImageIcon(image, "Settler");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -73,7 +76,7 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 		this.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		this.setBorder(null);
 		this.setOpaque(false);
-		this.setLocation(new Point(0, 0));
+		// this.setLocation(new Point(0, 0));
 	}
 
 	/**
@@ -90,7 +93,11 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 	 */
 	@Override
 	public void draw() {
-		this.setLocation(AsteroidGraphics.getCharacterPos(this.settler));
+		// this.setLocation(AsteroidGraphics.getCharacterPos(this.settler));
+		Point pos = AsteroidGraphics.getCharacterPos(this.settler);
+		this.setBounds(new Rectangle(pos.x, pos.y,
+								icon.getIconWidth(), icon.getIconHeight()));
+		this.repaint();
 	}
 
 }

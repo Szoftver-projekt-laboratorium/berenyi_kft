@@ -114,7 +114,7 @@ public class Controller {
 		game.startGame();
 		
 		// Aszteroidak elrendezese a panelen, majd a teljes palyakep kirajzolasa
-		AsteroidGraphics.setAsteroidLocations();
+		// AsteroidGraphics.setAsteroidLocations();
 		gamePanel.drawAll();
 		
 		// Az elso jatekos beallitasa actPlayer-nek

@@ -16,6 +16,7 @@ import javax.swing.border.LineBorder;
 import berenyi_kft.Asteroid;
 import berenyi_kft.Controller;
 import berenyi_kft.PlayerCommand;
+import berenyi_kft.TeleportingGate;
 
 public class GamePanel extends JPanel {
 	
@@ -73,16 +74,22 @@ public class GamePanel extends JPanel {
 			for (AsteroidGraphics ag : AsteroidGraphics.getAllAsteroidGraphics()) {
 				ag.getAsteroid().setEmphasized(false);
 			}
-			drawAll();
+			for (TeleportingGateGraphics tgg
+					: TeleportingGateGraphics.getAllTeleportingGateGraphics()) {
+				tgg.getTeleportingGate().setEmphasized(false);
+			}
 
 			JButton pressedButton = (JButton) ae.getSource();
 			if (pressedButton == moveButton) {
 				if (lastAsteroidClicked != null) {
+					// Mozgás történik! TODO: majd külön függvénybe tegyük.
 					Asteroid place = controller.getActPlayer().getSettler().getPlace();
 					int idx = place.getNeighbors().indexOf(lastAsteroidClicked.getAsteroid());
-					Object[] params = {"move", Integer.toString(idx)};
-					controller.getActPlayer().actOnSettler(PlayerCommand.MOVE, params);
-					controller.nextPlayer();
+					if (idx != -1) {
+						Object[] params = {"move", Integer.toString(idx)};
+						controller.getActPlayer().actOnSettler(PlayerCommand.MOVE, params);
+						controller.nextPlayer();
+					}
 				}
 				
 				drawAll();
@@ -111,6 +118,9 @@ public class GamePanel extends JPanel {
 				lastAsteroidClicked = ag;
 				for (Asteroid neighbor : ag.getAsteroid().getNeighbors())
 					neighbor.setEmphasized(true);
+				for (TeleportingGate neighborGate
+						: ag.getAsteroid().getNeighboringGatePairs())
+					neighborGate.setEmphasized(true);
 			}
 
 			// Frissíti az összes nézet-objektumot, mert megváltozhatott a modell.
@@ -278,8 +288,18 @@ public class GamePanel extends JPanel {
 
 		// Jatekpanel (kozepso)
 		mapPanel = new JPanel();
+		
+		// TODO: Átgondolni, hogy hogyan szabad/érdemes a rajzolást csinálni:
+		// Layout-tal, automatikus elrendezéssel, vagy layout nélkül,
+		// abszolút pozíciókkal, setBounds() és repaint() függvények hívásával.
+		/* -- ! Ilyen módon LayoutManager nélkül használjuk a kirajzolást.
+		 * A pozíciókat így kedvünk szerint beállíthatjuk, de nem biztos, hogy
+		 * az ablak mozgatható-átméretezhető, illetve a program hordozható lesz ! -- */
+		mapPanel.setLayout(null);
+		/* -- ! ----- ! --*/
+		
 		mapPanel.setMinimumSize(new Dimension(800, 600));
-		// mapPanel.setMaximumSize(new Dimension(800, 600));
+		mapPanel.setMaximumSize(new Dimension(800, 600));
 		mapPanel.setSize(new Dimension(800, 600));
 		mapPanel.setBackground(Color.black);
 
@@ -321,8 +341,10 @@ public class GamePanel extends JPanel {
 	}
 
 	public void drawAll() {
+		// AsteroidGraphics.setAsteroidLocations();
 		for (IDrawable d : drawables)
 			d.draw();
+		// this.invalidate();
 	}
 
 	@Override
