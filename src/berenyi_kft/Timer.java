@@ -38,6 +38,11 @@ public class Timer extends java.util.Timer {
 	 * A jatek leptetheto objektumainak listaja
 	 */
 	private ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
+	
+	/**
+	 * Referencia a jatek objektumra
+	 */
+	private Game game = null;
 
 	// --------------------------------------------------------------------
 
@@ -58,7 +63,25 @@ public class Timer extends java.util.Timer {
 	};
 
 	// ----------------------------------------------
-
+	
+	/**
+	 * Visszater az idozitett jatekkal.
+	 * 
+	 * @return a jatek objektum
+	 */
+	public Game getGame() {
+		return this.game;
+	}
+	
+	/**
+	 * Beallitja a jatekot, amelynek az idoziteset vegzi.
+	 * 
+	 * @param game - a jatek
+	 */
+	public void setGame(Game game) {
+		this.game = game;
+	}
+	
 	public String getDescription() {
 
 		String str = "";
@@ -161,11 +184,18 @@ public class Timer extends java.util.Timer {
 		Proto.println(Proto.getId(this) + ".tick()");
 		Proto.incrTabs();
 		int i = 0;
-		while (i <= steppables.size() - 1) {
+		while (i < steppables.size()) {
 			ISteppable is = steppables.get(i);
-			if (is != null)
+			if (is != null) {
+				System.out.println(Proto.getId(is) + " stepped");
 				is.step();
-			i = steppables.indexOf(is) + 1;
+				
+				// nézetfrissítés
+				game.getGamePanel().drawAll();
+			}
+			
+			// i = steppables.indexOf(is) + 1; // elvileg jo lenne
+			i++; // halal eseten problemas
 		}
 		Proto.decrTabs();
 	}
