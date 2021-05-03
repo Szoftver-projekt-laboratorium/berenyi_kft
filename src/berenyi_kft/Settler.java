@@ -422,4 +422,12 @@ public class Settler extends Character {
 		a.accept(this);
 	}
 
+	public boolean isActualSettler() {
+//itt a feltétel van elrontva, de nem értem miért nem működik sem így, sem ha az ID-ket hasonlítom, sem == vel. a többi osztályon emiatt még nem akartam változtatni
+		if( /* this.equals( game.getController().getActPlayer().getSettler())*/ false  ) {  
+			return true;
+		}
+		return false;
+	}
+	
 }
