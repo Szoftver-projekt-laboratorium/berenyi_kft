@@ -44,6 +44,7 @@ public class GamePanel extends JPanel {
 
 	private Cards cards;
 	private JPanel mapPanel;
+	private JPanel inventoryPanel;
 	private JLabel gameNameLabel;
 	private JButton moveButton;
 	private JButton drillButton;
@@ -56,6 +57,7 @@ public class GamePanel extends JPanel {
 	private JButton endGameButton;
 
 	private BufferedImage img;
+	private BufferedImage img_inventory;
 
 	private JTextArea messages = new JTextArea("Welcome in the game!");
 	
@@ -340,10 +342,20 @@ public class GamePanel extends JPanel {
 		this.add(controlPanel, BorderLayout.EAST);
 
 		// Raktarpanel (also)
-		JPanel inventoryPanel = new JPanel();
-		inventoryPanel.setMinimumSize(new Dimension(200, 100));
+		inventoryPanel = new JPanel();
+		inventoryPanel.setMinimumSize(new Dimension(800, 200));
+		inventoryPanel.setMaximumSize(new Dimension(800, 200));
+		inventoryPanel.setSize(new Dimension(800, 200));
 		inventoryPanel.setBackground(color);
 		this.setBackground(Color.BLACK);
+		inventoryPanel.setLayout(null);
+		String path_inventory = "src\\berenyi_kft_GUI\\Icons\\inventorypanel.png";
+		try {
+			img_inventory = ImageIO.read(new File(path_inventory));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		inventoryPanel.setOpaque(false);
 		this.add(inventoryPanel, BorderLayout.SOUTH);
 
 		// Jatekpanel (kozepso)
@@ -396,6 +408,22 @@ public class GamePanel extends JPanel {
 		drawableLabels.add(drawableLabel);
 		
 	}
+	
+	public void addToInventoryPanel(JButton drawableButton) {
+		inventoryPanel.add(drawableButton);
+		// Az új komponens előrehozása:
+		inventoryPanel.setComponentZOrder(drawableButton, 0);
+		drawableButtons.add(drawableButton);
+		drawableButton.addActionListener(bl);
+	}
+
+	public void addToMInventoryPanel(JLabel drawableLabel) {
+		inventoryPanel.add(drawableLabel);
+		// Az új komponens előrehozása:
+		inventoryPanel.setComponentZOrder(drawableLabel, 0);
+		drawableLabels.add(drawableLabel);
+		
+	}
 
 	public void addDrawable(IDrawable d) {
 		drawables.add(d);
@@ -419,6 +447,7 @@ public class GamePanel extends JPanel {
 		// vigyázat!
 		// this.drawAll();
 		g.drawImage(img, 0, 0, mapPanel);
+		g.drawImage(img_inventory, 75, 300, inventoryPanel);
 
 	}
 
