@@ -4,7 +4,6 @@ import java.util.*;
 
 import berenyi_kft_GUI.AsteroidGraphics;
 import berenyi_kft_GUI.GamePanel;
-import berenyi_kft_GUI.SettlerGraphics;
 
 /**
  * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot
@@ -88,6 +87,8 @@ public class Controller {
 	 * @param sc Scanner, amellyel a jatekosok adatait beolvassa
 	 */
 	public void startGame(GamePanel gamePanel, List<String> playerNames) {
+		Proto.enableLogging(true);
+		
 		Proto.println(Proto.getId(this) + ".startGame()");
 		Proto.incrTabs();
 		
@@ -115,7 +116,7 @@ public class Controller {
 		game.startGame();
 		
 		// Aszteroidak elrendezese a panelen, majd a teljes palyakep kirajzolasa
-		AsteroidGraphics.setAsteroidLocations();
+		// AsteroidGraphics.setAsteroidLocations();
 		gamePanel.drawAll();
 		
 		// Az elso jatekos beallitasa actPlayer-nek

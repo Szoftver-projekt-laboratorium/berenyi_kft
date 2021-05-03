@@ -3,8 +3,6 @@ package berenyi_kft;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import berenyi_kft_GUI.AsteroidGraphics;
-
 /**
  * Aszteroida osztaly: nyersanyagot tartalmazhat, illetve karakterek
  * tartozkodhatnak rajta
@@ -56,7 +54,7 @@ public class Asteroid {
 	private ArrayList<TeleportingGate> gates = new ArrayList<TeleportingGate>();
 	
 	/**
-	 * Az aszteroida grafikus megjelenitoje
+	 * Jeloli, hogy az aszteroida kiemelt allapotban van-e
 	 */
 	private boolean emphasized = false;
 
@@ -280,15 +278,7 @@ public class Asteroid {
 	 * @return A d-edik szomszedos aszteroida
 	 */
 	public Asteroid getNeighbor(int d) {
-		ArrayList<Asteroid> list = new ArrayList<Asteroid>();
-		list.addAll(neighbors);
-		for (TeleportingGate tg : gates) {
-			Asteroid other = tg.getPair().getAsteroid();
-			if (other != null) {
-				list.add(other);
-			}
-		}
-
+		ArrayList<Asteroid> list = this.getNeighbors();
 		if (list.size() != 0) {
 			d = (d * Integer.signum(d)) % list.size();
 			Asteroid neighbor = list.get(d);
@@ -305,8 +295,38 @@ public class Asteroid {
 	 * @return A szomszedos aszteroidak kollekcioja
 	 */
 	public ArrayList<Asteroid> getNeighbors() {
+		Proto.println(Proto.getId(this)+".getNeighbors()");
+		
+		ArrayList<Asteroid> neighborList = new ArrayList<Asteroid>();
+		neighborList.addAll(neighbors);
+		for (TeleportingGate tg : gates) {
+			Asteroid other = tg.getPair().getAsteroid();
+			if (other != null) {
+				neighborList.add(other);
+			}
+		}
+		return neighborList;
+	}
+	
+	/**
+	 * Visszaadja az adott aszteroida melletti aktiv teleportkapuk
+	 * es azok parjaibol allo listat.
+	 * 
+	 * @return a szomszedos aktiv teleportkapuk es parjaik listaja
+	 */
+	public ArrayList<TeleportingGate> getNeighboringGatePairs() {
 		// Proto.println(Proto.getId(this)+".getNeighbors()");
-		return neighbors;
+		// Proto.incrTabs();
+		ArrayList<TeleportingGate> neighborList = new ArrayList<TeleportingGate>();
+		for (TeleportingGate tg : gates) {
+			Asteroid other = tg.getPair().getAsteroid();
+			if (other != null) {
+				neighborList.add(tg);
+				neighborList.add(tg.getPair());
+			}
+		}
+		Proto.decrTabs();
+		return neighborList;
 	}
 
 	/**
@@ -374,7 +394,7 @@ public class Asteroid {
 	 * @return Az aszteroidan levo karakterek kollekcioja
 	 */
 	public ArrayList<Character> getCharacters() {
-		Proto.println(Proto.getId(this) + ".getCharacters()");
+		// Proto.println(Proto.getId(this) + ".getCharacters()");
 		return characters;
 	}
 
@@ -410,7 +430,7 @@ public class Asteroid {
 	 * @return Az aszteroidahoz tartozo teleportkapuk listaja
 	 */
 	public ArrayList<TeleportingGate> getGates() {
-		System.out.println("Asteroid's getGates() has been called");
+		// Proto.println(Proto.getId(this) + ".getGates()");
 		return gates;
 	}
 
@@ -616,16 +636,16 @@ public class Asteroid {
 	}
 	
 	/**
-	 * Visszater az aszteroida grafikus csomagolojaval.
-	 * @return Az aszteroidat megjelenito objektum
+	 * Megadja, hogy az aszteroida ki van-e emelve.
+	 * @return - <code>true</code>, ha az aszteroida kiemelt
 	 */
 	public boolean isEmphasized() {
 		return emphasized;
 	}
 	
 	/**
-	 * Beallitja az aszteroida grafikus kepet.
-	 * @param ag Az aszteroida uj megjelenito objektuma
+	 * Beallitja az aszteroida kiemeltseget (kiemelt vagy sem).
+	 * @param ag - az aszteroida uj kiemelt allapota
 	 */
 	public void setEmphasized(boolean emphasized) {
 		this.emphasized = emphasized;

@@ -1,7 +1,6 @@
 package berenyi_kft_GUI;
 
 import java.awt.*;
-import java.awt.event.*;
 
 import javax.swing.*;
 
