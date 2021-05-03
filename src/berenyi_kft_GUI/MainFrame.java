@@ -8,11 +8,18 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		super("Asteroid Miners");
-		cards = new Cards(this.getContentPane());
 		
-		this.setMinimumSize(new Dimension(1300, 700));
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setVisible(true);
+		// TODO Hogyan lesz szálbiztos?
+		EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+            	cards = new Cards(getContentPane());
+        		
+        		setMinimumSize(new Dimension(1300, 700));
+        		setDefaultCloseOperation(EXIT_ON_CLOSE);
+                setVisible(true);
+            }
+        });
 	}
 	
 	public static void main(String[] args) {

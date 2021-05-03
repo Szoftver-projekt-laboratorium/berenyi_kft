@@ -87,7 +87,7 @@ public class UFOGraphics extends JLabel implements IDrawable {
 	}
 
 	/**
-	 * Frissíti az ufó pozícióját az aszteroidája állapota alapján.
+	 * Frissíti az ufó nézetének pozícióját az aszteroidája állapota alapján.
 	 */
 	@Override
 	public void draw() {

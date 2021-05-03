@@ -26,7 +26,8 @@ public class GamePanel extends JPanel {
 	private List<JButton> drawableButtons = new ArrayList<JButton>();
 	private List<JLabel> drawableLabels = new ArrayList<JLabel>();
 	
-	private AsteroidGraphics lastAsteroidClicked = null;
+	private AsteroidGraphics latestSelectedAsteroid = null;
+	// private AsteroidGraphics latestSelectedResourceGraphics? = null;
 	
 	private ButtonListener bl;
 
@@ -81,26 +82,81 @@ public class GamePanel extends JPanel {
 
 			JButton pressedButton = (JButton) ae.getSource();
 			if (pressedButton == moveButton) {
-				if (lastAsteroidClicked != null) {
+				writeToMessageBoard("moveButton has been pushed");
+				if (latestSelectedAsteroid != null) {
+					writeToMessageBoard("moving to an asteroid You choose...");
+					
 					// Mozgás történik! TODO: majd külön függvénybe tegyük.
 					Asteroid place = controller.getActPlayer().getSettler().getPlace();
-					int idx = place.getNeighbors().indexOf(lastAsteroidClicked.getAsteroid());
+					int idx = place.getNeighbors().indexOf(latestSelectedAsteroid.getAsteroid());
 					if (idx != -1) {
 						Object[] params = {"move", Integer.toString(idx)};
 						controller.getActPlayer().actOnSettler(PlayerCommand.MOVE, params);
 						controller.nextPlayer();
+						
+						// új kattintásra fogunk várni, a lépés után
+						// nincs default kiválasztott
+						latestSelectedAsteroid = null;
 					}
+					
 				}
+			}
+			else if (pressedButton == drillButton) {
+				writeToMessageBoard("drillButton has been pushed");
+				writeToMessageBoard("drilling...");
 				
-				drawAll();
-				writeToMessageBoard("moveButton has been pushed");
+				Object[] params = {"drill"};
+				controller.getActPlayer().actOnSettler(PlayerCommand.DRILL, params);
+				controller.nextPlayer();
 			}
 			else if (pressedButton == mineButton) {
-				// TODO
-				drawAll();
 				writeToMessageBoard("mineButton has been pushed");
+				writeToMessageBoard("mining...");
+				
+				Object[] params = {"mine"};
+				controller.getActPlayer().actOnSettler(PlayerCommand.MINE, params);
+				controller.nextPlayer();
+			}
+			else if (pressedButton == restoreButton) {
+				writeToMessageBoard("restoreButton has been pushed");
+				writeToMessageBoard("restoring a resource You choose...");
+				
+				// Resource...
+				Object[] params = {"restore" /*, latestSelectedResource ID*/};
+				controller.getActPlayer().actOnSettler(PlayerCommand.RESTORE, params);
+				controller.nextPlayer();
+			}
+			else if (pressedButton == createrobotButton) {
+				writeToMessageBoard("createrobotButton has been pushed");
+				writeToMessageBoard("creating a new robot...");
+				
+				Object[] params = {"create_robot"};
+				controller.getActPlayer().actOnSettler(PlayerCommand.CREATE_ROBOT, params);
+				controller.nextPlayer();
+			}
+			else if (pressedButton == createteleportButton) {
+				writeToMessageBoard("createteleportButton has been pushed");
+				writeToMessageBoard("creating a new gate pair...");
+				
+				Object[] params = {"create_gate_pair"};
+				controller.getActPlayer().actOnSettler(PlayerCommand.CREATE_GATE_PAIR, params);
+				controller.nextPlayer();
+			}
+			else if (pressedButton == placeteleportButton) {
+				writeToMessageBoard("placeteleportButton has been pushed");
+				writeToMessageBoard("placing a teleporting gate available...");
+				
+				Object[] params = {"release_gate"};
+				controller.getActPlayer().actOnSettler(PlayerCommand.RELEASE_GATE, params);
+				controller.nextPlayer();
+			}
+			else if (pressedButton == passButton) {
+				writeToMessageBoard("passButton has been pushed");
+				writeToMessageBoard("You passed.");
 			}
 			else if (pressedButton == endGameButton) {
+				writeToMessageBoard("endGameButton has been pushed");
+				writeToMessageBoard("Stop playing, end game...");
 				
 				// TODO Inkább Pause gomb legyen helyette.
 				for (JButton drButton : drawableButtons)
@@ -115,7 +171,7 @@ public class GamePanel extends JPanel {
 			}
 			else if (ae.getActionCommand().equals(AsteroidGraphics.getCommand())) {
 				AsteroidGraphics ag = (AsteroidGraphics) pressedButton;
-				lastAsteroidClicked = ag;
+				latestSelectedAsteroid = ag;
 				for (Asteroid neighbor : ag.getAsteroid().getNeighbors())
 					neighbor.setEmphasized(true);
 				for (TeleportingGate neighborGate
@@ -127,7 +183,9 @@ public class GamePanel extends JPanel {
 			drawAll();
 		}
 	}
-
+	
+	// TODO: Szerintem menőbb (és kényelmesebb) lenne, ha minden új sort
+	// csak hozzáfűznénk a textArea végéhez, és görgethető lenne!
 	// uzenofal szovegnek bovitese
 	public void writeToMessageBoard(String mess) {
 		String tmp = messages.getText();
@@ -323,13 +381,18 @@ public class GamePanel extends JPanel {
 
 	public void addToMapPanel(JButton drawableButton) {
 		mapPanel.add(drawableButton);
+		// Az új komponens előrehozása:
+		mapPanel.setComponentZOrder(drawableButton, 0);
 		drawableButtons.add(drawableButton);
 		drawableButton.addActionListener(bl);
 	}
 
 	public void addToMapPanel(JLabel drawableLabel) {
 		mapPanel.add(drawableLabel);
+		// Az új komponens előrehozása:
+		mapPanel.setComponentZOrder(drawableLabel, 0);
 		drawableLabels.add(drawableLabel);
+		
 	}
 
 	public void addDrawable(IDrawable d) {

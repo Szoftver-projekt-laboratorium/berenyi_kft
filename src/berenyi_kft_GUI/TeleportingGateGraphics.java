@@ -105,7 +105,7 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 	}
 
 	/**
-	 * Frissíti a teleportkapu pozícióját az aszteroidája állapota alapján,
+	 * Frissíti a teleportkapu nézetének pozícióját az aszteroidája állapota alapján,
 	 * feltéve, hogy az már le van rakva egy aszteroidához.
 	 */
 	@Override

@@ -89,7 +89,7 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 	}
 
 	/**
-	 * Frissíti a telepes pozícióját az aszteroidája állapota alapján.
+	 * Frissíti a telepes nézetének pozícióját az aszteroidája állapota alapján.
 	 */
 	@Override
 	public void draw() {

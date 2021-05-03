@@ -245,7 +245,7 @@ public class Proto {
 
 	private static boolean random = true;
 
-	private static boolean log = true;
+	private static boolean log = false;
 
 	public static Proto.Objects getAllObjects() {
 		return allObjects;

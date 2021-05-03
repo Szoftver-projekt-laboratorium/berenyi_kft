@@ -224,6 +224,11 @@ public class Game {
 		Proto.getAllObjects().setSun(sun);
 		timer.addSteppable(sun);
 		
+		SunGraphics sung = new SunGraphics(sun, 
+				new Dimension(800, 600) /*gamePanel.getMinimumSize()*/);
+		gamePanel.addToMapPanel(sung);
+		gamePanel.addDrawable(sung);
+		
 		// allResourcesList - aszteroidak inicializalasahoz
 		List<Resource> allResourcesList = new ArrayList<Resource>();
 		for (int i = 0; i < nCoals; i++) {

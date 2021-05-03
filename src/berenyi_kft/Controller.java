@@ -87,6 +87,8 @@ public class Controller {
 	 * @param sc Scanner, amellyel a jatekosok adatait beolvassa
 	 */
 	public void startGame(GamePanel gamePanel, List<String> playerNames) {
+		Proto.enableLogging(true);
+		
 		Proto.println(Proto.getId(this) + ".startGame()");
 		Proto.incrTabs();
 		

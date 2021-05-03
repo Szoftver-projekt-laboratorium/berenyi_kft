@@ -87,7 +87,7 @@ public class AIRobotGraphics extends JLabel implements IDrawable {
 	}
 
 	/**
-	 * Frissíti a robot pozícióját az aszteroidája állapota alapján.
+	 * Frissíti a robot nézetének pozícióját az aszteroidája állapota alapján.
 	 */
 	@Override
 	public void draw() {
@@ -99,4 +99,3 @@ public class AIRobotGraphics extends JLabel implements IDrawable {
 	}
 
 }
-

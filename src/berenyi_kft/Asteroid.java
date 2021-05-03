@@ -394,7 +394,7 @@ public class Asteroid {
 	 * @return Az aszteroidan levo karakterek kollekcioja
 	 */
 	public ArrayList<Character> getCharacters() {
-		Proto.println(Proto.getId(this) + ".getCharacters()");
+		// Proto.println(Proto.getId(this) + ".getCharacters()");
 		return characters;
 	}
 
@@ -430,7 +430,7 @@ public class Asteroid {
 	 * @return Az aszteroidahoz tartozo teleportkapuk listaja
 	 */
 	public ArrayList<TeleportingGate> getGates() {
-		Proto.println(Proto.getId(this) + ".getGates()");
+		// Proto.println(Proto.getId(this) + ".getGates()");
 		return gates;
 	}
 
