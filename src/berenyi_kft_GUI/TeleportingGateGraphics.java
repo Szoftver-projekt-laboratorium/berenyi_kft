@@ -31,10 +31,21 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 			= new ArrayList<TeleportingGateGraphics>();
 	
 	/**
+	 * A játékpanel, amelynek a mapPanel-jén a teleportkapuk is megjelennek
+	 */
+	private static GamePanel gamePanel = null;
+	
+	/**
 	 * A kapuk közös képfájljának relatív elérési útja a projektben
 	 */
 	private static final String iconPath
 		= "src\\berenyi_kft_GUI\\Icons\\teleportingGate.png";
+	
+	/**
+	 * A kapuk közös képfájljának relatív elérési útja a projektben
+	 */
+	private static final String emphasizedIconPath
+		= "src\\berenyi_kft_GUI\\Icons\\teleportingGate_emphasized.png";
 
 	/**
 	 * A kapu-ikonok kívánt konstans szélessége
@@ -45,6 +56,11 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 	 * A kapuk megjelenő ikonja (képe)
 	 */
 	private static Icon icon;
+	
+	/**
+	 * A kiemelt kapuk megjelenő ikonja
+	 */
+	private static Icon emphasizedIcon;
 
 	/**
 	 * Statikus inicializáló blokk a kapuk ikonjának betöltéséhez és
@@ -56,9 +72,22 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 			Image img = ImageIO.read(new File(iconPath));
 			img = img.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
 			icon = new ImageIcon(img, "TeleportingGate");
+			
+			Image emphImg = ImageIO.read(new File(emphasizedIconPath));
+			emphImg = emphImg.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
+			emphasizedIcon = new ImageIcon(emphImg, "TeleportingGate emphasized");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Beállítja az osztálynak az aszteroidamezőt megjelenítő játékpanelt.
+	 * 
+	 * @param gamePanel	- a beállítandó játékpanel
+	 */
+	public static void setGamePanel(GamePanel gamePanel) {
+		TeleportingGateGraphics.gamePanel = gamePanel;
 	}
 	
 	/**
@@ -110,17 +139,20 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 	 */
 	@Override
 	public void draw() {
-		if (this.gate == null) {
+		if (gate.isDead()) {
+			this.setIcon(null);
 			allTeleportingGateGraphics.remove(this);
-			// mapPanel.removeDrawable(this);
-			// mapPanel.removeDrawableLabel(this);
+			gamePanel.removeDrawable(this);
+			gamePanel.removeFromMapPanel(this);
+			// this.gate = null;
 			return;
 		}
+		
 		if (this.gate.getAsteroid() != null) {
 			// this.setLocation(AsteroidGraphics.getGatePos(this.gate));
 			Point pos = AsteroidGraphics.getGatePos(this.gate);
 			if (gate.isEmphasized())
-				this.setIcon(icon /*emphasizedIcon*/); // TODO emph ikon hozzáadása
+				this.setIcon(emphasizedIcon);
 			else
 				this.setIcon(icon);
 				

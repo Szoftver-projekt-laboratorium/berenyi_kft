@@ -18,6 +18,11 @@ public abstract class Character {
 	 * A jatek idozitoje
 	 */
 	protected Timer timer = null;
+	
+	/**
+	 * Megmondja, hogy a karakter jatekban van-e meg
+	 */
+	protected boolean dead = false;
 
 	// ----------------------------------------------------------------
 
@@ -83,6 +88,16 @@ public abstract class Character {
 	 */
 	public void die() {
 		place.remove(this);
+		dead = true;
+	}
+	
+	/**
+	 * Megadja, hogy a karakter jatekban van-e, vagy sem.
+	 * 
+	 * @return	- <code>true</code>, ha a karakter mar nem el
+	 */
+	public boolean isDead() {
+		return dead;
 	}
 
 	/**

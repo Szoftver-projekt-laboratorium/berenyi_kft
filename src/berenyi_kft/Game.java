@@ -259,7 +259,7 @@ public class Game {
 			Proto.getAllObjects().addAsteroid(a);
 			
 			AsteroidGraphics ag = new AsteroidGraphics(a,
-					new Dimension(800, 600) /*gamePanel.getMinimumSize()*/);
+					new Dimension(800, 600) /*gamePanel.getMinimumSize()*/, this.gamePanel);
 			gamePanel.addToMapPanel(ag);
 			gamePanel.addDrawable(ag);
 			
@@ -291,7 +291,7 @@ public class Game {
 		}
 		// masodik kor: tovabbi veletlen elek az aszteroidak grafjaban
 		if (nAsteroids > 1) {
-			int nAdditionalNeighbors = (nAsteroids * nAsteroids / 10);
+			int nAdditionalNeighbors = (nAsteroids * nAsteroids / 20);
 			for (int i = 0; i < nAdditionalNeighbors; i++) {
 				Asteroid a1 = asteroids.get(random.nextInt(nAsteroids - 1));
 				Asteroid a2 = asteroids.get(random.nextInt(nAsteroids - 1));

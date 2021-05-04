@@ -33,6 +33,11 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 			= new ArrayList<AsteroidGraphics>();
 	
 	/**
+	 * A játékpanel, amelynek a mapPanel-jén az aszteroida-gombok megjelennek
+	 */
+	private static GamePanel gamePanel = null;
+	
+	/**
 	 * Az aszteroida-gombok közös akcióparancsa
 	 */
 	private static final String actionCommand = "Asteroid";
@@ -113,6 +118,15 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Beállítja az osztálynak az aszteroidamezőt megjelenítő játékpanelt.
+	 * 
+	 * @param gamePanel	- a beállítandó játékpanel
+	 */
+	public static void setGamePanel(GamePanel gamePanel) {
+		AsteroidGraphics.gamePanel = gamePanel;
 	}
 	
 	/**
@@ -204,21 +218,33 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 * @param a         - az aszteroida, amelyet a képernyőn meg kell jeleníteni
 	 * @param panelSize - az aszteroidamezőt megjelenítő panel méretei
 	 */
-	public AsteroidGraphics(Asteroid a, Dimension panelSize) {
+	public AsteroidGraphics(Asteroid a, Dimension panelSize, GamePanel gPanel) {
 		allAsteroidGraphics.add(this);
 		this.asteroid = a;
-		
+		gamePanel=gPanel;
 		this.setActionCommand(actionCommand);
 		this.setIcon(icon);
 		this.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		this.setBorderPainted(false);
 		this.setContentAreaFilled(false);
 		
-		Random random = new Random();
-		pos.x = preferredCellWidth + random.nextInt(
-				panelSize.width - preferredWidth - 2 * preferredCellWidth);
-		pos.y = preferredCellWidth + random.nextInt(
-				panelSize.height - preferredWidth - 2 * preferredCellWidth);
+		boolean b=true;
+		while(b) {
+			Random random = new Random();
+			pos.x = preferredCellWidth + random.nextInt(
+					panelSize.width - preferredWidth - 2 * preferredCellWidth);
+			pos.y = preferredCellWidth + random.nextInt(
+					panelSize.height - preferredWidth - 2 * preferredCellWidth);
+			
+			b=false;
+			for(Point p : gamePanel.getPoints()) {
+				if((p.x-pos.x)*(p.x-pos.x)+(p.y-pos.y)*(p.y-pos.y)<preferredWidth*preferredWidth) {
+					b=true;
+				}
+			}
+		}
+		
+		gamePanel.addPoint(new Point(pos.x, pos.y));
 		// this.setLocation(pos);
 	}
 	
@@ -260,10 +286,12 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	@Override
 	public void draw() {
 		// TODO: Átgondolni a nézetből való eltávolítást, ha a modell-objektum megszűnik.
-		if (this.asteroid == null) {
+		if (asteroid.isDead()) {
+			this.setIcon(null);
 			allAsteroidGraphics.remove(this);
-			// mapPanel.removeDrawable(this);
-			// mapPanel.removeDrawableLabel(this);
+			gamePanel.removeDrawable(this);
+			gamePanel.removeFromMapPanel(this);
+			// this.asteroid = null;
 			return;
 		}
 		
@@ -281,7 +309,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		if (asteroid.getSun().isCloseToSun(asteroid) && asteroid.getSun().getTimeToSunStorm() <3 ) {
 			this.setIcon(redIcon);
 			
-		}else if (asteroid.isEmphasized()) {
+		} else if (asteroid.isEmphasized()) {
 			this.setIcon(emphasizedIcon);
 		}
 		else {
