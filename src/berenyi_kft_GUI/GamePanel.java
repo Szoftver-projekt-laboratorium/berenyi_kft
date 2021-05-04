@@ -173,7 +173,8 @@ public class GamePanel extends JPanel {
 				drawableLabels.clear();
 				drawables.clear();
 				
-				cards.show(Cards.endGamePanelID);
+				//cards.show(Cards.endGamePanelID);
+				cards.show(Cards.menuPanelID);
 			}
 			else if (ae.getActionCommand().equals(AsteroidGraphics.getCommand())) {
 				AsteroidGraphics ag = (AsteroidGraphics) pressedButton;
@@ -465,8 +466,16 @@ public class GamePanel extends JPanel {
 		// vigyázat!
 		// this.drawAll();
 		g.drawImage(img, 0, 0, mapPanel);
-		g.drawImage(img_inventory, 75, 300, inventoryPanel);
+		g.drawImage(img_inventory, 75, 600, inventoryPanel);
 
+	}
+	
+	public Cards getCards() {
+		return cards;
+	}
+	
+	public Controller getController() {
+		return controller;
 	}
 
 }

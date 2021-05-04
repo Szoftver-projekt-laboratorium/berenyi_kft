@@ -211,7 +211,8 @@ public class TeleportingGate implements ISteppable {
 	public void goMad() {
 		Proto.println(Proto.getId(this) + ".goMad()");
 		Proto.incrTabs();
-		timer.addSteppable(this);
+		if(!timer.getSteppables().contains(this))
+			timer.addSteppable(this);
 		Proto.decrTabs();
 	}
 	
