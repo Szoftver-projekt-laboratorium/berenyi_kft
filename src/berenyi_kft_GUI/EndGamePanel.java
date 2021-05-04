@@ -13,14 +13,16 @@ import javax.swing.border.LineBorder;
 public class EndGamePanel extends JPanel {
 	
 	private static final String wonString =
-			"Settlers, you have won the game! Congratulations!";
+			"You won!";
 	private static final String lostString =
-			"Settlers, you have lost the game! Never mind, try again!";
+			"You lost!";
 	
 	private Cards cards;
 	private JTextArea resultField;
 	private JButton backToMenuButton;
 	private BufferedImage img;
+	private BufferedImage endImg;
+	private JPanel resultPanel;
 	
 	private class ButtonListener implements ActionListener {		
 		public void actionPerformed(ActionEvent ae) {
@@ -61,11 +63,11 @@ public class EndGamePanel extends JPanel {
 		this.add(resultLabel, BorderLayout.NORTH);
 		resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		resultField = new JTextArea(7, 15);
+		/*resultField = new JTextArea(7, 15);
 		resultField.setEditable(false);
 		resultField.setAlignmentX(CENTER_ALIGNMENT);
 		resultField.setFont(font);
-		resultField.setWrapStyleWord(true);
+		resultField.setWrapStyleWord(true);*/
 		
 		backToMenuButton = new JButton("Back to Menu");
 		backToMenuButton.setFont(font);
@@ -75,9 +77,8 @@ public class EndGamePanel extends JPanel {
 		backToMenuButton.setBorder(buttonBorder);
 		buttonPanel.add(backToMenuButton);
 		
-		JPanel resultPanel = new JPanel();
-		resultPanel.add(resultField);
-		resultPanel.setOpaque(true);
+		resultPanel = new JPanel();
+		//resultPanel.setOpaque(true);
 		resultPanel.setBackground(new Color(0, 0, 0, 0));
 		
 		this.add(resultPanel, BorderLayout.CENTER);
@@ -86,6 +87,13 @@ public class EndGamePanel extends JPanel {
 		String path = "src\\berenyi_kft_GUI\\Icons\\start.png";
 		try {
 			img=ImageIO.read(new File(path));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		String path2 = "src\\berenyi_kft_GUI\\Icons\\gameWon.png";
+		try {
+			endImg=ImageIO.read(new File(path2));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -102,6 +110,7 @@ public class EndGamePanel extends JPanel {
     {
         super.paintComponent(g);
         g.drawImage(img, 0, 0, this);
+        g.drawImage(endImg, 400, 100, resultPanel);
     }
 	
 	public EndGamePanel(Cards cards) {
