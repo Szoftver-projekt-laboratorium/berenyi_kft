@@ -54,6 +54,11 @@ public class Asteroid {
 	private ArrayList<TeleportingGate> gates = new ArrayList<TeleportingGate>();
 	
 	/**
+	 * Megmondja, hogy az aszteroida jatekban van-e meg
+	 */
+	private boolean dead = false;
+	
+	/**
 	 * Jeloli, hogy az aszteroida kiemelt allapotban van-e
 	 */
 	private boolean emphasized = false;
@@ -559,7 +564,7 @@ public class Asteroid {
 	 * korulotte keringo teleportkapukat a parjaikkal egyutt. Vegul eltavolitja
 	 * magat a jatekbol a Game osztaly removeAsteroid(Asteroid a) fuggvenyet hivva.
 	 * 
-	 * @param rr
+	 * @param rr - a radioaktiv nyersanyag, amely felrobbantja az aszteroidat
 	 */
 	public void explodedBy(RadioactiveResource rr) {
 		Proto.println(Proto.getId(this) + ".explodedBy(" + Proto.getId(rr) + ")");
@@ -575,8 +580,9 @@ public class Asteroid {
 		for (int i = neighbors.size() - 1; i >= 0; i--) {
 			neighbors.get(i).remove(this);
 		}
-
+		
 		game.removeAsteroid(this);
+		dead = true;
 		Proto.getAllObjects().removeAsteroid(this);
 		Proto.decrTabs();
 	}
@@ -636,8 +642,18 @@ public class Asteroid {
 	}
 	
 	/**
+	 * Megadja, hogy az aszteroida jatekban van-e, vagy sem.
+	 * 
+	 * @return	- <code>true</code>, ha az aszteroida mar nincs jatekban
+	 */
+	public boolean isDead() {
+		return dead;
+	}
+	
+	/**
 	 * Megadja, hogy az aszteroida ki van-e emelve.
-	 * @return - <code>true</code>, ha az aszteroida kiemelt
+	 * 
+	 * @return	- <code>true</code>, ha az aszteroida kiemelt
 	 */
 	public boolean isEmphasized() {
 		return emphasized;

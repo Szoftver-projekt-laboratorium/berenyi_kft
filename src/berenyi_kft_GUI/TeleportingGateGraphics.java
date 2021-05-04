@@ -31,6 +31,11 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 			= new ArrayList<TeleportingGateGraphics>();
 	
 	/**
+	 * A játékpanel, amelynek a mapPanel-jén a teleportkapuk is megjelennek
+	 */
+	private static GamePanel gamePanel = null;
+	
+	/**
 	 * A kapuk közös képfájljának relatív elérési útja a projektben
 	 */
 	private static final String iconPath
@@ -59,6 +64,15 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Beállítja az osztálynak az aszteroidamezőt megjelenítő játékpanelt.
+	 * 
+	 * @param gamePanel	- a beállítandó játékpanel
+	 */
+	public static void setGamePanel(GamePanel gamePanel) {
+		TeleportingGateGraphics.gamePanel = gamePanel;
 	}
 	
 	/**
@@ -110,12 +124,15 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 	 */
 	@Override
 	public void draw() {
-		if (this.gate == null) {
+		if (gate.isDead()) {
+			this.setIcon(null);
 			allTeleportingGateGraphics.remove(this);
-			// mapPanel.removeDrawable(this);
-			// mapPanel.removeDrawableLabel(this);
+			gamePanel.removeDrawable(this);
+			gamePanel.removeFromMapPanel(this);
+			// this.gate = null;
 			return;
 		}
+		
 		if (this.gate.getAsteroid() != null) {
 			// this.setLocation(AsteroidGraphics.getGatePos(this.gate));
 			Point pos = AsteroidGraphics.getGatePos(this.gate);

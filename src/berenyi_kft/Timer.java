@@ -185,10 +185,9 @@ public class Timer extends java.util.Timer {
 		Proto.incrTabs();
 		int i = 0;
 		while (i < steppables.size()) {
-			ISteppable is = steppables.get(i);
-			if (is != null) {
-				System.out.println(Proto.getId(is) + " stepped");
-				is.step();
+			ISteppable s = steppables.get(i);
+			if (s != null) {
+				s.step();
 				
 				// nézetfrissítés
 				game.getGamePanel().drawAll();
