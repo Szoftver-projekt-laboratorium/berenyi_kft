@@ -218,21 +218,33 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 * @param a         - az aszteroida, amelyet a képernyőn meg kell jeleníteni
 	 * @param panelSize - az aszteroidamezőt megjelenítő panel méretei
 	 */
-	public AsteroidGraphics(Asteroid a, Dimension panelSize) {
+	public AsteroidGraphics(Asteroid a, Dimension panelSize, GamePanel gPanel) {
 		allAsteroidGraphics.add(this);
 		this.asteroid = a;
-		
+		gamePanel=gPanel;
 		this.setActionCommand(actionCommand);
 		this.setIcon(icon);
 		this.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		this.setBorderPainted(false);
 		this.setContentAreaFilled(false);
 		
-		Random random = new Random();
-		pos.x = preferredCellWidth + random.nextInt(
-				panelSize.width - preferredWidth - 2 * preferredCellWidth);
-		pos.y = preferredCellWidth + random.nextInt(
-				panelSize.height - preferredWidth - 2 * preferredCellWidth);
+		boolean b=true;
+		while(b) {
+			Random random = new Random();
+			pos.x = preferredCellWidth + random.nextInt(
+					panelSize.width - preferredWidth - 2 * preferredCellWidth);
+			pos.y = preferredCellWidth + random.nextInt(
+					panelSize.height - preferredWidth - 2 * preferredCellWidth);
+			
+			b=false;
+			for(Point p : gamePanel.getPoints()) {
+				if((p.x-pos.x)*(p.x-pos.x)+(p.y-pos.y)*(p.y-pos.y)<preferredWidth*preferredWidth) {
+					b=true;
+				}
+			}
+		}
+		
+		gamePanel.addPoint(new Point(pos.x, pos.y));
 		// this.setLocation(pos);
 	}
 	

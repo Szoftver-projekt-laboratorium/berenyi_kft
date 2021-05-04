@@ -14,7 +14,7 @@ public class Sun implements ISteppable {
 	/**
 	 * A kovetkezo napvihar bekovetkezeseig hatralevo ido
 	 */
-	private long timeToSunStorm=5;
+	private long timeToSunStorm=3;
 
 	/**
 	 * A Nappal kozvetlenul szomszedos aszteroidak listaja
