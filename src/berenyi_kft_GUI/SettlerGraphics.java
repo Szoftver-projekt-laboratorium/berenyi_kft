@@ -36,7 +36,8 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 	/**
 	 * A aktualis telepesek képfájljának relatív elérési útja a projektben
 	 */
-	private static final String actualIconPath = "src\\berenyi_kft_GUI\\Icons\\uranium.png"; //!! ideiglenesen beraktam az urán képét ennek !!
+	private static final String actualIconPath
+			= "src\\berenyi_kft_GUI\\Icons\\settler_emphasized.png";
 
 
 	/**
