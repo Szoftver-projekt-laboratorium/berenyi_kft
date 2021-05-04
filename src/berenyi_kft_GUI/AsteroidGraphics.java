@@ -48,7 +48,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	private static final String iconPath = "src\\berenyi_kft_GUI\\Icons\\asteroid.png";
 	private static final String emphasizedIconPath
 		= "src\\berenyi_kft_GUI\\Icons\\asteroid_emphasized.png";
-
+	private static final String redIconPath = "src\\berenyi_kft_GUI\\Icons\\asteroid_solarstorm.png";
 	/**
 	 * Az aszteroida ikonok kívánt konstans szélessége (a képek négyzet alakúak)
 	 */
@@ -75,6 +75,11 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	 * Az aszteroida-gombon a kiemelésekor megjelenő ikon
 	 */
 	private static Icon emphasizedIcon;
+	
+	/**
+	 * Az aszteroida-gombon a napviharkor napközelben megjelenő ikon
+	 */
+	private static Icon redIcon;
 	
 	/**
 	 * Visszatér az összes grafikus aszteroidából álló listával.
@@ -106,6 +111,10 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 			Image emphImg = ImageIO.read(new File(emphasizedIconPath));
 			emphImg = emphImg.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
 			emphasizedIcon = new ImageIcon(emphImg, "Asteroid Emphasized");
+			
+			Image redImg = ImageIO.read(new File(redIconPath));
+			redImg = redImg.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
+			redIcon = new ImageIcon(redImg, "Asteroid SolarStorm");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -284,7 +293,11 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		 * (A draw függvényekben mindig beállítjuk a nézet-objektum helyét az elvárt
 		 * pos pozícióra, ez automatikusan invalidate()-et hív, és újra fogja rajzolni.)
 		 */
-		if (asteroid.isEmphasized()) {
+		
+		if (asteroid.getSun().isCloseToSun(asteroid) && asteroid.getSun().getTimeToSunStorm() <3 ) {
+			this.setIcon(redIcon);
+			
+		}else if (asteroid.isEmphasized()) {
 			this.setIcon(emphasizedIcon);
 		}
 		else {
