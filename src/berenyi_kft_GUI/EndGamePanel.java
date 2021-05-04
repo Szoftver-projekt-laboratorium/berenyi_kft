@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+import berenyi_kft.State;
+
 public class EndGamePanel extends JPanel {
 	
 	private static final String wonString =
@@ -18,11 +20,12 @@ public class EndGamePanel extends JPanel {
 			"You lost!";
 	
 	private Cards cards;
-	private JTextArea resultField;
+	//private JTextArea resultField;
 	private JButton backToMenuButton;
 	private BufferedImage img;
 	private BufferedImage endImg;
 	private JPanel resultPanel;
+	private JLabel resultLabel;
 	
 	private class ButtonListener implements ActionListener {		
 		public void actionPerformed(ActionEvent ae) {
@@ -33,8 +36,10 @@ public class EndGamePanel extends JPanel {
 		}
 	}
 	
-	public void showResult(boolean won) {
-		resultField.setText(won ? wonString : lostString);
+	public String getResultText() {
+		if(cards.getGamePanel().getController().getState()==State.LOST)
+			return lostString;
+		return wonString;
 	}
 	
 	public void initComponents() {
@@ -57,7 +62,7 @@ public class EndGamePanel extends JPanel {
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		
 		String message="You won!";
-		JLabel resultLabel=new JLabel(message);
+		resultLabel=new JLabel(message);
 		resultLabel.setFont(titleFont);
 		resultLabel.setForeground(Color.YELLOW);
 		this.add(resultLabel, BorderLayout.NORTH);
@@ -90,13 +95,6 @@ public class EndGamePanel extends JPanel {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		String path2 = "src\\berenyi_kft_GUI\\Icons\\gameWon.png";
-		try {
-			endImg=ImageIO.read(new File(path2));
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
@@ -110,7 +108,25 @@ public class EndGamePanel extends JPanel {
     {
         super.paintComponent(g);
         g.drawImage(img, 0, 0, this);
+        if(cards.getGamePanel().getController().getState()==State.LOST) {
+        	String path = "src\\berenyi_kft_GUI\\Icons\\gameFailed.png";
+    		try {
+    			endImg=ImageIO.read(new File(path));
+    		} catch(Exception e) {
+    			e.printStackTrace();
+    		}
+		}
+        
+        else {
+        	String path2 = "src\\berenyi_kft_GUI\\Icons\\gameWon.png";
+    		try {
+    			endImg=ImageIO.read(new File(path2));
+    		} catch(Exception e) {
+    			e.printStackTrace();
+    		}
+        }
         g.drawImage(endImg, 400, 100, resultPanel);
+        resultLabel.setText(this.getResultText());
     }
 	
 	public EndGamePanel(Cards cards) {
