@@ -107,6 +107,7 @@ public class Sun implements ISteppable {
 			// timeToSunStrom -= game.getTimer.getPeriod();
 		} else {
 			sunStorm();
+			Proto.println("SunStorm");
 			if (Proto.isRandom()) {
 				Random r = new Random();
 				timeToSunStorm = 15 + r.nextInt(10);
@@ -151,7 +152,7 @@ public class Sun implements ISteppable {
 		if (neighboringAsteroids.contains(a))
 			return true;
 
-		for (Asteroid a2 : a.getNeighbors())
+		for (Asteroid a2 : a.getNeighboringAsteroids()) // ez kell getNeighbors() helyett, mert ebben nincsenek benne a kapuk általi szomszédok, kapun napvihar ne menjen át
 			if (neighboringAsteroids.contains(a2))
 				return true;
 
