@@ -15,7 +15,9 @@ import javax.swing.border.LineBorder;
 
 import berenyi_kft.Asteroid;
 import berenyi_kft.Controller;
+import berenyi_kft.ISteppable;
 import berenyi_kft.PlayerCommand;
+import berenyi_kft.Proto;
 import berenyi_kft.State;
 import berenyi_kft.TeleportingGate;
 
@@ -404,6 +406,12 @@ public class GamePanel extends JPanel {
 		mapPanel.setOpaque(false);
 
 		this.add(mapPanel, BorderLayout.CENTER);
+		
+		AsteroidGraphics.setGamePanel(this);
+		SettlerGraphics.setGamePanel(this);
+		AIRobotGraphics.setGamePanel(this);
+		UFOGraphics.setGamePanel(this);
+		TeleportingGateGraphics.setGamePanel(this);
 	}
 
 	public GamePanel(Cards cards) {
@@ -425,7 +433,17 @@ public class GamePanel extends JPanel {
 		// Az új komponens előrehozása:
 		mapPanel.setComponentZOrder(drawableLabel, 0);
 		drawableLabels.add(drawableLabel);
-		
+	}
+	
+	public void removeFromMapPanel(JButton drawableButton) {
+		drawableButton.removeActionListener(bl);
+		drawableButtons.remove(drawableButton);
+		mapPanel.remove(drawableButton);
+	}
+	
+	public void removeFromMapPanel(JLabel drawableLabel) {
+		drawableLabels.remove(drawableLabel);
+		mapPanel.remove(drawableLabel);
 	}
 	
 	public void addToInventoryPanel(JButton drawableButton) {
@@ -453,10 +471,16 @@ public class GamePanel extends JPanel {
 	}
 
 	public void drawAll() {
-		// AsteroidGraphics.setAsteroidLocations();
-		for (IDrawable d : drawables)
-			d.draw();
-		// this.invalidate();
+		int i = 0;
+		while (i < drawables.size()) {
+			IDrawable d = drawables.get(i);
+			if (d != null)
+				d.draw();
+			
+			// i = steppables.indexOf(is) + 1; // elvileg jo lenne
+			i++; // halal eseten problemas lehet, de nem olyan veszes,
+				 // max lesz egy masodperces kesleltetes (?)
+		}
 	}
 
 	@Override
