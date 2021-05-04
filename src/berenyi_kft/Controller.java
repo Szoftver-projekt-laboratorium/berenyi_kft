@@ -186,6 +186,7 @@ public class Controller {
 	 */
 	public void nextPlayer() {
 		Proto.println(Proto.getId(this) + ".nextPlayer()");
+		game.getGamePanel().writeToMessageBoard("Next player steps...");
 		// TODO: Steppable leptetes
 		// game.getTimer().tick();
 		
