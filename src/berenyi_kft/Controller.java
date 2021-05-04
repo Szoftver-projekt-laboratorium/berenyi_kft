@@ -3,6 +3,7 @@ package berenyi_kft;
 import java.util.*;
 
 import berenyi_kft_GUI.AsteroidGraphics;
+import berenyi_kft_GUI.Cards;
 import berenyi_kft_GUI.GamePanel;
 
 /**
@@ -161,6 +162,8 @@ public class Controller {
 			Proto.println("(The game has not yet ended.)");
 		
 		// TODO endGamePanel megjelenítése
+		game.getGamePanel().getCards().show(Cards.endGamePanelID);
+		
 	}
 	
 	/**

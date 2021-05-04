@@ -14,7 +14,7 @@ public class Sun implements ISteppable {
 	/**
 	 * A kovetkezo napvihar bekovetkezeseig hatralevo ido
 	 */
-	private long timeToSunStorm;
+	private long timeToSunStorm=5;
 
 	/**
 	 * A Nappal kozvetlenul szomszedos aszteroidak listaja
@@ -99,6 +99,7 @@ public class Sun implements ISteppable {
 	 */
 	@Override
 	public void step() {
+		System.out.println(this.timeToSunStorm);
 		Proto.println(Proto.getId(this) + ".step()");
 		Proto.incrTabs();
 		if (timeToSunStorm > 0) {
