@@ -44,6 +44,7 @@ public class GamePanel extends JPanel {
 
 	private Cards cards;
 	private JPanel mapPanel;
+	private JPanel inventoryPanel;
 	private JLabel gameNameLabel;
 	private JButton moveButton;
 	private JButton drillButton;
@@ -56,8 +57,11 @@ public class GamePanel extends JPanel {
 	private JButton endGameButton;
 
 	private BufferedImage img;
+	private BufferedImage img_inventory;
 
 	private JTextArea messages = new JTextArea("Welcome in the game!");
+	private JScrollPane scrollPane;
+	
 	
 	public void setController(Controller controller) {
 		this.controller = controller;
@@ -169,7 +173,8 @@ public class GamePanel extends JPanel {
 				drawableLabels.clear();
 				drawables.clear();
 				
-				cards.show(Cards.endGamePanelID);
+				//cards.show(Cards.endGamePanelID);
+				cards.show(Cards.menuPanelID);
 			}
 			else if (ae.getActionCommand().equals(AsteroidGraphics.getCommand())) {
 				AsteroidGraphics ag = (AsteroidGraphics) pressedButton;
@@ -193,13 +198,14 @@ public class GamePanel extends JPanel {
 		String tmp = messages.getText();
 		String[] tmps = tmp.split("\n");
 		String coms = "";
-		if (tmps.length > 15) {
-			for (int i = tmps.length - 15; i < tmps.length; i++) {
+		//egyelore 30 uzit tart meg, de bovitheto lehet
+		if (tmps.length > 30) {
+			for (int i = tmps.length - 30; i < tmps.length; i++) {
 				coms += tmps[i] + "\r\n";
 			}
-			coms += "\r\n" + mess + "\r\n";
+			coms +=  mess + "\r\n";
 		} else {
-			tmp += "\r\n" + mess + "\r\n";
+			tmp +=  mess + "\r\n";
 			coms = tmp;
 		}
 
@@ -325,13 +331,28 @@ public class GamePanel extends JPanel {
 		// tolteleknek vettem fel, hogy ne legyen olyan egyben az egesz control panel
 		// (buttonok koze ilyet nem lehetett tenni sajnos)
 		controlPanel.add(new JLabel(" "));
-
+		
+		//gorgo 
+		scrollPane = new JScrollPane();
+		scrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+		scrollPane.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		controlPanel.add(scrollPane);
+		scrollPane.setViewportView(messages);
+		scrollPane.setBackground(Color.yellow);
+		
+		scrollPane.getVerticalScrollBar().setBackground(color);
 		messages.setBackground(Color.yellow);
 		messages.setMinimumSize(textarea_size);
 		messages.setMaximumSize(textarea_size);
-		// messages.setFont(font);
-		controlPanel.add(messages);
-
+		messages.setFont(font);
+		
+		//added scroll:
+		
+		messages.setEditable ( false );
+		messages.setLineWrap(true);
+		messages.setVisible(true);
+		
 		controlPanel.setBackground(color);
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.PAGE_AXIS));
 		controlPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -340,10 +361,20 @@ public class GamePanel extends JPanel {
 		this.add(controlPanel, BorderLayout.EAST);
 
 		// Raktarpanel (also)
-		JPanel inventoryPanel = new JPanel();
-		inventoryPanel.setMinimumSize(new Dimension(200, 100));
+		inventoryPanel = new JPanel();
+		inventoryPanel.setMinimumSize(new Dimension(800, 200));
+		inventoryPanel.setMaximumSize(new Dimension(800, 200));
+		inventoryPanel.setSize(new Dimension(800, 200));
 		inventoryPanel.setBackground(color);
 		this.setBackground(Color.BLACK);
+		inventoryPanel.setLayout(null);
+		String path_inventory = "src\\berenyi_kft_GUI\\Icons\\inventorypanel.png";
+		try {
+			img_inventory = ImageIO.read(new File(path_inventory));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		inventoryPanel.setOpaque(false);
 		this.add(inventoryPanel, BorderLayout.SOUTH);
 
 		// Jatekpanel (kozepso)
@@ -406,6 +437,22 @@ public class GamePanel extends JPanel {
 		drawableLabels.remove(drawableLabel);
 		mapPanel.remove(drawableLabel);
 	}
+	
+	public void addToInventoryPanel(JButton drawableButton) {
+		inventoryPanel.add(drawableButton);
+		// Az új komponens előrehozása:
+		inventoryPanel.setComponentZOrder(drawableButton, 0);
+		drawableButtons.add(drawableButton);
+		drawableButton.addActionListener(bl);
+	}
+
+	public void addToMInventoryPanel(JLabel drawableLabel) {
+		inventoryPanel.add(drawableLabel);
+		// Az új komponens előrehozása:
+		inventoryPanel.setComponentZOrder(drawableLabel, 0);
+		drawableLabels.add(drawableLabel);
+		
+	}
 
 	public void addDrawable(IDrawable d) {
 		drawables.add(d);
@@ -429,7 +476,16 @@ public class GamePanel extends JPanel {
 		// vigyázat!
 		// this.drawAll();
 		g.drawImage(img, 0, 0, mapPanel);
+		g.drawImage(img_inventory, 75, 600, inventoryPanel);
 
+	}
+	
+	public Cards getCards() {
+		return cards;
+	}
+	
+	public Controller getController() {
+		return controller;
 	}
 
 }
