@@ -21,7 +21,12 @@ import berenyi_kft.UFO;
  * @author berenyi_kft
  */
 public class UFOGraphics extends JLabel implements IDrawable {
-
+	
+	/**
+	 * A játékpanel, amelynek a mapPanel-jén az ufók is megjelennek
+	 */
+	private static GamePanel gamePanel = null;
+	
 	/**
 	 * Az ufók közös képfájljának relatív elérési útja a projektben
 	 */
@@ -50,6 +55,15 @@ public class UFOGraphics extends JLabel implements IDrawable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Beállítja az osztálynak az aszteroidamezőt megjelenítő játékpanelt.
+	 * 
+	 * @param gamePanel	- a beállítandó játékpanel
+	 */
+	public static void setGamePanel(GamePanel gamePanel) {
+		UFOGraphics.gamePanel = gamePanel;
 	}
 
 	/**
@@ -91,6 +105,14 @@ public class UFOGraphics extends JLabel implements IDrawable {
 	 */
 	@Override
 	public void draw() {
+		if (ufo.isDead()) {
+			this.setIcon(null);
+			gamePanel.removeDrawable(this);
+			gamePanel.removeFromMapPanel(this);
+			// this.ufo = null;
+			return;
+		}
+		
 		// this.setLocation(AsteroidGraphics.getCharacterPos(this.ufo));
 		Point pos = AsteroidGraphics.getCharacterPos(this.ufo);
 		this.setBounds(new Rectangle(pos.x, pos.y,

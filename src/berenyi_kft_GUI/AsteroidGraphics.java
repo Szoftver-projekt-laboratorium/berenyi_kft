@@ -33,6 +33,11 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 			= new ArrayList<AsteroidGraphics>();
 	
 	/**
+	 * A játékpanel, amelynek a mapPanel-jén az aszteroida-gombok megjelennek
+	 */
+	private static GamePanel gamePanel = null;
+	
+	/**
 	 * Az aszteroida-gombok közös akcióparancsa
 	 */
 	private static final String actionCommand = "Asteroid";
@@ -113,6 +118,15 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Beállítja az osztálynak az aszteroidamezőt megjelenítő játékpanelt.
+	 * 
+	 * @param gamePanel	- a beállítandó játékpanel
+	 */
+	public static void setGamePanel(GamePanel gamePanel) {
+		AsteroidGraphics.gamePanel = gamePanel;
 	}
 	
 	/**
@@ -260,10 +274,12 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	@Override
 	public void draw() {
 		// TODO: Átgondolni a nézetből való eltávolítást, ha a modell-objektum megszűnik.
-		if (this.asteroid == null) {
+		if (asteroid.isDead()) {
+			this.setIcon(null);
 			allAsteroidGraphics.remove(this);
-			// mapPanel.removeDrawable(this);
-			// mapPanel.removeDrawableLabel(this);
+			gamePanel.removeDrawable(this);
+			gamePanel.removeFromMapPanel(this);
+			// this.asteroid = null;
 			return;
 		}
 		

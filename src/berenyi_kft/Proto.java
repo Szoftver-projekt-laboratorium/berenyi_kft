@@ -333,11 +333,12 @@ public class Proto {
 	 */
 	public static void print(String str) {
 		if (Proto.isLogging()) {
-			/*for (int i = 0; i < tabs; i++) {
+			for (int i = 0; i < tabs; i++) {
 				System.out.print("   |");
 			}
-			System.out.print("- ");*/
-			gamePanel.writeToMessageBoard(str);
+			System.out.print("- ");
+			System.out.print(str);
+			// gamePanel.writeToMessageBoard(str);
 		}
 	}
 	
@@ -350,11 +351,12 @@ public class Proto {
 	 */
 	public static void println(String line) {
 		if (Proto.isLogging()) {
-			/*for (int i = 0; i < tabs; i++) {
+			for (int i = 0; i < tabs; i++) {
 				System.out.print("   |");
 			}
-			System.out.print("- ");*/
-			gamePanel.writeToMessageBoard(line);
+			System.out.print("- ");
+			System.out.println(line);
+			// gamePanel.writeToMessageBoard(line);
 		}
 	}
 

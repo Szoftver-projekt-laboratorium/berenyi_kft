@@ -22,7 +22,12 @@ import berenyi_kft.Settler;
  * @author berenyi_kft
  */
 public class SettlerGraphics extends JLabel implements IDrawable {
-
+	
+	/**
+	 * A játékpanel, amelynek a mapPanel-jén az telepesek is megjelennek
+	 */
+	private static GamePanel gamePanel = null;
+	
 	/**
 	 * A telepesek közös képfájljának relatív elérési útja a projektben
 	 */
@@ -31,7 +36,8 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 	/**
 	 * A aktualis telepesek képfájljának relatív elérési útja a projektben
 	 */
-	private static final String actualIconPath = "src\\berenyi_kft_GUI\\Icons\\uranium.png"; //!! ideiglenesen beraktam az urán képét ennek !!
+	private static final String actualIconPath
+			= "src\\berenyi_kft_GUI\\Icons\\settler_emphasized.png";
 
 
 	/**
@@ -65,6 +71,15 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Beállítja az osztálynak az aszteroidamezőt megjelenítő játékpanelt.
+	 * 
+	 * @param gamePanel	- a beállítandó játékpanel
+	 */
+	public static void setGamePanel(GamePanel gamePanel) {
+		SettlerGraphics.gamePanel = gamePanel;
 	}
 
 	/**
@@ -106,6 +121,14 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 	 */
 	@Override
 	public void draw() {
+		if (settler.isDead()) {
+			this.setIcon(null);
+			gamePanel.removeDrawable(this);
+			gamePanel.removeFromMapPanel(this);
+			// this.settler = null;
+			return;
+		}
+		
 		// this.setLocation(AsteroidGraphics.getCharacterPos(this.settler));
 		Point pos = AsteroidGraphics.getCharacterPos(this.settler);
 		

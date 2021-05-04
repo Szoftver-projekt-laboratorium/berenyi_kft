@@ -1,12 +1,21 @@
 package berenyi_kft_GUI;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -19,11 +28,13 @@ public class EndGamePanel extends JPanel {
 	private static final String lostString =
 			"You lost!";
 	
+	private static final int endImagePreferredWidth = 500;
+	
 	private Cards cards;
 	//private JTextArea resultField;
 	private JButton backToMenuButton;
-	private BufferedImage img;
-	private BufferedImage endImg;
+	private Image img;
+	private Image endImg;
 	private JPanel resultPanel;
 	private JLabel resultLabel;
 	
@@ -98,9 +109,8 @@ public class EndGamePanel extends JPanel {
 	}
 	
 	@Override
-    public Dimension getPreferredSize()
-    {
-        return (new Dimension(img.getWidth(), img.getHeight()));
+    public Dimension getPreferredSize() {
+        return (new Dimension(img.getWidth(null), img.getHeight(null)));
     }
 	
 	@Override
@@ -112,6 +122,8 @@ public class EndGamePanel extends JPanel {
         	String path = "src\\berenyi_kft_GUI\\Icons\\gameFailed.png";
     		try {
     			endImg=ImageIO.read(new File(path));
+    			endImg = endImg.getScaledInstance(
+    					endImagePreferredWidth, -1, Image.SCALE_DEFAULT);
     		} catch(Exception e) {
     			e.printStackTrace();
     		}
@@ -121,6 +133,8 @@ public class EndGamePanel extends JPanel {
         	String path2 = "src\\berenyi_kft_GUI\\Icons\\gameWon.png";
     		try {
     			endImg=ImageIO.read(new File(path2));
+    			endImg = endImg.getScaledInstance(
+    					endImagePreferredWidth, -1, Image.SCALE_DEFAULT);
     		} catch(Exception e) {
     			e.printStackTrace();
     		}
