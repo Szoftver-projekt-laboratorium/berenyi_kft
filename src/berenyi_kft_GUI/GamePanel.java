@@ -465,7 +465,7 @@ public class GamePanel extends JPanel {
 		// vigyázat!
 		// this.drawAll();
 		g.drawImage(img, 0, 0, mapPanel);
-		g.drawImage(img_inventory, 75, 300, inventoryPanel);
+		g.drawImage(img_inventory, 75, 600, inventoryPanel);
 
 	}
 
