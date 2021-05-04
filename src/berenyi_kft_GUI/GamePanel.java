@@ -394,7 +394,17 @@ public class GamePanel extends JPanel {
 		// Az új komponens előrehozása:
 		mapPanel.setComponentZOrder(drawableLabel, 0);
 		drawableLabels.add(drawableLabel);
-		
+	}
+	
+	public void removeFromMapPanel(JButton drawableButton) {
+		drawableButton.removeActionListener(bl);
+		drawableButtons.remove(drawableButton);
+		mapPanel.remove(drawableButton);
+	}
+	
+	public void removeFromMapPanel(JLabel drawableLabel) {
+		drawableLabels.remove(drawableLabel);
+		mapPanel.remove(drawableLabel);
 	}
 
 	public void addDrawable(IDrawable d) {
