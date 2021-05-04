@@ -468,5 +468,13 @@ public class GamePanel extends JPanel {
 		g.drawImage(img_inventory, 75, 600, inventoryPanel);
 
 	}
+	
+	public Cards getCards() {
+		return cards;
+	}
+	
+	public Controller getController() {
+		return controller;
+	}
 
 }
