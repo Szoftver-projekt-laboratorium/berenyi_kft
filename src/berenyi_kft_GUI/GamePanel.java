@@ -37,12 +37,14 @@ public class GamePanel extends JPanel {
 
 	// altalanos gombmeret beallitasa:
 	private Dimension buttonsize = new Dimension(250, 40);
+	
+	private Dimension resourcebuttonsize = new Dimension(40, 40);
 
 	private Dimension textarea_size = new Dimension(250, 300);
 
 	@Override
 	public Dimension getPreferredSize() {
-		return (new Dimension(img.getWidth(), img.getHeight()));
+		return (new Dimension(300, 100));
 	}
 
 	private Cards cards;
@@ -58,6 +60,11 @@ public class GamePanel extends JPanel {
 	private JButton placeteleportButton;
 	private JButton passButton;
 	private JButton endGameButton;
+	
+	private JButton CoalButton;
+	private JButton IceButton;
+	private JButton UraniumButton;
+	private JButton IronButton;
 
 	private BufferedImage img;
 	private BufferedImage img_inventory;
@@ -364,23 +371,55 @@ public class GamePanel extends JPanel {
 		this.add(controlPanel, BorderLayout.EAST);
 
 		// Raktarpanel (also)
+		
+		//Gombok szépek, hozzáadva meg minden, de nincsenek bekövte buttonlistenernek,
+		//a rajtuk megjelenő számok is invalidak egyelőre
+		
+		CoalGraphics CoalButton	= new CoalGraphics(null, resourcebuttonsize);
+		CoalButton.setBorder(buttonBorder);
+		
+		IceGraphics IceButton = new IceGraphics(null, resourcebuttonsize);
+		IceButton.setBorder(buttonBorder);
+		
+		UraniumGraphics UraniumButton = new UraniumGraphics(null, resourcebuttonsize);
+		UraniumButton.setBorder(buttonBorder);
+		
+		IronGraphics IronButton = new IronGraphics(null, resourcebuttonsize,"3");
+		IronButton.setBorder(buttonBorder);
+		
+		TeleportingGateGraphics TGateButton = new TeleportingGateGraphics(null);
+		TGateButton.setBorder(buttonBorder);
+		TGateButton.setMinimumSize(resourcebuttonsize);
+		TGateButton.setMaximumSize(resourcebuttonsize);
+		
 		inventoryPanel = new JPanel();
 		inventoryPanel.setMinimumSize(new Dimension(800, 200));
 		inventoryPanel.setMaximumSize(new Dimension(800, 200));
 		inventoryPanel.setSize(new Dimension(800, 200));
 		inventoryPanel.setBackground(color);
-		this.setBackground(Color.BLACK);
-		inventoryPanel.setLayout(null);
-		String path_inventory = "src\\berenyi_kft_GUI\\Icons\\inventorypanel.png";
-		try {
-			img_inventory = ImageIO.read(new File(path_inventory));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		inventoryPanel.setOpaque(false);
+		
+		
+		JLabel inventorytitleLabel = new JLabel("Spaceship's inventory:");
+		inventorytitleLabel.setFont(font);
+		inventorytitleLabel.setForeground(Color.YELLOW);
+		inventorytitleLabel.setBackground(color);
+		JLabel toltelek1 = new JLabel("                    ");
+		JLabel toltelek2 = new JLabel("                    ");
+		inventoryPanel.add(inventorytitleLabel);
+		inventoryPanel.add(toltelek1);
+		
+		inventoryPanel.add(CoalButton);
+		inventoryPanel.add(IronButton);
+		inventoryPanel.add(UraniumButton);
+		inventoryPanel.add(IceButton);
+		
+		inventoryPanel.add(toltelek2);
+		inventoryPanel.add(TGateButton);
+		
 		this.add(inventoryPanel, BorderLayout.SOUTH);
 
 		// Jatekpanel (kozepso)
+		
 		mapPanel = new JPanel();
 		
 		// TODO: Átgondolni, hogy hogyan szabad/érdemes a rajzolást csinálni:
@@ -397,9 +436,10 @@ public class GamePanel extends JPanel {
 		mapPanel.setSize(new Dimension(800, 600));
 		mapPanel.setBackground(Color.black);
 
-		String path = "src\\berenyi_kft_GUI\\Icons\\background.png";
+		String path = "src\\berenyi_kft_GUI\\Icons\\background1.png";
 		try {
 			img = ImageIO.read(new File(path));
+			//img = img.getScaledInstance(400, -1, Image.SCALE_DEFAULT);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -413,6 +453,10 @@ public class GamePanel extends JPanel {
 		AIRobotGraphics.setGamePanel(this);
 		UFOGraphics.setGamePanel(this);
 		TeleportingGateGraphics.setGamePanel(this);
+		
+		
+		
+
 	}
 
 	public GamePanel(Cards cards) {

@@ -122,6 +122,8 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 		this.setBorder(null);
 		this.setOpaque(false);
 		this.setLocation(new Point(0, 0));
+		
+		
 	}
 
 	/**
