@@ -34,6 +34,11 @@ public class TeleportingGate implements ISteppable {
 	private Timer timer = null;
 	
 	/**
+	 * Megmondja, hogy a teleportkapu jatekban van-e meg
+	 */
+	private boolean dead = false;
+	
+	/**
 	 * Jeloli, hogy a teleportkapu kiemelt allapotban van-e
 	 */
 	private boolean emphasized = false;
@@ -168,10 +173,11 @@ public class TeleportingGate implements ISteppable {
 		} else {
 			asteroid.remove(this);
 		}
-
+		
 		if (timer.getSteppables().contains(this)) { // (a feltetel nem szukseges)
 			timer.removeSteppable(this);
 		}
+		dead = true;
 		Proto.getAllObjects().removeTeleportingGate(this);
 		Proto.decrTabs();
 	}
@@ -214,6 +220,15 @@ public class TeleportingGate implements ISteppable {
 		if(!timer.getSteppables().contains(this))
 			timer.addSteppable(this);
 		Proto.decrTabs();
+	}
+	
+	/**
+	 * Megadja, hogy a teleportkapu jatekban van-e, vagy sem.
+	 * 
+	 * @return	- <code>true</code>, ha a kapu mar megsemmisult
+	 */
+	public boolean isDead() {
+		return dead;
 	}
 	
 	/**
