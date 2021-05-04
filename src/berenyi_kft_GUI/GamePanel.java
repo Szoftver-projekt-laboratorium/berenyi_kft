@@ -173,7 +173,8 @@ public class GamePanel extends JPanel {
 				drawableLabels.clear();
 				drawables.clear();
 				
-				cards.show(Cards.endGamePanelID);
+				//cards.show(Cards.endGamePanelID);
+				cards.show(Cards.menuPanelID);
 			}
 			else if (ae.getActionCommand().equals(AsteroidGraphics.getCommand())) {
 				AsteroidGraphics ag = (AsteroidGraphics) pressedButton;
