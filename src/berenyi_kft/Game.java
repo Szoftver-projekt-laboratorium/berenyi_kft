@@ -259,7 +259,7 @@ public class Game {
 			Proto.getAllObjects().addAsteroid(a);
 			
 			AsteroidGraphics ag = new AsteroidGraphics(a,
-					new Dimension(800, 600) /*gamePanel.getMinimumSize()*/);
+					new Dimension(800, 600) /*gamePanel.getMinimumSize()*/, this.gamePanel);
 			gamePanel.addToMapPanel(ag);
 			gamePanel.addDrawable(ag);
 			

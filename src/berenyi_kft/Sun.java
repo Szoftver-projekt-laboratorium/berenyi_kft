@@ -14,7 +14,7 @@ public class Sun implements ISteppable {
 	/**
 	 * A kovetkezo napvihar bekovetkezeseig hatralevo ido
 	 */
-	private long timeToSunStorm=5;
+	private long timeToSunStorm=3;
 
 	/**
 	 * A Nappal kozvetlenul szomszedos aszteroidak listaja
@@ -105,9 +105,15 @@ public class Sun implements ISteppable {
 		if (timeToSunStorm > 0) {
 			timeToSunStorm--;
 			// timeToSunStrom -= game.getTimer.getPeriod();
+			
+			if ((timeToSunStorm > 5)&&(timeToSunStorm < 10)) {
+				game.getGamePanel().writeToMessageBoard("Sunstorm is slowly coming!");
+			}
+			
 		} else {
 			sunStorm();
-			Proto.println("SunStorm");
+			// Sunstorm kiírás
+			game.getGamePanel().writeToMessageBoard("Sunstorm!!!");
 			if (Proto.isRandom()) {
 				Random r = new Random();
 				timeToSunStorm = 15 + r.nextInt(10);

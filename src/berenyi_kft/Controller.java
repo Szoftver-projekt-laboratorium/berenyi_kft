@@ -2,6 +2,9 @@ package berenyi_kft;
 
 import java.util.*;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
 import berenyi_kft_GUI.AsteroidGraphics;
 import berenyi_kft_GUI.Cards;
 import berenyi_kft_GUI.GamePanel;
@@ -161,6 +164,10 @@ public class Controller {
 		else
 			Proto.println("(The game has not yet ended.)");
 		
+		game.getGamePanel().removeDrawableButtons();
+		game.getGamePanel().removeDrawableLabels();
+		
+		game.getGamePanel().removeAsteroidPoints();
 		// TODO endGamePanel megjelenítése
 		game.getGamePanel().getCards().show(Cards.endGamePanelID);
 		
@@ -179,6 +186,7 @@ public class Controller {
 	 */
 	public void nextPlayer() {
 		Proto.println(Proto.getId(this) + ".nextPlayer()");
+		game.getGamePanel().writeToMessageBoard("Next player steps...");
 		// TODO: Steppable leptetes
 		// game.getTimer().tick();
 		

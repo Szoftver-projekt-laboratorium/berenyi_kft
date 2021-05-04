@@ -70,15 +70,17 @@ public class IronGraphics extends JButton implements IDrawable{
 	
 	private Point pos = new Point(0, 0);
 	
-	public IronGraphics(Iron i, Dimension panelSize) {
+	public IronGraphics(Iron i, Dimension panelSize, String num) {
 		allIronGraphics.add(this);
 		this.iron = i;
-		
+		this.setText(num);
 		this.setActionCommand(actionCommand);
 		this.setIcon(icon);
 		this.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-		this.setBorderPainted(false);
+		this.setBorderPainted(true);
 		this.setContentAreaFilled(false);
+		
+		
 		
 		pos.x = panelSize.width/element_number * queue_pos + 20;
 		pos.y = panelSize.height/2 - preferredWidth/2;
@@ -91,6 +93,8 @@ public class IronGraphics extends JButton implements IDrawable{
 	public Iron getIron() {
 		return this.iron;
 	}
+	
+
 	
 	@Override
 	public void draw() {
