@@ -60,6 +60,8 @@ public class GamePanel extends JPanel {
 	private BufferedImage img_inventory;
 
 	private JTextArea messages = new JTextArea("Welcome in the game!");
+	private JScrollPane scrollPane;
+	
 	
 	public void setController(Controller controller) {
 		this.controller = controller;
@@ -195,13 +197,14 @@ public class GamePanel extends JPanel {
 		String tmp = messages.getText();
 		String[] tmps = tmp.split("\n");
 		String coms = "";
-		if (tmps.length > 15) {
-			for (int i = tmps.length - 15; i < tmps.length; i++) {
+		//egyelore 30 uzit tart meg, de bovitheto lehet
+		if (tmps.length > 30) {
+			for (int i = tmps.length - 30; i < tmps.length; i++) {
 				coms += tmps[i] + "\r\n";
 			}
-			coms += "\r\n" + mess + "\r\n";
+			coms +=  mess + "\r\n";
 		} else {
-			tmp += "\r\n" + mess + "\r\n";
+			tmp +=  mess + "\r\n";
 			coms = tmp;
 		}
 
@@ -327,13 +330,28 @@ public class GamePanel extends JPanel {
 		// tolteleknek vettem fel, hogy ne legyen olyan egyben az egesz control panel
 		// (buttonok koze ilyet nem lehetett tenni sajnos)
 		controlPanel.add(new JLabel(" "));
-
+		
+		//gorgo 
+		scrollPane = new JScrollPane();
+		scrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+		scrollPane.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		controlPanel.add(scrollPane);
+		scrollPane.setViewportView(messages);
+		scrollPane.setBackground(Color.yellow);
+		
+		scrollPane.getVerticalScrollBar().setBackground(color);
 		messages.setBackground(Color.yellow);
 		messages.setMinimumSize(textarea_size);
 		messages.setMaximumSize(textarea_size);
-		// messages.setFont(font);
-		controlPanel.add(messages);
-
+		messages.setFont(font);
+		
+		//added scroll:
+		
+		messages.setEditable ( false );
+		messages.setLineWrap(true);
+		messages.setVisible(true);
+		
 		controlPanel.setBackground(color);
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.PAGE_AXIS));
 		controlPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -447,7 +465,7 @@ public class GamePanel extends JPanel {
 		// vigyázat!
 		// this.drawAll();
 		g.drawImage(img, 0, 0, mapPanel);
-		g.drawImage(img_inventory, 75, 300, inventoryPanel);
+		g.drawImage(img_inventory, 75, 600, inventoryPanel);
 
 	}
 

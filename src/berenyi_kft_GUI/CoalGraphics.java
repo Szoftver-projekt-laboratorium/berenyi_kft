@@ -8,14 +8,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import berenyi_kft.Asteroid;
 import berenyi_kft.Coal;
 import berenyi_kft.Resource;
 
@@ -35,6 +33,7 @@ public class CoalGraphics extends JButton implements IDrawable{
 	private static final int preferredCellWidth = 30;
 	
 	private static final int queue_pos = 1;	
+	private static final int element_number = 5;
 	
 	private static Icon icon;
 	
@@ -81,7 +80,7 @@ public class CoalGraphics extends JButton implements IDrawable{
 		this.setBorderPainted(false);
 		this.setContentAreaFilled(false);
 		
-		pos.x = panelSize.width/5 * queue_pos + 20;
+		pos.x = panelSize.width/element_number * queue_pos + 20;
 		pos.y = panelSize.height/2 - preferredWidth/2;
 	}
 	
