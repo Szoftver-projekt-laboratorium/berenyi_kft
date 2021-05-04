@@ -168,6 +168,7 @@ public class GamePanel extends JPanel {
 			else if (pressedButton == passButton) {
 				//writeToMessageBoard("passButton has been pushed");
 				writeToMessageBoard("You passed.");
+				controller.nextPlayer();
 			}
 			else if (pressedButton == endGameButton) {
 				writeToMessageBoard("endGameButton has been pushed");
