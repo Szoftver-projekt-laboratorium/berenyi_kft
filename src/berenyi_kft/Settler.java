@@ -422,4 +422,15 @@ public class Settler extends Character {
 		a.accept(this);
 	}
 
+	/**
+	 * A settler az eppen aktuálisan soronkovetkezo-e
+	 * 
+	 * @return true/false
+	 */
+	public boolean isActualSettler() {
+		if(Proto.getId(this).equals( Proto.getId(this.game.getController().getActPlayer().getSettler())))
+			return true;
+		return false;
+	}
+	
 }

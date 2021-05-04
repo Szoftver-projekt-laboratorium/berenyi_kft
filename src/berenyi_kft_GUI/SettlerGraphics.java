@@ -27,6 +27,12 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 	 * A telepesek közös képfájljának relatív elérési útja a projektben
 	 */
 	private static final String iconPath = "src\\berenyi_kft_GUI\\Icons\\settler.png";
+	
+	/**
+	 * A aktualis telepesek képfájljának relatív elérési útja a projektben
+	 */
+	private static final String actualIconPath = "src\\berenyi_kft_GUI\\Icons\\uranium.png"; //!! ideiglenesen beraktam az urán képét ennek !!
+
 
 	/**
 	 * A telepes-ikonok kívánt konstans szélessége
@@ -38,6 +44,9 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 	 */
 	private static Icon icon;
 	private static Image image;
+	
+	private static Icon actualIcon;
+	private static Image actualImage;
 
 	/**
 	 * Statikus inicializáló blokk a telepesek ikonjának betöltéséhez és
@@ -49,6 +58,10 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 			image = ImageIO.read(new File(iconPath));
 			image = image.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
 			icon = new ImageIcon(image, "Settler");
+			
+			actualImage = ImageIO.read(new File(actualIconPath));
+			actualImage = actualImage.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
+			actualIcon = new ImageIcon(actualImage, "Actual Settler");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,8 +108,15 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 	public void draw() {
 		// this.setLocation(AsteroidGraphics.getCharacterPos(this.settler));
 		Point pos = AsteroidGraphics.getCharacterPos(this.settler);
+		
+		if(settler.isActualSettler()) {
+			this.setIcon(actualIcon);
+		
+		}else {
+			this.setIcon(icon);
+		}
 		this.setBounds(new Rectangle(pos.x, pos.y,
-								icon.getIconWidth(), icon.getIconHeight()));
+				icon.getIconWidth(), icon.getIconHeight()));
 		this.repaint();
 	}
 
