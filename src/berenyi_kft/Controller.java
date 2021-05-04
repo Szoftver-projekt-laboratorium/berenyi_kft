@@ -116,6 +116,7 @@ public class Controller {
 			Settler s = new Settler();
 			Proto.getAllObjects().addSettler(s);
 			game.addSettler(s);
+			s.setGame(game);
 			
 			p.setName(name);
 			p.setSettler(s);
@@ -125,16 +126,17 @@ public class Controller {
 		// Palyakep inicializalasa
 		game.startGame();
 		
-		// Aszteroidak elrendezese a panelen, majd a teljes palyakep kirajzolasa
-		// AsteroidGraphics.setAsteroidLocations();
-		gamePanel.drawAll();
 		
 		// Az elso jatekos beallitasa actPlayer-nek
 		this.nextPlayer();
 		
 		// A timer inditasa
 		game.getTimer().start();
-		
+
+		// Aszteroidak elrendezese a panelen, majd a teljes palyakep kirajzolasa
+		// AsteroidGraphics.setAsteroidLocations();
+		gamePanel.drawAll();
+
 		Proto.decrTabs();
 	}	
 	
