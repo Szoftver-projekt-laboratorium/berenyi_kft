@@ -37,12 +37,14 @@ public class GamePanel extends JPanel {
 
 	// altalanos gombmeret beallitasa:
 	private Dimension buttonsize = new Dimension(250, 40);
+	
+	private Dimension resourcebuttonsize = new Dimension(40, 40);
 
 	private Dimension textarea_size = new Dimension(250, 300);
 
 	@Override
 	public Dimension getPreferredSize() {
-		return (new Dimension(img.getWidth(), img.getHeight()));
+		return (new Dimension(300, 100));
 	}
 
 	private Cards cards;
@@ -58,11 +60,16 @@ public class GamePanel extends JPanel {
 	private JButton placeteleportButton;
 	private JButton passButton;
 	private JButton endGameButton;
+	
+	private JButton CoalButton;
+	private JButton IceButton;
+	private JButton UraniumButton;
+	private JButton IronButton;
 
 	private BufferedImage img;
 	private BufferedImage img_inventory;
 
-	private JTextArea messages = new JTextArea("Welcome in the game!");
+	private JTextArea messages = new JTextArea("Welcome in the game!\n");
 	private JScrollPane scrollPane;
 	
 	
@@ -90,9 +97,9 @@ public class GamePanel extends JPanel {
 
 			JButton pressedButton = (JButton) ae.getSource();
 			if (pressedButton == moveButton) {
-				writeToMessageBoard("moveButton has been pushed");
+				writeToMessageBoard("Moving..");
 				if (latestSelectedAsteroid != null) {
-					writeToMessageBoard("moving to an asteroid You choose...");
+					writeToMessageBoard("Choose an astroid to move!");
 					
 					// Mozgás történik! TODO: majd külön függvénybe tegyük.
 					Asteroid place = controller.getActPlayer().getSettler().getPlace();
@@ -110,24 +117,24 @@ public class GamePanel extends JPanel {
 				}
 			}
 			else if (pressedButton == drillButton) {
-				writeToMessageBoard("drillButton has been pushed");
-				writeToMessageBoard("drilling...");
+				//writeToMessageBoard("drillButton has been pushed");
+				writeToMessageBoard("Drilling one layer...");
 				
 				Object[] params = {"drill"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.DRILL, params);
 				controller.nextPlayer();
 			}
 			else if (pressedButton == mineButton) {
-				writeToMessageBoard("mineButton has been pushed");
-				writeToMessageBoard("mining...");
+				//writeToMessageBoard("mineButton has been pushed");
+				writeToMessageBoard("Mining...");
 				
 				Object[] params = {"mine"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.MINE, params);
 				controller.nextPlayer();
 			}
 			else if (pressedButton == restoreButton) {
-				writeToMessageBoard("restoreButton has been pushed");
-				writeToMessageBoard("restoring a resource You choose...");
+				//writeToMessageBoard("restoreButton has been pushed");
+				writeToMessageBoard("Choose a resource to restore");
 				
 				// Resource...
 				Object[] params = {"restore" /*, latestSelectedResource ID*/};
@@ -135,32 +142,33 @@ public class GamePanel extends JPanel {
 				controller.nextPlayer();
 			}
 			else if (pressedButton == createrobotButton) {
-				writeToMessageBoard("createrobotButton has been pushed");
-				writeToMessageBoard("creating a new robot...");
+				//writeToMessageBoard("createrobotButton has been pushed");
+				writeToMessageBoard("Creating a new robot...");
 				
 				Object[] params = {"create_robot"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.CREATE_ROBOT, params);
 				controller.nextPlayer();
 			}
 			else if (pressedButton == createteleportButton) {
-				writeToMessageBoard("createteleportButton has been pushed");
-				writeToMessageBoard("creating a new gate pair...");
+				//writeToMessageBoard("createteleportButton has been pushed");
+				writeToMessageBoard("Creating a new gate pair...");
 				
 				Object[] params = {"create_gate_pair"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.CREATE_GATE_PAIR, params);
 				controller.nextPlayer();
 			}
 			else if (pressedButton == placeteleportButton) {
-				writeToMessageBoard("placeteleportButton has been pushed");
-				writeToMessageBoard("placing a teleporting gate available...");
+				//writeToMessageBoard("placeteleportButton has been pushed");
+				writeToMessageBoard("Placing a teleporting gate available...");
 				
 				Object[] params = {"release_gate"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.RELEASE_GATE, params);
 				controller.nextPlayer();
 			}
 			else if (pressedButton == passButton) {
-				writeToMessageBoard("passButton has been pushed");
+				//writeToMessageBoard("passButton has been pushed");
 				writeToMessageBoard("You passed.");
+				controller.nextPlayer();
 			}
 			else if (pressedButton == endGameButton) {
 				writeToMessageBoard("endGameButton has been pushed");
@@ -220,6 +228,7 @@ public class GamePanel extends JPanel {
 		// Font font = new Font("Comic Sans MS", Font.BOLD, 20);
 
 		Font font = new Font("teko semibold", Font.BOLD, 20);
+		Font smallerfont = new Font("teko semibold", Font.BOLD, 15);
 		Border buttonBorder = new LineBorder(Color.YELLOW, 3);
 
 		bl = new ButtonListener();
@@ -348,7 +357,7 @@ public class GamePanel extends JPanel {
 		messages.setBackground(Color.yellow);
 		messages.setMinimumSize(textarea_size);
 		messages.setMaximumSize(textarea_size);
-		messages.setFont(font);
+		messages.setFont(smallerfont);
 		
 		//added scroll:
 		
@@ -364,23 +373,58 @@ public class GamePanel extends JPanel {
 		this.add(controlPanel, BorderLayout.EAST);
 
 		// Raktarpanel (also)
+		
+		//Gombok szépek, hozzáadva meg minden, de nincsenek bekövte buttonlistenernek,
+		//a rajtuk megjelenő számok is invalidak egyelőre
+		
+		CoalGraphics CoalButton	= new CoalGraphics(null, resourcebuttonsize);
+		CoalButton.setBorder(buttonBorder);
+		
+		IceGraphics IceButton = new IceGraphics(null, resourcebuttonsize);
+		IceButton.setBorder(buttonBorder);
+		
+		UraniumGraphics UraniumButton = new UraniumGraphics(null, resourcebuttonsize);
+		UraniumButton.setBorder(buttonBorder);
+		
+		IronGraphics IronButton = new IronGraphics(null, resourcebuttonsize,"3");
+		IronButton.setBorder(buttonBorder);
+		
+		/*
+		 * BUGOS
+		 * 
+		TeleportingGateGraphics TGateButton = new TeleportingGateGraphics(null);
+		TGateButton.setBorder(buttonBorder);
+		TGateButton.setMinimumSize(resourcebuttonsize);
+		TGateButton.setMaximumSize(resourcebuttonsize);
+		*/
 		inventoryPanel = new JPanel();
 		inventoryPanel.setMinimumSize(new Dimension(800, 200));
 		inventoryPanel.setMaximumSize(new Dimension(800, 200));
 		inventoryPanel.setSize(new Dimension(800, 200));
 		inventoryPanel.setBackground(color);
-		this.setBackground(Color.BLACK);
-		inventoryPanel.setLayout(null);
-		String path_inventory = "src\\berenyi_kft_GUI\\Icons\\inventorypanel.png";
-		try {
-			img_inventory = ImageIO.read(new File(path_inventory));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		inventoryPanel.setOpaque(false);
+		
+		
+		JLabel inventorytitleLabel = new JLabel("Spaceship's inventory:");
+		inventorytitleLabel.setFont(font);
+		inventorytitleLabel.setForeground(Color.YELLOW);
+		inventorytitleLabel.setBackground(color);
+		JLabel toltelek1 = new JLabel("                    ");
+		JLabel toltelek2 = new JLabel("                    ");
+		inventoryPanel.add(inventorytitleLabel);
+		inventoryPanel.add(toltelek1);
+		
+		inventoryPanel.add(CoalButton);
+		inventoryPanel.add(IronButton);
+		inventoryPanel.add(UraniumButton);
+		inventoryPanel.add(IceButton);
+		
+		inventoryPanel.add(toltelek2);
+		//inventoryPanel.add(TGateButton);
+		
 		this.add(inventoryPanel, BorderLayout.SOUTH);
 
 		// Jatekpanel (kozepso)
+		
 		mapPanel = new JPanel();
 		
 		// TODO: Átgondolni, hogy hogyan szabad/érdemes a rajzolást csinálni:
@@ -397,9 +441,10 @@ public class GamePanel extends JPanel {
 		mapPanel.setSize(new Dimension(800, 600));
 		mapPanel.setBackground(Color.black);
 
-		String path = "src\\berenyi_kft_GUI\\Icons\\background.png";
+		String path = "src\\berenyi_kft_GUI\\Icons\\background1.png";
 		try {
 			img = ImageIO.read(new File(path));
+			//img = img.getScaledInstance(400, -1, Image.SCALE_DEFAULT);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -413,6 +458,10 @@ public class GamePanel extends JPanel {
 		AIRobotGraphics.setGamePanel(this);
 		UFOGraphics.setGamePanel(this);
 		TeleportingGateGraphics.setGamePanel(this);
+		
+		
+		
+
 	}
 
 	public GamePanel(Cards cards) {

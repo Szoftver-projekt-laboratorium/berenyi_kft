@@ -377,6 +377,8 @@ public class Asteroid {
 	 */
 	public void accept(Settler s) {
 		Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(s) + ")");
+		game.getGamePanel().writeToMessageBoard("Settler arrived to a new asteroid!");
+		game.getGamePanel().writeToMessageBoard("This asteroid's rocklayerThickness is:\n" + this.getRockLayerThickness());
 		characters.add(s);
 		this.checkSpaceBase();
 	}
@@ -453,6 +455,7 @@ public class Asteroid {
 	 */
 	public void accept(Settler s, Resource r) {
 		Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(s) + ", " + Proto.getId(r) + ")");
+		
 		Proto.incrTabs();
 		if (this.isMined()) {
 			resource = r;
