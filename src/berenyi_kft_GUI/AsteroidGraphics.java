@@ -297,7 +297,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		if (asteroid.getSun().isCloseToSun(asteroid) && asteroid.getSun().getTimeToSunStorm() <3 ) {
 			this.setIcon(redIcon);
 			
-		}else if (asteroid.isEmphasized()) {
+		} else if (asteroid.isEmphasized()) {
 			this.setIcon(emphasizedIcon);
 		}
 		else {
