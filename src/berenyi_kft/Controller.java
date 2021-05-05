@@ -101,7 +101,7 @@ public class Controller {
 	 * @param sc Scanner, amellyel a jatekosok adatait beolvassa
 	 */
 	public void startGame(GamePanel gamePanel, List<String> playerNames) {
-		Proto.enableLogging(true);
+		// Proto.enableLogging(true);
 		
 		Proto.println(Proto.getId(this) + ".startGame()");
 		Proto.incrTabs();
@@ -134,13 +134,13 @@ public class Controller {
 		// Az elso jatekos beallitasa actPlayer-nek
 		this.nextPlayer();
 		
-		// A timer inditasa
-		game.getTimer().start();
-
 		// Aszteroidak elrendezese a panelen, majd a teljes palyakep kirajzolasa
 		// AsteroidGraphics.setAsteroidLocations();
 		gamePanel.drawAll();
-
+		
+		// A timer inditasa
+		game.getTimer().start();
+		
 		Proto.decrTabs();
 	}	
 	
@@ -223,6 +223,8 @@ public class Controller {
 				}
 			}
 		}
+		if (this.getActPlayer() == null)
+			this.nextPlayer();
 		Proto.decrTabs();
 	}
 	

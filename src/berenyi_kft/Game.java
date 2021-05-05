@@ -224,9 +224,10 @@ public class Game {
 		sun = new Sun();
 		Proto.getAllObjects().setSun(sun);
 		timer.addSteppable(sun);
+		sun.setGame(this);
 		
 		SunGraphics sung = new SunGraphics(sun, 
-				new Dimension(800, 600) /*gamePanel.getMinimumSize()*/);
+				new Dimension(800, 600) /* TODO gamePanel.getMinimumSize()*/);
 		gamePanel.addToMapPanel(sung);
 		gamePanel.addDrawable(sung);
 		

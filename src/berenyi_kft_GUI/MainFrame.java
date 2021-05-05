@@ -8,7 +8,6 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		super("Asteroid Miners");
-		
 		// TODO Hogyan lesz szálbiztos?
 		EventQueue.invokeLater(new Runnable() {
             @Override

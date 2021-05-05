@@ -306,10 +306,11 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		 * pos pozícióra, ez automatikusan invalidate()-et hív, és újra fogja rajzolni.)
 		 */
 		
-		if (asteroid.getSun().isCloseToSun(asteroid) && asteroid.getSun().getTimeToSunStorm() <3 ) {
+		if (asteroid.getSun().isCloseToSun(asteroid)
+					&& asteroid.getSun().getTimeToSunStorm() < 3) {
 			this.setIcon(redIcon);
-			
-		} else if (asteroid.isEmphasized()) {
+		}
+		else if (asteroid.isEmphasized()) {
 			this.setIcon(emphasizedIcon);
 		}
 		else {

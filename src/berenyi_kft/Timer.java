@@ -32,7 +32,7 @@ public class Timer extends java.util.Timer {
 	 * ezredmasodpercben
 	 */
 	private long delay = 3000;
-	private long period = 1000;
+	private long period = 3000;
 
 	/**
 	 * A jatek leptetheto objektumainak listaja
@@ -186,19 +186,27 @@ public class Timer extends java.util.Timer {
 		int i = 0;
 		
 		// stepping kiírás
-		game.getGamePanel().writeToMessageBoard("UFO-s, Gates Robots, Sun stepped!");
-		
-		while (i < steppables.size()) {
-			ISteppable s = steppables.get(i);
-			if (s != null) {
-				s.step();
-				// nézetfrissítés
-				game.getGamePanel().drawAll();
+		if (game != null) // amíg tart a játék
+		{
+			game.getGamePanel().writeToMessageBoard("UFO-s, Gates Robots, Sun stepped!");
+			
+			while (i < steppables.size()) {
+				ISteppable s = steppables.get(i);
+				if (s != null) {
+					s.step();
+					
+					// nézetfrissítés
+					game.getGamePanel().drawAll();
+				}
+				
+				// i = steppables.indexOf(is) + 1; // elvileg jo lenne
+				i++; // halal eseten problemas
 			}
 			
-			// i = steppables.indexOf(is) + 1; // elvileg jo lenne
-			i++; // halal eseten problemas
+			// nézetfrissítés
+			game.getGamePanel().drawAll();
 		}
+			
 		Proto.decrTabs();
 	}
 
@@ -239,9 +247,9 @@ public class Timer extends java.util.Timer {
 
 			case "steppables":
 				for (int i = 1; i < tokens.length; i++) {
-					ISteppable p = (ISteppable) Proto.getObject(tokens[i]);
-					if (p != null)
-						steppables.add(p);
+					ISteppable s = (ISteppable) Proto.getObject(tokens[i]);
+					if (s != null)
+						steppables.add(s);
 				}
 				break;
 

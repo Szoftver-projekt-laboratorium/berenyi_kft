@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -12,7 +13,27 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+import berenyi_kft.Controller;
+import berenyi_kft.Game;
+import berenyi_kft.Proto;
+
 public class MenuPanel extends JPanel {
+	
+	/**
+	 * A legutóbbi pályakonfigurációt tartalmazó input-output szövegfájl.
+	 * A konfiguráció megfelel a prototípus programbeli fájlformátumnak.
+	 */
+	private static final String persistentFilePath
+			= "src\\berenyi_kft_GUI\\last_level_config.txt";
+	
+	/**
+	 * Visszatér az utolsó pályakonfigurációt tároló fájl elérési útjával.
+	 * 
+	 * @return a perzisztáló bemeneti-kimeneti fájl elérési útja
+	 */
+	public static String getPersistentFilePath() {
+		return persistentFilePath;
+	}
 	
 	private Cards cards;
 	private JLabel nameLabel;
@@ -28,6 +49,29 @@ public class MenuPanel extends JPanel {
 				cards.show(Cards.addPlayersPanelID);
 			}
 			else if (pressedButton == loadGameButton) {
+				GamePanel gamePanel = cards.getGamePanel();
+				Proto.setGamePanel(gamePanel);
+				
+				try {
+					Proto.load(persistentFilePath);
+				}
+				catch (IOException e) {
+					// (TODO .out vagy legyen .err?)
+					System.out.println("Input configuration file not found.");
+					e.printStackTrace();
+				}
+				
+				Controller controller = Proto.getAllObjects().getController();
+				Game game = controller.getGame();
+				gamePanel.setController(controller);
+				controller.setGamePanel(gamePanel);
+				game.setController(controller);
+				game.setGamePanel(gamePanel);
+				
+				controller.nextPlayer();
+				gamePanel.drawAll();
+				game.getTimer().start();
+				
 				cards.show(Cards.gamePanelID);
 			}
 			else if (pressedButton == exitButton) {
