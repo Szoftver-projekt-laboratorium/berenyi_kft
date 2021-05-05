@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,7 +174,10 @@ public class GamePanel extends JPanel {
 			else if (pressedButton == endGameButton) {
 				writeToMessageBoard("endGameButton has been pushed");
 				writeToMessageBoard("Stop playing, end game...");
-				controller.endGame(State.LOST);
+				
+				// timer leállítása
+				berenyi_kft.Timer timer = controller.getGame().getTimer();
+				timer.cancel();
 				
 				// TODO Inkább Pause gomb legyen helyette.
 				for (JButton drButton : drawableButtons)
@@ -183,6 +187,15 @@ public class GamePanel extends JPanel {
 					mapPanel.remove(drLabel);
 				drawableLabels.clear();
 				drawables.clear();
+				
+				try {
+					Proto.save(MenuPanel.getPersistentFilePath());
+				}
+				catch (FileNotFoundException e) {
+					// (TODO .out vagy .err?)
+					System.err.println("Persistent file not found.");
+					e.printStackTrace();
+				}
 				
 				//cards.show(Cards.endGamePanelID);
 				cards.show(Cards.menuPanelID);
@@ -202,8 +215,6 @@ public class GamePanel extends JPanel {
 		}
 	}
 	
-	// TODO: Szerintem menőbb (és kényelmesebb) lenne, ha minden új sort
-	// csak hozzáfűznénk a textArea végéhez, és görgethető lenne!
 	// uzenofal szovegnek bovitese
 	public void writeToMessageBoard(String mess) {
 		String tmp = messages.getText();
@@ -458,10 +469,6 @@ public class GamePanel extends JPanel {
 		AIRobotGraphics.setGamePanel(this);
 		UFOGraphics.setGamePanel(this);
 		TeleportingGateGraphics.setGamePanel(this);
-		
-		
-		
-
 	}
 
 	public GamePanel(Cards cards) {
