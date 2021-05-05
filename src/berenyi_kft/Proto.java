@@ -1,5 +1,6 @@
 package berenyi_kft;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,16 +11,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import javax.swing.JTextArea;
-
+import berenyi_kft_GUI.AIRobotGraphics;
+import berenyi_kft_GUI.AsteroidGraphics;
 import berenyi_kft_GUI.GamePanel;
-import berenyi_kft_test.Tester;
-
-// Teszteleshez masolhato parancs (pelda tesztfajl betoltese):
-// load src/test_data/test_inputs/test_10.in
-
-// (Az IO metodusokat jobb lenne kiszervezni vagy beszervezni egy masik osztalyba.
-// Lehetne akar Proto.IO is. Nem tudom, jobb-e ugy, csak kompaktabb lenne.)
+import berenyi_kft_GUI.SettlerGraphics;
+import berenyi_kft_GUI.SunGraphics;
+import berenyi_kft_GUI.TeleportingGateGraphics;
+import berenyi_kft_GUI.UFOGraphics;
 
 /**
  * Proto osztaly a prototipus program vezerlesehez, tesztelesehez
@@ -422,12 +420,23 @@ public class Proto {
 			Sun sun = new Sun();
 			allObjects.ids.put(sun, id);
 			allObjects.sun = sun;
+			
+			// TODO megfelelo pozicionalas kell
+			SunGraphics sung = new SunGraphics(sun, new Dimension(800, 600));
+			gamePanel.addToMapPanel(sung);
+			gamePanel.addDrawable(sung);
 			break;
 
 		case "Asteroid":
 			Asteroid a = new Asteroid();
 			allObjects.ids.put(a, id);
 			allObjects.asteroids.add(a);
+			
+			// TODO megfelelo panelmeret-atadas
+			AsteroidGraphics ag
+				= new AsteroidGraphics(a, new Dimension(800, 600), gamePanel);
+			gamePanel.addToMapPanel(ag);
+			gamePanel.addDrawable(ag);
 			break;
 
 		case "Coal":
@@ -458,24 +467,40 @@ public class Proto {
 			Settler s = new Settler();
 			allObjects.ids.put(s, id);
 			allObjects.settlers.add(s);
+			
+			SettlerGraphics sg = new SettlerGraphics(s);
+			gamePanel.addToMapPanel(sg);
+			gamePanel.addDrawable(sg);
 			break;
 
 		case "AIRobot":
 			AIRobot air = new AIRobot();
 			allObjects.ids.put(air, id);
 			allObjects.robots.add(air);
+			
+			AIRobotGraphics airg = new AIRobotGraphics(air);
+			gamePanel.addToMapPanel(airg);
+			gamePanel.addDrawable(airg);
 			break;
 
 		case "UFO":
 			UFO ufo = new UFO();
 			allObjects.ids.put(ufo, id);
 			allObjects.ufos.add(ufo);
+			
+			UFOGraphics ufog = new UFOGraphics(ufo);
+			gamePanel.addToMapPanel(ufog);
+			gamePanel.addDrawable(ufog);
 			break;
 
 		case "TeleportingGate":
 			TeleportingGate tg = new TeleportingGate();
 			allObjects.ids.put(tg, id);
 			allObjects.gates.add(tg);
+			
+			TeleportingGateGraphics tgg = new TeleportingGateGraphics(tg);
+			gamePanel.addToMapPanel(tgg);
+			gamePanel.addDrawable(tgg);
 			break;
 
 		default:

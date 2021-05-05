@@ -226,7 +226,7 @@ public class Game {
 		timer.addSteppable(sun);
 		
 		SunGraphics sung = new SunGraphics(sun, 
-				new Dimension(800, 600) /*gamePanel.getMinimumSize()*/);
+				new Dimension(800, 600) /* TODO gamePanel.getMinimumSize()*/);
 		gamePanel.addToMapPanel(sung);
 		gamePanel.addDrawable(sung);
 		

@@ -186,19 +186,23 @@ public class Timer extends java.util.Timer {
 		int i = 0;
 		
 		// stepping kiírás
-		game.getGamePanel().writeToMessageBoard("UFO-s, Gates Robots, Sun stepped!");
-		
-		while (i < steppables.size()) {
-			ISteppable s = steppables.get(i);
-			if (s != null) {
-				s.step();
-				// nézetfrissítés
-				game.getGamePanel().drawAll();
-			}
+		if (game != null) // amíg tart a játék
+		{
+			game.getGamePanel().writeToMessageBoard("UFO-s, Gates Robots, Sun stepped!");
 			
-			// i = steppables.indexOf(is) + 1; // elvileg jo lenne
-			i++; // halal eseten problemas
+			while (i < steppables.size()) {
+				ISteppable s = steppables.get(i);
+				if (s != null) {
+					s.step();
+					// nézetfrissítés
+					game.getGamePanel().drawAll();
+				}
+				
+				// i = steppables.indexOf(is) + 1; // elvileg jo lenne
+				i++; // halal eseten problemas
+			}
 		}
+			
 		Proto.decrTabs();
 	}
 
