@@ -139,6 +139,7 @@ public class Controller {
 		gamePanel.drawAll();
 		
 		// A timer inditasa
+		this.setState(State.RUNNING);
 		game.getTimer().start();
 		
 		Proto.decrTabs();

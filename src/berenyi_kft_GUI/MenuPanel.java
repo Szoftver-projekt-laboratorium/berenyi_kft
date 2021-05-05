@@ -16,6 +16,7 @@ import javax.swing.border.LineBorder;
 import berenyi_kft.Controller;
 import berenyi_kft.Game;
 import berenyi_kft.Proto;
+import berenyi_kft.State;
 
 public class MenuPanel extends JPanel {
 	
@@ -71,6 +72,7 @@ public class MenuPanel extends JPanel {
 				controller.nextPlayer();
 				gamePanel.drawAll();
 				game.getTimer().start();
+				controller.setState(State.RUNNING);
 				
 				cards.show(Cards.gamePanelID);
 			}
