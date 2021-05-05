@@ -243,7 +243,7 @@ public class Proto {
 
 	private static boolean random = true;
 
-	private static boolean log = false;
+	private static boolean log = true;
 
 	public static Proto.Objects getAllObjects() {
 		return allObjects;
@@ -411,7 +411,7 @@ public class Proto {
 			break;
 
 		case "Timer":
-			Timer timer = new Timer(3000, 1000);
+			Timer timer = new Timer(3000, 3000); // lassabb lett
 			allObjects.ids.put(timer, id);
 			allObjects.timer = timer;
 			break;
@@ -538,6 +538,7 @@ public class Proto {
 
 		if (allObjects.sun != null) {
 			allObjects.sun.load(sc);
+			allObjects.sun.setGame(allObjects.game);
 		}
 
 		for (Asteroid a : allObjects.asteroids) {

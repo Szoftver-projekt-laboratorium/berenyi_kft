@@ -187,6 +187,7 @@ public class GamePanel extends JPanel {
 					mapPanel.remove(drLabel);
 				drawableLabels.clear();
 				drawables.clear();
+				drawAll();
 				
 				try {
 					Proto.save(MenuPanel.getPersistentFilePath());
