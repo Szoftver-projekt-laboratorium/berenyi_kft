@@ -66,7 +66,7 @@ public class MenuPanel extends JPanel {
 				gamePanel.setController(controller);
 				controller.setGamePanel(gamePanel);
 				game.setController(controller);
-				game.setGamePanel(cards.getGamePanel());
+				game.setGamePanel(gamePanel);
 				
 				controller.nextPlayer();
 				gamePanel.drawAll();
