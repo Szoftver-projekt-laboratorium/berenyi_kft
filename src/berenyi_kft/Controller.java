@@ -134,13 +134,13 @@ public class Controller {
 		// Az elso jatekos beallitasa actPlayer-nek
 		this.nextPlayer();
 		
-		// A timer inditasa
-		game.getTimer().start();
-
 		// Aszteroidak elrendezese a panelen, majd a teljes palyakep kirajzolasa
 		// AsteroidGraphics.setAsteroidLocations();
 		gamePanel.drawAll();
-
+		
+		// A timer inditasa
+		game.getTimer().start();
+		
 		Proto.decrTabs();
 	}	
 	
@@ -186,6 +186,7 @@ public class Controller {
 	 */
 	public void nextPlayer() {
 		Proto.println(Proto.getId(this) + ".nextPlayer()");
+		game.getGamePanel().writeToMessageBoard("Next player steps...");
 		// TODO: Steppable leptetes
 		// game.getTimer().tick();
 		

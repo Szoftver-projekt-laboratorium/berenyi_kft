@@ -77,7 +77,7 @@ public class IceGraphics extends JButton implements IDrawable{
 		this.setActionCommand(actionCommand);
 		this.setIcon(icon);
 		this.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-		this.setBorderPainted(false);
+		this.setBorderPainted(true);
 		this.setContentAreaFilled(false);
 		
 		pos.x = panelSize.width/element_number * queue_pos + 20;

@@ -373,6 +373,7 @@ public class Settler extends Character {
 	@Override
 	public void die() {
 		Proto.println(Proto.getId(this) + ".die()");
+		game.getGamePanel().writeToMessageBoard("Settler " + Proto.getId(this) + " died!");
 		Proto.incrTabs();
 		super.die();
 		for (Resource r : collectedResources) {
