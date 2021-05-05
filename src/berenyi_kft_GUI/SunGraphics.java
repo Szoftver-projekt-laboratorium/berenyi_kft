@@ -61,7 +61,7 @@ public class SunGraphics extends JLabel implements IDrawable {
 			
 			Image stormyImg = ImageIO.read(new File(stormyIconPath));
 			stormyImg = stormyImg.getScaledInstance(preferredWidth, -1, Image.SCALE_DEFAULT);
-			stormyIcon = new ImageIcon(img, "Sunstorm");
+			stormyIcon = new ImageIcon(stormyImg, "Sunstorm");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -116,7 +116,7 @@ public class SunGraphics extends JLabel implements IDrawable {
 	@Override
 	public void draw() {
 		// this.setLocation(pos);
-		if (sun.getTimeToSunStorm() <= 1) {
+		if (sun.getTimeToSunStorm() < 3) {
 			this.setIcon(stormyIcon);
 		}
 		else {
