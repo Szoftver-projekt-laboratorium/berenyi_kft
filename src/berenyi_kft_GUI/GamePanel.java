@@ -403,12 +403,12 @@ public class GamePanel extends JPanel {
 		
 		/*
 		 * BUGOS
-		 * 
+		 */
 		TeleportingGateGraphics TGateButton = new TeleportingGateGraphics(null);
 		TGateButton.setBorder(buttonBorder);
 		TGateButton.setMinimumSize(resourcebuttonsize);
 		TGateButton.setMaximumSize(resourcebuttonsize);
-		*/
+		
 		inventoryPanel = new JPanel();
 		inventoryPanel.setMinimumSize(new Dimension(800, 200));
 		inventoryPanel.setMaximumSize(new Dimension(800, 200));
@@ -431,7 +431,7 @@ public class GamePanel extends JPanel {
 		inventoryPanel.add(IceButton);
 		
 		inventoryPanel.add(toltelek2);
-		//inventoryPanel.add(TGateButton);
+		inventoryPanel.add(TGateButton);
 		
 		this.add(inventoryPanel, BorderLayout.SOUTH);
 
