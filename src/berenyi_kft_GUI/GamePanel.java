@@ -179,22 +179,19 @@ public class GamePanel extends JPanel {
 				berenyi_kft.Timer timer = controller.getGame().getTimer();
 				timer.cancel();
 				
-				// TODO Inkább Pause gomb legyen helyette.
-				for (JButton drButton : drawableButtons)
-					mapPanel.remove(drButton);
-				drawableButtons.clear();
-				for (JLabel drLabel : drawableLabels)
-					mapPanel.remove(drLabel);
-				drawableLabels.clear();
+				// TODO Pause gomb esetleg?
+				
+				removeDrawableButtons();
+				removeDrawableLabels();
 				drawables.clear();
-				drawAll();
+				// drawAll();
 				
 				try {
 					Proto.save(MenuPanel.getPersistentFilePath());
 				}
 				catch (FileNotFoundException e) {
 					// (TODO .out vagy .err?)
-					System.err.println("Persistent file not found.");
+					System.out.println("Persistent file not found.");
 					e.printStackTrace();
 				}
 				
