@@ -94,7 +94,6 @@ public class UraniumGraphics extends JButton implements IDrawable{
 	
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
 		if (this.uranium == null) {
 			allUraniumGraphics.remove(this);
 			return;

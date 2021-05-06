@@ -33,7 +33,7 @@ public class EndGamePanel extends JPanel {
 	private Cards cards;
 	//private JTextArea resultField;
 	private JButton backToMenuButton;
-	private Image img;
+	// private Image img;
 	private Image endImg;
 	private JPanel resultPanel;
 	private JLabel resultLabel;
@@ -100,24 +100,25 @@ public class EndGamePanel extends JPanel {
 		this.add(resultPanel, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		
-		String path = "src\\berenyi_kft_GUI\\Icons\\start.png";
+		/*String path = "src\\berenyi_kft_GUI\\Icons\\start_16_9.png";
 		try {
 			img=ImageIO.read(new File(path));
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
-	@Override
+	/*@Override
     public Dimension getPreferredSize() {
         return (new Dimension(img.getWidth(null), img.getHeight(null)));
-    }
+    }*/
 	
 	@Override
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.drawImage(img, 0, 0, this);
+        g.drawImage(Cards.bgImage, 0, 0, this);
+        
         if(cards.getGamePanel().getController().getState()==State.LOST) {
         	String path = "src\\berenyi_kft_GUI\\Icons\\gameFailed.png";
     		try {
@@ -146,6 +147,7 @@ public class EndGamePanel extends JPanel {
 	public EndGamePanel(Cards cards) {
 		this.cards = cards;
 		this.initComponents();
+		this.setOpaque(false);
 		this.setVisible(true);
 	}
 	

@@ -143,12 +143,14 @@ public class Player {
 
 		case RESTORE:
 			if (allParams.length < 2) {
-				System.out.println("restore <resource>: "
-						+ "Please specify the id of a resource of type <resource>.");
+				System.out.println("restore <resource>: "	/*the id of*/
+						+ "Please specify a resource of type <resource>.");
 				break;
 			}
-			/* Resource r = (Resource)allParams[1];*/
-			Resource r = (Resource)Proto.getObject((String)allParams[1]);
+			// Resource r = (Resource)Proto.getObject((String)allParams[1]);
+			
+			// A tesztekhez kepest egyszerubb bemeneti forma: Resource-ot varunk.
+			Resource r = (Resource)allParams[1];
 			settler.restore(r);
 			break;
 

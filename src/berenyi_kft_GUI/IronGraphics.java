@@ -70,10 +70,10 @@ public class IronGraphics extends JButton implements IDrawable{
 	
 	private Point pos = new Point(0, 0);
 	
-	public IronGraphics(Iron i, Dimension panelSize, String num) {
+	public IronGraphics(Iron i, Dimension panelSize) {
 		allIronGraphics.add(this);
 		this.iron = i;
-		this.setText(num);
+		// this.setText(num);
 		this.setActionCommand(actionCommand);
 		this.setIcon(icon);
 		this.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));

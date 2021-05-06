@@ -1,7 +1,15 @@
 package berenyi_kft_GUI;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,18 +17,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import berenyi_kft.Asteroid;
+import berenyi_kft.Coal;
 import berenyi_kft.Controller;
-import berenyi_kft.ISteppable;
+import berenyi_kft.Ice;
+import berenyi_kft.Iron;
 import berenyi_kft.PlayerCommand;
 import berenyi_kft.Proto;
-import berenyi_kft.State;
+import berenyi_kft.Resource;
 import berenyi_kft.TeleportingGate;
+import berenyi_kft.Uranium;
 
 public class GamePanel extends JPanel {
 	
@@ -32,9 +49,10 @@ public class GamePanel extends JPanel {
 	private List<Point> asteroidPoints=new ArrayList<Point>();
 	
 	private AsteroidGraphics latestSelectedAsteroid = null;
-	// private AsteroidGraphics latestSelectedResourceGraphics? = null;
+	private Resource latestSelectedResource = null;
 	
 	private ButtonListener bl;
+
 
 	// altalanos gombmeret beallitasa:
 	private Dimension buttonsize = new Dimension(250, 40);
@@ -42,7 +60,7 @@ public class GamePanel extends JPanel {
 	private Dimension resourcebuttonsize = new Dimension(40, 40);
 
 	private Dimension textarea_size = new Dimension(250, 300);
-
+	
 	@Override
 	public Dimension getPreferredSize() {
 		return (new Dimension(300, 100));
@@ -72,7 +90,7 @@ public class GamePanel extends JPanel {
 	private JLabel uraniumLabel;
 	private JLabel ironLabel;
 	
-	private BufferedImage img;
+	private Image img;
 	private BufferedImage img_inventory;
 
 	private JTextArea messages = new JTextArea("Welcome in the game!\n");
@@ -138,8 +156,7 @@ public class GamePanel extends JPanel {
 				//writeToMessageBoard("restoreButton has been pushed");
 				writeToMessageBoard("Choose a resource to restore");
 				
-				// Resource...
-				Object[] params = {"restore" /*, latestSelectedResource ID*/};
+				Object[] params = {"restore", latestSelectedResource};
 				controller.getActPlayer().actOnSettler(PlayerCommand.RESTORE, params);
 				controller.nextPlayer();
 			}
@@ -172,6 +189,7 @@ public class GamePanel extends JPanel {
 				writeToMessageBoard(controller.getActPlayer().getName()+ " passed.");
 				controller.nextPlayer();
 			}
+					
 			else if (pressedButton == endGameButton) {
 				writeToMessageBoard("endGameButton has been pushed");
 				writeToMessageBoard("Stop playing, end game...");
@@ -180,13 +198,10 @@ public class GamePanel extends JPanel {
 				berenyi_kft.Timer timer = controller.getGame().getTimer();
 				timer.cancel();
 				
-				// TODO Inkább Pause gomb legyen helyette.
-				for (JButton drButton : drawableButtons)
-					mapPanel.remove(drButton);
-				drawableButtons.clear();
-				for (JLabel drLabel : drawableLabels)
-					mapPanel.remove(drLabel);
-				drawableLabels.clear();
+				// TODO Pause gomb esetleg?
+				
+				removeDrawableButtons();
+				removeDrawableLabels();
 				drawables.clear();
 				removeAsteroidPoints();
 				drawAll();
@@ -196,13 +211,15 @@ public class GamePanel extends JPanel {
 				}
 				catch (FileNotFoundException e) {
 					// (TODO .out vagy .err?)
-					System.err.println("Persistent file not found.");
+					System.out.println("Persistent file not found.");
 					e.printStackTrace();
 				}
 				
 				//cards.show(Cards.endGamePanelID);
 				cards.show(Cards.menuPanelID);
 			}
+		
+			
 			else if (ae.getActionCommand().equals(AsteroidGraphics.getCommand())) {
 				AsteroidGraphics ag = (AsteroidGraphics) pressedButton;
 				latestSelectedAsteroid = ag;
@@ -212,6 +229,32 @@ public class GamePanel extends JPanel {
 						: ag.getAsteroid().getNeighboringGatePairs())
 					neighborGate.setEmphasized(true);
 			}
+			
+			//inventoty - gombok action-je
+			
+			else if (ae.getActionCommand().equals("Ice")) {
+				writeToMessageBoard("Ice is selected to restore");
+				//controller.getActPlayer().getSettler().
+				latestSelectedResource = new Ice();
+			}
+			
+			else if (ae.getActionCommand().equals("Coal")) {
+				writeToMessageBoard("Coal is selected to restore");
+				latestSelectedResource = new Coal();
+			}
+			
+			else if (ae.getActionCommand().equals("Iron")) {
+				writeToMessageBoard("Iron is selected to restore");
+				latestSelectedResource = new Iron();
+			}
+			
+			else if (ae.getActionCommand().equals("Uranium")) {
+				writeToMessageBoard("Uranium is selected to restore");
+				latestSelectedResource = new Uranium();
+				
+			}
+			
+			
 
 			// Frissíti az összes nézet-objektumot, mert megváltozhatott a modell.
 			drawAll();
@@ -391,17 +434,21 @@ public class GamePanel extends JPanel {
 		//Gombok szépek, hozzáadva meg minden, de nincsenek bekövte buttonlistenernek,
 		//a rajtuk megjelenő számok is invalidak egyelőre
 		
-		CoalButton	= new CoalGraphics(null, resourcebuttonsize);
+		CoalGraphics CoalButton	= new CoalGraphics(new Coal(), resourcebuttonsize);
 		CoalButton.setBorder(buttonBorder);
+		CoalButton.addActionListener(bl);
 		
-		IceButton = new IceGraphics(null, resourcebuttonsize);
+		IceGraphics IceButton = new IceGraphics(new Ice(), resourcebuttonsize);
 		IceButton.setBorder(buttonBorder);
+		IceButton.addActionListener(bl);
 		
-		UraniumButton = new UraniumGraphics(null, resourcebuttonsize);
+		UraniumGraphics UraniumButton = new UraniumGraphics(new Uranium(), resourcebuttonsize);
 		UraniumButton.setBorder(buttonBorder);
+		UraniumButton.addActionListener(bl);
 		
-		IronButton = new IronGraphics(null, resourcebuttonsize,"3");
+		IronGraphics IronButton = new IronGraphics(new Iron(), resourcebuttonsize);
 		IronButton.setBorder(buttonBorder);
+		IronButton.addActionListener(bl);
 		
 		coalLabel=new JLabel();
 		coalLabel.setForeground(Color.YELLOW);
@@ -436,12 +483,14 @@ public class GamePanel extends JPanel {
 		iceLabel.setFont(font);
 		/*
 		 * BUGOS
-		 * 
-		TeleportingGateGraphics TGateButton = new TeleportingGateGraphics(null);
+		 */
+		
+		
+		TeleportingGateGraphics TGateButton = new TeleportingGateGraphics(new TeleportingGate());
 		TGateButton.setBorder(buttonBorder);
 		TGateButton.setMinimumSize(resourcebuttonsize);
 		TGateButton.setMaximumSize(resourcebuttonsize);
-		*/
+		
 		inventoryPanel = new JPanel();
 		inventoryPanel.setMinimumSize(new Dimension(800, 200));
 		inventoryPanel.setMaximumSize(new Dimension(800, 200));
@@ -461,10 +510,11 @@ public class GamePanel extends JPanel {
 		inventoryPanel.add(CoalButton);
 		inventoryPanel.add(IronButton);
 		inventoryPanel.add(UraniumButton);
-		inventoryPanel.add(IceButton);
+		inventoryPanel.add(IceButton); 
+		
 		
 		inventoryPanel.add(toltelek2);
-		//inventoryPanel.add(TGateButton);
+		inventoryPanel.add(TGateButton);
 		
 		this.add(inventoryPanel, BorderLayout.SOUTH);
 
@@ -481,18 +531,19 @@ public class GamePanel extends JPanel {
 		mapPanel.setLayout(null);
 		/* -- ! ----- ! --*/
 		
-		mapPanel.setMinimumSize(new Dimension(800, 600));
-		mapPanel.setMaximumSize(new Dimension(800, 600));
-		mapPanel.setSize(new Dimension(800, 600));
+		// mapPanel.setMinimumSize(new Dimension(800, 600));
+		// mapPanel.setMaximumSize(new Dimension(800, 600));
+		// mapPanel.setSize(new Dimension(800, 600));
 		mapPanel.setBackground(Color.black);
 
-		String path = "src\\berenyi_kft_GUI\\Icons\\background1.png";
+		String path = "src\\berenyi_kft_GUI\\Icons\\background.png";
 		try {
 			img = ImageIO.read(new File(path));
-			//img = img.getScaledInstance(400, -1, Image.SCALE_DEFAULT);
+			img = img.getScaledInstance(1000, -1, Image.SCALE_DEFAULT);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		mapPanel.setSize(new Dimension(img.getWidth(null), img.getHeight(null)));
 
 		mapPanel.setOpaque(false);
 
@@ -508,6 +559,7 @@ public class GamePanel extends JPanel {
 	public GamePanel(Cards cards) {
 		this.cards = cards;
 		this.initComponents();
+		// this.setOpaque(false);
 		this.setVisible(true);
 	}
 
