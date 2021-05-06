@@ -186,21 +186,27 @@ public class Controller {
 	 */
 	public void nextPlayer() {
 		Proto.println(Proto.getId(this) + ".nextPlayer()");
-		game.getGamePanel().writeToMessageBoard("Next player steps...");
+
 		// TODO: Steppable leptetes
 		// game.getTimer().tick();
 		
 		if (playersAlive.size() == 0)
 			actPlayer = null;
 		else {
-			if (actPlayer == null)
+			if (actPlayer == null) {
 				actPlayer = playersAlive.get(0);
-			else {
+				game.getGamePanel().writeToMessageBoard("\n"+actPlayer.getName()+ " please step! ");
+				game.getGamePanel().writeToMessageBoard("Your asteroid's thinkness: " + actPlayer.getSettler().getPlace().getRockLayerThickness());
+			}else {
+				
 				int idx = playersAlive.indexOf(actPlayer);
 				if (idx == playersAlive.size() - 1)
 					actPlayer = playersAlive.get(0);
 				else
 					actPlayer = playersAlive.get(idx + 1);
+				
+				game.getGamePanel().writeToMessageBoard("\n"+actPlayer.getName()+ " please step! ");
+				game.getGamePanel().writeToMessageBoard("Your asteroid's thinkness: " + actPlayer.getSettler().getPlace().getRockLayerThickness());
 			}
 		}
 	}
