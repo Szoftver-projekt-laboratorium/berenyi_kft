@@ -377,8 +377,8 @@ public class Asteroid {
 	 */
 	public void accept(Settler s) {
 		Proto.println(Proto.getId(this) + ".accept(" + Proto.getId(s) + ")");
-		game.getGamePanel().writeToMessageBoard("Settler arrived to a new asteroid!");
-		game.getGamePanel().writeToMessageBoard("This asteroid's rocklayerThickness is:\n" + this.getRockLayerThickness());
+		//game.getGamePanel().writeToMessageBoard("Settler arrived to a new asteroid!");
+		//game.getGamePanel().writeToMessageBoard("This asteroid's rocklayerThickness: " + this.getRockLayerThickness());
 		characters.add(s);
 		this.checkSpaceBase();
 	}
@@ -460,7 +460,15 @@ public class Asteroid {
 		if (this.isMined()) {
 			resource = r;
 			s.remove(r);
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" restored a resource succesfully.");
 			if (sun.isCloseToSun(this)) {
+				
+				if(resource.isCompatibleWith(new Uranium())) {
+					game.getGamePanel().writeToMessageBoard("Uranium explodes. ");
+				}else if(resource.isCompatibleWith(new Ice())) {
+					game.getGamePanel().writeToMessageBoard("Ice sublimates. ");
+				}
+				
 				resource.drilledOut(this);
 			}
 		}
@@ -503,6 +511,12 @@ public class Asteroid {
 		if (rockLayerThickness >= 1) {
 			rockLayerThickness--;
 			if (rockLayerThickness == 0 && resource != null && sun.isCloseToSun(this)) {
+				
+				if(resource.isCompatibleWith(new Uranium())) {
+					game.getGamePanel().writeToMessageBoard(" Uranium explodes");
+				}else if(resource.isCompatibleWith(new Ice())) {
+					game.getGamePanel().writeToMessageBoard(" Ice sublimates");
+				}
 				resource.drilledOut(this);
 			}
 		}
@@ -525,8 +539,10 @@ public class Asteroid {
 		if (rockLayerThickness == 0 && resource != null) {
 			s.accept(resource);
 			this.removeResource();
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+ " mined successfully.");
 			this.checkSpaceBase();
 		} else {
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+ " failed to mine.");
 			Proto.println("Asteroid is not drilled or it is empty.");
 		}
 		Proto.decrTabs();
