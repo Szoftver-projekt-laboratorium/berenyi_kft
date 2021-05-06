@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Cards {
-	public static final int preferredWindowWidth = 1280;
+	public static final int preferredWindowWidth = 1200;
 	public static final String bgImagePath
 			= "src\\berenyi_kft_GUI\\Icons\\start_16_9.png";
 	public static Image bgImage;
