@@ -45,7 +45,7 @@ Recipe spaceBaseRecipe
 	resources co8 ir11 ic7 ur10 co9 ir12 ic8 ur11 co10 ir13 ic9 ur12
 
 Timer timer
-	ticks 13
+	ticks 21
 	delay 5000
 	period 3000
 	steppables sun tg1 tg3 tg2 tg4
@@ -64,12 +64,12 @@ Asteroid a1
 	gates null
 
 Asteroid a2
-	rockLayerThickness 1
+	rockLayerThickness 0
 	game game
 	sun sun
 	neighbors a4 a8 a3
-	resource co6
-	characters null
+	resource null
+	characters s1
 	gates null
 
 Asteroid a3
@@ -87,7 +87,7 @@ Asteroid a4
 	sun sun
 	neighbors a5 a7 a14 a15 a2 a9 a3
 	resource null
-	characters s2 s1
+	characters null
 	gates tg4
 
 Asteroid a5
@@ -95,8 +95,8 @@ Asteroid a5
 	game game
 	sun sun
 	neighbors a8 a10 a4 a12 a9 a13 a3
-	resource ir8
-	characters null
+	resource null
+	characters s2
 	gates null
 
 Asteroid a6
@@ -219,15 +219,15 @@ Uranium ur12
 Settler s1
 	game game
 	timer timer
-	place a4
-	resources null
+	place a2
+	resources co6
 	gatesCreated null
 
 Settler s2
 	game game
 	timer timer
-	place a4
-	resources ir7
+	place a5
+	resources ir7 ir8
 	gatesCreated null
 
 TeleportingGate tg1

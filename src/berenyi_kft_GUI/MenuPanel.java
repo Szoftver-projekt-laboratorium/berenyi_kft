@@ -177,6 +177,8 @@ public class MenuPanel extends JPanel {
 		this.cards = cards;
 		this.initComponents();
 		// this.setOpaque(false);
+		// this.setMinimumSize(new Dimension(Cards.bgImage.getWidth(null),
+		//								Cards.bgImage.getHeight(null)));
 		this.setVisible(true);
 	}
 }

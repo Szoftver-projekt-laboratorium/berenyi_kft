@@ -463,7 +463,7 @@ public class GamePanel extends JPanel {
 		iceLabel.setForeground(Color.YELLOW);
 		
 		CoalButton.setLayout(new BorderLayout());
-		CoalButton.add(coalLabel, BorderLayout.SOUTH);
+		CoalButton.add(coalLabel, BorderLayout.CENTER);
 		coalLabel.setHorizontalAlignment(JLabel.CENTER);
 		coalLabel.setFont(font);
 		
