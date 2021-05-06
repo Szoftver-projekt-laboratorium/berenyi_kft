@@ -434,4 +434,30 @@ public class Settler extends Character {
 		return false;
 	}
 	
+	public Integer[] getNumbOfResources() {
+		Uranium uranium=new Uranium();
+		Coal coal=new Coal();
+		Iron iron=new Iron();
+		Ice ice=new Ice();
+	
+		Integer[] numbOfResources=new Integer[4];
+		numbOfResources[0]=0;
+		numbOfResources[1]=0;
+		numbOfResources[2]=0;
+		numbOfResources[3]=0;
+		
+		for(Resource r : collectedResources) {
+			if(r.isCompatibleWith(coal))
+				numbOfResources[0]++;
+			if(r.isCompatibleWith(iron))
+				numbOfResources[1]++;
+			if(r.isCompatibleWith(uranium))
+				numbOfResources[2]++;
+			if(r.isCompatibleWith(ice))
+				numbOfResources[3]++;
+		}
+		
+		return numbOfResources;
+	}
+	
 }

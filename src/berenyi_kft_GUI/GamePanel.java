@@ -62,17 +62,21 @@ public class GamePanel extends JPanel {
 	private JButton passButton;
 	private JButton endGameButton;
 	
-	private JButton CoalButton;
-	private JButton IceButton;
-	private JButton UraniumButton;
-	private JButton IronButton;
-
+	private CoalGraphics CoalButton;
+	private IceGraphics IceButton;
+	private UraniumGraphics UraniumButton;
+	private IronGraphics IronButton;
+	
+	private JLabel coalLabel;
+	private JLabel iceLabel;
+	private JLabel uraniumLabel;
+	private JLabel ironLabel;
+	
 	private BufferedImage img;
 	private BufferedImage img_inventory;
 
 	private JTextArea messages = new JTextArea("Welcome in the game!\n");
 	private JScrollPane scrollPane;
-	
 	
 	public void setController(Controller controller) {
 		this.controller = controller;
@@ -187,6 +191,7 @@ public class GamePanel extends JPanel {
 					mapPanel.remove(drLabel);
 				drawableLabels.clear();
 				drawables.clear();
+				removeAsteroidPoints();
 				drawAll();
 				
 				try {
@@ -389,18 +394,49 @@ public class GamePanel extends JPanel {
 		//Gombok szépek, hozzáadva meg minden, de nincsenek bekövte buttonlistenernek,
 		//a rajtuk megjelenő számok is invalidak egyelőre
 		
-		CoalGraphics CoalButton	= new CoalGraphics(null, resourcebuttonsize);
+		CoalButton	= new CoalGraphics(null, resourcebuttonsize);
 		CoalButton.setBorder(buttonBorder);
 		
-		IceGraphics IceButton = new IceGraphics(null, resourcebuttonsize);
+		IceButton = new IceGraphics(null, resourcebuttonsize);
 		IceButton.setBorder(buttonBorder);
 		
-		UraniumGraphics UraniumButton = new UraniumGraphics(null, resourcebuttonsize);
+		UraniumButton = new UraniumGraphics(null, resourcebuttonsize);
 		UraniumButton.setBorder(buttonBorder);
 		
-		IronGraphics IronButton = new IronGraphics(null, resourcebuttonsize,"3");
+		IronButton = new IronGraphics(null, resourcebuttonsize,"3");
 		IronButton.setBorder(buttonBorder);
 		
+		coalLabel=new JLabel();
+		coalLabel.setForeground(Color.YELLOW);
+		
+		ironLabel=new JLabel();
+		ironLabel.setForeground(Color.YELLOW);
+		
+		uraniumLabel=new JLabel();
+		uraniumLabel.setForeground(Color.YELLOW);
+		
+		iceLabel=new JLabel();
+		iceLabel.setForeground(Color.YELLOW);
+		
+		CoalButton.setLayout(new BorderLayout());
+		CoalButton.add(coalLabel, BorderLayout.SOUTH);
+		coalLabel.setHorizontalAlignment(JLabel.CENTER);
+		coalLabel.setFont(font);
+		
+		IronButton.setLayout(new BorderLayout());
+		IronButton.add(ironLabel, BorderLayout.CENTER);
+		ironLabel.setHorizontalAlignment(JLabel.CENTER);
+		ironLabel.setFont(font);
+		
+		UraniumButton.setLayout(new BorderLayout());
+		UraniumButton.add(uraniumLabel, BorderLayout.CENTER);
+		uraniumLabel.setHorizontalAlignment(JLabel.CENTER);
+		uraniumLabel.setFont(font);
+		
+		IceButton.setLayout(new BorderLayout());
+		IceButton.add(iceLabel, BorderLayout.CENTER);
+		iceLabel.setHorizontalAlignment(JLabel.CENTER);
+		iceLabel.setFont(font);
 		/*
 		 * BUGOS
 		 * 
@@ -540,6 +576,23 @@ public class GamePanel extends JPanel {
 				 // max lesz egy masodperces kesleltetes (?)
 		}
 	}
+	
+	public void drawNumbOfResources() {
+		if(controller==null) {
+			ironLabel.setText("0");
+			coalLabel.setText("0");
+			iceLabel.setText("0");
+			uraniumLabel.setText("0");
+		}
+		
+		if(controller.getActPlayer()!=null) {
+			Integer[] resourceArray=controller.getActPlayer().getSettler().getNumbOfResources();
+			coalLabel.setText(resourceArray[0].toString());
+			ironLabel.setText(resourceArray[1].toString());
+			uraniumLabel.setText(resourceArray[2].toString());
+			iceLabel.setText(resourceArray[3].toString());
+		}
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -549,6 +602,7 @@ public class GamePanel extends JPanel {
 		// this.drawAll();
 		g.drawImage(img, 0, 0, mapPanel);
 		g.drawImage(img_inventory, 75, 600, inventoryPanel);
+		this.drawNumbOfResources();
 
 	}
 	
