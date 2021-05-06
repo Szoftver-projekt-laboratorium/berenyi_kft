@@ -1,7 +1,14 @@
 package berenyi_kft_GUI;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,7 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -17,12 +30,11 @@ import javax.swing.border.LineBorder;
 import berenyi_kft.Asteroid;
 import berenyi_kft.Coal;
 import berenyi_kft.Controller;
-import berenyi_kft.ISteppable;
+import berenyi_kft.Ice;
 import berenyi_kft.Iron;
 import berenyi_kft.PlayerCommand;
 import berenyi_kft.Proto;
 import berenyi_kft.Resource;
-import berenyi_kft.State;
 import berenyi_kft.TeleportingGate;
 import berenyi_kft.Uranium;
 
@@ -36,10 +48,7 @@ public class GamePanel extends JPanel {
 	private List<Point> asteroidPoints=new ArrayList<Point>();
 	
 	private AsteroidGraphics latestSelectedAsteroid = null;
-	
-	
-	//egyelőre így van megoldva
-	private String latestSelectedResource = null;
+	private Resource latestSelectedResource = null;
 	
 	private ButtonListener bl;
 
@@ -50,7 +59,7 @@ public class GamePanel extends JPanel {
 	private Dimension resourcebuttonsize = new Dimension(40, 40);
 
 	private Dimension textarea_size = new Dimension(250, 300);
-
+	
 	@Override
 	public Dimension getPreferredSize() {
 		return (new Dimension(300, 100));
@@ -147,13 +156,8 @@ public class GamePanel extends JPanel {
 				//writeToMessageBoard("restoreButton has been pushed");
 				writeToMessageBoard("Choose a resource to restore");
 				
-				// Resource...
-				Object[] params = {"restore" ,"iron"};
-				//Resource res = latestSelectedResource;
-				//TODO megoldani a rendes restore-t
-				//Object[] params = {"restore" /*, latestSelectedResource ID*/};
-				//controller.getActPlayer().actOnSettler(PlayerCommand.RESTORE, params);
-				
+				Object[] params = {"restore", latestSelectedResource};
+				controller.getActPlayer().actOnSettler(PlayerCommand.RESTORE, params);
 				controller.nextPlayer();
 			}
 			else if (pressedButton == createrobotButton) {
@@ -230,22 +234,22 @@ public class GamePanel extends JPanel {
 			else if (ae.getActionCommand().equals("Ice")) {
 				writeToMessageBoard("Ice is selected to restore");
 				//controller.getActPlayer().getSettler().
-				latestSelectedResource = "Ice";
+				latestSelectedResource = new Ice();
 			}
 			
 			else if (ae.getActionCommand().equals("Coal")) {
 				writeToMessageBoard("Coal is selected to restore");
-				latestSelectedResource = "Coal";
+				latestSelectedResource = new Coal();
 			}
 			
 			else if (ae.getActionCommand().equals("Iron")) {
 				writeToMessageBoard("Iron is selected to restore");
-				latestSelectedResource = "Iron";
+				latestSelectedResource = new Iron();
 			}
 			
 			else if (ae.getActionCommand().equals("Uranium")) {
 				writeToMessageBoard("Uranium is selected to restore");
-				latestSelectedResource = "Uranium";
+				latestSelectedResource = new Uranium();
 				
 			}
 			
@@ -433,11 +437,11 @@ public class GamePanel extends JPanel {
 		CoalButton.setBorder(buttonBorder);
 		CoalButton.addActionListener(bl);
 		
-		IceGraphics IceButton = new IceGraphics(null, resourcebuttonsize);
+		IceGraphics IceButton = new IceGraphics(new Ice(), resourcebuttonsize);
 		IceButton.setBorder(buttonBorder);
 		IceButton.addActionListener(bl);
 		
-		UraniumGraphics UraniumButton = new UraniumGraphics(null, resourcebuttonsize);
+		UraniumGraphics UraniumButton = new UraniumGraphics(new Uranium(), resourcebuttonsize);
 		UraniumButton.setBorder(buttonBorder);
 		UraniumButton.addActionListener(bl);
 		
