@@ -15,12 +15,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import berenyi_kft.Asteroid;
+import berenyi_kft.Coal;
 import berenyi_kft.Controller;
 import berenyi_kft.ISteppable;
+import berenyi_kft.Iron;
 import berenyi_kft.PlayerCommand;
 import berenyi_kft.Proto;
+import berenyi_kft.Resource;
 import berenyi_kft.State;
 import berenyi_kft.TeleportingGate;
+import berenyi_kft.Uranium;
 
 public class GamePanel extends JPanel {
 	
@@ -32,9 +36,13 @@ public class GamePanel extends JPanel {
 	private List<Point> asteroidPoints=new ArrayList<Point>();
 	
 	private AsteroidGraphics latestSelectedAsteroid = null;
-	// private AsteroidGraphics latestSelectedResourceGraphics? = null;
+	
+	
+	//egyelőre így van megoldva
+	private String latestSelectedResource = null;
 	
 	private ButtonListener bl;
+
 
 	// altalanos gombmeret beallitasa:
 	private Dimension buttonsize = new Dimension(250, 40);
@@ -62,10 +70,12 @@ public class GamePanel extends JPanel {
 	private JButton passButton;
 	private JButton endGameButton;
 	
+	/*
 	private JButton CoalButton;
 	private JButton IceButton;
 	private JButton UraniumButton;
 	private JButton IronButton;
+	*/
 
 	private BufferedImage img;
 	private BufferedImage img_inventory;
@@ -138,8 +148,12 @@ public class GamePanel extends JPanel {
 				writeToMessageBoard("Choose a resource to restore");
 				
 				// Resource...
-				Object[] params = {"restore" /*, latestSelectedResource ID*/};
-				controller.getActPlayer().actOnSettler(PlayerCommand.RESTORE, params);
+				Object[] params = {"restore" ,"iron"};
+				//Resource res = latestSelectedResource;
+				//TODO megoldani a rendes restore-t
+				//Object[] params = {"restore" /*, latestSelectedResource ID*/};
+				//controller.getActPlayer().actOnSettler(PlayerCommand.RESTORE, params);
+				
 				controller.nextPlayer();
 			}
 			else if (pressedButton == createrobotButton) {
@@ -171,6 +185,7 @@ public class GamePanel extends JPanel {
 				writeToMessageBoard("You passed.");
 				controller.nextPlayer();
 			}
+					
 			else if (pressedButton == endGameButton) {
 				writeToMessageBoard("endGameButton has been pushed");
 				writeToMessageBoard("Stop playing, end game...");
@@ -198,6 +213,8 @@ public class GamePanel extends JPanel {
 				//cards.show(Cards.endGamePanelID);
 				cards.show(Cards.menuPanelID);
 			}
+		
+			
 			else if (ae.getActionCommand().equals(AsteroidGraphics.getCommand())) {
 				AsteroidGraphics ag = (AsteroidGraphics) pressedButton;
 				latestSelectedAsteroid = ag;
@@ -207,6 +224,32 @@ public class GamePanel extends JPanel {
 						: ag.getAsteroid().getNeighboringGatePairs())
 					neighborGate.setEmphasized(true);
 			}
+			
+			//inventoty - gombok action-je
+			
+			else if (ae.getActionCommand().equals("Ice")) {
+				writeToMessageBoard("Ice is selected to restore");
+				//controller.getActPlayer().getSettler().
+				latestSelectedResource = "Ice";
+			}
+			
+			else if (ae.getActionCommand().equals("Coal")) {
+				writeToMessageBoard("Coal is selected to restore");
+				latestSelectedResource = "Coal";
+			}
+			
+			else if (ae.getActionCommand().equals("Iron")) {
+				writeToMessageBoard("Iron is selected to restore");
+				latestSelectedResource = "Iron";
+			}
+			
+			else if (ae.getActionCommand().equals("Uranium")) {
+				writeToMessageBoard("Uranium is selected to restore");
+				latestSelectedResource = "Uranium";
+				
+			}
+			
+			
 
 			// Frissíti az összes nézet-objektumot, mert megváltozhatott a modell.
 			drawAll();
@@ -386,26 +429,32 @@ public class GamePanel extends JPanel {
 		//Gombok szépek, hozzáadva meg minden, de nincsenek bekövte buttonlistenernek,
 		//a rajtuk megjelenő számok is invalidak egyelőre
 		
-		CoalGraphics CoalButton	= new CoalGraphics(null, resourcebuttonsize);
+		CoalGraphics CoalButton	= new CoalGraphics(new Coal(), resourcebuttonsize);
 		CoalButton.setBorder(buttonBorder);
+		CoalButton.addActionListener(bl);
 		
 		IceGraphics IceButton = new IceGraphics(null, resourcebuttonsize);
 		IceButton.setBorder(buttonBorder);
+		IceButton.addActionListener(bl);
 		
 		UraniumGraphics UraniumButton = new UraniumGraphics(null, resourcebuttonsize);
 		UraniumButton.setBorder(buttonBorder);
+		UraniumButton.addActionListener(bl);
 		
-		IronGraphics IronButton = new IronGraphics(null, resourcebuttonsize,"3");
+		IronGraphics IronButton = new IronGraphics(new Iron(), resourcebuttonsize);
 		IronButton.setBorder(buttonBorder);
+		IronButton.addActionListener(bl);
 		
 		/*
 		 * BUGOS
-		 * 
-		TeleportingGateGraphics TGateButton = new TeleportingGateGraphics(null);
+		 */
+		
+		
+		TeleportingGateGraphics TGateButton = new TeleportingGateGraphics(new TeleportingGate());
 		TGateButton.setBorder(buttonBorder);
 		TGateButton.setMinimumSize(resourcebuttonsize);
 		TGateButton.setMaximumSize(resourcebuttonsize);
-		*/
+		
 		inventoryPanel = new JPanel();
 		inventoryPanel.setMinimumSize(new Dimension(800, 200));
 		inventoryPanel.setMaximumSize(new Dimension(800, 200));
@@ -425,10 +474,11 @@ public class GamePanel extends JPanel {
 		inventoryPanel.add(CoalButton);
 		inventoryPanel.add(IronButton);
 		inventoryPanel.add(UraniumButton);
-		inventoryPanel.add(IceButton);
+		inventoryPanel.add(IceButton); 
+		
 		
 		inventoryPanel.add(toltelek2);
-		//inventoryPanel.add(TGateButton);
+		inventoryPanel.add(TGateButton);
 		
 		this.add(inventoryPanel, BorderLayout.SOUTH);
 
