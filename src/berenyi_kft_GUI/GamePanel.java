@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,7 +87,7 @@ public class GamePanel extends JPanel {
 	private JButton IronButton;
 	*/
 
-	private BufferedImage img;
+	private Image img;
 	private BufferedImage img_inventory;
 
 	private JTextArea messages = new JTextArea("Welcome in the game!\n");
@@ -499,18 +500,19 @@ public class GamePanel extends JPanel {
 		mapPanel.setLayout(null);
 		/* -- ! ----- ! --*/
 		
-		mapPanel.setMinimumSize(new Dimension(800, 600));
-		mapPanel.setMaximumSize(new Dimension(800, 600));
-		mapPanel.setSize(new Dimension(800, 600));
+		// mapPanel.setMinimumSize(new Dimension(800, 600));
+		// mapPanel.setMaximumSize(new Dimension(800, 600));
+		// mapPanel.setSize(new Dimension(800, 600));
 		mapPanel.setBackground(Color.black);
 
-		String path = "src\\berenyi_kft_GUI\\Icons\\background1.png";
+		String path = "src\\berenyi_kft_GUI\\Icons\\background.png";
 		try {
 			img = ImageIO.read(new File(path));
-			//img = img.getScaledInstance(400, -1, Image.SCALE_DEFAULT);
+			img = img.getScaledInstance(1000, -1, Image.SCALE_DEFAULT);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		mapPanel.setSize(new Dimension(img.getWidth(null), img.getHeight(null)));
 
 		mapPanel.setOpaque(false);
 
@@ -526,6 +528,7 @@ public class GamePanel extends JPanel {
 	public GamePanel(Cards cards) {
 		this.cards = cards;
 		this.initComponents();
+		// this.setOpaque(false);
 		this.setVisible(true);
 	}
 

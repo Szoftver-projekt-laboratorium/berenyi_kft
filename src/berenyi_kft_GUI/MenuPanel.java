@@ -41,7 +41,7 @@ public class MenuPanel extends JPanel {
 	private JButton newGameButton;
 	private JButton loadGameButton;
 	private JButton exitButton;
-	private BufferedImage img;
+	// private BufferedImage img;
 	
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
@@ -137,12 +137,12 @@ public class MenuPanel extends JPanel {
 			e.printStackTrace();
 		}*/
 
-		String path = "src\\berenyi_kft_GUI\\Icons\\start.png";
+		/*String path = "src\\berenyi_kft_GUI\\Icons\\start_16_9.png";
 		try {
 			img=ImageIO.read(new File(path));
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public void setButton(JButton button) {
@@ -160,22 +160,23 @@ public class MenuPanel extends JPanel {
 		button.setBorder(buttonBorder);
 	}
 	
-	@Override
+	/*@Override
     public Dimension getPreferredSize()
     {
         return (new Dimension(img.getWidth(), img.getHeight()));
-    }
+    }*/
 	
 	@Override
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.drawImage(img, 0, 0, this);
+        g.drawImage(Cards.bgImage, 0, 0, this);
     }
 	
 	public MenuPanel(Cards cards) {
 		this.cards = cards;
 		this.initComponents();
+		// this.setOpaque(false);
 		this.setVisible(true);
 	}
 }

@@ -1,39 +1,41 @@
 Controller controller
-Player p2 p3
+Player p1 p2
 Game game
 Recipe robotRecipe gatePairRecipe spaceBaseRecipe
 Timer timer
 Sun sun
-Asteroid a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13
+Asteroid a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14
 Coal co1 co5 co6 co7 co8 co9 co10
-Iron ir1 ir2 ir3 ir7 ir8 ir9 ir10 ir11 ir12
-Ice ic1 ic5 ic6 ic7 ic8 ic9 ic10
-Uranium ur1 ur2 ur6 ur7 ur8 ur9 ur10 ur11 ur12
-Settler s2 s3
+Iron ir1 ir2 ir3 ir9 ir10 ir11 ir12 ir13
+Ice ic1 ic6 ic7 ic8 ic9 ic10
+Uranium ur1 ur2 ur6 ur7 ur8 ur9 ur10 ur11
+Settler s1 s2
+AIRobot air1 air2
+UFO ufo1
 TeleportingGate tg1 tg2 tg3 tg4
 
 Controller controller
 	game game
-	allPlayers p2 p3
-	actPlayer p2
+	allPlayers p1 p2
+	actPlayer p1
 	state running
+
+Player p1
+	name Player1
+	settler s1
+	isAlive true
 
 Player p2
 	name Player1
 	settler s2
 	isAlive true
 
-Player p3
-	name Player1
-	settler s3
-	isAlive true
-
 Game game
 	timer timer
 	recipes robotRecipe gatePairRecipe spaceBaseRecipe
 	sun sun
-	asteroids a1 a5 a3 a6 a9 a10 a4 a12 a13 a8 a2 a11 a7
-	settlersAlive s2 s3
+	asteroids a1 a14 a13 a5 a7 a11 a6 a3 a2 a9 a4 a12 a10 a8
+	settlersAlive s1 s2
 
 Recipe robotRecipe
 	resources co1 ur1
@@ -42,23 +44,23 @@ Recipe gatePairRecipe
 	resources ir2 ir3 ic1 ur2
 
 Recipe spaceBaseRecipe
-	resources co8 ir10 ic8 ur10 co9 ir11 ic9 ur11 co10 ir12 ic10 ur12
+	resources co8 ir11 ic8 ur9 co9 ir12 ic9 ur10 co10 ir13 ic10 ur11
 
 Timer timer
-	ticks 36
+	ticks 5
 	delay 5000
 	period 3000
-	steppables sun tg1 tg3 tg2
+	steppables sun air1 air2 ufo1 tg1 tg3 tg2
 
 Sun sun
-	timeToSunStorm 13
+	timeToSunStorm 19
 	neighboringAsteroids a1
 
 Asteroid a1
-	rockLayerThickness 0
+	rockLayerThickness 4
 	game game
 	sun sun
-	neighbors a5 a3 a6 a11 a13
+	neighbors a14 a13 a5 a12
 	resource co5
 	characters null
 	gates null
@@ -67,108 +69,117 @@ Asteroid a2
 	rockLayerThickness 0
 	game game
 	sun sun
-	neighbors a5 a7 a9
-	resource null
+	neighbors a14 a5 a10 a12
+	resource co6
 	characters null
 	gates null
 
 Asteroid a3
-	rockLayerThickness 0
+	rockLayerThickness 3
 	game game
 	sun sun
-	neighbors a1 a10 a13 a12 a4 a11
+	neighbors a13 a12
 	resource co7
 	characters null
-	gates tg1 tg2
+	gates null
 
 Asteroid a4
 	rockLayerThickness 0
 	game game
 	sun sun
-	neighbors a5 a3
-	resource ir7
+	neighbors a7 a10 a13 a5
+	resource null
 	characters null
-	gates null
+	gates tg4 tg3
 
 Asteroid a5
 	rockLayerThickness 0
 	game game
 	sun sun
-	neighbors a1 a9 a4 a12 a8 a2 a10 a11
+	neighbors a1 a2 a4
 	resource null
-	characters s3
-	gates tg3
+	characters null
+	gates null
 
 Asteroid a6
-	rockLayerThickness 3
+	rockLayerThickness 4
 	game game
 	sun sun
-	neighbors a1
+	neighbors a14
 	resource ir9
 	characters null
 	gates null
 
 Asteroid a7
-	rockLayerThickness 0
+	rockLayerThickness 2
 	game game
 	sun sun
-	neighbors a2
-	resource ic5
-	characters s2
+	neighbors a14 a4 a11
+	resource ir10
+	characters null
 	gates null
 
 Asteroid a8
-	rockLayerThickness 3
+	rockLayerThickness 0
 	game game
 	sun sun
-	neighbors a5
-	resource ic6
-	characters null
-	gates tg4
+	neighbors a9
+	resource null
+	characters ufo1
+	gates tg2
 
 Asteroid a9
 	rockLayerThickness 0
 	game game
 	sun sun
-	neighbors a5 a2
-	resource ic7
-	characters null
+	neighbors a13 a8 a14
+	resource ic6
+	characters air1
 	gates null
 
 Asteroid a10
-	rockLayerThickness 0
+	rockLayerThickness 1
 	game game
 	sun sun
-	neighbors a3 a11 a5
-	resource ur6
-	characters null
+	neighbors a4 a11 a2
+	resource ic7
+	characters air2
 	gates null
 
 Asteroid a11
-	rockLayerThickness 0
+	rockLayerThickness 4
 	game game
 	sun sun
-	neighbors a10 a1 a5 a3
+	neighbors a14 a10 a7
+	resource ur6
+	characters s2
+	gates null
+
+Asteroid a12
+	rockLayerThickness 2
+	game game
+	sun sun
+	neighbors a1 a3 a2
 	resource ur7
 	characters null
 	gates null
 
-Asteroid a12
-	rockLayerThickness 0
+Asteroid a13
+	rockLayerThickness 3
 	game game
 	sun sun
-	neighbors a5 a3
+	neighbors a1 a3 a9 a4
 	resource ur8
 	characters null
-	gates null
+	gates tg1
 
-Asteroid a13
-	rockLayerThickness 0
+Asteroid a14
+	rockLayerThickness 2
 	game game
 	sun sun
-	neighbors a3 a1
-	resource ur9
-	characters null
+	neighbors a1 a7 a11 a6 a2 a9
+	resource null
+	characters s1
 	gates null
 
 Uranium ur1
@@ -181,13 +192,13 @@ Uranium ur6
 	life 3
 
 Uranium ur7
-	life 2
+	life 3
 
 Uranium ur8
 	life 3
 
 Uranium ur9
-	life 2
+	life 3
 
 Uranium ur10
 	life 3
@@ -195,44 +206,53 @@ Uranium ur10
 Uranium ur11
 	life 3
 
-Uranium ur12
-	life 3
+Settler s1
+	game game
+	timer timer
+	place a14
+	resources null
+	gatesCreated null
 
 Settler s2
 	game game
 	timer timer
-	place a7
-	resources co6
+	place a11
+	resources null
 	gatesCreated null
 
-Settler s3
-	game game
+AIRobot air1
 	timer timer
-	place a5
-	resources ir8
-	gatesCreated null
+	place a9
+
+AIRobot air2
+	timer timer
+	place a10
+
+UFO ufo1
+	timer timer
+	place a8
 
 TeleportingGate tg1
 	timer timer
 	pair tg2
 	settler null
-	asteroid a3
+	asteroid a13
 
 TeleportingGate tg2
 	timer timer
 	pair tg1
 	settler null
-	asteroid a3
+	asteroid a8
 
 TeleportingGate tg3
 	timer timer
 	pair tg4
 	settler null
-	asteroid a5
+	asteroid a4
 
 TeleportingGate tg4
 	timer timer
 	pair tg3
 	settler null
-	asteroid a8
+	asteroid a4
 
