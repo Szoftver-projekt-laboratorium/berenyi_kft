@@ -98,15 +98,16 @@ public class GamePanel extends JPanel {
 
 			JButton pressedButton = (JButton) ae.getSource();
 			if (pressedButton == moveButton) {
-				writeToMessageBoard("Moving..");
+
 				if (latestSelectedAsteroid != null) {
-					writeToMessageBoard("Choose an astroid to move!");
+					//writeToMessageBoard("Choose an astroid to move!");
 					
 					// Mozgás történik! TODO: majd külön függvénybe tegyük.
 					Asteroid place = controller.getActPlayer().getSettler().getPlace();
 					int idx = place.getNeighbors().indexOf(latestSelectedAsteroid.getAsteroid());
 					if (idx != -1) {
 						Object[] params = {"move", Integer.toString(idx)};
+						writeToMessageBoard(controller.getActPlayer().getName()+ " moved..");
 						controller.getActPlayer().actOnSettler(PlayerCommand.MOVE, params);
 						controller.nextPlayer();
 						
@@ -118,17 +119,13 @@ public class GamePanel extends JPanel {
 				}
 			}
 			else if (pressedButton == drillButton) {
-				//writeToMessageBoard("drillButton has been pushed");
-				writeToMessageBoard("Drilling one layer...");
-				
+				//writeToMessageBoard("drillButton has been pushed");				
 				Object[] params = {"drill"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.DRILL, params);
 				controller.nextPlayer();
 			}
 			else if (pressedButton == mineButton) {
-				//writeToMessageBoard("mineButton has been pushed");
-				writeToMessageBoard("Mining...");
-				
+				//writeToMessageBoard("mineButton has been pushed");				
 				Object[] params = {"mine"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.MINE, params);
 				controller.nextPlayer();
@@ -144,7 +141,7 @@ public class GamePanel extends JPanel {
 			}
 			else if (pressedButton == createrobotButton) {
 				//writeToMessageBoard("createrobotButton has been pushed");
-				writeToMessageBoard("Creating a new robot...");
+				writeToMessageBoard(controller.getActPlayer().getName()+ " is trying to create a robot...");
 				
 				Object[] params = {"create_robot"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.CREATE_ROBOT, params);
@@ -152,7 +149,7 @@ public class GamePanel extends JPanel {
 			}
 			else if (pressedButton == createteleportButton) {
 				//writeToMessageBoard("createteleportButton has been pushed");
-				writeToMessageBoard("Creating a new gate pair...");
+				writeToMessageBoard(controller.getActPlayer().getName()+" is trying to create a gate pair...");
 				
 				Object[] params = {"create_gate_pair"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.CREATE_GATE_PAIR, params);
@@ -160,7 +157,7 @@ public class GamePanel extends JPanel {
 			}
 			else if (pressedButton == placeteleportButton) {
 				//writeToMessageBoard("placeteleportButton has been pushed");
-				writeToMessageBoard("Placing a teleporting gate available...");
+				writeToMessageBoard(controller.getActPlayer().getName()+ " is trying to place a teleporting gate available...");
 				
 				Object[] params = {"release_gate"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.RELEASE_GATE, params);
@@ -168,7 +165,7 @@ public class GamePanel extends JPanel {
 			}
 			else if (pressedButton == passButton) {
 				//writeToMessageBoard("passButton has been pushed");
-				writeToMessageBoard("You passed.");
+				writeToMessageBoard(controller.getActPlayer().getName()+ " passed.");
 				controller.nextPlayer();
 			}
 			else if (pressedButton == endGameButton) {

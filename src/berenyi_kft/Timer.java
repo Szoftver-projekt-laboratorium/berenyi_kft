@@ -188,7 +188,7 @@ public class Timer extends java.util.Timer {
 		// stepping kiírás
 		if (game != null) // amíg tart a játék
 		{
-			game.getGamePanel().writeToMessageBoard("UFO-s, Gates Robots, Sun stepped!");
+			//game.getGamePanel().writeToMessageBoard("UFO-s, Gates Robots, Sun stepped!");
 			
 			while (i < steppables.size()) {
 				ISteppable s = steppables.get(i);

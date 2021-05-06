@@ -181,6 +181,8 @@ public class Settler extends Character {
 		Proto.println(Proto.getId(this) + ".drill()");
 		Proto.incrTabs();
 		place.drilled();
+		game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" is drilling one layer...");
+		game.getGamePanel().writeToMessageBoard(this.getPlace().getRockLayerThickness()+" layer(s) left \n");
 		Proto.decrTabs();
 	}
 
@@ -194,6 +196,7 @@ public class Settler extends Character {
 		Proto.println(Proto.getId(this) + ".mine()");
 		Proto.incrTabs();
 		if (collectedResources.size() < Settler.capacity) {
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+ " is mining...");
 			place.minedBy(this);
 		}
 		Proto.decrTabs();
@@ -262,6 +265,7 @@ public class Settler extends Character {
 			
 			place.accept(air);
 			air.setPlace(place);
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" created a Robot succesfully.");
 		}
 		aiRobotRecipe.reset();
 		Proto.decrTabs();
@@ -327,6 +331,7 @@ public class Settler extends Character {
 			tg1.setPair(tg2);
 			this.accept(tg1);
 			this.accept(tg2);
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" created a gate pair succesfully.");
 		}
 		gatePairRecipe.reset();
 		Proto.decrTabs();
@@ -349,8 +354,10 @@ public class Settler extends Character {
 			place.accept(tg);
 			tg.setSettler(null);
 			gatesCreated.remove(0);
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" placed a gate succesfully.");
 		} else {
 			Proto.println("There is no TeleportingGate available on you at the moment.");
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" failed to place a gate.");
 		}
 		Proto.decrTabs();
 	}

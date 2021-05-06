@@ -111,9 +111,9 @@ public class Sun implements ISteppable {
 			}
 			
 		} else {
-			sunStorm();
 			// Sunstorm kiírás
 			game.getGamePanel().writeToMessageBoard("Sunstorm!!!");
+			sunStorm();
 			if (Proto.isRandom()) {
 				Random r = new Random();
 				timeToSunStorm = 15 + r.nextInt(10);
