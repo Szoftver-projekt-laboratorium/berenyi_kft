@@ -32,7 +32,7 @@ public class Timer extends java.util.Timer {
 	 * ezredmasodpercben
 	 */
 	private long delay = 3000;
-	private long period = 1000;
+	private long period = 3000;
 
 	/**
 	 * A jatek leptetheto objektumainak listaja
@@ -194,6 +194,7 @@ public class Timer extends java.util.Timer {
 				ISteppable s = steppables.get(i);
 				if (s != null) {
 					s.step();
+					
 					// nézetfrissítés
 					game.getGamePanel().drawAll();
 				}
@@ -201,6 +202,9 @@ public class Timer extends java.util.Timer {
 				// i = steppables.indexOf(is) + 1; // elvileg jo lenne
 				i++; // halal eseten problemas
 			}
+			
+			// nézetfrissítés
+			game.getGamePanel().drawAll();
 		}
 			
 		Proto.decrTabs();
@@ -243,9 +247,9 @@ public class Timer extends java.util.Timer {
 
 			case "steppables":
 				for (int i = 1; i < tokens.length; i++) {
-					ISteppable p = (ISteppable) Proto.getObject(tokens[i]);
-					if (p != null)
-						steppables.add(p);
+					ISteppable s = (ISteppable) Proto.getObject(tokens[i]);
+					if (s != null)
+						steppables.add(s);
 				}
 				break;
 
