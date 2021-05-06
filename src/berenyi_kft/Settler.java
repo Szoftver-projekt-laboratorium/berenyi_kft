@@ -181,6 +181,8 @@ public class Settler extends Character {
 		Proto.println(Proto.getId(this) + ".drill()");
 		Proto.incrTabs();
 		place.drilled();
+		game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" is drilling one layer...");
+		game.getGamePanel().writeToMessageBoard(this.getPlace().getRockLayerThickness()+" layer(s) left \n");
 		Proto.decrTabs();
 	}
 
@@ -194,6 +196,7 @@ public class Settler extends Character {
 		Proto.println(Proto.getId(this) + ".mine()");
 		Proto.incrTabs();
 		if (collectedResources.size() < Settler.capacity) {
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+ " is mining...");
 			place.minedBy(this);
 		}
 		Proto.decrTabs();
@@ -262,6 +265,7 @@ public class Settler extends Character {
 			
 			place.accept(air);
 			air.setPlace(place);
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" created a Robot succesfully.");
 		}
 		aiRobotRecipe.reset();
 		Proto.decrTabs();
@@ -327,6 +331,7 @@ public class Settler extends Character {
 			tg1.setPair(tg2);
 			this.accept(tg1);
 			this.accept(tg2);
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" created a gate pair succesfully.");
 		}
 		gatePairRecipe.reset();
 		Proto.decrTabs();
@@ -349,8 +354,10 @@ public class Settler extends Character {
 			place.accept(tg);
 			tg.setSettler(null);
 			gatesCreated.remove(0);
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" placed a gate succesfully.");
 		} else {
 			Proto.println("There is no TeleportingGate available on you at the moment.");
+			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" failed to place a gate.");
 		}
 		Proto.decrTabs();
 	}
@@ -432,6 +439,32 @@ public class Settler extends Character {
 		if(Proto.getId(this).equals( Proto.getId(this.game.getController().getActPlayer().getSettler())))
 			return true;
 		return false;
+	}
+	
+	public Integer[] getNumbOfResources() {
+		Uranium uranium=new Uranium();
+		Coal coal=new Coal();
+		Iron iron=new Iron();
+		Ice ice=new Ice();
+	
+		Integer[] numbOfResources=new Integer[4];
+		numbOfResources[0]=0;
+		numbOfResources[1]=0;
+		numbOfResources[2]=0;
+		numbOfResources[3]=0;
+		
+		for(Resource r : collectedResources) {
+			if(r.isCompatibleWith(coal))
+				numbOfResources[0]++;
+			if(r.isCompatibleWith(iron))
+				numbOfResources[1]++;
+			if(r.isCompatibleWith(uranium))
+				numbOfResources[2]++;
+			if(r.isCompatibleWith(ice))
+				numbOfResources[3]++;
+		}
+		
+		return numbOfResources;
 	}
 	
 }

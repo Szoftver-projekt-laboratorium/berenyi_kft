@@ -80,19 +80,21 @@ public class GamePanel extends JPanel {
 	private JButton passButton;
 	private JButton endGameButton;
 	
-	/*
-	private JButton CoalButton;
-	private JButton IceButton;
-	private JButton UraniumButton;
-	private JButton IronButton;
-	*/
-
+	private CoalGraphics CoalButton;
+	private IceGraphics IceButton;
+	private UraniumGraphics UraniumButton;
+	private IronGraphics IronButton;
+	
+	private JLabel coalLabel;
+	private JLabel iceLabel;
+	private JLabel uraniumLabel;
+	private JLabel ironLabel;
+	
 	private Image img;
 	private BufferedImage img_inventory;
 
 	private JTextArea messages = new JTextArea("Welcome in the game!\n");
 	private JScrollPane scrollPane;
-	
 	
 	public void setController(Controller controller) {
 		this.controller = controller;
@@ -118,15 +120,16 @@ public class GamePanel extends JPanel {
 
 			JButton pressedButton = (JButton) ae.getSource();
 			if (pressedButton == moveButton) {
-				writeToMessageBoard("Moving..");
+
 				if (latestSelectedAsteroid != null) {
-					writeToMessageBoard("Choose an astroid to move!");
+					//writeToMessageBoard("Choose an astroid to move!");
 					
 					// Mozgás történik! TODO: majd külön függvénybe tegyük.
 					Asteroid place = controller.getActPlayer().getSettler().getPlace();
 					int idx = place.getNeighbors().indexOf(latestSelectedAsteroid.getAsteroid());
 					if (idx != -1) {
 						Object[] params = {"move", Integer.toString(idx)};
+						writeToMessageBoard(controller.getActPlayer().getName()+ " moved..");
 						controller.getActPlayer().actOnSettler(PlayerCommand.MOVE, params);
 						controller.nextPlayer();
 						
@@ -138,17 +141,13 @@ public class GamePanel extends JPanel {
 				}
 			}
 			else if (pressedButton == drillButton) {
-				//writeToMessageBoard("drillButton has been pushed");
-				writeToMessageBoard("Drilling one layer...");
-				
+				//writeToMessageBoard("drillButton has been pushed");				
 				Object[] params = {"drill"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.DRILL, params);
 				controller.nextPlayer();
 			}
 			else if (pressedButton == mineButton) {
-				//writeToMessageBoard("mineButton has been pushed");
-				writeToMessageBoard("Mining...");
-				
+				//writeToMessageBoard("mineButton has been pushed");				
 				Object[] params = {"mine"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.MINE, params);
 				controller.nextPlayer();
@@ -163,7 +162,7 @@ public class GamePanel extends JPanel {
 			}
 			else if (pressedButton == createrobotButton) {
 				//writeToMessageBoard("createrobotButton has been pushed");
-				writeToMessageBoard("Creating a new robot...");
+				writeToMessageBoard(controller.getActPlayer().getName()+ " is trying to create a robot...");
 				
 				Object[] params = {"create_robot"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.CREATE_ROBOT, params);
@@ -171,7 +170,7 @@ public class GamePanel extends JPanel {
 			}
 			else if (pressedButton == createteleportButton) {
 				//writeToMessageBoard("createteleportButton has been pushed");
-				writeToMessageBoard("Creating a new gate pair...");
+				writeToMessageBoard(controller.getActPlayer().getName()+" is trying to create a gate pair...");
 				
 				Object[] params = {"create_gate_pair"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.CREATE_GATE_PAIR, params);
@@ -179,7 +178,7 @@ public class GamePanel extends JPanel {
 			}
 			else if (pressedButton == placeteleportButton) {
 				//writeToMessageBoard("placeteleportButton has been pushed");
-				writeToMessageBoard("Placing a teleporting gate available...");
+				writeToMessageBoard(controller.getActPlayer().getName()+ " is trying to place a teleporting gate available...");
 				
 				Object[] params = {"release_gate"};
 				controller.getActPlayer().actOnSettler(PlayerCommand.RELEASE_GATE, params);
@@ -187,7 +186,7 @@ public class GamePanel extends JPanel {
 			}
 			else if (pressedButton == passButton) {
 				//writeToMessageBoard("passButton has been pushed");
-				writeToMessageBoard("You passed.");
+				writeToMessageBoard(controller.getActPlayer().getName()+ " passed.");
 				controller.nextPlayer();
 			}
 					
@@ -204,7 +203,8 @@ public class GamePanel extends JPanel {
 				removeDrawableButtons();
 				removeDrawableLabels();
 				drawables.clear();
-				// drawAll();
+				removeAsteroidPoints();
+				drawAll();
 				
 				try {
 					Proto.save(MenuPanel.getPersistentFilePath());
@@ -450,6 +450,37 @@ public class GamePanel extends JPanel {
 		IronButton.setBorder(buttonBorder);
 		IronButton.addActionListener(bl);
 		
+		coalLabel=new JLabel();
+		coalLabel.setForeground(Color.YELLOW);
+		
+		ironLabel=new JLabel();
+		ironLabel.setForeground(Color.YELLOW);
+		
+		uraniumLabel=new JLabel();
+		uraniumLabel.setForeground(Color.YELLOW);
+		
+		iceLabel=new JLabel();
+		iceLabel.setForeground(Color.YELLOW);
+		
+		CoalButton.setLayout(new BorderLayout());
+		CoalButton.add(coalLabel, BorderLayout.SOUTH);
+		coalLabel.setHorizontalAlignment(JLabel.CENTER);
+		coalLabel.setFont(font);
+		
+		IronButton.setLayout(new BorderLayout());
+		IronButton.add(ironLabel, BorderLayout.CENTER);
+		ironLabel.setHorizontalAlignment(JLabel.CENTER);
+		ironLabel.setFont(font);
+		
+		UraniumButton.setLayout(new BorderLayout());
+		UraniumButton.add(uraniumLabel, BorderLayout.CENTER);
+		uraniumLabel.setHorizontalAlignment(JLabel.CENTER);
+		uraniumLabel.setFont(font);
+		
+		IceButton.setLayout(new BorderLayout());
+		IceButton.add(iceLabel, BorderLayout.CENTER);
+		iceLabel.setHorizontalAlignment(JLabel.CENTER);
+		iceLabel.setFont(font);
 		/*
 		 * BUGOS
 		 */
@@ -594,6 +625,23 @@ public class GamePanel extends JPanel {
 				 // max lesz egy masodperces kesleltetes (?)
 		}
 	}
+	
+	public void drawNumbOfResources() {
+		if(controller==null) {
+			ironLabel.setText("0");
+			coalLabel.setText("0");
+			iceLabel.setText("0");
+			uraniumLabel.setText("0");
+		}
+		
+		if(controller.getActPlayer()!=null) {
+			Integer[] resourceArray=controller.getActPlayer().getSettler().getNumbOfResources();
+			coalLabel.setText(resourceArray[0].toString());
+			ironLabel.setText(resourceArray[1].toString());
+			uraniumLabel.setText(resourceArray[2].toString());
+			iceLabel.setText(resourceArray[3].toString());
+		}
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -603,6 +651,7 @@ public class GamePanel extends JPanel {
 		// this.drawAll();
 		g.drawImage(img, 0, 0, mapPanel);
 		g.drawImage(img_inventory, 75, 600, inventoryPanel);
+		this.drawNumbOfResources();
 
 	}
 	
