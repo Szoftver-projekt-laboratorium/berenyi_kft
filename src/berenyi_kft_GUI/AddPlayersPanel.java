@@ -26,7 +26,7 @@ public class AddPlayersPanel extends JPanel {
 	private JTextField nameField;
 	private JButton addPlayerButton;
 	private JButton startGameButton;
-	private BufferedImage img;
+	// private BufferedImage img;
 	private Color color;
 	
 	public ArrayList<String> getPlayerNames() {
@@ -145,12 +145,12 @@ public class AddPlayersPanel extends JPanel {
 		startPanel.add(startGameButton);
 		this.add(startPanel, BorderLayout.SOUTH);
 		
-		String path = "src\\berenyi_kft_GUI\\Icons\\start.png";
+		/*String path = "src\\berenyi_kft_GUI\\Icons\\start_16_9.png";
 		try {
 			img=ImageIO.read(new File(path));
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 	
@@ -169,22 +169,23 @@ public class AddPlayersPanel extends JPanel {
 		button.setBorder(buttonBorder);
 	}
 	
-	@Override
+	/*@Override
     public Dimension getPreferredSize()
     {
         return (new Dimension(img.getWidth(), img.getHeight()));
-    }
+    }*/
 	
 	@Override
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.drawImage(img, 0, 0, this);
+        g.drawImage(Cards.bgImage, 0, 0, this);
     }
 	
 	public AddPlayersPanel(Cards cards) {
 		this.cards = cards;
 		this.initComponents();
+		// this.setOpaque(false);
 		this.setVisible(true);
 	}
 	

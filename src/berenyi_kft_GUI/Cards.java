@@ -1,15 +1,32 @@
 package berenyi_kft_GUI;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Cards {
+	public static final int preferredWindowWidth = 1200;
+	public static final String bgImagePath
+			= "src\\berenyi_kft_GUI\\Icons\\start_16_9.png";
+	public static Image bgImage;
 	
 	public final static String menuPanelID = "menuPanel";
 	public final static String addPlayersPanelID = "addPlayersPanel";
 	public final static String gamePanelID = "gamePanel";
 	public final static String endGamePanelID = "endGamePanel";
+	
+	static {
+		try {
+			bgImage = ImageIO.read(new File(bgImagePath));
+			bgImage = bgImage.getScaledInstance(
+					preferredWindowWidth, -1, Image.SCALE_DEFAULT);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private JPanel cardsPanel;
 	private MenuPanel menuPanel;

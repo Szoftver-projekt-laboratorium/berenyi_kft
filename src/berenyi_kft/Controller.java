@@ -139,6 +139,7 @@ public class Controller {
 		gamePanel.drawAll();
 		
 		// A timer inditasa
+		this.setState(State.RUNNING);
 		game.getTimer().start();
 		
 		Proto.decrTabs();
@@ -154,8 +155,8 @@ public class Controller {
 		setState(state);
 		
 		// Idozites leallitasa mindenkeppen
-		if (game.getTimer() != null)
-			game.getTimer().cancel();
+		// if (game.getTimer() != null)
+		game.getTimer().cancel();
 		
 		if (state == State.WON)
 			Proto.println("Settlers won the game, the spacebase has been built!");
