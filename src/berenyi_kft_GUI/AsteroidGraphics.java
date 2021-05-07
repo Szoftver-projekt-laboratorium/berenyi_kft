@@ -52,7 +52,7 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 	/**
 	 * Az aszteroida ikonok kívánt konstans szélessége (a képek négyzet alakúak)
 	 */
-	private static final int preferredWidth = 90;
+	private static final int preferredWidth = 95;
 	
 	/**
 	 * Az aszteroidán megjelenő karakter- és teleportkapu ikonokat
@@ -157,9 +157,9 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		
 		int idx = a.getCharacters().indexOf(c);
 		int xPos = ag.getX() + (idx % thingTableSize) * preferredCellWidth
-					- preferredCellWidth/2;
+					- preferredCellWidth * 2/3;
 		int yPos = ag.getY() + (idx / thingTableSize) * preferredCellWidth
-					- preferredCellWidth/2;
+					- preferredCellWidth * 2/3;
 		return new Point(xPos, yPos);
 	}
 	
@@ -187,9 +187,9 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		
 		int idx = a.getCharacters().size() + a.getGates().indexOf(tg);
 		int xPos = ag.getX() + (idx % thingTableSize) * preferredCellWidth
-					- preferredCellWidth/2;
+					- preferredCellWidth * 2/3;
 		int yPos = ag.getY() + (idx / thingTableSize) * preferredCellWidth
-					- preferredCellWidth/2;
+					- preferredCellWidth * 2/3;
 		return new Point(xPos, yPos);
 	}
 
@@ -232,9 +232,9 @@ public class AsteroidGraphics extends JButton implements IDrawable {
 		while(b) {
 			Random random = new Random();
 			pos.x = preferredCellWidth + random.nextInt(
-					panelSize.width - preferredWidth - 2 * preferredCellWidth);
+					/*panelSize.width*/ 920 - preferredWidth - 2 * preferredCellWidth);
 			pos.y = preferredCellWidth + random.nextInt(
-					panelSize.height - preferredWidth - 2 * preferredCellWidth);
+					/*panelSize.height*/ 550 - preferredWidth - 2 * preferredCellWidth);
 			
 			b=false;
 			for(Point p : gamePanel.getPoints()) {

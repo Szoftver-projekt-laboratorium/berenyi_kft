@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import berenyi_kft.AIRobot;
+import berenyi_kft.Asteroid;
 import berenyi_kft.Sun;
 
 /**
@@ -36,7 +37,7 @@ public class AIRobotGraphics extends JLabel implements IDrawable {
 	/**
 	 * A robot-ikonok kívánt konstans szélessége
 	 */
-	private static final int preferredWidth = 60;
+	private static final int preferredWidth = 65;
 
 	/**
 	 * A robotok megjelenő ikonja (képe)
@@ -117,11 +118,12 @@ public class AIRobotGraphics extends JLabel implements IDrawable {
 		// this.setLocation(AsteroidGraphics.getCharacterPos(this.aiRobot));
 		Point pos = AsteroidGraphics.getCharacterPos(this.aiRobot);
 		
-		Sun sun = aiRobot.getPlace().getSun();
-		if (sun.getTimeToSunStorm() < 1 && aiRobot.getPlace().isMined()) {
+		Asteroid place = aiRobot.getPlace();
+		Sun sun = place.getSun();
+		if (sun.isCloseToSun(place)
+				&& sun.getTimeToSunStorm() < 1 && place.isMined()) {
 			this.setIcon(null);
-		}
-		else {
+		} else {
 			this.setIcon(icon);
 		}
 		this.setBounds(new Rectangle(pos.x, pos.y,

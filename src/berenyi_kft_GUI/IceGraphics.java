@@ -26,7 +26,7 @@ public class IceGraphics extends JButton implements IDrawable{
 	
 	private static final String iconPath = "src\\berenyi_kft_GUI\\Icons\\ice.png";
 	
-	private static final int preferredWidth = 50;
+	private static final int preferredWidth = 70;
 	
 	private static final int thingTableSize = 3;
 	
@@ -71,7 +71,7 @@ public class IceGraphics extends JButton implements IDrawable{
 	private Point pos = new Point(0, 0);
 	
 	public IceGraphics(Ice i, Dimension panelSize) {
-		allIceGraphics.add(this);
+		// allIceGraphics.add(this);
 		this.ice = i;
 		
 		this.setActionCommand(actionCommand);
@@ -80,8 +80,8 @@ public class IceGraphics extends JButton implements IDrawable{
 		this.setBorderPainted(true);
 		this.setContentAreaFilled(false);
 		
-		pos.x = panelSize.width/element_number * queue_pos + 20;
-		pos.y = panelSize.height/2 - preferredWidth/2;
+		// pos.x = panelSize.width/element_number * queue_pos + 20;
+		// pos.y = panelSize.height/2 - preferredWidth/2;
 	}
 	
 	/**

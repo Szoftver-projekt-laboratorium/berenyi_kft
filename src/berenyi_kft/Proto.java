@@ -434,7 +434,7 @@ public class Proto {
 			
 			// TODO megfelelo panelmeret-atadas
 			AsteroidGraphics ag
-				= new AsteroidGraphics(a, new Dimension(800, 600), gamePanel);
+				= new AsteroidGraphics(a, new Dimension(900, 600), gamePanel);
 			gamePanel.addToMapPanel(ag);
 			gamePanel.addDrawable(ag);
 			break;

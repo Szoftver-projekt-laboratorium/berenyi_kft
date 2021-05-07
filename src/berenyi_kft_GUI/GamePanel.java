@@ -33,9 +33,11 @@ import berenyi_kft.Coal;
 import berenyi_kft.Controller;
 import berenyi_kft.Ice;
 import berenyi_kft.Iron;
+import berenyi_kft.Player;
 import berenyi_kft.PlayerCommand;
 import berenyi_kft.Proto;
 import berenyi_kft.Resource;
+import berenyi_kft.State;
 import berenyi_kft.TeleportingGate;
 import berenyi_kft.Uranium;
 
@@ -57,14 +59,9 @@ public class GamePanel extends JPanel {
 	// altalanos gombmeret beallitasa:
 	private Dimension buttonsize = new Dimension(250, 40);
 	
-	private Dimension resourcebuttonsize = new Dimension(40, 40);
+	private Dimension resourcebuttonsize = new Dimension(75, 75);
 
 	private Dimension textarea_size = new Dimension(250, 300);
-	
-	@Override
-	public Dimension getPreferredSize() {
-		return (new Dimension(300, 100));
-	}
 
 	private Cards cards;
 	private JPanel mapPanel;
@@ -116,7 +113,7 @@ public class GamePanel extends JPanel {
 		 * 
 		 * @param ae: A beérkező akcióparancs paraméterei
 		 */
-		public void actionPerformed(ActionEvent ae) {
+		public void actionPerformed(ActionEvent ae) {			
 			// Megszünteti az eddig kijelölt aszteroidák kiemelését.
 			for (AsteroidGraphics ag : AsteroidGraphics.getAllAsteroidGraphics()) {
 				ag.getAsteroid().setEmphasized(false);
@@ -127,6 +124,14 @@ public class GamePanel extends JPanel {
 			}
 
 			JButton pressedButton = (JButton) ae.getSource();
+			if (pressedButton != endGameButton &&
+					(controller == null ||
+					(controller.getState() == State.WON
+					| controller.getState() == State.LOST
+					| controller.getState() == State.EXITED))) {
+				return;
+			}
+			
 			if (pressedButton == moveButton) {
 
 				if (latestSelectedAsteroid != null) {
@@ -300,6 +305,7 @@ public class GamePanel extends JPanel {
 
 		Font font = new Font("teko semibold", Font.BOLD, 20);
 		Font smallerfont = new Font("teko semibold", Font.BOLD, 15);
+		Font biggerFont = new Font("teko semibold", Font.BOLD, 35);
 		Border buttonBorder = new LineBorder(Color.YELLOW, 3);
 
 		bl = new ButtonListener();
@@ -465,45 +471,43 @@ public class GamePanel extends JPanel {
 		IronButton.addActionListener(bl);
 		
 		coalLabel=new JLabel();
-		coalLabel.setForeground(Color.RED);
+		coalLabel.setForeground(Color.YELLOW);
 		
 		ironLabel=new JLabel();
-		ironLabel.setForeground(Color.RED);
+		ironLabel.setForeground(Color.YELLOW);
 		
 		uraniumLabel=new JLabel();
-		uraniumLabel.setForeground(Color.RED);
+		uraniumLabel.setForeground(new Color(0, 192, 0));
 		
 		iceLabel=new JLabel();
-		iceLabel.setForeground(Color.RED);
+		iceLabel.setForeground(Color.YELLOW);
 		
 		CoalButton.setLayout(new BorderLayout());
 		CoalButton.add(coalLabel, BorderLayout.CENTER);
 		coalLabel.setHorizontalAlignment(JLabel.CENTER);
-		coalLabel.setFont(font);
+		coalLabel.setFont(biggerFont);
 		
 		IronButton.setLayout(new BorderLayout());
 		IronButton.add(ironLabel, BorderLayout.CENTER);
 		ironLabel.setHorizontalAlignment(JLabel.CENTER);
-		ironLabel.setFont(font);
+		ironLabel.setFont(biggerFont);
 		
 		UraniumButton.setLayout(new BorderLayout());
 		UraniumButton.add(uraniumLabel, BorderLayout.CENTER);
 		uraniumLabel.setHorizontalAlignment(JLabel.CENTER);
-		uraniumLabel.setFont(font);
+		uraniumLabel.setFont(biggerFont);
 		
 		IceButton.setLayout(new BorderLayout());
 		IceButton.add(iceLabel, BorderLayout.CENTER);
 		iceLabel.setHorizontalAlignment(JLabel.CENTER);
-		iceLabel.setFont(font);
-		/*
-		 * BUGOS
-		 */
+		iceLabel.setFont(biggerFont);
 		
 	    tGateLabel=new JLabel();
 		tGateLabel.setForeground(Color.RED);
 		
 		TGateButton = new TeleportingGateGraphics(new TeleportingGate());
-		TGateButton.setPreferredSize(TGateButton.getPreferredSize());
+		// TGateButton.setPreferredSize(TGateButton.getPreferredSize());
+		TGateButton.setPreferredSize(resourcebuttonsize);
 		TGateButton.setBorder(buttonBorder);
 		TGateButton.setMinimumSize(resourcebuttonsize);
 		TGateButton.setMaximumSize(resourcebuttonsize);
@@ -511,7 +515,7 @@ public class GamePanel extends JPanel {
 		
 		TGateButton.add(tGateLabel, BorderLayout.CENTER);
 		tGateLabel.setHorizontalAlignment(JLabel.CENTER);
-		tGateLabel.setFont(font);
+		tGateLabel.setFont(biggerFont);
 		
 		inventoryPanel = new JPanel();
 		inventoryPanel.setMinimumSize(new Dimension(800, 200));
@@ -561,11 +565,13 @@ public class GamePanel extends JPanel {
 		String path = "src\\berenyi_kft_GUI\\Icons\\background.png";
 		try {
 			img = ImageIO.read(new File(path));
-			img = img.getScaledInstance(920, -1, Image.SCALE_DEFAULT);
+			img = img.getScaledInstance(920, 600, Image.SCALE_DEFAULT);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		mapPanel.setMinimumSize(
+				new Dimension(img.getWidth(null), img.getHeight(null)));
+		mapPanel.setMaximumSize(
 				new Dimension(img.getWidth(null), img.getHeight(null)));
 
 		mapPanel.setOpaque(false);
@@ -644,8 +650,7 @@ public class GamePanel extends JPanel {
 				d.draw();
 			
 			// i = steppables.indexOf(is) + 1; // elvileg jo lenne
-			i++; // halal eseten problemas lehet, de nem olyan veszes,
-				 // max lesz egy masodperces kesleltetes (?)
+			i++; // halal eseten problemas lehet, de nem olyan veszes
 		}
 	}
 	
@@ -660,6 +665,12 @@ public class GamePanel extends JPanel {
 	}
 	
 	public void drawNumbOfGates() {
+		Player p = controller.getActPlayer();
+		if (p == null)
+			return;
+		if (p.getSettler() == null)
+			return;
+		
 		Integer numb=controller.getActPlayer().getSettler().getNumbOfGates();
 		tGateLabel.setText(numb.toString());
 	}

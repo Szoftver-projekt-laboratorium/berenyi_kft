@@ -209,7 +209,7 @@ public class Controller {
 			if (actPlayer == null) {
 				actPlayer = playersAlive.get(0);
 				game.getGamePanel().writeToMessageBoard("\n"+actPlayer.getName()+ " please step! ");
-				game.getGamePanel().writeToMessageBoard("Your asteroid's thinkness: " + actPlayer.getSettler().getPlace().getRockLayerThickness());
+				game.getGamePanel().writeToMessageBoard("Your asteroid's thickness: " + actPlayer.getSettler().getPlace().getRockLayerThickness());
 			}else {
 				
 				int idx = playersAlive.indexOf(actPlayer);
@@ -219,7 +219,7 @@ public class Controller {
 					actPlayer = playersAlive.get(idx + 1);
 				
 				game.getGamePanel().writeToMessageBoard("\n"+actPlayer.getName()+ " please step! ");
-				game.getGamePanel().writeToMessageBoard("Your asteroid's thinkness: " + actPlayer.getSettler().getPlace().getRockLayerThickness());
+				game.getGamePanel().writeToMessageBoard("Your asteroid's thickness: " + actPlayer.getSettler().getPlace().getRockLayerThickness());
 			}
 		}
 	}

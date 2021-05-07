@@ -78,7 +78,7 @@ public class EndGamePanel extends JPanel {
 		resultLabel.setForeground(Color.YELLOW);
 		this.add(resultLabel, BorderLayout.NORTH);
 		resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
+		
 		/*resultField = new JTextArea(7, 15);
 		resultField.setEditable(false);
 		resultField.setAlignmentX(CENTER_ALIGNMENT);

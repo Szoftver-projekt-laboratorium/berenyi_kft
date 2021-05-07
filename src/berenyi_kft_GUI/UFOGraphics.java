@@ -12,6 +12,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import berenyi_kft.Asteroid;
 import berenyi_kft.Sun;
 import berenyi_kft.UFO;
 
@@ -36,7 +37,7 @@ public class UFOGraphics extends JLabel implements IDrawable {
 	/**
 	 * Az ufó-ikonok kívánt konstans szélessége
 	 */
-	private static final int preferredWidth = 60;
+	private static final int preferredWidth = 75;
 
 	/**
 	 * Az ufók megjelenő ikonja (képe)
@@ -117,11 +118,12 @@ public class UFOGraphics extends JLabel implements IDrawable {
 		// this.setLocation(AsteroidGraphics.getCharacterPos(this.ufo));
 		Point pos = AsteroidGraphics.getCharacterPos(this.ufo);
 		
-		Sun sun = ufo.getPlace().getSun();
-		if (sun.getTimeToSunStorm() < 1 && ufo.getPlace().isMined()) {
+		Asteroid place = ufo.getPlace();
+		Sun sun = place.getSun();
+		if (sun.isCloseToSun(place)
+				&& sun.getTimeToSunStorm() < 1 && place.isMined()) {
 			this.setIcon(null);
-		}
-		else {
+		} else {
 			this.setIcon(icon);
 		}
 		this.setBounds(new Rectangle(pos.x, pos.y,
