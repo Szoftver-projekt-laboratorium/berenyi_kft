@@ -24,9 +24,9 @@ import berenyi_kft.State;
 public class EndGamePanel extends JPanel {
 	
 	private static final String wonString =
-			"You won!";
+			"You won by building the spacebase! Congratulations!";
 	private static final String lostString =
-			"You lost!";
+			"You lost the game, try again!";
 	
 	private static final int endImagePreferredWidth = 500;
 	

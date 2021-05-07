@@ -164,7 +164,7 @@ public class Game {
 		co2.addToGame();
 		robotRecipe.addResource(co2);
 		ir2 = ir1.clone();
-		ir1.addToGame();
+		ir2.addToGame();
 		robotRecipe.addResource(ir2);
 		ur2 = ur1.clone();
 		ur2.addToGame();
