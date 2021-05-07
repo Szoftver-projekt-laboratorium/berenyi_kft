@@ -52,6 +52,7 @@ public class MenuPanel extends JPanel {
 			else if (pressedButton == loadGameButton) {
 				GamePanel gamePanel = cards.getGamePanel();
 				Proto.setGamePanel(gamePanel);
+				cards.getGamePanel().removeAsteroidPoints();
 				
 				try {
 					Proto.load(persistentFilePath);

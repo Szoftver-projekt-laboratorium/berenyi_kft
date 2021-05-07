@@ -50,11 +50,13 @@ public class AddPlayersPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "A jatekosok szama legfeljebb 6 lehet!");
 				}
 				else if (! nameField.getText().matches("[a-zA-Z0-9]+")) {
-					JOptionPane.showMessageDialog(null, "A neved csak ekezet nelkuli "
-							+ "alfanumerikus karaktereket tartalmazhat.");
+					JOptionPane.showMessageDialog(null, "A neved ne tartalmazzon "
+							+ "se szokozt, se ekezetes karaktereket.");
 				}
 				else {
 					playerNames.add(nameField.getText());
+					nameField.setText("");
+					
 					StringBuilder sb = new StringBuilder();
 					for (String name : playerNames) {
 					    sb.append(name);

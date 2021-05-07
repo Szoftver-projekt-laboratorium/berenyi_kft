@@ -50,7 +50,7 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 	/**
 	 * A kapu-ikonok kívánt konstans szélessége
 	 */
-	private static final int preferredWidth = 60;
+	private static final int preferredWidth = 70;
 
 	/**
 	 * A kapuk megjelenő ikonja (képe)
@@ -122,8 +122,6 @@ public class TeleportingGateGraphics extends JLabel implements IDrawable {
 		this.setBorder(null);
 		this.setOpaque(false);
 		this.setLocation(new Point(0, 0));
-		
-		
 	}
 
 	/**

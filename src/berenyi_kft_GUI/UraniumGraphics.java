@@ -26,7 +26,7 @@ public class UraniumGraphics extends JButton implements IDrawable{
 	
 	private static final String iconPath = "src\\berenyi_kft_GUI\\Icons\\uranium.png";
 	
-	private static final int preferredWidth = 50;
+	private static final int preferredWidth = 70;
 	
 	private static final int thingTableSize = 3;
 	
@@ -71,7 +71,7 @@ public class UraniumGraphics extends JButton implements IDrawable{
 	private Point pos = new Point(0, 0);
 	
 	public UraniumGraphics(Uranium u, Dimension panelSize) {
-		allUraniumGraphics.add(this);
+		// allUraniumGraphics.add(this);
 		this.uranium = u;
 		
 		this.setActionCommand(actionCommand);
@@ -80,8 +80,8 @@ public class UraniumGraphics extends JButton implements IDrawable{
 		this.setBorderPainted(true);
 		this.setContentAreaFilled(false);
 		
-		pos.x = panelSize.width/element_number * queue_pos + 20;
-		pos.y = panelSize.height/2 - preferredWidth/2;
+		// pos.x = panelSize.width/element_number * queue_pos + 20;
+		// pos.y = panelSize.height/2 - preferredWidth/2;
 	}
 	
 	/**

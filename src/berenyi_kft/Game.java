@@ -35,7 +35,7 @@ public class Game {
 	
 	/**
 	 * A jatekban felepitheto dolgok receptjeinek a kollekcioja.
-	 * [0...3]
+	 * [0..2]
 	 */
 	private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 	
@@ -191,7 +191,7 @@ public class Game {
 		Recipe spaceBaseRecipe = new Recipe();
 		Proto.getAllObjects().setSpaceBaseRecipe(spaceBaseRecipe);
 		recipes.add(spaceBaseRecipe);
-		for (int i = 0; i < 3 /*1*/; i++) { // TODO Visszaírni 3-ra a tesztek után (ha nem 3).
+		for (int i = 0; i < 3; i++) {
 			co2 = co1.clone();
 			co2.addToGame();
 			spaceBaseRecipe.addResource(co2);
@@ -208,15 +208,15 @@ public class Game {
 		
 		// nyersanyagszamok
 		int nCoals = 4 + random.nextInt(2);
-		int nIrons = 4 + random.nextInt(3);
-		int nIces = 6 + random.nextInt(3);
-		int nUraniums = 4 + random.nextInt(2);
+		int nIrons = 5 + random.nextInt(2);
+		int nIces = 7 + random.nextInt(2);
+		int nUraniums = 6 + random.nextInt(2);
 		// aszteroidaszamok
 		int nEmpty = random.nextInt(2);
 		int nAsteroids = nCoals + nIrons + nIces + nUraniums + nEmpty;
 		
 		// timer
-		timer = new Timer(5000, 3000);
+		timer = new Timer(5000, 5000);
 		Proto.getAllObjects().setTimer(timer);
 		timer.setGame(this);
 		
@@ -255,6 +255,7 @@ public class Game {
 		}
 		
 		// asteroids
+		gamePanel.removeAsteroidPoints();
 		for (int i = 0; i < nAsteroids; i++) {
 			Asteroid a = new Asteroid();
 			Proto.getAllObjects().addAsteroid(a);
