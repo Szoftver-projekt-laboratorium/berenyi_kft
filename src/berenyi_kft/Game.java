@@ -191,7 +191,7 @@ public class Game {
 		Recipe spaceBaseRecipe = new Recipe();
 		Proto.getAllObjects().setSpaceBaseRecipe(spaceBaseRecipe);
 		recipes.add(spaceBaseRecipe);
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3 /*1*/; i++) { // TODO Visszaírni 3-ra a tesztek után (ha nem 3).
 			co2 = co1.clone();
 			co2.addToGame();
 			spaceBaseRecipe.addResource(co2);
@@ -207,10 +207,10 @@ public class Game {
 		}
 		
 		// nyersanyagszamok
-		int nCoals = 3 + random.nextInt(1);
-		int nIrons = 3 + random.nextInt(3);
-		int nIces = 3 + random.nextInt(1);
-		int nUraniums = 3 + random.nextInt(2);
+		int nCoals = 4 + random.nextInt(2);
+		int nIrons = 4 + random.nextInt(3);
+		int nIces = 6 + random.nextInt(3);
+		int nUraniums = 4 + random.nextInt(2);
 		// aszteroidaszamok
 		int nEmpty = random.nextInt(2);
 		int nAsteroids = nCoals + nIrons + nIces + nUraniums + nEmpty;
@@ -227,7 +227,7 @@ public class Game {
 		sun.setGame(this);
 		
 		SunGraphics sung = new SunGraphics(sun, 
-				new Dimension(800, 600) /* TODO gamePanel.getMinimumSize()*/);
+				new Dimension(900, 600) /*gamePanel.getSize()*/);
 		gamePanel.addToMapPanel(sung);
 		gamePanel.addDrawable(sung);
 		
@@ -259,12 +259,12 @@ public class Game {
 			Asteroid a = new Asteroid();
 			Proto.getAllObjects().addAsteroid(a);
 			
-			AsteroidGraphics ag = new AsteroidGraphics(a,
-					new Dimension(800, 600) /*gamePanel.getMinimumSize()*/, this.gamePanel);
+			AsteroidGraphics ag = new AsteroidGraphics(a, new Dimension(900, 600)
+					/*gamePanel.getSize()*/, this.gamePanel);
 			gamePanel.addToMapPanel(ag);
 			gamePanel.addDrawable(ag);
 			
-			a.setRockLayerThickness(random.nextInt(5));
+			a.setRockLayerThickness(1 + random.nextInt(4));
 			a.setGame(this);
 			a.setSun(sun);
 			if (i < nAsteroids - nEmpty) {
@@ -277,7 +277,7 @@ public class Game {
 		// nyersanyagok elkeverese
 		Collections.shuffle(asteroids);
 		// napkozeli aszteroidak (veletlenszeruen)
-		int nCloseToSun = 1 + random.nextInt(1);
+		int nCloseToSun = 1 /*+ random.nextInt(1)*/;
 		for (int i = 0; i < nCloseToSun; i++)
 			sun.addNeighbor(asteroids.get(i));
 		
@@ -323,7 +323,7 @@ public class Game {
 		}
 		
 		// robots (just for fun)
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 1; i++) {
 			AIRobot air = new AIRobot();
 			Proto.getAllObjects().addAIRobot(air);
 
@@ -339,7 +339,7 @@ public class Game {
 		}
 		
 		// ufos
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 1; i++) {
 			UFO ufo = new UFO();
 			Proto.getAllObjects().addUFO(ufo);
 			

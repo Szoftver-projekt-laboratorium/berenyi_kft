@@ -31,7 +31,7 @@ public class MainFrame extends JFrame {
         			e.printStackTrace();
         		}*/
             	
-        		setMinimumSize(new Dimension(1200, 675 + 36));
+        		setMinimumSize(new Dimension(1200 + 16, 675 + 38));
             	
         		setDefaultCloseOperation(EXIT_ON_CLOSE);
                 setVisible(true);
