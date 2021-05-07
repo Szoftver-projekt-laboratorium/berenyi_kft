@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import berenyi_kft.Settler;
+import berenyi_kft.Sun;
 
 /**
  * A telepesek képernyőre rajzolásáért felelős grafikus csomagoló osztály.
@@ -132,10 +133,13 @@ public class SettlerGraphics extends JLabel implements IDrawable {
 		// this.setLocation(AsteroidGraphics.getCharacterPos(this.settler));
 		Point pos = AsteroidGraphics.getCharacterPos(this.settler);
 		
-		if(settler.isActualSettler()) {
+		Sun sun = settler.getPlace().getSun();
+		if (sun.getTimeToSunStorm() < 1 && settler.getPlace().isMined()) {
+			this.setIcon(null);
+		} else if (settler.isActualSettler()) {
 			this.setIcon(actualIcon);
 		
-		}else {
+		} else {
 			this.setIcon(icon);
 		}
 		this.setBounds(new Rectangle(pos.x, pos.y,

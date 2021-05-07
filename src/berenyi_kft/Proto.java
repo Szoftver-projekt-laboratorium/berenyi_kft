@@ -411,7 +411,7 @@ public class Proto {
 			break;
 
 		case "Timer":
-			Timer timer = new Timer(3000, 3000); // lassabb lett
+			Timer timer = new Timer(5000, 5000); // lassabb lett
 			allObjects.ids.put(timer, id);
 			allObjects.timer = timer;
 			break;

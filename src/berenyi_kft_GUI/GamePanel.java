@@ -503,6 +503,7 @@ public class GamePanel extends JPanel {
 		tGateLabel.setForeground(Color.RED);
 		
 		TGateButton = new TeleportingGateGraphics(new TeleportingGate());
+		TGateButton.setPreferredSize(TGateButton.getPreferredSize());
 		TGateButton.setBorder(buttonBorder);
 		TGateButton.setMinimumSize(resourcebuttonsize);
 		TGateButton.setMaximumSize(resourcebuttonsize);

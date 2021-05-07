@@ -12,6 +12,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import berenyi_kft.Sun;
 import berenyi_kft.UFO;
 
 /**
@@ -115,6 +116,14 @@ public class UFOGraphics extends JLabel implements IDrawable {
 		
 		// this.setLocation(AsteroidGraphics.getCharacterPos(this.ufo));
 		Point pos = AsteroidGraphics.getCharacterPos(this.ufo);
+		
+		Sun sun = ufo.getPlace().getSun();
+		if (sun.getTimeToSunStorm() < 1 && ufo.getPlace().isMined()) {
+			this.setIcon(null);
+		}
+		else {
+			this.setIcon(icon);
+		}
 		this.setBounds(new Rectangle(pos.x, pos.y,
 								icon.getIconWidth(), icon.getIconHeight()));
 		this.repaint();

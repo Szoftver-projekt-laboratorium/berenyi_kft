@@ -468,8 +468,9 @@ public class Asteroid {
 
 					if (resource.isCompatibleWith(new Uranium())) {
 						Uranium ur = (Uranium)resource;
-						game.getGamePanel().writeToMessageBoard("Uranium exposed. Life="
-								+ ur.getLife());
+						game.getGamePanel().writeToMessageBoard(
+								"Uranium exposed. Life decreasing to "
+								+ (ur.getLife() - 1) + ".");
 					} else if (resource.isCompatibleWith(new Ice())) {
 						game.getGamePanel().writeToMessageBoard("Ice sublimates.");
 					}

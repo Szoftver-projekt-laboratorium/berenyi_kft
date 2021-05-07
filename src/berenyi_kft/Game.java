@@ -216,7 +216,7 @@ public class Game {
 		int nAsteroids = nCoals + nIrons + nIces + nUraniums + nEmpty;
 		
 		// timer
-		timer = new Timer(5000, 3000);
+		timer = new Timer(5000, 5000);
 		Proto.getAllObjects().setTimer(timer);
 		timer.setGame(this);
 		

@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import berenyi_kft.AIRobot;
+import berenyi_kft.Sun;
 
 /**
  * A robotok képernyőre rajzolásáért felelős grafikus csomagoló osztály.
@@ -115,6 +116,14 @@ public class AIRobotGraphics extends JLabel implements IDrawable {
 		
 		// this.setLocation(AsteroidGraphics.getCharacterPos(this.aiRobot));
 		Point pos = AsteroidGraphics.getCharacterPos(this.aiRobot);
+		
+		Sun sun = aiRobot.getPlace().getSun();
+		if (sun.getTimeToSunStorm() < 1 && aiRobot.getPlace().isMined()) {
+			this.setIcon(null);
+		}
+		else {
+			this.setIcon(icon);
+		}
 		this.setBounds(new Rectangle(pos.x, pos.y,
 								icon.getIconWidth(), icon.getIconHeight()));
 		this.repaint();
