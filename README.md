@@ -1,23 +1,15 @@
 # berenyi_kft
 
-Szkeleton program az aszteroidabányászat analízis modelljének teszteléséhez.
-
-## Fordítás
-
-A program a virtuális gépeken java jdk-11.0.2-vel fordítható a
-
-```
-javac berenyi_kft\*.java
-```
-
-parancsot kiadva a projekt ``src`` mappájában.
+Grafikus aszteroidabányászat játékprogram.
 
 ## Futtatás
 
-A lefordított projekt ezután a
+A projekt `src` mappájában adjuk ki a
 
 ```
-java berenyi_kft.Skeleton
+java -jar berenyi_kft_runnable.jar
 ```
 
-paranccsal futtatható.
+parancsot, vagy pedig kattintsunk duplán a futtatható JAR fájlon.
+
+A futtatást JRE 11 környezettel teszteltük sikeresen.
