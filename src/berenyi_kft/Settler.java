@@ -467,4 +467,8 @@ public class Settler extends Character {
 		return numbOfResources;
 	}
 	
+	public Integer getNumbOfGates() {
+		return gatesCreated.size();
+	}
+	
 }
