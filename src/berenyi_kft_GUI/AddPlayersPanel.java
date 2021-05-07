@@ -104,7 +104,7 @@ public class AddPlayersPanel extends JPanel {
 		nameLabel.setFont(font);
 		nameLabel.setForeground(Color.YELLOW);
 		
-		nameField = new JTextField("Player1",20);
+		nameField = new JTextField("Player1", 15);
 		nameField.setFont(font);
 		nameField.setBackground(Color.YELLOW);
 		

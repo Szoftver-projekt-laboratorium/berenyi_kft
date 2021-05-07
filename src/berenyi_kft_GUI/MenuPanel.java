@@ -70,10 +70,12 @@ public class MenuPanel extends JPanel {
 				game.setController(controller);
 				game.setGamePanel(gamePanel);
 				
+				controller.setState(State.RUNNING);
 				controller.nextPlayer();
 				gamePanel.drawAll();
-				game.getTimer().start();
-				controller.setState(State.RUNNING);
+				berenyi_kft.Timer timer = game.getTimer();
+				timer.setGame(game); // Be kell állítani a játékot a timer-ben
+				timer.start();
 				
 				cards.show(Cards.gamePanelID);
 			}
