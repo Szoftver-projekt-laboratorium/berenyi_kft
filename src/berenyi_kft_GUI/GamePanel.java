@@ -160,9 +160,15 @@ public class GamePanel extends JPanel {
 				//writeToMessageBoard("restoreButton has been pushed");
 				writeToMessageBoard("Choose a resource to restore");
 				
-				Object[] params = {"restore", latestSelectedResource};
-				controller.getActPlayer().actOnSettler(PlayerCommand.RESTORE, params);
-				controller.nextPlayer();
+				if (latestSelectedResource != null) {
+					Object[] params = {"restore", latestSelectedResource};
+					controller.getActPlayer().actOnSettler(PlayerCommand.RESTORE, params);
+					controller.nextPlayer();
+					
+					// új kattintásra fogunk várni, a lépés után
+					// nincs default kiválasztott
+					latestSelectedResource = null;
+				}
 			}
 			else if (pressedButton == createrobotButton) {
 				//writeToMessageBoard("createrobotButton has been pushed");
@@ -472,17 +478,17 @@ public class GamePanel extends JPanel {
 		coalLabel.setFont(font);
 		
 		IronButton.setLayout(new BorderLayout());
-		IronButton.add(ironLabel, BorderLayout.SOUTH);
+		IronButton.add(ironLabel, BorderLayout.CENTER);
 		ironLabel.setHorizontalAlignment(JLabel.CENTER);
 		ironLabel.setFont(font);
 		
 		UraniumButton.setLayout(new BorderLayout());
-		UraniumButton.add(uraniumLabel, BorderLayout.SOUTH);
+		UraniumButton.add(uraniumLabel, BorderLayout.CENTER);
 		uraniumLabel.setHorizontalAlignment(JLabel.CENTER);
 		uraniumLabel.setFont(font);
 		
 		IceButton.setLayout(new BorderLayout());
-		IceButton.add(iceLabel, BorderLayout.SOUTH);
+		IceButton.add(iceLabel, BorderLayout.CENTER);
 		iceLabel.setHorizontalAlignment(JLabel.CENTER);
 		iceLabel.setFont(font);
 		/*
@@ -498,7 +504,7 @@ public class GamePanel extends JPanel {
 		TGateButton.setMaximumSize(resourcebuttonsize);
 		TGateButton.setLayout(new BorderLayout());
 		
-		TGateButton.add(tGateLabel, BorderLayout.SOUTH);
+		TGateButton.add(tGateLabel, BorderLayout.CENTER);
 		tGateLabel.setHorizontalAlignment(JLabel.CENTER);
 		tGateLabel.setFont(font);
 		

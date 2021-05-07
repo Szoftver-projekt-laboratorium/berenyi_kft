@@ -72,9 +72,18 @@ public class Uranium extends RadioactiveResource {
 			return true;
 		return false;
 	}
-
+	
 	/**
-	 * Az uran egyseg elettartamat
+	 * Megadja az uran aktualis elettartamat.
+	 * 
+	 * @return elettartam
+	 */
+	public int getLife() {
+		return life;
+	}
+	
+	/**
+	 * Az uran egyseg elettartamat eggyel csokkenti.
 	 */
 	public void decLife() {
 		Proto.println(Proto.getId(this) + ".decLife()");
@@ -93,6 +102,7 @@ public class Uranium extends RadioactiveResource {
 		decLife();
 		if (life == 0) {
 			Proto.println("Uranium is exploding!");
+			System.out.println("Uranium is exploding!");
 			a.explodedBy(this);
 		}
 		Proto.decrTabs();

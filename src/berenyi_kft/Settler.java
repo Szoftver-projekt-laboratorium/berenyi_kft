@@ -213,6 +213,7 @@ public class Settler extends Character {
 	public void restore(Resource r) {
 		Proto.println(Proto.getId(this) + ".restore(" + Proto.getId(r) + ")");
 		Proto.incrTabs();
+		
 		place.accept(this, r);
 		Proto.decrTabs();
 	}
