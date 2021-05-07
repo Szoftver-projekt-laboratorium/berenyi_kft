@@ -1,5 +1,6 @@
 package berenyi_kft;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import javax.swing.JButton;
@@ -8,6 +9,7 @@ import javax.swing.JLabel;
 import berenyi_kft_GUI.AsteroidGraphics;
 import berenyi_kft_GUI.Cards;
 import berenyi_kft_GUI.GamePanel;
+import berenyi_kft_GUI.MenuPanel;
 
 /**
  * A jatek foosztalya, a jatek objektumait vezerelve vezenyeli a jatekot
@@ -167,8 +169,18 @@ public class Controller {
 		
 		game.getGamePanel().removeDrawableButtons();
 		game.getGamePanel().removeDrawableLabels();
-		
+		game.getGamePanel().getDrawables().clear();
 		game.getGamePanel().removeAsteroidPoints();
+		
+		try {
+			Proto.save(MenuPanel.getPersistentFilePath());
+		}
+		catch (FileNotFoundException e) {
+			// (TODO .out vagy .err?)
+			System.out.println("Persistent file not found.");
+			e.printStackTrace();
+		}
+		
 		// TODO endGamePanel megjelenítése
 		game.getGamePanel().getCards().show(Cards.endGamePanelID);
 		

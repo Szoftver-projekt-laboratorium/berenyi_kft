@@ -100,6 +100,10 @@ public class GamePanel extends JPanel {
 		this.controller = controller;
 	}
 	
+	public List<IDrawable> getDrawables() {
+		return drawables;
+	}
+	
 	private class ButtonListener implements ActionListener {
 
 		/**
@@ -539,11 +543,12 @@ public class GamePanel extends JPanel {
 		String path = "src\\berenyi_kft_GUI\\Icons\\background.png";
 		try {
 			img = ImageIO.read(new File(path));
-			img = img.getScaledInstance(1000, -1, Image.SCALE_DEFAULT);
+			img = img.getScaledInstance(920, -1, Image.SCALE_DEFAULT);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mapPanel.setSize(new Dimension(img.getWidth(null), img.getHeight(null)));
+		mapPanel.setMinimumSize(
+				new Dimension(img.getWidth(null), img.getHeight(null)));
 
 		mapPanel.setOpaque(false);
 
