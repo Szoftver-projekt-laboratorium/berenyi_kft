@@ -213,6 +213,7 @@ public class Settler extends Character {
 	public void restore(Resource r) {
 		Proto.println(Proto.getId(this) + ".restore(" + Proto.getId(r) + ")");
 		Proto.incrTabs();
+		
 		place.accept(this, r);
 		Proto.decrTabs();
 	}
@@ -465,6 +466,10 @@ public class Settler extends Character {
 		}
 		
 		return numbOfResources;
+	}
+	
+	public Integer getNumbOfGates() {
+		return gatesCreated.size();
 	}
 	
 }

@@ -85,6 +85,10 @@ public class GamePanel extends JPanel {
 	private UraniumGraphics UraniumButton;
 	private IronGraphics IronButton;
 	
+	private TeleportingGateGraphics TGateButton;
+	
+	private JLabel tGateLabel;
+	
 	private JLabel coalLabel;
 	private JLabel iceLabel;
 	private JLabel uraniumLabel;
@@ -160,9 +164,15 @@ public class GamePanel extends JPanel {
 				//writeToMessageBoard("restoreButton has been pushed");
 				writeToMessageBoard("Choose a resource to restore");
 				
-				Object[] params = {"restore", latestSelectedResource};
-				controller.getActPlayer().actOnSettler(PlayerCommand.RESTORE, params);
-				controller.nextPlayer();
+				if (latestSelectedResource != null) {
+					Object[] params = {"restore", latestSelectedResource};
+					controller.getActPlayer().actOnSettler(PlayerCommand.RESTORE, params);
+					controller.nextPlayer();
+					
+					// új kattintásra fogunk várni, a lépés után
+					// nincs default kiválasztott
+					latestSelectedResource = null;
+				}
 			}
 			else if (pressedButton == createrobotButton) {
 				//writeToMessageBoard("createrobotButton has been pushed");
@@ -455,16 +465,16 @@ public class GamePanel extends JPanel {
 		IronButton.addActionListener(bl);
 		
 		coalLabel=new JLabel();
-		coalLabel.setForeground(Color.YELLOW);
+		coalLabel.setForeground(Color.RED);
 		
 		ironLabel=new JLabel();
-		ironLabel.setForeground(Color.YELLOW);
+		ironLabel.setForeground(Color.RED);
 		
 		uraniumLabel=new JLabel();
-		uraniumLabel.setForeground(Color.YELLOW);
+		uraniumLabel.setForeground(Color.RED);
 		
 		iceLabel=new JLabel();
-		iceLabel.setForeground(Color.YELLOW);
+		iceLabel.setForeground(Color.RED);
 		
 		CoalButton.setLayout(new BorderLayout());
 		CoalButton.add(coalLabel, BorderLayout.CENTER);
@@ -489,11 +499,18 @@ public class GamePanel extends JPanel {
 		 * BUGOS
 		 */
 		
+	    tGateLabel=new JLabel();
+		tGateLabel.setForeground(Color.RED);
 		
-		TeleportingGateGraphics TGateButton = new TeleportingGateGraphics(new TeleportingGate());
+		TGateButton = new TeleportingGateGraphics(new TeleportingGate());
 		TGateButton.setBorder(buttonBorder);
 		TGateButton.setMinimumSize(resourcebuttonsize);
 		TGateButton.setMaximumSize(resourcebuttonsize);
+		TGateButton.setLayout(new BorderLayout());
+		
+		TGateButton.add(tGateLabel, BorderLayout.CENTER);
+		tGateLabel.setHorizontalAlignment(JLabel.CENTER);
+		tGateLabel.setFont(font);
 		
 		inventoryPanel = new JPanel();
 		inventoryPanel.setMinimumSize(new Dimension(800, 200));
@@ -632,13 +649,6 @@ public class GamePanel extends JPanel {
 	}
 	
 	public void drawNumbOfResources() {
-		if(controller==null) {
-			ironLabel.setText("0");
-			coalLabel.setText("0");
-			iceLabel.setText("0");
-			uraniumLabel.setText("0");
-		}
-		
 		if(controller.getActPlayer()!=null) {
 			Integer[] resourceArray=controller.getActPlayer().getSettler().getNumbOfResources();
 			coalLabel.setText(resourceArray[0].toString());
@@ -646,6 +656,11 @@ public class GamePanel extends JPanel {
 			uraniumLabel.setText(resourceArray[2].toString());
 			iceLabel.setText(resourceArray[3].toString());
 		}
+	}
+	
+	public void drawNumbOfGates() {
+		Integer numb=controller.getActPlayer().getSettler().getNumbOfGates();
+		tGateLabel.setText(numb.toString());
 	}
 
 	@Override
@@ -657,6 +672,7 @@ public class GamePanel extends JPanel {
 		g.drawImage(img, 0, 0, mapPanel);
 		g.drawImage(img_inventory, 75, 600, inventoryPanel);
 		this.drawNumbOfResources();
+		this.drawNumbOfGates();
 
 	}
 	

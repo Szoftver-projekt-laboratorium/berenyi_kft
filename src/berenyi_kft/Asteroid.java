@@ -458,18 +458,24 @@ public class Asteroid {
 		
 		Proto.incrTabs();
 		if (this.isMined()) {
-			resource = r;
-			s.remove(r);
-			game.getGamePanel().writeToMessageBoard(game.getGamePanel().getController().getActPlayer().getName()+" restored a resource succesfully.");
-			if (sun.isCloseToSun(this)) {
-				
-				if(resource.isCompatibleWith(new Uranium())) {
-					game.getGamePanel().writeToMessageBoard("Uranium explodes. ");
-				}else if(resource.isCompatibleWith(new Ice())) {
-					game.getGamePanel().writeToMessageBoard("Ice sublimates. ");
+			Resource rRestored = s.remove(r);
+			if (rRestored != null) { // Ha s-nel nincs meg r, nem tortenik semmi.
+				resource = rRestored;
+				game.getGamePanel().writeToMessageBoard(
+						game.getGamePanel().getController().getActPlayer().getName()
+						+ " restored a resource succesfully.");
+				if (sun.isCloseToSun(this)) {
+
+					if (resource.isCompatibleWith(new Uranium())) {
+						Uranium ur = (Uranium)resource;
+						game.getGamePanel().writeToMessageBoard("Uranium exposed. Life="
+								+ ur.getLife());
+					} else if (resource.isCompatibleWith(new Ice())) {
+						game.getGamePanel().writeToMessageBoard("Ice sublimates.");
+					}
+
+					resource.drilledOut(this);
 				}
-				
-				resource.drilledOut(this);
 			}
 		}
 		Proto.decrTabs();
@@ -588,6 +594,7 @@ public class Asteroid {
 	public void explodedBy(RadioactiveResource rr) {
 		Proto.println(Proto.getId(this) + ".explodedBy(" + Proto.getId(rr) + ")");
 		Proto.incrTabs();
+		game.getGamePanel().writeToMessageBoard("Uranium is exploding!!!");
 		resource.removeFromGame();
 
 		for (int i = characters.size() - 1; i >= 0; i--) {
