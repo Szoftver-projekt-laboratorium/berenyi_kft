@@ -1,0 +1,341 @@
+Controller controller
+Player p1
+Game game
+Recipe robotRecipe gatePairRecipe spaceBaseRecipe
+Timer timer
+Sun sun
+Asteroid a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 a23 a24
+Coal co1 co2 co3 co4 co5 co6 co7 co8 co9
+Iron ir1 ir2 ir3 ir4 ir5 ir6 ir7 ir8 ir9 ir10 ir11 ir12
+Ice ic1 ic2 ic3 ic4 ic5 ic6 ic7 ic8 ic9 ic10 ic11
+Uranium ur1 ur2 ur3 ur4 ur5 ur6 ur7 ur8 ur9 ur10 ur11
+Settler s1
+AIRobot air1
+UFO ufo1
+TeleportingGate tg1 tg2 tg3 tg4
+
+Controller controller
+	game game
+	allPlayers p1
+	actPlayer p1
+	state running
+
+Player p1
+	name Player1
+	settler s1
+	isAlive true
+
+Game game
+	timer timer
+	recipes robotRecipe gatePairRecipe spaceBaseRecipe
+	sun sun
+	asteroids a5 a2 a7 a19 a12 a15 a16 a13 a10 a11 a20 a9 a6 a18 a22 a3 a24 a14 a8 a1 a4 a21 a17 a23
+	settlersAlive s1
+
+Recipe robotRecipe
+	resources co1 ir1 ur1
+
+Recipe gatePairRecipe
+	resources ir2 ir3 ic1 ur2
+
+Recipe spaceBaseRecipe
+	resources co2 ir4 ic2 ur3 co3 ir5 ic3 ur4 co4 ir6 ic4 ur5
+
+Timer timer
+	ticks 0
+	delay 5000
+	period 5000
+	steppables sun air1 ufo1 tg1 tg3
+
+Sun sun
+	timeToSunStorm 3
+	neighboringAsteroids a5
+
+Asteroid a1
+	rockLayerThickness 2
+	game game
+	sun sun
+	neighbors a15 a22 a18 a24 a2
+	resource co5
+	characters null
+	gates null
+
+Asteroid a2
+	rockLayerThickness 2
+	game game
+	sun sun
+	neighbors a5 a12 a16 a24 a1 a9 a8
+	resource co6
+	characters null
+	gates tg2
+
+Asteroid a3
+	rockLayerThickness 1
+	game game
+	sun sun
+	neighbors a20 a21 a15 a18
+	resource co7
+	characters null
+	gates null
+
+Asteroid a4
+	rockLayerThickness 3
+	game game
+	sun sun
+	neighbors a12 a16 a24 a22 a15
+	resource co8
+	characters null
+	gates null
+
+Asteroid a5
+	rockLayerThickness 3
+	game game
+	sun sun
+	neighbors a2 a7 a19 a20 a24 a13
+	resource co9
+	characters null
+	gates null
+
+Asteroid a6
+	rockLayerThickness 4
+	game game
+	sun sun
+	neighbors a19 a24 a22 a20
+	resource ir7
+	characters null
+	gates null
+
+Asteroid a7
+	rockLayerThickness 2
+	game game
+	sun sun
+	neighbors a5 a15 a10 a17 a20 a12 a19
+	resource ir8
+	characters null
+	gates null
+
+Asteroid a8
+	rockLayerThickness 4
+	game game
+	sun sun
+	neighbors a13 a14 a2
+	resource ir9
+	characters null
+	gates null
+
+Asteroid a9
+	rockLayerThickness 4
+	game game
+	sun sun
+	neighbors a19 a11 a2
+	resource ir10
+	characters null
+	gates null
+
+Asteroid a10
+	rockLayerThickness 4
+	game game
+	sun sun
+	neighbors a7
+	resource ir11
+	characters null
+	gates null
+
+Asteroid a11
+	rockLayerThickness 3
+	game game
+	sun sun
+	neighbors a16 a9
+	resource ir12
+	characters null
+	gates null
+
+Asteroid a12
+	rockLayerThickness 4
+	game game
+	sun sun
+	neighbors a2 a16 a13 a4 a7
+	resource ic5
+	characters s1
+	gates null
+
+Asteroid a13
+	rockLayerThickness 2
+	game game
+	sun sun
+	neighbors a12 a8 a23 a17 a16 a5
+	resource ic6
+	characters null
+	gates null
+
+Asteroid a14
+	rockLayerThickness 4
+	game game
+	sun sun
+	neighbors a19 a21 a24 a8
+	resource ic7
+	characters null
+	gates null
+
+Asteroid a15
+	rockLayerThickness 4
+	game game
+	sun sun
+	neighbors a7 a1 a4 a3
+	resource ic8
+	characters null
+	gates tg3
+
+Asteroid a16
+	rockLayerThickness 1
+	game game
+	sun sun
+	neighbors a12 a11 a2 a4 a13
+	resource ic9
+	characters null
+	gates null
+
+Asteroid a17
+	rockLayerThickness 2
+	game game
+	sun sun
+	neighbors a7 a13
+	resource ic10
+	characters air1
+	gates null
+
+Asteroid a18
+	rockLayerThickness 4
+	game game
+	sun sun
+	neighbors a20 a1 a3
+	resource ic11
+	characters null
+	gates tg1 tg4
+
+Asteroid a19
+	rockLayerThickness 1
+	game game
+	sun sun
+	neighbors a5 a9 a6 a22 a14 a21 a7
+	resource ur6
+	characters null
+	gates null
+
+Asteroid a20
+	rockLayerThickness 3
+	game game
+	sun sun
+	neighbors a5 a18 a3 a7 a6
+	resource ur7
+	characters ufo1
+	gates null
+
+Asteroid a21
+	rockLayerThickness 3
+	game game
+	sun sun
+	neighbors a14 a3 a19
+	resource ur8
+	characters null
+	gates null
+
+Asteroid a22
+	rockLayerThickness 4
+	game game
+	sun sun
+	neighbors a19 a1 a6 a4
+	resource ur9
+	characters null
+	gates null
+
+Asteroid a23
+	rockLayerThickness 2
+	game game
+	sun sun
+	neighbors a13
+	resource ur10
+	characters null
+	gates null
+
+Asteroid a24
+	rockLayerThickness 2
+	game game
+	sun sun
+	neighbors a6 a2 a4 a14 a5 a1
+	resource ur11
+	characters null
+	gates null
+
+Uranium ur1
+	life 3
+
+Uranium ur2
+	life 3
+
+Uranium ur3
+	life 3
+
+Uranium ur4
+	life 3
+
+Uranium ur5
+	life 3
+
+Uranium ur6
+	life 3
+
+Uranium ur7
+	life 3
+
+Uranium ur8
+	life 3
+
+Uranium ur9
+	life 3
+
+Uranium ur10
+	life 3
+
+Uranium ur11
+	life 3
+
+Settler s1
+	game game
+	timer timer
+	place a12
+	resources null
+	gatesCreated null
+
+AIRobot air1
+	timer timer
+	place a17
+
+UFO ufo1
+	timer timer
+	place a20
+
+TeleportingGate tg1
+	timer timer
+	pair tg2
+	settler null
+	asteroid a18
+
+TeleportingGate tg2
+	timer timer
+	pair tg1
+	settler null
+	asteroid a2
+
+TeleportingGate tg3
+	timer timer
+	pair tg4
+	settler null
+	asteroid a15
+
+TeleportingGate tg4
+	timer timer
+	pair tg3
+	settler null
+	asteroid a18
+
