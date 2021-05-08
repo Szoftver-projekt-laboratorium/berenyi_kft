@@ -25,7 +25,7 @@ public class MenuPanel extends JPanel {
 	 * A konfiguráció megfelel a prototípus programbeli fájlformátumnak.
 	 */
 	private static final String persistentFilePath
-			= "src\\berenyi_kft_GUI\\last_level_config.txt";
+			= "src\\berenyi_kft\\last_level_config.txt";
 	
 	/**
 	 * Visszatér az utolsó pályakonfigurációt tároló fájl elérési útjával.
@@ -87,10 +87,10 @@ public class MenuPanel extends JPanel {
 	
 	public void initComponents() {
 		this.setLayout(new BorderLayout());
-		Font titleFont = new Font("teko semibold", Font.BOLD, 40);
+		Font titleFont = new Font("teko semibold", Font.BOLD, 60);
 		Font font = new Font("teko semibold", Font.BOLD, 20);
 		
-		nameLabel = new JLabel("Asteroid Miner");
+		nameLabel = new JLabel("Asteroid Mining");
 		nameLabel.setFont(titleFont);
 		nameLabel.setForeground(Color.YELLOW);
 		

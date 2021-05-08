@@ -314,7 +314,7 @@ public class GamePanel extends JPanel {
 		// Fejlecpanel (felso)
 		JPanel titlePanel = new JPanel();
 		gameNameLabel = new JLabel("Asteroid Mining");
-		gameNameLabel.setFont(font);
+		gameNameLabel.setFont(biggerFont);
 		gameNameLabel.setForeground(Color.YELLOW);
 		titlePanel.setBackground(color);
 		titlePanel.add(gameNameLabel);
@@ -404,7 +404,6 @@ public class GamePanel extends JPanel {
 		endGameButton.setBackground(color);
 		endGameButton.setBorder(buttonBorder);
 
-		//
 		JPanel controlPanel = new JPanel();
 
 		controlPanel.add(moveButton);
